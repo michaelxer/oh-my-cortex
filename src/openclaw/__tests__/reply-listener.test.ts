@@ -13,7 +13,7 @@ type SpawnImplementation = (...args: unknown[]) => MockSpawnProcess
 
 const originalHome = process.env.HOME
 const originalUserProfile = process.env.USERPROFILE
-const originalStartupTimeout = process.env.OMO_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS
+const originalStartupTimeout = process.env.OMX_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS
 
 const tempHome = mkdtempSync(join(tmpdir(), "openclaw-reply-listener-"))
 const stateDir = join(tempHome, ".omx", "state")
@@ -91,7 +91,7 @@ beforeAll(async () => {
 
 afterEach(() => {
   resetStateDir()
-  process.env.OMO_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS = "25"
+  process.env.OMX_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS = "25"
 })
 
 afterAll(() => {
@@ -102,9 +102,9 @@ afterAll(() => {
   else process.env.USERPROFILE = originalUserProfile
 
   if (originalStartupTimeout === undefined) {
-    delete process.env.OMO_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS
+    delete process.env.OMX_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS
   } else {
-    process.env.OMO_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS = originalStartupTimeout
+    process.env.OMX_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS = originalStartupTimeout
   }
 
   rmSync(tempHome, { recursive: true, force: true })

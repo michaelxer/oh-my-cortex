@@ -161,7 +161,7 @@ Skill body.
     })
   })
 
-  describe("mcp.json file loading (AmpCode compat)", () => {
+  describe("mcp.json file loading (deep-work systems compat)", () => {
     it("loads MCP config from mcp.json with mcpServers format", async () => {
       // given
       const skillContent = `---

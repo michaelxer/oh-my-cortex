@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import type { ContextLimitModelCacheState } from "../shared/context-limit-resolver"
 
 import { createPostCompactionDegradationMonitor } from "./preemptive-compaction-degradation-monitor"
@@ -11,7 +11,7 @@ import type {
 
 export function createPreemptiveCompactionHook(
   ctx: PreemptiveCompactionContext,
-  pluginConfig: OhMyOpenCodeConfig,
+  pluginConfig: OhMyCortexConfig,
   modelCacheState?: ContextLimitModelCacheState,
 ) {
   const compactionInProgress = new Set<string>()

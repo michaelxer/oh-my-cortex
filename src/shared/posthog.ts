@@ -55,11 +55,11 @@ function isFalsy(value: string | undefined): boolean {
 }
 
 function shouldDisablePostHog(): boolean {
-  if (process.env.OMO_DISABLE_POSTHOG === "true" || process.env.OMO_DISABLE_POSTHOG === "1") {
+  if (process.env.OMX_DISABLE_POSTHOG === "true" || process.env.OMX_DISABLE_POSTHOG === "1") {
     return true
   }
 
-  return isFalsy(process.env.OMO_SEND_ANONYMOUS_TELEMETRY?.trim().toLowerCase())
+  return isFalsy(process.env.OMX_SEND_ANONYMOUS_TELEMETRY?.trim().toLowerCase())
 }
 
 function hasPostHogApiKey(): boolean {
@@ -87,7 +87,7 @@ function getSharedProperties(source: PostHogSource): NonNullable<PostHogCaptureE
   const cpus = safeCpus()
 
   return {
-    platform: "oh-my-opencode",
+    platform: "oh-my-cortex",
     package_name: PUBLISHED_PACKAGE_NAME,
     plugin_name: PLUGIN_NAME,
     package_version: packageJson.version,
@@ -152,7 +152,7 @@ function createPostHogClient(
       if (activityState.captureDaily) {
         configuredClient.capture({
           distinctId,
-          event: "omo_daily_active",
+          event: "omx_daily_active",
           properties: {
             ...sharedProperties,
             day_utc: activityState.dayUTC,

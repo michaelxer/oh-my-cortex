@@ -41,7 +41,7 @@ Pattern followed: `grep-app.ts` (static export, no auth, no config factory neede
  import { context7 } from "./context7"
  import { grep_app } from "./grep-app"
 +import { arxiv } from "./arxiv"
- import type { OhMyOpenCodeConfig } from "../config/schema"
+ import type { OhMyCortexConfig } from "../config/schema"
 
 -export { McpNameSchema, type McpName } from "./types"
 +export { McpNameSchema, type McpName } from "./types"
@@ -54,7 +54,7 @@ Pattern followed: `grep-app.ts` (static export, no auth, no config factory neede
    oauth?: false
  }
 
- export function createBuiltinMcps(disabledMcps: string[] = [], config?: OhMyOpenCodeConfig) {
+ export function createBuiltinMcps(disabledMcps: string[] = [], config?: OhMyCortexConfig) {
    const mcps: Record<string, RemoteMcpConfig> = {}
 
    if (!disabledMcps.includes("websearch")) {

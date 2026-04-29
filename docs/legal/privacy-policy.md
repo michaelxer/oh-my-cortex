@@ -2,9 +2,9 @@
 
 Last updated: April 11, 2026
 
-This Privacy Policy explains how oh-my-opencode and oh-my-openagent collect, use, and protect information related to the published CLI package, the OpenCode plugin, and the project website or repository materials where they apply.
+This Privacy Policy explains how oh-my-cortex and oh-my-cortex collect, use, and protect information related to the published CLI package, the OpenCode plugin, and the project website or repository materials where they apply.
 
-For this policy, "Application" means the published `oh-my-opencode` CLI package and the OpenCode plugin runtime it installs. "Service" means the Application and the project distribution surfaces together. "We" and "our" refer to the maintainer of oh-my-opencode. "You" refers to a user of the Service.
+For this policy, "Application" means the published `oh-my-cortex` CLI package and the OpenCode plugin runtime it installs. "Service" means the Application and the project distribution surfaces together. "We" and "our" refer to the maintainer of oh-my-cortex. "You" refers to a user of the Service.
 
 By using the Service, you accept this Privacy Policy and the accompanying Terms of Service in [terms-of-service.md](./terms-of-service.md).
 
@@ -16,7 +16,7 @@ We collect limited non-personal information needed to operate and improve the Se
 
 When anonymous telemetry is enabled, the Application may collect:
 
-- Anonymous usage events, including `run_started`, `run_completed`, `run_failed`, `install_completed`, `install_failed`, `plugin_loaded`, and `omo_daily_active`
+- Anonymous usage events, including `run_started`, `run_completed`, `run_failed`, `install_completed`, `install_failed`, `plugin_loaded`, and `omx_daily_active`
 - Application metadata such as package version, plugin name, runtime, and command or entry-point context
 - Error diagnostics captured during failed CLI runs
 - A pseudonymous installation identifier derived from a one-way hash of the local hostname
@@ -34,9 +34,9 @@ The Application uses PostHog for anonymous product analytics. Telemetry is enabl
 Telemetry can be disabled at any time by setting one of these environment variables before running the CLI or plugin host:
 
 ```bash
-export OMO_SEND_ANONYMOUS_TELEMETRY=0
+export OMX_SEND_ANONYMOUS_TELEMETRY=0
 # or
-export OMO_DISABLE_POSTHOG=1
+export OMX_DISABLE_POSTHOG=1
 ```
 
 When telemetry is disabled, PostHog events are not sent.

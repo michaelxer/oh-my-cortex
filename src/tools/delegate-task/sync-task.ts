@@ -153,7 +153,7 @@ export async function executeSyncTask(
       systemContent,
       toastManager,
       taskId,
-      sisyphusAgentConfig: executorCtx.sisyphusAgentConfig,
+      chiefAgentConfig: executorCtx.chiefAgentConfig,
     }
 
     let effectiveCategoryModel = categoryModel

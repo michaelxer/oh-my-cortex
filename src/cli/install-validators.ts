@@ -6,15 +6,17 @@ import type {
   InstallArgs,
   InstallConfig,
 } from "./types"
+import type { GeneratedOmxConfig } from "./model-fallback-types"
 
 export const SYMBOLS = {
-  check: color.green("[OK]"),
-  cross: color.red("[X]"),
-  arrow: color.cyan("->"),
-  bullet: color.dim("*"),
-  info: color.blue("[i]"),
-  warn: color.yellow("[!]"),
-  star: color.yellow("*"),
+  check: color.green("✓"),
+  cross: color.red("✗"),
+  arrow: color.cyan("→"),
+  bullet: color.dim("•"),
+  info: color.blue("ℹ"),
+  warn: color.yellow("⚠"),
+  star: color.yellow("★"),
+  dot: color.dim("·"),
 }
 
 const ANSI_COLOR_PATTERN = new RegExp("\u001b\\[[0-9;]*m", "g")
@@ -26,30 +28,138 @@ function formatProvider(name: string, enabled: boolean, detail?: string): string
   return `  ${status} ${label}${suffix}`
 }
 
+const AGENT_ROLES: Record<string, string> = {
+  chief: "Main orchestrator — plans, delegates, challenges",
+  founder: "Autonomous deep worker — goal in, result out",
+  thinker: "All-domain consultant — read-only reasoning",
+  researcher: "Knowledge finder — docs, examples, best practices",
+  tracker: "Codebase explorer — fast file and pattern search",
+  planner: "Strategic interviewer — questions first, plan second",
+  reviewer: "Gap finder — catches what Planner missed",
+  critic: "Quality gate — validates plans before execution",
+  lead: "Project manager — delegates tasks to Workers",
+  worker: "Task executor — focused, disciplined, scoped",
+  spotter: "Visual analyst — images, PDFs, diagrams",
+}
+
+const AGENT_ORDER = [
+  "chief", "founder", "thinker", "researcher", "tracker",
+  "planner", "reviewer", "critic", "lead", "worker", "spotter",
+]
+
+function extractModelShortName(modelId: string): string {
+  const parts = modelId.split("/")
+  return parts.length > 1 ? parts[1] : modelId
+}
+
+function padRight(text: string, width: number): string {
+  const stripped = text.replace(ANSI_COLOR_PATTERN, "")
+  const padding = Math.max(0, width - stripped.length)
+  return text + " ".repeat(padding)
+}
+
 export function formatConfigSummary(config: InstallConfig): string {
   const lines: string[] = []
 
-  lines.push(color.bold(color.white("Configuration Summary")))
+  lines.push(color.bold(color.white("Your Providers")))
   lines.push("")
 
   const claudeDetail = config.hasClaude ? (config.isMax20 ? "max20" : "standard") : undefined
   lines.push(formatProvider("Claude", config.hasClaude, claudeDetail))
-  lines.push(formatProvider("OpenAI/ChatGPT", config.hasOpenAI, "GPT-5.4 for Oracle"))
+  lines.push(formatProvider("OpenAI / ChatGPT", config.hasOpenAI))
   lines.push(formatProvider("Gemini", config.hasGemini))
-  lines.push(formatProvider("GitHub Copilot", config.hasCopilot, "fallback"))
-  lines.push(formatProvider("OpenCode Zen", config.hasOpencodeZen, "opencode/ models"))
-  lines.push(formatProvider("Z.ai Coding Plan", config.hasZaiCodingPlan, "Librarian/Multimodal"))
-  lines.push(formatProvider("Kimi For Coding", config.hasKimiForCoding, "Sisyphus/Prometheus fallback"))
-  lines.push(formatProvider("Vercel AI Gateway", config.hasVercelAiGateway, "universal proxy"))
+  lines.push(formatProvider("GitHub Copilot", config.hasCopilot))
+  lines.push(formatProvider("OpenCode Zen", config.hasOpencodeZen))
+  lines.push(formatProvider("Z.ai Coding Plan", config.hasZaiCodingPlan))
+  lines.push(formatProvider("Kimi For Coding", config.hasKimiForCoding))
+  lines.push(formatProvider("OpenCode Go", config.hasOpencodeGo))
+  lines.push(formatProvider("Vercel AI Gateway", config.hasVercelAiGateway))
+
+  return lines.join("\n")
+}
+
+export function formatAgentModelTable(generatedConfig: GeneratedOmxConfig): string {
+  const lines: string[] = []
+
+  lines.push(color.bold(color.white("Your OMX Team")))
+  lines.push("")
+  lines.push(
+    `  ${padRight(color.bold(color.white("Agent")), 22)}` +
+    `${padRight(color.bold(color.white("Model")), 28)}` +
+    `${color.bold(color.white("Role"))}`,
+  )
+  lines.push(`  ${color.dim("─".repeat(70))}`)
+
+  for (const agentKey of AGENT_ORDER) {
+    const agentConfig = generatedConfig.agents?.[agentKey]
+    const model = agentConfig?.model
+      ? extractModelShortName(agentConfig.model)
+      : color.dim("(fallback)")
+    const variant = agentConfig?.variant ? color.dim(` ${agentConfig.variant}`) : ""
+    const role = AGENT_ROLES[agentKey] ?? ""
+    const isPrimary = agentKey === "chief" || agentKey === "founder"
+    const agentLabel = isPrimary
+      ? color.bold(color.cyan(agentKey.charAt(0).toUpperCase() + agentKey.slice(1)))
+      : color.white(agentKey.charAt(0).toUpperCase() + agentKey.slice(1))
+    const badge = isPrimary ? color.cyan(" ★") : "  "
+
+    lines.push(
+      `  ${padRight(`${badge}${agentLabel}`, 22)}` +
+      `${padRight(`${color.green(model)}${variant}`, 28)}` +
+      `${color.dim(role)}`,
+    )
+  }
 
   lines.push("")
-  lines.push(color.dim("─".repeat(40)))
-  lines.push("")
+  lines.push(`  ${SYMBOLS.info} ${color.cyan("★")} = primary agent ${color.dim("(selectable via Tab)")}`)
+  lines.push(`  ${SYMBOLS.info} Others are subagents ${color.dim("(called automatically by Chief)")}`)
 
-  lines.push(color.bold(color.white("Model Assignment")))
+  return lines.join("\n")
+}
+
+export function formatGettingStarted(): string {
+  const lines: string[] = []
+
+  lines.push(color.bold(color.white("Getting Started")))
   lines.push("")
-  lines.push(`  ${SYMBOLS.info} Models auto-configured based on provider priority`)
-  lines.push(`  ${SYMBOLS.bullet} Priority: Native > Copilot > OpenCode Zen > Z.ai`)
+  lines.push(`  ${SYMBOLS.bullet} Switch to ${color.cyan("Chief")} via ${color.bold("Tab")} to begin`)
+  lines.push(`  ${SYMBOLS.bullet} Type ${color.cyan("deepwork")} or ${color.cyan("dw")} for full autonomous mode`)
+  lines.push("")
+  lines.push(color.bold(color.white("  OMX works beyond code:")))
+  lines.push(`    ${SYMBOLS.bullet} Business strategy and decision analysis`)
+  lines.push(`    ${SYMBOLS.bullet} Sensitive communication drafting`)
+  lines.push(`    ${SYMBOLS.bullet} Risk assessment and crisis planning`)
+  lines.push(`    ${SYMBOLS.bullet} Research synthesis and evidence review`)
+  lines.push(`    ${SYMBOLS.bullet} Coaching, mentoring, and reflection`)
+
+  return lines.join("\n")
+}
+
+export function formatCommands(): string {
+  const lines: string[] = []
+
+  lines.push(color.bold(color.white("Useful Commands")))
+  lines.push("")
+  lines.push(`  ${color.cyan("/deepwork")} or ${color.cyan("/dw")}       Full activation — all agents, max intensity`)
+  lines.push(`  ${color.cyan("/dw-loop")}              Cortex loop — runs until 100% done`)
+  lines.push(`  ${color.cyan("/challenge [1-4]")}      Set challenge level (1=nudge 4=red-team)`)
+  lines.push(`  ${color.cyan("/checkpoint")}           Force a conversation summary`)
+  lines.push(`  ${color.cyan("/lens [domain]")}        Activate domain lens (health, legal, etc.)`)
+  lines.push(`  ${color.cyan("/decide")}               Structured decision framework`)
+  lines.push(`  ${color.cyan("/start-work")}           Execute from a Planner plan`)
+  lines.push(`  ${color.cyan("/cancel-cortex")}        Stop the cortex loop`)
+
+  return lines.join("\n")
+}
+
+export function formatCoexistenceNote(): string {
+  const lines: string[] = []
+
+  lines.push(color.bold(color.white("Coexistence")))
+  lines.push("")
+  lines.push(`  OMX runs safely alongside OmO and OMC.`)
+  lines.push(`  Use ${color.cyan("Chief")} for general work, ${color.cyan("Sisyphus")}/${color.cyan("Captain")} for coding.`)
+  lines.push(`  Agents stay in their own lane — no cross-contamination.`)
 
   return lines.join("\n")
 }
@@ -57,7 +167,7 @@ export function formatConfigSummary(config: InstallConfig): string {
 export function printHeader(isUpdate: boolean): void {
   const mode = isUpdate ? "Update" : "Install"
   console.log()
-  console.log(color.bgMagenta(color.white(` oMoMoMoMo... ${mode} `)))
+  console.log(color.bgCyan(color.white(color.bold(` OMX — oh-my-cortex ${mode} `))))
   console.log()
 }
 

@@ -15,11 +15,11 @@ const _realLogger = require("../../shared/logger")
 async function importFreshCacheModule(): Promise<typeof import("../auto-update-checker/cache")> {
   mock.module("../auto-update-checker/constants", () => ({
     CACHE_DIR: TEST_OPENCODE_CACHE_DIR,
-    PACKAGE_NAME: "oh-my-opencode",
-    NPM_REGISTRY_URL: "https://registry.npmjs.org/-/package/oh-my-opencode/dist-tags",
+    PACKAGE_NAME: "oh-my-cortex",
+    NPM_REGISTRY_URL: "https://registry.npmjs.org/-/package/oh-my-cortex/dist-tags",
     NPM_FETCH_TIMEOUT: 5000,
     VERSION_FILE: join(TEST_OPENCODE_CACHE_DIR, "version"),
-    INSTALLED_PACKAGE_JSON: join(TEST_OPENCODE_CACHE_DIR, "node_modules", "oh-my-opencode", "package.json"),
+    INSTALLED_PACKAGE_JSON: join(TEST_OPENCODE_CACHE_DIR, "node_modules", "oh-my-cortex", "package.json"),
     getUserConfigDir: () => TEST_USER_CONFIG_DIR,
     getUserOpencodeConfig: () => join(TEST_USER_CONFIG_DIR, "opencode.json"),
     getUserOpencodeConfigJsonc: () => join(TEST_USER_CONFIG_DIR, "opencode.jsonc"),
@@ -40,10 +40,10 @@ function resetTestCache(): void {
     rmSync(TEST_CACHE_DIR, { recursive: true, force: true })
   }
 
-  mkdirSync(join(TEST_OPENCODE_CACHE_DIR, "node_modules", "oh-my-opencode"), { recursive: true })
+  mkdirSync(join(TEST_OPENCODE_CACHE_DIR, "node_modules", "oh-my-cortex"), { recursive: true })
   writeFileSync(
     join(TEST_OPENCODE_CACHE_DIR, "package.json"),
-    JSON.stringify({ dependencies: { "oh-my-opencode": "latest", other: "1.0.0" } }, null, 2)
+    JSON.stringify({ dependencies: { "oh-my-cortex": "latest", other: "1.0.0" } }, null, 2)
   )
   writeFileSync(
     join(TEST_OPENCODE_CACHE_DIR, "bun.lock"),
@@ -51,11 +51,11 @@ function resetTestCache(): void {
       {
         workspaces: {
           "": {
-            dependencies: { "oh-my-opencode": "latest", other: "1.0.0" },
+            dependencies: { "oh-my-cortex": "latest", other: "1.0.0" },
           },
         },
         packages: {
-          "oh-my-opencode": {},
+          "oh-my-cortex": {},
           other: {},
         },
       },
@@ -64,8 +64,8 @@ function resetTestCache(): void {
     )
   )
   writeFileSync(
-    join(TEST_OPENCODE_CACHE_DIR, "node_modules", "oh-my-opencode", "package.json"),
-    '{"name":"oh-my-opencode"}'
+    join(TEST_OPENCODE_CACHE_DIR, "node_modules", "oh-my-cortex", "package.json"),
+    '{"name":"oh-my-cortex"}'
   )
 }
 
@@ -86,21 +86,21 @@ describe("invalidatePackage", () => {
     const result = invalidatePackage()
 
     expect(result).toBe(true)
-    expect(existsSync(join(TEST_OPENCODE_CACHE_DIR, "node_modules", "oh-my-opencode"))).toBe(false)
+    expect(existsSync(join(TEST_OPENCODE_CACHE_DIR, "node_modules", "oh-my-cortex"))).toBe(false)
 
     const packageJson = JSON.parse(readFileSync(join(TEST_OPENCODE_CACHE_DIR, "package.json"), "utf-8")) as {
       dependencies?: Record<string, string>
     }
-    expect(packageJson.dependencies?.["oh-my-opencode"]).toBe("latest")
+    expect(packageJson.dependencies?.["oh-my-cortex"]).toBe("latest")
     expect(packageJson.dependencies?.other).toBe("1.0.0")
 
     const bunLock = JSON.parse(readFileSync(join(TEST_OPENCODE_CACHE_DIR, "bun.lock"), "utf-8")) as {
       workspaces?: { ""?: { dependencies?: Record<string, string> } }
       packages?: Record<string, unknown>
     }
-    expect(bunLock.workspaces?.[""]?.dependencies?.["oh-my-opencode"]).toBe("latest")
+    expect(bunLock.workspaces?.[""]?.dependencies?.["oh-my-cortex"]).toBe("latest")
     expect(bunLock.workspaces?.[""]?.dependencies?.other).toBe("1.0.0")
-    expect(bunLock.packages?.["oh-my-opencode"]).toBeUndefined()
+    expect(bunLock.packages?.["oh-my-cortex"]).toBeUndefined()
     expect(bunLock.packages?.other).toEqual({})
   })
 })

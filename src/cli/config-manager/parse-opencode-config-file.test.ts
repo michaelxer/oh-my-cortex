@@ -16,23 +16,23 @@ describe("parseOpenCodeConfigFileWithError", () => {
 
   test("#given a valid object config #when parsing the file #then it returns the parsed config", () => {
     // given
-    const directory = mkdtempSync(join(tmpdir(), "omo-parse-config-"))
+    const directory = mkdtempSync(join(tmpdir(), "omx-parse-config-"))
     tempDirectories.push(directory)
     const filePath = join(directory, "opencode.json")
-    writeFileSync(filePath, '{"plugin": ["oh-my-openagent"]}\n', "utf-8")
+    writeFileSync(filePath, '{"plugin": ["oh-my-cortex"]}\n', "utf-8")
 
     // when
     const result = parseOpenCodeConfigFileWithError(filePath)
 
     // then
     expect(result).toEqual({
-      config: { plugin: ["oh-my-openagent"] },
+      config: { plugin: ["oh-my-cortex"] },
     })
   })
 
   test("#given a null config payload #when parsing the file #then it returns a null parse error", () => {
     // given
-    const directory = mkdtempSync(join(tmpdir(), "omo-parse-config-"))
+    const directory = mkdtempSync(join(tmpdir(), "omx-parse-config-"))
     tempDirectories.push(directory)
     const filePath = join(directory, "opencode.json")
     writeFileSync(filePath, "null\n", "utf-8")

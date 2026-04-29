@@ -42,9 +42,9 @@ function createDelegateTask(...args: Parameters<typeof import("./tools").createD
 		//#then
 		expect(description).toContain("subagent_type: Use specific agent directly")
 		expect(description).toContain("task_id: Existing task to continue")
-		expect(description).not.toContain("sisyphus")
-		expect(description).not.toContain("hephaestus")
-		expect(description).not.toContain("prometheus")
+		expect(description).not.toContain("chief")
+		expect(description).not.toContain("founder")
+		expect(description).not.toContain("planner")
 	})
 })
 

@@ -6,8 +6,8 @@ describe("executeBackgroundContinuation - subagent metadata", () => {
     const mockManager = {
       resume: async () => ({
         id: "bg_task_001",
-        description: "oracle consultation",
-        agent: "oracle",
+        description: "thinker consultation",
+        agent: "thinker",
         status: "running",
         sessionID: "ses_resumed_123",
       }),
@@ -26,13 +26,13 @@ describe("executeBackgroundContinuation - subagent metadata", () => {
     const parentContext = {
       sessionID: "parent-session",
       messageID: "msg-parent",
-      agent: "sisyphus",
+      agent: "chief",
     }
 
     const args = {
       task_id: "ses_resumed_123",
       prompt: "continue working",
-      description: "resume oracle",
+      description: "resume thinker",
       load_skills: [],
       run_in_background: true,
     }
@@ -43,7 +43,7 @@ describe("executeBackgroundContinuation - subagent metadata", () => {
 
     //#then - task_metadata should contain subagent field
     expect(result).toContain("<task_metadata>")
-    expect(result).toContain("subagent: oracle")
+    expect(result).toContain("subagent: thinker")
     expect(result).toContain("session_id: ses_resumed_123")
   })
 
@@ -72,7 +72,7 @@ describe("executeBackgroundContinuation - subagent metadata", () => {
     const parentContext = {
       sessionID: "parent-session",
       messageID: "msg-parent",
-      agent: "sisyphus",
+      agent: "chief",
     }
 
     const args = {

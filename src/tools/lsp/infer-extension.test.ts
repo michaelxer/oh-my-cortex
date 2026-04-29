@@ -9,7 +9,7 @@ describe("inferExtensionFromDirectory", () => {
   let tmpDir: string
 
   beforeEach(() => {
-    tmpDir = mkdtempSync(join(os.tmpdir(), "omo-infer-ext-"))
+    tmpDir = mkdtempSync(join(os.tmpdir(), "omx-infer-ext-"))
   })
 
   afterEach(() => {

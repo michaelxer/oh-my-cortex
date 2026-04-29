@@ -7,7 +7,7 @@ import { clearPendingStore, consumeToolMetadata } from "../../features/tool-meta
 import type { BackgroundOutputClient, BackgroundOutputManager } from "./clients"
 import { createBackgroundOutput } from "./create-background-output"
 
-const projectDir = "/Users/yeongyu/local-workspaces/oh-my-opencode"
+const projectDir = "/Users/yeongyu/local-workspaces/oh-my-cortex"
 
 type ToolContextWithCallID = ToolContext & {
   callID: string

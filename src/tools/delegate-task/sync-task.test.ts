@@ -490,7 +490,7 @@ describe("executeSyncTask - cleanup on error paths", () => {
 
     const result = await executeSyncTask(args, mockCtx, mockExecutorCtx, {
       sessionID: "parent-session",
-    }, "sisyphus-junior", initialModel, undefined, undefined, fallbackChain, deps)
+    }, "worker", initialModel, undefined, undefined, fallbackChain, deps)
 
     expect(createdSessions).toEqual(["ses_first", "ses_second"])
     expect(polledSessions).toEqual(["ses_first", "ses_second"])
@@ -575,7 +575,7 @@ describe("executeSyncTask - cleanup on error paths", () => {
 
     const result = await executeSyncTask(args, mockCtx, mockExecutorCtx, {
       sessionID: "parent-session",
-    }, "sisyphus-junior", initialModel, undefined, undefined, fallbackChain, deps)
+    }, "worker", initialModel, undefined, undefined, fallbackChain, deps)
 
     expect(result).toContain("Result from ses_second")
     expect(onSyncSessionCreated.mock.calls.map((call: any[]) => call[0])).toEqual([
@@ -649,7 +649,7 @@ describe("executeSyncTask - cleanup on error paths", () => {
 
     const result = await executeSyncTask(args, mockCtx, mockExecutorCtx, {
       sessionID: "parent-session",
-    }, "sisyphus-junior", initialModel, undefined, undefined, fallbackChain, deps)
+    }, "worker", initialModel, undefined, undefined, fallbackChain, deps)
 
     expect(result).toBe("Final retry failed")
     const finalMetadata = metadataCalls.at(-1)

@@ -119,7 +119,7 @@ Verify zero consumer files need changes:
 | `delegate-task/sync-continuation.ts` | `./constants` | Yes (barrel) |
 | `delegate-task/sync-prompt-sender.ts` | `./constants` | Yes (barrel) |
 | `delegate-task/index.ts` | `./constants` | Yes (barrel) |
-| `agents/atlas/prompt-section-builder.ts` | `../../tools/delegate-task/constants` | Yes (barrel) |
+| `agents/lead/prompt-section-builder.ts` | `../../tools/delegate-task/constants` | Yes (barrel) |
 | `agents/builtin-agents.ts` | `../tools/delegate-task/constants` | Yes (barrel) |
 | `plugin/available-categories.ts` | `../tools/delegate-task/constants` | Yes (barrel) |
 | `plugin-handlers/category-config-resolver.ts` | `../tools/delegate-task/constants` | Yes (barrel) |

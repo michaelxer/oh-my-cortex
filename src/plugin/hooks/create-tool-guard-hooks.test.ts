@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, spyOn } from "bun:test"
-import type { OhMyOpenCodeConfig } from "../../config"
+import type { OhMyCortexConfig } from "../../config"
 import type { ModelCacheState } from "../../plugin-state"
 import type { PluginContext } from "../types"
 import * as hooks from "../../hooks"
@@ -32,7 +32,7 @@ describe("createToolGuardHooks", () => {
       claude_code: {
         hooks: false,
       },
-    } as OhMyOpenCodeConfig
+    } as OhMyCortexConfig
     const { createToolGuardHooks } = require("./create-tool-guard-hooks")
 
     // when

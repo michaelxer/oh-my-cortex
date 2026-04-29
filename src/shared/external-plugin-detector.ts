@@ -1,5 +1,5 @@
 /**
- * Detects external plugins that may conflict with oh-my-opencode features.
+ * Detects external plugins that may conflict with oh-my-cortex features.
  * Used to prevent crashes from concurrent notification plugins.
  */
 
@@ -8,7 +8,7 @@ import { log } from "./logger"
 import { CONFIG_BASENAME, PLUGIN_NAME } from "./plugin-identity"
 
 /**
- * Known notification plugins that conflict with oh-my-opencode's session-notification.
+ * Known notification plugins that conflict with oh-my-cortex's session-notification.
  * Both plugins listen to session.idle and send notifications simultaneously,
  * which can cause crashes on Windows due to resource contention.
  */
@@ -19,7 +19,7 @@ const KNOWN_NOTIFICATION_PLUGINS = [
 ]
 
 /**
- * Known skill plugins that conflict with oh-my-opencode's skill loading.
+ * Known skill plugins that conflict with oh-my-cortex's skill loading.
  * Both plugins scan ~/.config/opencode/skills/ and register tools independently,
  * causing "Duplicate tool names detected" warnings and HTTP 400 errors.
  */

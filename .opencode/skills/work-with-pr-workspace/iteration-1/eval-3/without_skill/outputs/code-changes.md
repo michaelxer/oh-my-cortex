@@ -71,7 +71,7 @@ You are working on WRITING / PROSE tasks.
 </Category_Context>`
 
 export const DEEP_CATEGORY_PROMPT_APPEND = `<Category_Context>
-You are working on GOAL-ORIENTED AUTONOMOUS tasks.
+You are working on GOAL-ORIENTED AUTONOMXUS tasks.
 ...
 </Category_Context>`
 
@@ -186,10 +186,10 @@ export function isPlanAgent(agentName: string | undefined): boolean {
 }
 
 /**
- * Plan family: plan + prometheus. Shares mutual delegation blocking and task tool permission.
+ * Plan family: plan + planner. Shares mutual delegation blocking and task tool permission.
  * Does NOT share system prompt (only isPlanAgent controls that).
  */
-export const PLAN_FAMILY_NAMES = ["plan", "prometheus"]
+export const PLAN_FAMILY_NAMES = ["plan", "planner"]
 
 /**
  * Check if the given agent belongs to the plan family (blocking + task permission).

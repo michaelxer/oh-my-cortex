@@ -64,8 +64,8 @@ describe("task history cleanup", () => {
   test("#given TaskHistory with entries for multiple parents #when clearSession called for one parent #then only that parent's entries are removed, others remain", () => {
     // given
     const history = new TaskHistory()
-    history.record("parent-1", { id: "task-1", agent: "explore", description: "task 1", status: "pending" })
-    history.record("parent-2", { id: "task-2", agent: "oracle", description: "task 2", status: "running" })
+    history.record("parent-1", { id: "task-1", agent: "tracker", description: "task 1", status: "pending" })
+    history.record("parent-2", { id: "task-2", agent: "thinker", description: "task 2", status: "running" })
 
     // when
     history.clearSession("parent-1")
@@ -78,8 +78,8 @@ describe("task history cleanup", () => {
   test("#given TaskHistory with entries for multiple parents #when clearAll called #then all entries are removed", () => {
     // given
     const history = new TaskHistory()
-    history.record("parent-1", { id: "task-1", agent: "explore", description: "task 1", status: "pending" })
-    history.record("parent-2", { id: "task-2", agent: "oracle", description: "task 2", status: "running" })
+    history.record("parent-1", { id: "task-1", agent: "tracker", description: "task 1", status: "pending" })
+    history.record("parent-2", { id: "task-2", agent: "thinker", description: "task 2", status: "running" })
 
     // when
     history.clearAll()
@@ -93,7 +93,7 @@ describe("task history cleanup", () => {
     // given
     const manager = createManager()
     managerUnderTest = manager
-    manager.taskHistory.record("parent-1", { id: "task-1", agent: "explore", description: "task 1", status: "pending" })
+    manager.taskHistory.record("parent-1", { id: "task-1", agent: "tracker", description: "task 1", status: "pending" })
 
     let clearAllCalls = 0
     const originalClearAll = manager.taskHistory.clearAll.bind(manager.taskHistory)

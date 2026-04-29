@@ -1,39 +1,39 @@
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/dev/assets/oh-my-opencode.schema.json",
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-cortex/dev/assets/oh-my-cortex.schema.json",
 
   // Optimized for strategic planning, architecture, and complex project design.
   // Prioritizes deep thinking agents and thorough analysis before execution.
 
   "agents": {
     // Orchestrator: delegates to planning agents first
-    "sisyphus": {
+    "chief": {
       "model": "anthropic/claude-opus-4-7",
       "ultrawork": { "model": "anthropic/claude-opus-4-7", "variant": "max" },
-      "prompt_append": "Always consult prometheus and atlas for planning. Never rush to implementation.",
+      "prompt_append": "Always consult planner and lead for planning. Never rush to implementation.",
     },
 
     // Implementation: uses planning outputs
-    "hephaestus": {
+    "founder": {
       "model": "openai/gpt-5.4",
       "prompt_append": "Follow established plans precisely. Ask for clarification when plans are ambiguous.",
     },
 
     // Primary planner: deep interview mode
-    "prometheus": {
+    "planner": {
       "model": "anthropic/claude-opus-4-7",
       "thinking": { "type": "enabled", "budgetTokens": 160000 },
       "prompt_append": "Interview extensively. Question assumptions. Build exhaustive plans with milestones, risks, and contingencies. Use deep & quick agents heavily in parallel for research.",
     },
 
     // Architecture consultant
-    "oracle": {
+    "thinker": {
       "model": "openai/gpt-5.4",
       "variant": "xhigh",
       "thinking": { "type": "enabled", "budgetTokens": 120000 },
     },
 
     // Research and documentation
-    "librarian": { "model": "google/gemini-3-flash" },
+    "researcher": { "model": "google/gemini-3-flash" },
 
     // Exploration for research phase
     "explore": { "model": "github-copilot/grok-code-fast-1" },
@@ -42,24 +42,24 @@
     "multimodal-looker": { "model": "google/gemini-3.1-pro", "variant": "high" },
 
     // Plan review and refinement: heavily utilized
-    "metis": {
+    "reviewer": {
       "model": "anthropic/claude-opus-4-7",
       "prompt_append": "Critically evaluate plans. Identify gaps, risks, and improvements. Be thorough.",
     },
 
     // Critic: challenges assumptions
-    "momus": {
+    "critic": {
       "model": "openai/gpt-5.4",
       "prompt_append": "Challenge all assumptions in plans. Look for edge cases, failure modes, and overlooked requirements.",
     },
 
     // Long-running planning sessions
-    "atlas": {
+    "lead": {
       "prompt_append": "Preserve context across long planning sessions. Track evolving decisions.",
     },
 
     // Quick research tasks
-    "sisyphus-junior": { "model": "opencode/gpt-5-nano" },
+    "worker": { "model": "opencode/gpt-5-nano" },
   },
 
   "categories": {
@@ -103,7 +103,7 @@
     },
   },
 
-  "sisyphus_agent": {
+  "chief_agent": {
     "planner_enabled": true,
     "replace_plan": true,
   },

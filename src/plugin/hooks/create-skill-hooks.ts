@@ -1,5 +1,5 @@
 import type { AvailableSkill } from "../../agents/dynamic-agent-prompt-builder"
-import type { HookName, OhMyOpenCodeConfig } from "../../config"
+import type { HookName, OhMyCortexConfig } from "../../config"
 import type { LoadedSkill } from "../../features/opencode-skill-loader/types"
 import type { PluginContext } from "../types"
 
@@ -13,7 +13,7 @@ export type SkillHooks = {
 
 export function createSkillHooks(args: {
   ctx: PluginContext
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   isHookEnabled: (hookName: HookName) => boolean
   safeHookEnabled: boolean
   mergedSkills: LoadedSkill[]

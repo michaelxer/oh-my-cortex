@@ -3,16 +3,16 @@ import type { BuiltinAgentName, AgentOverrides, AgentFactory, AgentPromptMetadat
 import type { CategoriesConfig, GitMasterConfig } from "../config/schema"
 import type { LoadedSkill } from "../features/opencode-skill-loader/types"
 import type { BrowserAutomationProvider } from "../config/schema"
-import { createSisyphusAgent } from "./sisyphus"
-import { createOracleAgent, ORACLE_PROMPT_METADATA } from "./oracle"
-import { createLibrarianAgent, LIBRARIAN_PROMPT_METADATA } from "./librarian"
-import { createExploreAgent, EXPLORE_PROMPT_METADATA } from "./explore"
-import { createMultimodalLookerAgent, MULTIMODAL_LOOKER_PROMPT_METADATA } from "./multimodal-looker"
-import { createMetisAgent, metisPromptMetadata } from "./metis"
-import { createAtlasAgent, atlasPromptMetadata } from "./atlas"
-import { createMomusAgent, momusPromptMetadata } from "./momus"
-import { createHephaestusAgent } from "./hephaestus"
-import { createSisyphusJuniorAgentWithOverrides } from "./sisyphus-junior"
+import { createChiefAgent } from "./chief"
+import { createThinkerAgent, THINKER_PROMPT_METADATA } from "./thinker"
+import { createResearcherAgent, RESEARCHER_PROMPT_METADATA } from "./researcher"
+import { createExploreAgent, EXPLORE_PROMPT_METADATA } from "./tracker"
+import { createSpotterAgent, SPOTTER_PROMPT_METADATA } from "./spotter"
+import { createReviewerAgent, reviewerPromptMetadata } from "./reviewer"
+import { createLeadAgent, leadPromptMetadata } from "./lead"
+import { createCriticAgent, criticPromptMetadata } from "./critic"
+import { createFounderAgent } from "./founder"
+import { createWorkerAgentWithOverrides } from "./worker"
 import type { AvailableCategory } from "./dynamic-agent-prompt-builder"
 import {
   fetchAvailableModels,
@@ -23,39 +23,39 @@ import { CATEGORY_DESCRIPTIONS } from "../tools/delegate-task/constants"
 import { mergeCategories } from "../shared/merge-categories"
 import { buildAvailableSkills } from "./builtin-agents/available-skills"
 import { collectPendingBuiltinAgents } from "./builtin-agents/general-agents"
-import { maybeCreateSisyphusConfig } from "./builtin-agents/sisyphus-agent"
-import { maybeCreateHephaestusConfig } from "./builtin-agents/hephaestus-agent"
-import { maybeCreateAtlasConfig } from "./builtin-agents/atlas-agent"
+import { maybeCreateChiefConfig } from "./builtin-agents/chief-agent"
+import { maybeCreateFounderConfig } from "./builtin-agents/founder-agent"
+import { maybeCreateLeadConfig } from "./builtin-agents/lead-agent"
 
 type AgentSource = AgentFactory | AgentConfig
 
-const agentSources: Record<BuiltinAgentName, AgentSource> = {
-  sisyphus: createSisyphusAgent,
-  hephaestus: createHephaestusAgent,
-  oracle: createOracleAgent,
-  librarian: createLibrarianAgent,
-  explore: createExploreAgent,
-  "multimodal-looker": createMultimodalLookerAgent,
-  metis: createMetisAgent,
-  momus: createMomusAgent,
-  // Note: Atlas is handled specially in createBuiltinAgents()
+const agentSources: Partial<Record<BuiltinAgentName, AgentSource>> = {
+  chief: createChiefAgent,
+  founder: createFounderAgent,
+  thinker: createThinkerAgent,
+  researcher: createResearcherAgent,
+  tracker: createExploreAgent,
+  "spotter": createSpotterAgent,
+  reviewer: createReviewerAgent,
+  critic: createCriticAgent,
+  // Note: Lead is handled specially in createBuiltinAgents()
   // because it needs OrchestratorContext, not just a model string
-  atlas: createAtlasAgent as AgentFactory,
-  "sisyphus-junior": createSisyphusJuniorAgentWithOverrides as unknown as AgentFactory,
+  lead: createLeadAgent as AgentFactory,
+  "worker": createWorkerAgentWithOverrides as unknown as AgentFactory,
 }
 
 /**
- * Metadata for each agent, used to build Sisyphus's dynamic prompt sections
+ * Metadata for each agent, used to build Chief's dynamic prompt sections
  * (Delegation Table, Tool Selection, Key Triggers, etc.)
  */
 const agentMetadata: Partial<Record<BuiltinAgentName, AgentPromptMetadata>> = {
-  oracle: ORACLE_PROMPT_METADATA,
-  librarian: LIBRARIAN_PROMPT_METADATA,
-  explore: EXPLORE_PROMPT_METADATA,
-  "multimodal-looker": MULTIMODAL_LOOKER_PROMPT_METADATA,
-  metis: metisPromptMetadata,
-  momus: momusPromptMetadata,
-  atlas: atlasPromptMetadata,
+  thinker: THINKER_PROMPT_METADATA,
+  researcher: RESEARCHER_PROMPT_METADATA,
+  tracker: EXPLORE_PROMPT_METADATA,
+  "spotter": SPOTTER_PROMPT_METADATA,
+  reviewer: reviewerPromptMetadata,
+  critic: criticPromptMetadata,
+  lead: leadPromptMetadata,
 }
 
 export async function createBuiltinAgents(
@@ -71,7 +71,7 @@ export async function createBuiltinAgents(
   uiSelectedModel?: string,
   disabledSkills?: Set<string>,
   useTaskSystem = false,
-  disableOmoEnv = false
+  disableCortexEnv = false
 ): Promise<Record<string, AgentConfig>> {
 
   const connectedProviders = readConnectedProvidersCache()
@@ -83,7 +83,7 @@ export async function createBuiltinAgents(
   )
   // IMPORTANT: Do NOT call OpenCode client APIs during plugin initialization.
   // This function is called from config handler, and calling client API causes deadlock.
-  // See: https://github.com/code-yeongyu/oh-my-openagent/issues/1301
+  // See: https://github.com/michaelxer/oh-my-cortex/issues/1301
   const availableModels = await fetchAvailableModels(undefined, {
     connectedProviders: mergedConnectedProviders.length > 0 ? mergedConnectedProviders : undefined,
   })
@@ -116,10 +116,10 @@ export async function createBuiltinAgents(
     availableModels,
     isFirstRunNoCache,
     disabledSkills,
-    disableOmoEnv,
+    disableCortexEnv,
   })
 
-  const sisyphusConfig = maybeCreateSisyphusConfig({
+  const chiefConfig = maybeCreateChiefConfig({
     disabledAgents,
     agentOverrides,
     uiSelectedModel,
@@ -133,13 +133,13 @@ export async function createBuiltinAgents(
     directory,
     userCategories: categories,
     useTaskSystem,
-    disableOmoEnv,
+    disableCortexEnv,
   })
-  if (sisyphusConfig) {
-    result["sisyphus"] = sisyphusConfig
+  if (chiefConfig) {
+    result["chief"] = chiefConfig
   }
 
-  const hephaestusConfig = maybeCreateHephaestusConfig({
+  const founderConfig = maybeCreateFounderConfig({
     disabledAgents,
     agentOverrides,
     availableModels,
@@ -151,18 +151,18 @@ export async function createBuiltinAgents(
     mergedCategories,
     directory,
     useTaskSystem,
-    disableOmoEnv,
+    disableCortexEnv,
   })
-  if (hephaestusConfig) {
-    result["hephaestus"] = hephaestusConfig
+  if (founderConfig) {
+    result["founder"] = founderConfig
   }
 
-  // Add pending agents after sisyphus and hephaestus to maintain order
+  // Add pending agents after chief and founder to maintain order
   for (const [name, config] of pendingAgentConfigs) {
     result[name] = config
   }
 
-  const atlasConfig = maybeCreateAtlasConfig({
+  const leadConfig = maybeCreateLeadConfig({
     disabledAgents,
     agentOverrides,
     uiSelectedModel,
@@ -174,8 +174,8 @@ export async function createBuiltinAgents(
     directory,
     userCategories: categories,
   })
-  if (atlasConfig) {
-    result["atlas"] = atlasConfig
+  if (leadConfig) {
+    result["lead"] = leadConfig
   }
 
   return result

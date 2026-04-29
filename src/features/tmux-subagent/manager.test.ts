@@ -58,7 +58,7 @@ const mockSpawnTmuxSession = mock<(
   paneId: '%isolated-session',
 }))
 const mockKillTmuxSessionIfExists = mock<(sessionName: string) => Promise<boolean>>(async () => true)
-const mockSweepStaleOmoAgentSessions = mock<() => Promise<number>>(async () => 0)
+const mockSweepStaleCortexAgentSessions = mock<() => Promise<number>>(async () => 0)
 const mockIsInsideTmux = mock<() => boolean>(() => true)
 const mockGetCurrentPaneId = mock<() => string | undefined>(() => '%0')
 
@@ -102,8 +102,8 @@ mock.module('../../shared/tmux', () => {
     spawnTmuxWindow: mockSpawnTmuxWindow,
     spawnTmuxSession: mockSpawnTmuxSession,
     killTmuxSessionIfExists: mockKillTmuxSessionIfExists,
-    getIsolatedSessionName: (pid: number = 12345) => `omo-agents-${pid}`,
-    sweepStaleOmoAgentSessions: mockSweepStaleOmoAgentSessions,
+    getIsolatedSessionName: (pid: number = 12345) => `omx-agents-${pid}`,
+    sweepStaleCortexAgentSessions: mockSweepStaleCortexAgentSessions,
   }
 })
 
@@ -440,7 +440,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 100,
               top: 0,
-              title: 'omo-subagent-Task 1',
+              title: 'omx-subagent-Task 1',
               isActive: false,
             },
           ],
@@ -681,7 +681,7 @@ describe('TmuxSessionManager', () => {
               height: 11,
               left: 80,
               top: 0,
-              title: 'omo-subagent-Task 1',
+              title: 'omx-subagent-Task 1',
               isActive: false,
             },
           ],
@@ -1177,7 +1177,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 100,
               top: 0,
-              title: 'omo-subagent-Timeout Task',
+              title: 'omx-subagent-Timeout Task',
               isActive: false,
             },
           ],
@@ -1223,7 +1223,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 100,
               top: 0,
-              title: 'omo-subagent-Task',
+              title: 'omx-subagent-Task',
               isActive: false,
             },
           ],
@@ -1415,7 +1415,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 110,
               top: 0,
-              title: 'omo-subagent-Second Task',
+              title: 'omx-subagent-Second Task',
               isActive: false,
             },
           ],
@@ -1440,7 +1440,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 110,
               top: 0,
-              title: 'omo-subagent-Second Task',
+              title: 'omx-subagent-Second Task',
               isActive: false,
             },
           ],
@@ -1516,7 +1516,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 110,
               top: 0,
-              title: 'omo-subagent-Second Task',
+              title: 'omx-subagent-Second Task',
               isActive: false,
             },
           ],
@@ -1541,7 +1541,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 110,
               top: 0,
-              title: 'omo-subagent-Second Task',
+              title: 'omx-subagent-Second Task',
               isActive: false,
             },
           ],
@@ -1639,7 +1639,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omx-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -1664,7 +1664,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omx-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -1739,7 +1739,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omx-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -1764,7 +1764,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omx-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -1830,7 +1830,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omx-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -1947,7 +1947,7 @@ describe('TmuxSessionManager', () => {
 
       // then
       expect(mockKillTmuxSessionIfExists).toHaveBeenCalledTimes(1)
-      expect(mockKillTmuxSessionIfExists.mock.calls[0]?.[0]).toMatch(/^omo-agents-\d+$/)
+      expect(mockKillTmuxSessionIfExists.mock.calls[0]?.[0]).toMatch(/^omx-agents-\d+$/)
     })
 
     test('#given two manager instances #when both cleanup #then each kills its own isolated session name, not a shared one', async () => {
@@ -1971,8 +1971,8 @@ describe('TmuxSessionManager', () => {
       expect(mockKillTmuxSessionIfExists).toHaveBeenCalledTimes(2)
       const firstTarget = mockKillTmuxSessionIfExists.mock.calls[0]?.[0]
       const secondTarget = mockKillTmuxSessionIfExists.mock.calls[1]?.[0]
-      expect(firstTarget).toMatch(/^omo-agents-\d+$/)
-      expect(secondTarget).toMatch(/^omo-agents-\d+$/)
+      expect(firstTarget).toMatch(/^omx-agents-\d+$/)
+      expect(secondTarget).toMatch(/^omx-agents-\d+$/)
     })
 
     test('#given tmux isolation is "inline" #when cleanup runs #then killTmuxSessionIfExists is NOT invoked', async () => {
@@ -2007,10 +2007,10 @@ describe('TmuxSessionManager', () => {
       expect(mockKillTmuxSessionIfExists).toHaveBeenCalledTimes(0)
     })
 
-    test('#given sweepStaleOmoAgentSessions throws on first onSessionCreated #when second onSessionCreated fires #then sweep is retried instead of skipped forever', async () => {
+    test('#given sweepStaleCortexAgentSessions throws on first onSessionCreated #when second onSessionCreated fires #then sweep is retried instead of skipped forever', async () => {
       // given
-      mockSweepStaleOmoAgentSessions.mockClear()
-      mockSweepStaleOmoAgentSessions.mockImplementationOnce(async () => {
+      mockSweepStaleCortexAgentSessions.mockClear()
+      mockSweepStaleCortexAgentSessions.mockImplementationOnce(async () => {
         throw new Error('simulated sweep failure')
       })
       mockIsInsideTmux.mockReturnValue(true)
@@ -2025,13 +2025,13 @@ describe('TmuxSessionManager', () => {
       await manager.onSessionCreated(createSessionCreatedEvent('ses_second', 'ses_parent', 'Second'))
 
       // then
-      expect(mockSweepStaleOmoAgentSessions).toHaveBeenCalledTimes(2)
+      expect(mockSweepStaleCortexAgentSessions).toHaveBeenCalledTimes(2)
     })
 
-    test('#given sweepStaleOmoAgentSessions succeeds #when additional onSessionCreated events fire in same process #then sweep runs exactly once', async () => {
+    test('#given sweepStaleCortexAgentSessions succeeds #when additional onSessionCreated events fire in same process #then sweep runs exactly once', async () => {
       // given
-      mockSweepStaleOmoAgentSessions.mockClear()
-      mockSweepStaleOmoAgentSessions.mockImplementation(async () => 0)
+      mockSweepStaleCortexAgentSessions.mockClear()
+      mockSweepStaleCortexAgentSessions.mockImplementation(async () => 0)
       mockIsInsideTmux.mockReturnValue(true)
       const { TmuxSessionManager } = await import('./manager')
       const manager = new TmuxSessionManager(createMockContext(), createTmuxConfig({
@@ -2045,7 +2045,7 @@ describe('TmuxSessionManager', () => {
       await manager.onSessionCreated(createSessionCreatedEvent('ses_c', 'ses_parent', 'C'))
 
       // then
-      expect(mockSweepStaleOmoAgentSessions).toHaveBeenCalledTimes(1)
+      expect(mockSweepStaleCortexAgentSessions).toHaveBeenCalledTimes(1)
     })
 
     test('#given killTmuxSessionIfExists throws #when cleanup runs #then cleanup still completes without throwing', async () => {
@@ -2161,7 +2161,7 @@ describe('DecisionEngine', () => {
             height: 11,
             left: 80,
             top: 0,
-            title: 'omo-subagent-Old',
+            title: 'omx-subagent-Old',
             isActive: false,
           },
         ],

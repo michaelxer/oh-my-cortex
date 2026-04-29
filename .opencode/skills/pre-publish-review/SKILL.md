@@ -1,6 +1,6 @@
 ---
 name: pre-publish-review
-description: "Nuclear-grade 16-agent pre-publish release gate. Runs /get-unpublished-changes to detect all changes since last npm release, spawns up to 10 ultrabrain agents for deep per-change analysis, invokes /review-work (5 agents) for holistic review, and 1 oracle for overall release synthesis. Use before EVERY npm publish. Triggers: 'pre-publish review', 'review before publish', 'release review', 'pre-release review', 'ready to publish?', 'can I publish?', 'pre-publish', 'safe to publish', 'publishing review', 'pre-publish check'."
+description: "Nuclear-grade 16-agent pre-publish release gate. Runs /get-unpublished-changes to detect all changes since last npm release, spawns up to 10 ultrabrain agents for deep per-change analysis, invokes /review-work (5 agents) for holistic review, and 1 thinker for overall release synthesis. Use before EVERY npm publish. Triggers: 'pre-publish review', 'review before publish', 'release review', 'pre-release review', 'ready to publish?', 'can I publish?', 'pre-publish', 'safe to publish', 'publishing review', 'pre-publish check'."
 ---
 
 # Pre-Publish Review — 16-Agent Release Gate
@@ -11,7 +11,7 @@ Three-layer review before publishing to npm. Every layer covers a different angl
 |-------|--------|------|-----------------|
 | Per-Change Deep Dive | up to 10 | ultrabrain | Each logical change group individually — correctness, edge cases, pattern adherence |
 | Holistic Review | 5 | review-work | Goal compliance, QA execution, code quality, security, context mining across full changeset |
-| Release Synthesis | 1 | oracle | Overall release readiness, version bump, breaking changes, deployment risk |
+| Release Synthesis | 1 | thinker | Overall release readiness, version bump, breaking changes, deployment risk |
 
 ---
 
@@ -37,7 +37,7 @@ Then capture raw data needed by agent prompts:
 
 ```bash
 # Extract versions (already in /get-unpublished-changes output)
-PUBLISHED=$(npm view oh-my-opencode version 2>/dev/null || echo "not published")
+PUBLISHED=$(npm view oh-my-cortex version 2>/dev/null || echo "not published")
 LOCAL=$(node -p "require('./package.json').version" 2>/dev/null || echo "unknown")
 
 # Raw data for agents (diffs, file lists)
@@ -85,7 +85,7 @@ task(
 <review_type>PER-CHANGE DEEP ANALYSIS</review_type>
 <change_group>{GROUP_NAME}</change_group>
 
-<project>oh-my-opencode (npm package)</project>
+<project>oh-my-cortex (npm package)</project>
 <published_version>{PUBLISHED}</published_version>
 <target_version>{LOCAL}</target_version>
 
@@ -149,7 +149,7 @@ OUTPUT FORMAT:
 
 ### Layer 2: Holistic Review via /review-work (5 agents)
 
-Spawn a sub-agent that loads the `/review-work` skill. The review-work skill internally launches 5 parallel agents: Oracle (goal verification), unspecified-high (QA execution), Oracle (code quality), Oracle (security), unspecified-high (context mining). All 5 must pass for the review to pass.
+Spawn a sub-agent that loads the `/review-work` skill. The review-work skill internally launches 5 parallel agents: Thinker (goal verification), unspecified-high (QA execution), Thinker (code quality), Thinker (security), unspecified-high (context mining). All 5 must pass for the review to pass.
 
 ```
 task(
@@ -160,7 +160,7 @@ task(
   prompt="""
 Run /review-work on the unpublished changes between v{PUBLISHED} and HEAD.
 
-GOAL: Review all changes heading into npm publish of oh-my-opencode. These changes span {COMMIT_COUNT} commits across {FILE_COUNT} files.
+GOAL: Review all changes heading into npm publish of oh-my-cortex. These changes span {COMMIT_COUNT} commits across {FILE_COUNT} files.
 
 CONSTRAINTS:
 - This is a plugin published to npm — public API stability matters
@@ -169,7 +169,7 @@ CONSTRAINTS:
 - Factory pattern (createXXX) for tools, hooks, agents
 - kebab-case files, barrel exports, no catch-all files
 
-BACKGROUND: Pre-publish review of oh-my-opencode, an OpenCode plugin with 1268 TypeScript files, 160k LOC. Changes since v{PUBLISHED} are about to be published.
+BACKGROUND: Pre-publish review of oh-my-cortex, an OpenCode plugin with 1268 TypeScript files, 160k LOC. Changes since v{PUBLISHED} are about to be published.
 
 The diff base is: git diff v{PUBLISHED}..HEAD
 
@@ -177,20 +177,20 @@ Follow the /review-work skill flow exactly — launch all 5 review agents and co
 """)
 ```
 
-### Layer 3: Oracle Release Synthesis (1 agent)
+### Layer 3: Thinker Release Synthesis (1 agent)
 
-The oracle gets the full picture — all commits, full diff stat, and changed file list. It provides the final release readiness assessment.
+The thinker gets the full picture — all commits, full diff stat, and changed file list. It provides the final release readiness assessment.
 
 ```
 task(
-  subagent_type="oracle",
+  subagent_type="thinker",
   run_in_background=true,
   load_skills=[],
-  description="Oracle: overall release synthesis and version bump recommendation",
+  description="Thinker: overall release synthesis and version bump recommendation",
   prompt="""
 <review_type>RELEASE SYNTHESIS — OVERALL ASSESSMENT</review_type>
 
-<project>oh-my-opencode (npm package)</project>
+<project>oh-my-cortex (npm package)</project>
 <published_version>{PUBLISHED}</published_version>
 <local_version>{LOCAL}</local_version>
 
@@ -290,7 +290,7 @@ Track completion in a table:
 |---|-------|------|--------|---------|
 | 1-10 | Ultrabrain: {group_name} | ultrabrain | pending | — |
 | 11 | Review-Work Coordinator | unspecified-high | pending | — |
-| 12 | Release Synthesis Oracle | oracle | pending | — |
+| 12 | Release Synthesis Thinker | thinker | pending | — |
 
 Do NOT deliver the final report until ALL agents have completed.
 
@@ -301,22 +301,22 @@ Do NOT deliver the final report until ALL agents have completed.
 <verdict_logic>
 
 **BLOCK** if:
-- Oracle verdict is BLOCK
+- Thinker verdict is BLOCK
 - Any ultrabrain found CRITICAL blocking issues
 - Review-work failed on any MAIN agent
 
 **RISKY** if:
-- Oracle verdict is RISKY
+- Thinker verdict is RISKY
 - Multiple ultrabrains returned CAUTION or FAIL
 - Review-work passed but with significant findings
 
 **CAUTION** if:
-- Oracle verdict is CAUTION
+- Thinker verdict is CAUTION
 - A few ultrabrains flagged minor issues
 - Review-work passed cleanly
 
 **SAFE** if:
-- Oracle verdict is SAFE
+- Thinker verdict is SAFE
 - All ultrabrains passed
 - Review-work passed
 
@@ -325,7 +325,7 @@ Do NOT deliver the final report until ALL agents have completed.
 Compile the final report:
 
 ```markdown
-# Pre-Publish Review — oh-my-opencode
+# Pre-Publish Review — oh-my-cortex
 
 ## Release: v{PUBLISHED} -> v{LOCAL}
 **Commits:** {COMMIT_COUNT} | **Files Changed:** {FILE_COUNT} | **Agents:** {AGENT_COUNT}
@@ -335,7 +335,7 @@ Compile the final report:
 ## Overall Verdict: SAFE / CAUTION / RISKY / BLOCK
 
 ## Recommended Version Bump: PATCH / MINOR / MAJOR
-{Justification from Oracle}
+{Justification from Thinker}
 
 ---
 
@@ -366,19 +366,19 @@ Compile the final report:
 
 ---
 
-## Release Synthesis (Oracle)
+## Release Synthesis (Thinker)
 
 ### Breaking Changes
-{From Oracle — exhaustive list or "None"}
+{From Thinker — exhaustive list or "None"}
 
 ### Changelog Draft
-{From Oracle — ready to use}
+{From Thinker — ready to use}
 
 ### Deployment Risk
-{From Oracle — specific concerns}
+{From Thinker — specific concerns}
 
 ### Post-Publish Monitoring
-{From Oracle — what to watch}
+{From Thinker — what to watch}
 
 ---
 
@@ -400,8 +400,8 @@ Compile the final report:
 | Publishing without waiting for all agents | **CRITICAL** |
 | Spawning ultrabrains sequentially instead of in parallel | CRITICAL |
 | Using `run_in_background=false` for any agent | CRITICAL |
-| Skipping the Oracle synthesis | HIGH |
-| Not reading file contents for Oracle (it cannot read files) | HIGH |
+| Skipping the Thinker synthesis | HIGH |
+| Not reading file contents for Thinker (it cannot read files) | HIGH |
 | Grouping all changes into 1-2 ultrabrains instead of distributing | HIGH |
 | Delivering verdict before all agents complete | HIGH |
 | Not including diff in ultrabrain prompts | MAJOR |

@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig, HookName } from "../../config"
+import type { OhMyCortexConfig, HookName } from "../../config"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { ModelFallbackControllerAccessor } from "../../hooks/model-fallback"
 import type { ModelCacheState } from "../../plugin-state"
@@ -15,15 +15,15 @@ import {
   createAgentUsageReminderHook,
   createNonInteractiveEnvHook,
   createInteractiveBashSessionHook,
-  createRalphLoopHook,
+  createCortexLoopHook,
   createEditErrorRecoveryHook,
   createDelegateTaskRetryHook,
   createTaskResumeInfoHook,
   createStartWorkHook,
-  createPrometheusMdOnlyHook,
-  createSisyphusJuniorNotepadHook,
-  createNoSisyphusGptHook,
-  createNoHephaestusNonGptHook,
+  createPlannerMdOnlyHook,
+  createWorkerNotepadHook,
+  createNoChiefGptHook,
+  createNoFounderNonGptHook,
   createQuestionLabelTruncatorHook,
   createPreemptiveCompactionHook,
   createRuntimeFallbackHook,
@@ -52,14 +52,14 @@ export type SessionHooks = {
   agentUsageReminder: ReturnType<typeof createAgentUsageReminderHook> | null
   nonInteractiveEnv: ReturnType<typeof createNonInteractiveEnvHook> | null
   interactiveBashSession: ReturnType<typeof createInteractiveBashSessionHook> | null
-  ralphLoop: ReturnType<typeof createRalphLoopHook> | null
+  cortexLoop: ReturnType<typeof createCortexLoopHook> | null
   editErrorRecovery: ReturnType<typeof createEditErrorRecoveryHook> | null
   delegateTaskRetry: ReturnType<typeof createDelegateTaskRetryHook> | null
   startWork: ReturnType<typeof createStartWorkHook> | null
-  prometheusMdOnly: ReturnType<typeof createPrometheusMdOnlyHook> | null
-  sisyphusJuniorNotepad: ReturnType<typeof createSisyphusJuniorNotepadHook> | null
-  noSisyphusGpt: ReturnType<typeof createNoSisyphusGptHook> | null
-  noHephaestusNonGpt: ReturnType<typeof createNoHephaestusNonGptHook> | null
+  plannerMdOnly: ReturnType<typeof createPlannerMdOnlyHook> | null
+  workerNotepad: ReturnType<typeof createWorkerNotepadHook> | null
+  noChiefGpt: ReturnType<typeof createNoChiefGptHook> | null
+  noFounderNonGpt: ReturnType<typeof createNoFounderNonGptHook> | null
   questionLabelTruncator: ReturnType<typeof createQuestionLabelTruncatorHook> | null
   taskResumeInfo: ReturnType<typeof createTaskResumeInfoHook> | null
   anthropicEffort: ReturnType<typeof createAnthropicEffortHook> | null
@@ -69,7 +69,7 @@ export type SessionHooks = {
 
 export function createSessionHooks(args: {
   ctx: PluginContext
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   modelCacheState: ModelCacheState
   backgroundManager: BackgroundManager
   modelFallbackControllerAccessor?: ModelFallbackControllerAccessor
@@ -188,7 +188,7 @@ export function createSessionHooks(args: {
     ? safeHook("auto-update-checker", () =>
         createAutoUpdateCheckerHook(ctx, {
           showStartupToast: isHookEnabled("startup-toast"),
-          isSisyphusEnabled: pluginConfig.sisyphus_agent?.disabled !== true,
+          isChiefEnabled: (pluginConfig.chief_agent ?? pluginConfig.chief_agent)?.disabled !== true,
           autoUpdate: pluginConfig.auto_update ?? true,
           modelCapabilities: pluginConfig.model_capabilities,
         }))
@@ -208,10 +208,10 @@ export function createSessionHooks(args: {
     ? safeHook("interactive-bash-session", () => createInteractiveBashSessionHook(ctx))
     : null
 
-  const ralphLoop = isHookEnabled("ralph-loop")
-    ? safeHook("ralph-loop", () =>
-        createRalphLoopHook(ctx, {
-          config: pluginConfig.ralph_loop,
+  const cortexLoop = isHookEnabled("cortex-loop")
+    ? safeHook("cortex-loop", () =>
+        createCortexLoopHook(ctx, {
+          config: pluginConfig.cortex_loop,
           checkSessionExists: async (sessionId) => await sessionExists(sessionId),
           backgroundManager,
         }))
@@ -229,22 +229,22 @@ export function createSessionHooks(args: {
     ? safeHook("start-work", () => createStartWorkHook(ctx))
     : null
 
-  const prometheusMdOnly = isHookEnabled("prometheus-md-only")
-    ? safeHook("prometheus-md-only", () => createPrometheusMdOnlyHook(ctx))
+  const plannerMdOnly = isHookEnabled("planner-md-only")
+    ? safeHook("planner-md-only", () => createPlannerMdOnlyHook(ctx))
     : null
 
-  const sisyphusJuniorNotepad = isHookEnabled("sisyphus-junior-notepad")
-    ? safeHook("sisyphus-junior-notepad", () => createSisyphusJuniorNotepadHook(ctx))
+  const workerNotepad = isHookEnabled("worker-notepad")
+    ? safeHook("worker-notepad", () => createWorkerNotepadHook(ctx))
     : null
 
-  const noSisyphusGpt = isHookEnabled("no-sisyphus-gpt")
-    ? safeHook("no-sisyphus-gpt", () => createNoSisyphusGptHook(ctx))
+  const noChiefGpt = isHookEnabled("no-chief-gpt")
+    ? safeHook("no-chief-gpt", () => createNoChiefGptHook(ctx))
     : null
 
-  const noHephaestusNonGpt = isHookEnabled("no-hephaestus-non-gpt")
-    ? safeHook("no-hephaestus-non-gpt", () =>
-      createNoHephaestusNonGptHook(ctx, {
-        allowNonGptModel: pluginConfig.agents?.hephaestus?.allow_non_gpt_model,
+  const noFounderNonGpt = isHookEnabled("no-founder-non-gpt")
+    ? safeHook("no-founder-non-gpt", () =>
+      createNoFounderNonGptHook(ctx, {
+        allowNonGptModel: pluginConfig.agents?.founder?.allow_non_gpt_model,
       }))
     : null
 
@@ -288,14 +288,14 @@ export function createSessionHooks(args: {
     agentUsageReminder,
     nonInteractiveEnv,
     interactiveBashSession,
-    ralphLoop,
+    cortexLoop,
     editErrorRecovery,
     delegateTaskRetry,
     startWork,
-    prometheusMdOnly,
-    sisyphusJuniorNotepad,
-    noSisyphusGpt,
-    noHephaestusNonGpt,
+    plannerMdOnly,
+    workerNotepad,
+    noChiefGpt,
+    noFounderNonGpt,
     questionLabelTruncator,
     taskResumeInfo,
     anthropicEffort,

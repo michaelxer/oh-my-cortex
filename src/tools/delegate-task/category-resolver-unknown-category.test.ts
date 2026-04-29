@@ -21,7 +21,7 @@ describe("resolveCategoryExecution unknown category handling", () => {
 			manager: {} as ExecutorContext["manager"],
 			directory: "/tmp/test",
 			userCategories: {},
-			sisyphusJuniorModel: undefined,
+			workerModel: undefined,
 		}
 		const args = {
 			category: "backend-engineer",

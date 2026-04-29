@@ -18,7 +18,7 @@ function createTestCacheContext(
   createConnectedProvidersCacheStore: ConnectedProvidersCacheModule["createConnectedProvidersCacheStore"],
 ) {
 	const fakeUserCacheRoot = mkdtempSync(join(tmpdir(), "connected-providers-user-cache-"))
-	const testCacheDir = join(fakeUserCacheRoot, "oh-my-opencode")
+	const testCacheDir = join(fakeUserCacheRoot, "oh-my-cortex")
 	const testCacheStore = createConnectedProvidersCacheStore(() => testCacheDir)
 
 	return {
@@ -181,7 +181,7 @@ describe("updateConnectedProvidersCache", () => {
 		const { testCacheStore, fakeUserCacheRoot } = createTestCacheContext(createConnectedProvidersCacheStore)
 
 		//#given
-		const realCacheDir = join(fakeUserCacheRoot, "oh-my-opencode")
+		const realCacheDir = join(fakeUserCacheRoot, "oh-my-cortex")
 		const sentinelPath = join(realCacheDir, "connected-providers-cache.test-sentinel.json")
 		mkdirSync(realCacheDir, { recursive: true })
 		writeFileSync(sentinelPath, JSON.stringify({ keep: true }))

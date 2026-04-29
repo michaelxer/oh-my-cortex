@@ -10,7 +10,7 @@ import { startReplyListener, stopReplyListener } from "./reply-listener"
 import type { OpenClawConfig, OpenClawContext, OpenClawPayload, WakeResult } from "./types"
 
 const DEBUG =
-  process.env.OMO_OPENCLAW_DEBUG === "1"
+  process.env.OMX_OPENCLAW_DEBUG === "1"
   || process.env.OMX_OPENCLAW_DEBUG === "1"
 
 function buildWhitelistedContext(context: OpenClawContext): OpenClawContext {

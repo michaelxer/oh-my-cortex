@@ -1,35 +1,35 @@
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/dev/assets/oh-my-opencode.schema.json",
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-cortex/dev/assets/oh-my-cortex.schema.json",
 
   // Optimized for intensive coding sessions.
   // Prioritizes deep implementation agents and fast feedback loops.
 
   "agents": {
     // Primary orchestrator: aggressive parallel delegation
-    "sisyphus": {
+    "chief": {
       "model": "kimi-for-coding/k2p5",
       "ultrawork": { "model": "anthropic/claude-opus-4-7", "variant": "max" },
-      "prompt_append": "Delegate heavily to hephaestus for implementation. Parallelize exploration.",
+      "prompt_append": "Delegate heavily to founder for implementation. Parallelize exploration.",
     },
 
     // Heavy lifter: maximum autonomy for coding tasks
-    "hephaestus": {
+    "founder": {
       "model": "openai/gpt-5.4",
       "prompt_append": "You are the primary implementation agent. Own the codebase. Explore, decide, execute. Use LSP and AST-grep aggressively.",
       "permission": { "edit": "allow", "bash": { "git": "allow", "test": "allow" } },
     },
 
     // Lightweight planner: quick planning for coding tasks
-    "prometheus": {
+    "planner": {
       "model": "opencode/gpt-5-nano",
       "prompt_append": "Keep plans concise. Focus on file structure and key decisions.",
     },
 
     // Debugging and architecture
-    "oracle": { "model": "openai/gpt-5.4", "variant": "high" },
+    "thinker": { "model": "openai/gpt-5.4", "variant": "high" },
 
     // Fast docs lookup
-    "librarian": { "model": "github-copilot/grok-code-fast-1" },
+    "researcher": { "model": "github-copilot/grok-code-fast-1" },
 
     // Rapid codebase navigation
     "explore": { "model": "github-copilot/grok-code-fast-1" },
@@ -38,16 +38,16 @@
     "multimodal-looker": { "model": "google/gemini-3.1-pro" },
 
     // Plan review: minimal overhead
-    "metis": { "model": "opencode/gpt-5-nano" },
+    "reviewer": { "model": "opencode/gpt-5-nano" },
 
     // Code review focus
-    "momus": { "prompt_append": "Focus on code quality, edge cases, and test coverage." },
+    "critic": { "prompt_append": "Focus on code quality, edge cases, and test coverage." },
 
     // Long-running coding sessions
-    "atlas": {},
+    "lead": {},
 
     // Quick fixes and small tasks
-    "sisyphus-junior": { "model": "opencode/gpt-5-nano" },
+    "worker": { "model": "opencode/gpt-5-nano" },
   },
 
   "categories": {

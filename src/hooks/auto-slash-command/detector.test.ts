@@ -173,26 +173,26 @@ After`
   })
 
   describe("isExcludedCommand", () => {
-    it("should exclude ralph-loop", () => {
-      // given ralph-loop command
+    it("should exclude cortex-loop", () => {
+      // given cortex-loop command
       // when checking exclusion
       // then should be excluded
-      expect(isExcludedCommand("ralph-loop")).toBe(true)
+      expect(isExcludedCommand("cortex-loop")).toBe(true)
     })
 
-    it("should exclude cancel-ralph", () => {
-      // given cancel-ralph command
+    it("should exclude cancel-cortex", () => {
+      // given cancel-cortex command
       // when checking exclusion
       // then should be excluded
-      expect(isExcludedCommand("cancel-ralph")).toBe(true)
+      expect(isExcludedCommand("cancel-cortex")).toBe(true)
     })
 
     it("should be case-insensitive for exclusion", () => {
       // given uppercase variants
       // when checking exclusion
       // then should still be excluded
-      expect(isExcludedCommand("RALPH-LOOP")).toBe(true)
-      expect(isExcludedCommand("Cancel-Ralph")).toBe(true)
+      expect(isExcludedCommand("CORTEX-LOOP")).toBe(true)
+      expect(isExcludedCommand("Cancel-Cortex")).toBe(true)
     })
 
     it("should not exclude regular commands", () => {
@@ -244,7 +244,7 @@ After`
 
     it("should NOT detect excluded commands", () => {
       // given excluded command
-      const text = "/ralph-loop do something"
+      const text = "/cortex-loop do something"
 
       // when detecting
       const result = detectSlashCommand(text)

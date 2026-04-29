@@ -52,20 +52,20 @@ export function createDelegateTaskPresentation(options: DelegateTaskToolOptions)
   
   **CORRECT - Using subagent_type:**
   \`\`\`
-  task(subagent_type="explore", load_skills=[], description="Find patterns", prompt="...", run_in_background=true)
+  task(subagent_type="tracker", load_skills=[], description="Find patterns", prompt="...", run_in_background=true)
   \`\`\`
   
   REQUIRED: Provide ONE of:
-  - category: For task delegation (uses Sisyphus-Junior with category-optimized model)
-  - subagent_type: For direct agent invocation (explore, librarian, oracle, etc.)
+  - category: For task delegation (uses Worker with category-optimized model)
+  - subagent_type: For direct agent invocation (tracker, researcher, thinker, etc.)
   
   **DO NOT provide both.** If category is provided, subagent_type is ignored.
   
   - load_skills: ALWAYS REQUIRED. Pass [] if no skills needed, or ["skill-1", "skill-2"] for category tasks.
-  - category: Use predefined category → Spawns Sisyphus-Junior with category config
+  - category: Use predefined category → Spawns Worker with category config
     Available categories:
   ${categoryList}
-  - subagent_type: Use specific agent directly (explore, librarian, oracle, metis, momus)
+  - subagent_type: Use specific agent directly (tracker, researcher, thinker, reviewer, critic)
   - run_in_background: REQUIRED. true=async (returns task_id), false=sync (waits). Use background=true ONLY for parallel exploration with 5+ independent queries.
   - task_id: Existing task to continue (from previous task output). Continues the same subagent session with FULL CONTEXT PRESERVED.
   - command: The command that triggered this task (optional, for slash command tracking).

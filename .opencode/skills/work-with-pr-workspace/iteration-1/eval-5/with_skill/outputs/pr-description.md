@@ -38,7 +38,7 @@ These are standard engineering comments, not AI agent memos.
 ## Usage
 
 ```jsonc
-// .opencode/oh-my-opencode.jsonc
+// .opencode/oh-my-cortex.jsonc
 {
   "comment_checker": {
     "exclude_patterns": ["^Note:", "^TODO:", "^FIXME:"]
@@ -48,4 +48,4 @@ These are standard engineering comments, not AI agent memos.
 
 ## Related
 
-- Go binary repo: `code-yeongyu/go-claude-code-comment-checker` (needs corresponding `--exclude-pattern` flag support)
+- Go binary repo: `michaelxer/go-claude-code-comment-checker` (needs corresponding `--exclude-pattern` flag support)

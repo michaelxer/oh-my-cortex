@@ -1,4 +1,4 @@
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../shared"
+import { OMX_INTERNAL_INITIATOR_MARKER } from "../shared"
 import type { PluginContext } from "./types"
 
 type ChatHeadersInput = {
@@ -84,7 +84,7 @@ async function hasInternalMarker(
         return false
       }
 
-      return part.text.includes(OMO_INTERNAL_INITIATOR_MARKER)
+      return part.text.includes(OMX_INTERNAL_INITIATOR_MARKER)
     })
 
     internalMarkerCache.set(cacheKey, hasMarker)
@@ -102,7 +102,7 @@ async function hasInternalMarker(
   }
 }
 
-async function isOmoInternalMessage(input: ChatHeadersInput, client: PluginContext["client"]): Promise<boolean> {
+async function isOmxInternalMessage(input: ChatHeadersInput, client: PluginContext["client"]): Promise<boolean> {
   if (input.message.role !== "user") {
     return false
   }
@@ -134,7 +134,7 @@ export function createChatHeadersHandler(args: { ctx: PluginContext }): (input: 
     const api = model && isRecord(model.api) ? model.api as Record<string, unknown> : undefined
     if (api?.npm === "@ai-sdk/github-copilot") return
 
-    if (!(await isOmoInternalMessage(normalizedInput, ctx.client))) return
+    if (!(await isOmxInternalMessage(normalizedInput, ctx.client))) return
 
     output.headers["x-initiator"] = "agent"
   }

@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig } from "../config";
+import type { OhMyCortexConfig } from "../config";
 import type { PluginInput } from "@opencode-ai/plugin";
 import type { PluginContext } from "./types";
 
@@ -119,7 +119,7 @@ function applyUserConfiguredFallbackChain(
   sessionID: string,
   agentName: string,
   currentProviderID: string,
-  pluginConfig: OhMyOpenCodeConfig,
+  pluginConfig: OhMyCortexConfig,
 ): void {
   const agentKey = getAgentConfigKey(agentName);
   const rawFallbackModels = getRawFallbackModels(sessionID, agentKey, pluginConfig);
@@ -141,7 +141,7 @@ function isCompactionAgent(agent: string): boolean {
 type EventInput = Parameters<NonNullable<NonNullable<CreatedHooks["writeExistingFileGuard"]>["event"]>>[0];
 export function createEventHandler(args: {
   ctx: PluginContext;
-  pluginConfig: OhMyOpenCodeConfig;
+  pluginConfig: OhMyCortexConfig;
   firstMessageVariantGate: FirstMessageVariantGate;
   managers: Managers;
   hooks: CreatedHooks;
@@ -262,12 +262,12 @@ export function createEventHandler(args: {
     await runEventHookSafely("agentUsageReminder", hooks.agentUsageReminder?.event, input);
     await runEventHookSafely("categorySkillReminder", hooks.categorySkillReminder?.event, input);
     await runEventHookSafely("interactiveBashSession", hooks.interactiveBashSession?.event, input as EventInput);
-    await runEventHookSafely("ralphLoop", hooks.ralphLoop?.event, input);
+    await runEventHookSafely("cortexLoop", hooks.cortexLoop?.event, input);
     await runEventHookSafely("stopContinuationGuard", hooks.stopContinuationGuard?.event, input);
     await runEventHookSafely("compactionContextInjector", hooks.compactionContextInjector?.event, input);
     await runEventHookSafely("compactionTodoPreserver", hooks.compactionTodoPreserver?.event, input);
     await runEventHookSafely("writeExistingFileGuard", hooks.writeExistingFileGuard?.event, input);
-    await runEventHookSafely("atlasHook", hooks.atlasHook?.handler, input);
+    await runEventHookSafely("leadHook", hooks.leadHook?.handler, input);
     await runEventHookSafely("autoSlashCommand", hooks.autoSlashCommand?.event, input);
   };
 
@@ -514,11 +514,11 @@ export function createEventHandler(args: {
               let agentName = agent ?? getSessionAgent(sessionID);
               if (!agentName && sessionID === getMainSessionID()) {
                 if (errorMessage.includes("claude-opus") || errorMessage.includes("opus")) {
-                  agentName = "sisyphus";
+                  agentName = "chief";
                 } else if (errorMessage.includes("gpt-5")) {
-                  agentName = "hephaestus";
+                  agentName = "founder";
                 } else {
-                  agentName = "sisyphus";
+                  agentName = "chief";
                 }
               }
 
@@ -580,11 +580,11 @@ export function createEventHandler(args: {
             let agentName = getSessionAgent(sessionID);
             if (!agentName && sessionID === getMainSessionID()) {
               if (retryMessage.includes("claude-opus") || retryMessage.includes("opus")) {
-                agentName = "sisyphus";
+                agentName = "chief";
               } else if (retryMessage.includes("gpt-5")) {
-                agentName = "hephaestus";
+                agentName = "founder";
               } else {
-                agentName = "sisyphus";
+                agentName = "chief";
               }
             }
 
@@ -666,11 +666,11 @@ export function createEventHandler(args: {
 
           if (!agentName && sessionID === getMainSessionID()) {
             if (errorMessage.includes("claude-opus") || errorMessage.includes("opus")) {
-              agentName = "sisyphus";
+              agentName = "chief";
             } else if (errorMessage.includes("gpt-5")) {
-              agentName = "hephaestus";
+              agentName = "founder";
             } else {
-              agentName = "sisyphus";
+              agentName = "chief";
             }
           }
 

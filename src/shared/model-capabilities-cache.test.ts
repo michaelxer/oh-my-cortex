@@ -17,7 +17,7 @@ let testCacheDir = ""
 describe("model-capabilities-cache", () => {
   beforeEach(() => {
     fakeUserCacheRoot = mkdtempSync(join(tmpdir(), "model-capabilities-cache-"))
-    testCacheDir = join(fakeUserCacheRoot, "oh-my-opencode")
+    testCacheDir = join(fakeUserCacheRoot, "oh-my-cortex")
   })
 
   afterEach(() => {

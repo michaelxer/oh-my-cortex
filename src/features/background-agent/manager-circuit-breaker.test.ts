@@ -54,7 +54,7 @@ describe("BackgroundManager circuit breaker", () => {
         parentMessageID: "msg-1",
         description: "Looping task",
         prompt: "loop",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
         startedAt: new Date(Date.now() - 60_000),
         progress: {
@@ -92,7 +92,7 @@ describe("BackgroundManager circuit breaker", () => {
         parentMessageID: "msg-1",
         description: "Healthy task",
         prompt: "work",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
         startedAt: new Date(Date.now() - 60_000),
         progress: {
@@ -142,7 +142,7 @@ describe("BackgroundManager circuit breaker", () => {
         parentMessageID: "msg-1",
         description: "Backstop task",
         prompt: "work",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
         startedAt: new Date(Date.now() - 60_000),
         progress: {
@@ -181,7 +181,7 @@ describe("BackgroundManager circuit breaker", () => {
         parentMessageID: "msg-1",
         description: "Dedupe task",
         prompt: "work",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
         startedAt: new Date(Date.now() - 60_000),
         progress: {
@@ -228,7 +228,7 @@ describe("BackgroundManager circuit breaker", () => {
         parentMessageID: "msg-1",
         description: "Reading different files",
         prompt: "work",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
         startedAt: new Date(Date.now() - 60_000),
         progress: {
@@ -273,7 +273,7 @@ describe("BackgroundManager circuit breaker", () => {
         parentMessageID: "msg-1",
         description: "Reading same file repeatedly",
         prompt: "work",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
         startedAt: new Date(Date.now() - 60_000),
         progress: {
@@ -320,7 +320,7 @@ describe("BackgroundManager circuit breaker", () => {
         parentMessageID: "msg-1",
         description: "Disabled circuit breaker task",
         prompt: "work",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
         startedAt: new Date(Date.now() - 60_000),
         progress: {
@@ -363,7 +363,7 @@ describe("BackgroundManager circuit breaker", () => {
         parentMessageID: "msg-1",
         description: "Backstop task with disabled circuit breaker",
         prompt: "work",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
         startedAt: new Date(Date.now() - 60_000),
         progress: {

@@ -12,7 +12,7 @@ import {
   spawnTmuxSession,
   killTmuxSessionIfExists,
   getIsolatedSessionName,
-  sweepStaleOmoAgentSessions,
+  sweepStaleCortexAgentSessions,
 } from "../../shared/tmux"
 import { queryWindowState } from "./pane-state-querier"
 import { decideSpawnActions, decideCloseAction, type SessionMapping } from "./decision-engine"
@@ -997,7 +997,7 @@ export class TmuxSessionManager {
 
     this.staleSweepInProgress = true
     try {
-      const killed = await sweepStaleOmoAgentSessions()
+      const killed = await sweepStaleCortexAgentSessions()
       if (killed > 0) {
         log("[tmux-session-manager] stale isolated sessions swept", { killed })
       }

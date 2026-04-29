@@ -11,7 +11,7 @@ const createdDirectories: string[] = []
 const MIGRATION_KEY = "model-version:anthropic/claude-opus-4-5->anthropic/claude-opus-4-7"
 
 function createWorkdir(): string {
-  const workdir = mkdtempSync(join(tmpdir(), "omo-config-migration-"))
+  const workdir = mkdtempSync(join(tmpdir(), "omx-config-migration-"))
   createdDirectories.push(workdir)
   return workdir
 }
@@ -19,7 +19,7 @@ function createWorkdir(): string {
 function createLegacyConfig(): Record<string, unknown> {
   return {
     agents: {
-      prometheus: { model: "anthropic/claude-opus-4-5" },
+      planner: { model: "anthropic/claude-opus-4-5" },
     },
   }
 }
@@ -34,7 +34,7 @@ describe("migrateConfigFile sidecar write ordering", () => {
   test("writes the migrated config before recording the sidecar when both writes succeed", () => {
     // given
     const workdir = createWorkdir()
-    const configPath = join(workdir, "oh-my-opencode.json")
+    const configPath = join(workdir, "oh-my-cortex.json")
     const rawConfig = createLegacyConfig()
 
     writeFileSync(configPath, JSON.stringify(rawConfig, null, 2) + "\n")
@@ -45,13 +45,13 @@ describe("migrateConfigFile sidecar write ordering", () => {
     // then
     expect(needsWrite).toBe(true)
     expect(rawConfig._migrations).toBeUndefined()
-    expect((rawConfig.agents as Record<string, Record<string, unknown>>).prometheus.model).toBe(
+    expect((rawConfig.agents as Record<string, Record<string, unknown>>).planner.model).toBe(
       "anthropic/claude-opus-4-7",
     )
 
     const persistedConfig = JSON.parse(readFileSync(configPath, "utf-8")) as Record<string, unknown>
     expect(persistedConfig._migrations).toBeUndefined()
-    expect((persistedConfig.agents as Record<string, Record<string, unknown>>).prometheus.model).toBe(
+    expect((persistedConfig.agents as Record<string, Record<string, unknown>>).planner.model).toBe(
       "anthropic/claude-opus-4-7",
     )
 
@@ -64,7 +64,7 @@ describe("migrateConfigFile sidecar write ordering", () => {
   test("skips the sidecar when the config write fails so the migration retries on next startup", () => {
     // given
     const workdir = createWorkdir()
-    const configPath = join(workdir, "missing-parent", "oh-my-opencode.json")
+    const configPath = join(workdir, "missing-parent", "oh-my-cortex.json")
     const firstAttemptConfig = createLegacyConfig()
 
     // when
@@ -86,7 +86,7 @@ describe("migrateConfigFile sidecar write ordering", () => {
     // then
     expect(retriedNeedsWrite).toBe(true)
     expect(retriedConfig._migrations).toBeUndefined()
-    expect((retriedConfig.agents as Record<string, Record<string, unknown>>).prometheus.model).toBe(
+    expect((retriedConfig.agents as Record<string, Record<string, unknown>>).planner.model).toBe(
       "anthropic/claude-opus-4-7",
     )
     expect(existsSync(getSidecarPath(configPath))).toBe(true)
@@ -95,7 +95,7 @@ describe("migrateConfigFile sidecar write ordering", () => {
   test("preserves _migrations in the config when the sidecar write fails after the config write succeeds", () => {
     // given
     const workdir = createWorkdir()
-    const configPath = join(workdir, "oh-my-opencode.json")
+    const configPath = join(workdir, "oh-my-cortex.json")
     const rawConfig = createLegacyConfig()
 
     writeFileSync(configPath, JSON.stringify(rawConfig, null, 2) + "\n")
@@ -107,13 +107,13 @@ describe("migrateConfigFile sidecar write ordering", () => {
     // then
     expect(needsWrite).toBe(true)
     expect(rawConfig._migrations).toEqual([MIGRATION_KEY])
-    expect((rawConfig.agents as Record<string, Record<string, unknown>>).prometheus.model).toBe(
+    expect((rawConfig.agents as Record<string, Record<string, unknown>>).planner.model).toBe(
       "anthropic/claude-opus-4-7",
     )
 
     const persistedConfig = JSON.parse(readFileSync(configPath, "utf-8")) as Record<string, unknown>
     expect(persistedConfig._migrations).toEqual([MIGRATION_KEY])
-    expect((persistedConfig.agents as Record<string, Record<string, unknown>>).prometheus.model).toBe(
+    expect((persistedConfig.agents as Record<string, Record<string, unknown>>).planner.model).toBe(
       "anthropic/claude-opus-4-7",
     )
     expect(statSync(getSidecarPath(configPath)).isDirectory()).toBe(true)
@@ -122,10 +122,10 @@ describe("migrateConfigFile sidecar write ordering", () => {
   test("treats top-level appliedMigrations as migration history and does not reapply the model update", () => {
     // given
     const workdir = createWorkdir()
-    const configPath = join(workdir, "oh-my-openagent.json")
+    const configPath = join(workdir, "oh-my-cortex.json")
     const rawConfig: Record<string, unknown> = {
       agents: {
-        oracle: { model: "anthropic/claude-opus-4-6" },
+        thinker: { model: "anthropic/claude-opus-4-6" },
       },
       appliedMigrations: ["model-version:anthropic/claude-opus-4-6->anthropic/claude-opus-4-7"],
     }
@@ -138,7 +138,7 @@ describe("migrateConfigFile sidecar write ordering", () => {
     // then
     expect(needsWrite).toBe(true)
     expect(rawConfig.appliedMigrations).toBeUndefined()
-    expect((rawConfig.agents as Record<string, Record<string, unknown>>).oracle.model).toBe(
+    expect((rawConfig.agents as Record<string, Record<string, unknown>>).thinker.model).toBe(
       "anthropic/claude-opus-4-6",
     )
 
@@ -155,7 +155,7 @@ describe("migrateConfigFile backup skipping", () => {
   test("skips backup when file content is identical after migration", () => {
     // given - config with legacy key that migrates to same on-disk content
     const workdir = createWorkdir()
-    const configPath = join(workdir, "oh-my-opencode.json")
+    const configPath = join(workdir, "oh-my-cortex.json")
     const migratedContent = {
       disabled_hooks: ["comment-checker"],
     }
@@ -180,10 +180,10 @@ describe("migrateConfigFile backup skipping", () => {
   test("creates backup when file content actually changes", () => {
     // given - config with model that needs migration
     const workdir = createWorkdir()
-    const configPath = join(workdir, "oh-my-opencode.json")
+    const configPath = join(workdir, "oh-my-cortex.json")
     const rawConfig = {
       agents: {
-        prometheus: { model: "anthropic/claude-opus-4-5" },
+        planner: { model: "anthropic/claude-opus-4-5" },
       },
     }
 

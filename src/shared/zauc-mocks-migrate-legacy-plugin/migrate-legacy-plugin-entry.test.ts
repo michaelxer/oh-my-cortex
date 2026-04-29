@@ -17,7 +17,7 @@ describe("migrateLegacyPluginEntry", () => {
   let testDir = ""
 
   beforeEach(() => {
-    testDir = join(tmpdir(), `omo-migrate-entry-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testDir = join(tmpdir(), `omx-migrate-entry-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     mkdirSync(testDir, { recursive: true })
   })
 
@@ -25,36 +25,36 @@ describe("migrateLegacyPluginEntry", () => {
     rmSync(testDir, { recursive: true, force: true })
   })
 
-  describe("#given opencode.json contains oh-my-opencode plugin entry", () => {
+  describe("#given opencode.json contains oh-my-cortex plugin entry", () => {
     describe("#when migrating the config", () => {
-      it("#then replaces oh-my-opencode with oh-my-openagent", async () => {
+      it("#then replaces oh-my-cortex with oh-my-cortex", async () => {
         const configPath = join(testDir, "opencode.json")
-        writeFileSync(configPath, JSON.stringify({ plugin: ["oh-my-opencode@latest"] }, null, 2))
+        writeFileSync(configPath, JSON.stringify({ plugin: ["oh-my-cortex@latest"] }, null, 2))
         const { migrateLegacyPluginEntry } = await importFreshMigrationModule()
 
         const result = migrateLegacyPluginEntry(configPath)
 
         expect(result).toBe(true)
         const content = readFileSync(configPath, "utf-8")
-        expect(content).toContain("oh-my-openagent@latest")
-        expect(content).not.toContain("oh-my-opencode")
+        expect(content).toContain("oh-my-cortex@latest")
+        expect(content).not.toContain("oh-my-cortex")
       })
     })
   })
 
-  describe("#given opencode.json contains bare oh-my-opencode entry", () => {
+  describe("#given opencode.json contains bare oh-my-cortex entry", () => {
     describe("#when migrating the config", () => {
-      it("#then replaces with oh-my-openagent", async () => {
+      it("#then replaces with oh-my-cortex", async () => {
         const configPath = join(testDir, "opencode.json")
-        writeFileSync(configPath, JSON.stringify({ plugin: ["oh-my-opencode"] }, null, 2))
+        writeFileSync(configPath, JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2))
         const { migrateLegacyPluginEntry } = await importFreshMigrationModule()
 
         const result = migrateLegacyPluginEntry(configPath)
 
         expect(result).toBe(true)
         const content = readFileSync(configPath, "utf-8")
-        expect(content).toContain('"oh-my-openagent"')
-        expect(content).not.toContain("oh-my-opencode")
+        expect(content).toContain('"oh-my-cortex"')
+        expect(content).not.toContain("oh-my-cortex")
       })
     })
   })
@@ -63,7 +63,7 @@ describe("migrateLegacyPluginEntry", () => {
     describe("#when migrating the config", () => {
       it("#then keeps the original config untouched and writes the migrated content to a sibling temp file", async () => {
         const configPath = join(testDir, "opencode.json")
-        const originalContent = JSON.stringify({ plugin: ["oh-my-opencode@latest"] }, null, 2)
+        const originalContent = JSON.stringify({ plugin: ["oh-my-cortex@latest"] }, null, 2)
         const tempPath = `${configPath}.tmp`
         writeFileSync(configPath, originalContent)
 
@@ -84,8 +84,8 @@ describe("migrateLegacyPluginEntry", () => {
 
           expect(result).toBe(false)
           expect(readFileSync(configPath, "utf-8")).toBe(originalContent)
-          expect(readFileSync(tempPath, "utf-8")).toContain("oh-my-openagent@latest")
-          expect(readFileSync(tempPath, "utf-8")).not.toContain("oh-my-opencode")
+          expect(readFileSync(tempPath, "utf-8")).toContain("oh-my-cortex@latest")
+          expect(readFileSync(tempPath, "utf-8")).not.toContain("oh-my-cortex")
         } finally {
           mock.module("node:fs", () => ({
             ...fs,
@@ -96,27 +96,27 @@ describe("migrateLegacyPluginEntry", () => {
     })
   })
 
-  describe("#given opencode.json contains pinned oh-my-opencode version", () => {
+  describe("#given opencode.json contains pinned oh-my-cortex version", () => {
     describe("#when migrating the config", () => {
       it("#then preserves the version pin", async () => {
         const configPath = join(testDir, "opencode.json")
-        writeFileSync(configPath, JSON.stringify({ plugin: ["oh-my-opencode@3.11.0"] }, null, 2))
+        writeFileSync(configPath, JSON.stringify({ plugin: ["oh-my-cortex@3.11.0"] }, null, 2))
         const { migrateLegacyPluginEntry } = await importFreshMigrationModule()
 
         const result = migrateLegacyPluginEntry(configPath)
 
         expect(result).toBe(true)
         const content = readFileSync(configPath, "utf-8")
-        expect(content).toContain("oh-my-openagent@3.11.0")
+        expect(content).toContain("oh-my-cortex@3.11.0")
       })
     })
   })
 
-  describe("#given opencode.json already uses oh-my-openagent", () => {
+  describe("#given opencode.json already uses oh-my-cortex", () => {
     describe("#when checking for migration", () => {
       it("#then returns false and does not modify the file", async () => {
         const configPath = join(testDir, "opencode.json")
-        const original = JSON.stringify({ plugin: ["oh-my-openagent@latest"] }, null, 2)
+        const original = JSON.stringify({ plugin: ["oh-my-cortex@latest"] }, null, 2)
         writeFileSync(configPath, original)
         const { migrateLegacyPluginEntry } = await importFreshMigrationModule()
 
@@ -132,14 +132,14 @@ describe("migrateLegacyPluginEntry", () => {
     describe("#when migrating the config", () => {
       it("#then removes the legacy entry instead of duplicating the canonical one", async () => {
         const configPath = join(testDir, "opencode.json")
-        writeFileSync(configPath, JSON.stringify({ plugin: ["oh-my-openagent", "oh-my-opencode"] }, null, 2))
+        writeFileSync(configPath, JSON.stringify({ plugin: ["oh-my-cortex", "oh-my-cortex"] }, null, 2))
         const { migrateLegacyPluginEntry } = await importFreshMigrationModule()
 
         const result = migrateLegacyPluginEntry(configPath)
 
         expect(result).toBe(true)
         const saved = JSON.parse(readFileSync(configPath, "utf-8")) as { plugin: string[] }
-        expect(saved.plugin).toEqual(["oh-my-openagent"])
+        expect(saved.plugin).toEqual(["oh-my-cortex"])
       })
     })
   })
@@ -152,9 +152,9 @@ describe("migrateLegacyPluginEntry", () => {
           configPath,
           JSON.stringify(
             {
-              plugin: ["oh-my-opencode"],
-              notes: "keep oh-my-opencode in this text field",
-              paths: ["/tmp/oh-my-opencode/cache"],
+              plugin: ["oh-my-cortex"],
+              notes: "keep oh-my-cortex in this text field",
+              paths: ["/tmp/oh-my-cortex/cache"],
             },
             null,
             2,
@@ -170,9 +170,9 @@ describe("migrateLegacyPluginEntry", () => {
           notes: string
           paths: string[]
         }
-        expect(saved.plugin).toEqual(["oh-my-openagent"])
-        expect(saved.notes).toBe("keep oh-my-opencode in this text field")
-        expect(saved.paths).toEqual(["/tmp/oh-my-opencode/cache"])
+        expect(saved.plugin).toEqual(["oh-my-cortex"])
+        expect(saved.notes).toBe("keep oh-my-cortex in this text field")
+        expect(saved.paths).toEqual(["/tmp/oh-my-cortex/cache"])
       })
     })
   })
@@ -185,9 +185,9 @@ describe("migrateLegacyPluginEntry", () => {
           configPath,
           `{
   "nested": {
-    "plugin": ["oh-my-opencode"]
+    "plugin": ["oh-my-cortex"]
   },
-  "plugin": ["oh-my-opencode@latest"]
+  "plugin": ["oh-my-cortex@latest"]
 }
 `,
         )
@@ -198,10 +198,10 @@ describe("migrateLegacyPluginEntry", () => {
         expect(result).toBe(true)
         const content = readFileSync(configPath, "utf-8")
         expect(content).toContain(`"nested": {
-    "plugin": ["oh-my-opencode"]
+    "plugin": ["oh-my-cortex"]
   }`)
         expect(content).toContain(`"plugin": [
-    "oh-my-openagent@latest"
+    "oh-my-cortex@latest"
   ]`)
       })
     })

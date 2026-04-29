@@ -385,7 +385,7 @@ describe("BackgroundManager prompt rejection fallback routing", () => {
     const launchedTask = await manager.launch({
       description: "background retry test",
       prompt: "say hi",
-      agent: "sisyphus-junior",
+      agent: "worker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-message",
       model: { providerID: "genai-proxy-openai", modelID: "gpt-5.4-mini" },
@@ -427,7 +427,7 @@ describe("BackgroundManager prompt rejection fallback routing", () => {
       parentMessageID: "parent-message",
       description: "resume retry test",
       prompt: "say hi",
-      agent: "sisyphus-junior",
+      agent: "worker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -879,10 +879,10 @@ describe("BackgroundManager.notifyParentSession - release ordering", () => {
     const { ConcurrencyManager } = await import("./concurrency")
     const concurrencyManager = new ConcurrencyManager({ defaultConcurrency: 1 })
 
-    await concurrencyManager.acquire("explore")
+    await concurrencyManager.acquire("tracker")
 
     let task2Resolved = false
-    const task2Promise = concurrencyManager.acquire("explore").then(() => {
+    const task2Promise = concurrencyManager.acquire("tracker").then(() => {
       task2Resolved = true
     })
 
@@ -892,7 +892,7 @@ describe("BackgroundManager.notifyParentSession - release ordering", () => {
     // when - simulate notifyParentSession: release BEFORE prompt (fixed behavior)
     let promptStarted = false
     const simulateNotifyParentSession = async () => {
-      concurrencyManager.release("explore")
+      concurrencyManager.release("tracker")
 
       promptStarted = true
       await new Promise(() => {})
@@ -914,10 +914,10 @@ describe("BackgroundManager.notifyParentSession - release ordering", () => {
     const { ConcurrencyManager } = await import("./concurrency")
     const concurrencyManager = new ConcurrencyManager({ defaultConcurrency: 1 })
 
-    await concurrencyManager.acquire("explore")
+    await concurrencyManager.acquire("tracker")
 
     let task2Resolved = false
-    concurrencyManager.acquire("explore").then(() => {
+    concurrencyManager.acquire("tracker").then(() => {
       task2Resolved = true
     })
 
@@ -929,7 +929,7 @@ describe("BackgroundManager.notifyParentSession - release ordering", () => {
       try {
         await new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 50))
       } finally {
-        concurrencyManager.release("explore")
+        concurrencyManager.release("tracker")
       }
     }
 
@@ -1107,7 +1107,7 @@ describe("BackgroundManager.resume", () => {
       sessionID: "session-a",
       parentSessionID: "old-parent",
       description: "original description",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
     })
     manager.addTask(existingTask)
@@ -1125,7 +1125,7 @@ describe("BackgroundManager.resume", () => {
     expect(result.id).toBe("task-a")
     expect(result.sessionID).toBe("session-a")
     expect(result.description).toBe("original description")
-    expect(result.agent).toBe("explore")
+    expect(result.agent).toBe("tracker")
     expect(result.parentModel).toEqual({ providerID: "anthropic", modelID: "claude-opus" })
   })
 
@@ -1212,7 +1212,7 @@ describe("LaunchInput.skillContent", () => {
     const input: import("./types").LaunchInput = {
       description: "test",
       prompt: "test prompt",
-      agent: "explore",
+      agent: "tracker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-msg",
     }
@@ -1226,7 +1226,7 @@ describe("LaunchInput.skillContent", () => {
     const input: import("./types").LaunchInput = {
       description: "test",
       prompt: "test prompt",
-      agent: "explore",
+      agent: "tracker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-msg",
       skillContent: "You are a playwright expert",
@@ -1258,7 +1258,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
           data: [
             {
               info: {
-                agent: "sisyphus",
+                agent: "chief",
                 model: { providerID: "anthropic", modelID: "claude-opus-4.7" },
               },
             },
@@ -1280,7 +1280,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
       parentMessageID: "msg-parent",
       description: "task with compaction at tail",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1293,7 +1293,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
       .notifyParentSession(task)
 
     //#then
-    expect(capturedBody?.agent).toBe("sisyphus")
+    expect(capturedBody?.agent).toBe("chief")
     expect(capturedBody?.model).toEqual({ providerID: "anthropic", modelID: "claude-opus-4.7" })
 
     manager.shutdown()
@@ -1308,7 +1308,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
       parentMessageID: "msg-parent",
       description: "task with dynamic lookup",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1316,7 +1316,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
       parentModel: { providerID: "old", modelID: "old-model" },
     }
     const currentMessage: CurrentMessage = {
-      agent: "sisyphus",
+      agent: "chief",
       model: { providerID: "anthropic", modelID: "claude-opus-4.7" },
     }
 
@@ -1324,7 +1324,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
     const promptBody = buildNotificationPromptBody(task, currentMessage)
 
     // then
-    expect(promptBody.agent).toBe("sisyphus")
+    expect(promptBody.agent).toBe("chief")
     expect(promptBody.model).toEqual({ providerID: "anthropic", modelID: "claude-opus-4.7" })
   })
 
@@ -1337,7 +1337,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
       parentMessageID: "msg-parent",
       description: "task fallback agent",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1363,15 +1363,15 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
       parentMessageID: "msg-parent",
       description: "task incomplete model",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
-      parentAgent: "sisyphus",
+      parentAgent: "chief",
       parentModel: { providerID: "anthropic", modelID: "claude-opus" },
     }
     const currentMessage: CurrentMessage = {
-      agent: "sisyphus",
+      agent: "chief",
       model: { providerID: "anthropic" },
     }
 
@@ -1379,7 +1379,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
     const promptBody = buildNotificationPromptBody(task, currentMessage)
 
     // then
-    expect(promptBody.agent).toBe("sisyphus")
+    expect(promptBody.agent).toBe("chief")
     expect("model" in promptBody).toBe(false)
   })
 
@@ -1392,11 +1392,11 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
       parentMessageID: "msg-parent",
       description: "task no message",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
-      parentAgent: "sisyphus",
+      parentAgent: "chief",
       parentModel: { providerID: "anthropic", modelID: "claude-opus" },
     }
 
@@ -1404,7 +1404,7 @@ describe("BackgroundManager.notifyParentSession - dynamic message lookup", () =>
     const promptBody = buildNotificationPromptBody(task, null)
 
     // then
-    expect(promptBody.agent).toBe("sisyphus")
+    expect(promptBody.agent).toBe("chief")
     expect("model" in promptBody).toBe(false)
   })
 })
@@ -1437,7 +1437,7 @@ describe("BackgroundManager.notifyParentSession - aborted parent", () => {
       parentMessageID: "msg-parent",
       description: "task aborted parent",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1479,7 +1479,7 @@ describe("BackgroundManager.notifyParentSession - aborted parent", () => {
       parentMessageID: "msg-parent",
       description: "task aborted prompt",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1519,7 +1519,7 @@ describe("BackgroundManager.notifyParentSession - aborted parent", () => {
       parentMessageID: "msg-parent",
       description: "task idle queue",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1556,7 +1556,7 @@ describe("BackgroundManager.notifyParentSession - notifications toggle", () => {
         messages: async () => ({
           data: [{
             info: {
-              agent: "explore",
+              agent: "tracker",
               model: {
                 providerID: "anthropic",
                 modelID: "claude-opus-4.7",
@@ -1579,7 +1579,7 @@ describe("BackgroundManager.notifyParentSession - notifications toggle", () => {
       parentMessageID: "msg-parent",
       description: "task notifications disabled",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1612,7 +1612,7 @@ describe("BackgroundManager.notifyParentSession - variant propagation", () => {
         messages: async () => ({
           data: [{
             info: {
-              agent: "explore",
+              agent: "tracker",
               model: {
                 providerID: "anthropic",
                 modelID: "claude-opus-4.7",
@@ -1631,7 +1631,7 @@ describe("BackgroundManager.notifyParentSession - variant propagation", () => {
       parentMessageID: "msg-parent",
       description: "task with mismatched variant",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1672,7 +1672,7 @@ describe("BackgroundManager.notifyParentSession - variant propagation", () => {
       parentMessageID: "msg-parent",
       description: "task without variant",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -1764,7 +1764,7 @@ describe("BackgroundManager.tryCompleteTask", () => {
       parentMessageID: "msg-1",
       description: "test task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(),
       concurrencyKey,
@@ -1793,7 +1793,7 @@ describe("BackgroundManager.tryCompleteTask", () => {
       parentMessageID: "msg-1",
       description: "test task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(),
       concurrencyKey,
@@ -1834,7 +1834,7 @@ describe("BackgroundManager.tryCompleteTask", () => {
       parentMessageID: "msg-1",
       description: "test task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(),
     }
@@ -1868,7 +1868,7 @@ describe("BackgroundManager.tryCompleteTask", () => {
       parentMessageID: "msg-1",
       description: "pending cleanup task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(),
     }
@@ -1894,7 +1894,7 @@ describe("BackgroundManager.tryCompleteTask", () => {
       parentMessageID: "msg-1",
       description: "toast completion task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(),
     }
@@ -1920,7 +1920,7 @@ describe("BackgroundManager.tryCompleteTask", () => {
       sessionID: "session-process-key-concurrency",
       parentSessionID: "parent-process-key-concurrency",
       status: "pending",
-      agent: "explore",
+      agent: "tracker",
     })
     const input = {
       description: task.description,
@@ -1955,7 +1955,7 @@ describe("BackgroundManager.tryCompleteTask", () => {
       sessionID: "session-zombie-placeholder",
       parentSessionID: "parent-zombie",
       status: "pending",
-      agent: "explore",
+      agent: "tracker",
     })
     delete (task as Partial<BackgroundTask>).sessionID
 
@@ -1997,7 +1997,7 @@ describe("BackgroundManager.tryCompleteTask", () => {
       sessionID: "session-process-key-interrupt",
       parentSessionID: "parent-process-key-interrupt",
       status: "interrupt",
-      agent: "explore",
+      agent: "tracker",
     })
     const input = {
       description: task.description,
@@ -2226,12 +2226,12 @@ describe("BackgroundManager.resume model persistence", () => {
       parentMessageID: "msg-1",
       description: "task with model override",
       prompt: "original prompt",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
       model: { providerID: "anthropic", modelID: "claude-sonnet-4-20250514" },
-      concurrencyGroup: "explore",
+      concurrencyGroup: "tracker",
     }
     getTaskMap(manager).set(taskWithModel.id, taskWithModel)
 
@@ -2246,7 +2246,7 @@ describe("BackgroundManager.resume model persistence", () => {
     // then
     expect(promptCalls).toHaveLength(1)
     expect(promptCalls[0].body.model).toEqual({ providerID: "anthropic", modelID: "claude-sonnet-4-20250514" })
-    expect(promptCalls[0].body.agent).toBe("explore")
+    expect(promptCalls[0].body.agent).toBe("tracker")
   })
 
   test("should preserve promoted per-model settings when resuming a task", async () => {
@@ -2258,7 +2258,7 @@ describe("BackgroundManager.resume model persistence", () => {
       parentMessageID: "msg-1",
       description: "task with advanced model settings",
       prompt: "original prompt",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -2272,7 +2272,7 @@ describe("BackgroundManager.resume model persistence", () => {
         maxTokens: 8192,
         thinking: { type: "disabled" },
       },
-      concurrencyGroup: "explore",
+      concurrencyGroup: "tracker",
     }
     getTaskMap(manager).set(taskWithAdvancedModel.id, taskWithAdvancedModel)
 
@@ -2312,11 +2312,11 @@ describe("BackgroundManager.resume model persistence", () => {
       parentMessageID: "msg-1",
       description: "task without model",
       prompt: "original prompt",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
-      concurrencyGroup: "explore",
+      concurrencyGroup: "tracker",
     }
     getTaskMap(manager).set(taskWithoutModel.id, taskWithoutModel)
 
@@ -2331,7 +2331,7 @@ describe("BackgroundManager.resume model persistence", () => {
     // then
     expect(promptCalls).toHaveLength(1)
     expect("model" in promptCalls[0].body).toBe(false)
-    expect(promptCalls[0].body.agent).toBe("explore")
+    expect(promptCalls[0].body.agent).toBe("tracker")
   })
 })
 
@@ -4659,7 +4659,7 @@ describe("BackgroundManager.handleEvent - session.error", () => {
       parentSessionID: "parent-session",
       parentMessageID: "msg-retry",
       description: input.description,
-      agent: "sisyphus",
+      agent: "chief",
       status: "running",
       concurrencyKey: input.concurrencyKey,
       model: { providerID: "anthropic", modelID: "claude-opus-4.7-thinking" },
@@ -4684,7 +4684,7 @@ describe("BackgroundManager.handleEvent - session.error", () => {
       parentSessionID: "parent-session",
       parentMessageID: "msg-1",
       description: "task that errors",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       concurrencyKey,
     })
@@ -4759,7 +4759,7 @@ describe("BackgroundManager.handleEvent - session.error", () => {
       parentSessionID: "parent-session",
       parentMessageID: "msg-1",
       description: "task already done",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
     })
     task.completedAt = new Date()
@@ -5139,7 +5139,7 @@ describe("BackgroundManager.completionTimers - Memory Leak Fix", () => {
       parentMessageID: "msg-a",
       description: "Task A",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -5151,7 +5151,7 @@ describe("BackgroundManager.completionTimers - Memory Leak Fix", () => {
       parentMessageID: "msg-b",
       description: "Task B",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -5209,7 +5209,7 @@ describe("BackgroundManager.completionTimers - Memory Leak Fix", () => {
       parentMessageID: "msg-1",
       description: "Test task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
     }
@@ -5287,7 +5287,7 @@ describe("BackgroundManager.handleEvent - early session.idle deferral", () => {
       parentMessageID: "msg-1",
       description: "early idle task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(baseNow),
     }
@@ -5343,7 +5343,7 @@ describe("BackgroundManager.handleEvent - early session.idle deferral", () => {
       parentMessageID: "msg-1",
       description: "late idle task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(Date.now() - (MIN_IDLE_TIME_MS + 10)),
     }
@@ -5398,7 +5398,7 @@ describe("BackgroundManager.handleEvent - early session.idle deferral", () => {
       parentMessageID: "msg-1",
       description: "deferred noop task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(baseNow),
     }
@@ -5447,7 +5447,7 @@ describe("BackgroundManager.handleEvent - non-tool event lastUpdate", () => {
       parentMessageID: "msg-1",
       description: "Thinking task",
       prompt: "Think deeply",
-      agent: "oracle",
+      agent: "thinker",
       status: "running",
       startedAt: new Date(Date.now() - 600_000),
       progress: {
@@ -5487,7 +5487,7 @@ describe("BackgroundManager.handleEvent - non-tool event lastUpdate", () => {
       parentMessageID: "msg-1",
       description: "Reasoning task",
       prompt: "Reason about architecture",
-      agent: "oracle",
+      agent: "thinker",
       status: "running",
       startedAt: new Date(Date.now() - 600_000),
       progress: {
@@ -5526,7 +5526,7 @@ describe("BackgroundManager.handleEvent - non-tool event lastUpdate", () => {
       parentMessageID: "msg-1",
       description: "New task",
       prompt: "Start thinking",
-      agent: "oracle",
+      agent: "thinker",
       status: "running",
       startedAt: new Date(Date.now() - 60_000),
     }
@@ -5563,7 +5563,7 @@ describe("BackgroundManager.handleEvent - non-tool event lastUpdate", () => {
       parentMessageID: "msg-1",
       description: "Long thinking task",
       prompt: "Deep reasoning",
-      agent: "oracle",
+      agent: "thinker",
       status: "running",
       startedAt: new Date(Date.now() - 600_000),
       progress: {
@@ -5603,7 +5603,7 @@ describe("BackgroundManager.handleEvent - non-tool event lastUpdate", () => {
       parentMessageID: "msg-1",
       description: "Reasoning task with delta events",
       prompt: "Extended thinking",
-      agent: "oracle",
+      agent: "thinker",
       status: "running",
       startedAt: new Date(Date.now() - 600_000),
       progress: {
@@ -5661,7 +5661,7 @@ describe("BackgroundManager.handleEvent - non-tool event lastUpdate", () => {
       parentMessageID: "msg-1",
       description: "idle cached output task",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(Date.now() - (MIN_IDLE_TIME_MS + 10)),
     }
@@ -5704,11 +5704,11 @@ describe("BackgroundManager regression fixes - resume and aborted notification",
       parentMessageID: "msg-1",
       description: "resume timer regression",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
-      concurrencyGroup: "explore",
+      concurrencyGroup: "tracker",
     }
     getTaskMap(manager).set(task.id, task)
 
@@ -5757,7 +5757,7 @@ describe("BackgroundManager regression fixes - resume and aborted notification",
       parentMessageID: "msg-1",
       description: "aborted prompt cleanup regression",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -5776,7 +5776,7 @@ describe("BackgroundManager regression fixes - resume and aborted notification",
 })
 
 describe("BackgroundManager - tool permission spread order", () => {
-  test("startTask respects explore agent restrictions", async () => {
+  test("startTask respects tracker agent restrictions", async () => {
     //#given
     let capturedTools: Record<string, unknown> | undefined
     const client = {
@@ -5796,7 +5796,7 @@ describe("BackgroundManager - tool permission spread order", () => {
       queuedAt: new Date(),
       description: "test task",
       prompt: "test prompt",
-      agent: "explore",
+      agent: "tracker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-message",
     }
@@ -5814,7 +5814,7 @@ describe("BackgroundManager - tool permission spread order", () => {
 
     //#then
     expect(capturedTools).toBeDefined()
-    expect(capturedTools?.call_omo_agent).toBe(false)
+    expect(capturedTools?.call_cortex_agent).toBe(false)
     expect(capturedTools?.task).toBe(false)
     expect(capturedTools?.write).toBe(false)
     expect(capturedTools?.edit).toBe(false)
@@ -5842,7 +5842,7 @@ describe("BackgroundManager - tool permission spread order", () => {
       queuedAt: new Date(),
       description: "test task",
       prompt: "test prompt",
-      agent: "sisyphus-junior",
+      agent: "worker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-message",
       model: { providerID: "openai", modelID: "gpt-5.4", variant: "medium" },
@@ -5862,14 +5862,14 @@ describe("BackgroundManager - tool permission spread order", () => {
 
     //#then
     expect(promptCalls).toHaveLength(1)
-    expect(promptCalls[0].body.agent).toBe("sisyphus-junior")
+    expect(promptCalls[0].body.agent).toBe("worker")
     expect(promptCalls[0].body.model).toEqual({ providerID: "openai", modelID: "gpt-5.4" })
     expect(promptCalls[0].body.variant).toBe("medium")
 
     manager.shutdown()
   })
 
-  test("resume respects explore agent restrictions", async () => {
+  test("resume respects tracker agent restrictions", async () => {
     //#given
     let capturedTools: Record<string, unknown> | undefined
     const client = {
@@ -5889,7 +5889,7 @@ describe("BackgroundManager - tool permission spread order", () => {
       parentMessageID: "parent-message",
       description: "resume task",
       prompt: "resume prompt",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -5906,7 +5906,7 @@ describe("BackgroundManager - tool permission spread order", () => {
 
     //#then
     expect(capturedTools).toBeDefined()
-    expect(capturedTools?.call_omo_agent).toBe(false)
+    expect(capturedTools?.call_cortex_agent).toBe(false)
     expect(capturedTools?.task).toBe(false)
     expect(capturedTools?.write).toBe(false)
     expect(capturedTools?.edit).toBe(false)
@@ -5934,7 +5934,7 @@ describe("BackgroundManager - tool permission spread order", () => {
       parentMessageID: "parent-message",
       description: "resume task",
       prompt: "resume prompt",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(),
       completedAt: new Date(),
@@ -5952,7 +5952,7 @@ describe("BackgroundManager - tool permission spread order", () => {
 
     //#then
     expect(promptCall).toBeDefined()
-    expect(promptCall?.body.agent).toBe("explore")
+    expect(promptCall?.body.agent).toBe("tracker")
     expect(promptCall?.body.model).toEqual({ providerID: "anthropic", modelID: "claude-sonnet-4-20250514" })
 
     manager.shutdown()
@@ -5981,7 +5981,7 @@ describe("BackgroundManager.launch - attempt state initialization", () => {
     const task = await manager.launch({
       description: "attempt state test",
       prompt: "do something",
-      agent: "explore",
+      agent: "tracker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-message",
       model: { providerID: "anthropic", modelID: "claude-haiku-4.5" },
@@ -6028,7 +6028,7 @@ describe("BackgroundManager attempt lifecycle bindings", () => {
       queuedAt: new Date(),
       description: "retry binding task",
       prompt: "continue",
-      agent: "sisyphus-junior",
+      agent: "worker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-message",
       model: { providerID: "anthropic", modelID: "claude-haiku-4.5", variant: "max" },
@@ -6100,7 +6100,7 @@ describe("BackgroundManager attempt lifecycle bindings", () => {
       sessionID: "session-attempt-2",
       description: "ignore stale retry events",
       prompt: "continue",
-      agent: "explore",
+      agent: "tracker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-message",
       model: { providerID: "anthropic", modelID: "claude-haiku-4.5" },
@@ -6189,7 +6189,7 @@ describe("BackgroundManager attempt lifecycle bindings", () => {
       queuedAt: new Date("2026-04-27T00:00:00.000Z"),
       description: "ignore stale prompt errors",
       prompt: "continue",
-      agent: "sisyphus-junior",
+      agent: "worker",
       parentSessionID: "parent-session",
       parentMessageID: "parent-message",
       model: { providerID: "openai", modelID: "gpt-5.4-mini" },

@@ -8,7 +8,7 @@
 
 ## WHY IT EXISTS
 
-Claude Code ecosystem ships MCPs via `.mcp.json` files with `${VAR}` env var placeholders. OmO consumes these unchanged so existing Claude Code MCP configs work.
+Claude Code ecosystem ships MCPs via `.mcp.json` files with `${VAR}` env var placeholders. OMX consumes these unchanged so existing Claude Code MCP configs work.
 
 ## LOAD PIPELINE
 

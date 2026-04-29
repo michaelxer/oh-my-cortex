@@ -68,7 +68,7 @@ function convertSDKMessageToStoredMessage(msg: SDKMessage): StoredMessage | null
 // TODO: These SDK-based functions are exported for future use when hooks migrate to async.
 // Currently, callers still use the sync JSON-based functions which return null on beta.
 // Migration requires making callers async, which is a larger refactoring.
-// See: https://github.com/code-yeongyu/oh-my-openagent/pull/1837
+// See: https://github.com/michaelxer/oh-my-cortex/pull/1837
 
 /**
  * Finds the nearest message with required fields using SDK (for beta/SQLite backend).
@@ -308,9 +308,9 @@ function getOrCreateMessageDir(sessionID: string): string {
  *
  * Features degraded on beta:
  * - Hook message injection (e.g., continuation prompts, context injection) won't persist
- * - Atlas hook's injected messages won't be visible in SQLite backend
+ * - Lead hook's injected messages won't be visible in SQLite backend
  * - Todo continuation enforcer's injected prompts won't persist
- * - Ralph loop's continuation prompts won't persist
+ * - Cortex loop's continuation prompts won't persist
  *
  * @param sessionID - Target session ID
  * @param hookContent - Content to inject

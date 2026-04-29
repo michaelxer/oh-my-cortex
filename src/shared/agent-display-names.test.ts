@@ -3,25 +3,25 @@ import { AGENT_DISPLAY_NAMES, getAgentConfigKey, getAgentDisplayName, getAgentLi
 
 describe("getAgentDisplayName", () => {
   it("returns display name for lowercase config key (new format)", () => {
-    // given config key "sisyphus"
-    const configKey = "sisyphus"
+    // given config key "chief"
+    const configKey = "chief"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "Sisyphus - Ultraworker"
-    expect(result).toBe("Sisyphus - Ultraworker")
+    // then returns "Chief - Deepworker"
+    expect(result).toBe("Chief - Deepworker")
   })
 
   it("returns display name for uppercase config key (old format - case-insensitive)", () => {
-    // given config key "Sisyphus" (old format)
-    const configKey = "Sisyphus"
+    // given config key "Chief" (old format)
+    const configKey = "Chief"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "Sisyphus - Ultraworker" (case-insensitive lookup)
-    expect(result).toBe("Sisyphus - Ultraworker")
+    // then returns "Chief - Deepworker" (case-insensitive lookup)
+    expect(result).toBe("Chief - Deepworker")
   })
 
   it("returns original key for unknown agents (fallback)", () => {
@@ -35,134 +35,134 @@ describe("getAgentDisplayName", () => {
     expect(result).toBe("custom-agent")
   })
 
-  it("returns display name for atlas", () => {
-    // given config key "atlas"
-    const configKey = "atlas"
+  it("returns display name for lead", () => {
+    // given config key "lead"
+    const configKey = "lead"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-     // then returns "Atlas - Plan Executor"
-    expect(result).toBe("Atlas - Plan Executor")
+     // then returns "Lead - Plan Executor"
+    expect(result).toBe("Lead - Plan Executor")
   })
 
-  it("returns display name for prometheus", () => {
-    // given config key "prometheus"
-    const configKey = "prometheus"
+  it("returns display name for planner", () => {
+    // given config key "planner"
+    const configKey = "planner"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "Prometheus - Plan Builder"
-    expect(result).toBe("Prometheus - Plan Builder")
+    // then returns "Planner - Plan Builder"
+    expect(result).toBe("Planner - Plan Builder")
   })
 
-  it("returns display name for sisyphus-junior", () => {
-    // given config key "sisyphus-junior"
-    const configKey = "sisyphus-junior"
+  it("returns display name for worker", () => {
+    // given config key "worker"
+    const configKey = "worker"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "Sisyphus-Junior"
-    expect(result).toBe("Sisyphus-Junior")
+    // then returns "Worker"
+    expect(result).toBe("Worker")
   })
 
-  it("returns display name for metis", () => {
-    // given config key "metis"
-    const configKey = "metis"
+  it("returns display name for reviewer", () => {
+    // given config key "reviewer"
+    const configKey = "reviewer"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "Metis - Plan Consultant"
-    expect(result).toBe("Metis - Plan Consultant")
+    // then returns "Reviewer - Plan Consultant"
+    expect(result).toBe("Reviewer - Plan Consultant")
   })
 
-  it("returns display name for momus", () => {
-    // given config key "momus"
-    const configKey = "momus"
+  it("returns display name for critic", () => {
+    // given config key "critic"
+    const configKey = "critic"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-     // then returns "Momus - Plan Critic"
-    expect(result).toBe("Momus - Plan Critic")
+     // then returns "Critic - Plan Critic"
+    expect(result).toBe("Critic - Plan Critic")
   })
 
-  it("returns display name for oracle", () => {
-    // given config key "oracle"
-    const configKey = "oracle"
+  it("returns display name for thinker", () => {
+    // given config key "thinker"
+    const configKey = "thinker"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "oracle"
-    expect(result).toBe("oracle")
+    // then returns "thinker"
+    expect(result).toBe("thinker")
   })
 
-  it("returns display name for librarian", () => {
-    // given config key "librarian"
-    const configKey = "librarian"
+  it("returns display name for researcher", () => {
+    // given config key "researcher"
+    const configKey = "researcher"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "librarian"
-    expect(result).toBe("librarian")
+    // then returns "researcher"
+    expect(result).toBe("researcher")
   })
 
-  it("returns display name for explore", () => {
-    // given config key "explore"
-    const configKey = "explore"
+  it("returns display name for tracker", () => {
+    // given config key "tracker"
+    const configKey = "tracker"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "explore"
-    expect(result).toBe("explore")
+    // then returns "tracker"
+    expect(result).toBe("tracker")
   })
 
-  it("returns display name for multimodal-looker", () => {
-    // given config key "multimodal-looker"
-    const configKey = "multimodal-looker"
+  it("returns display name for spotter", () => {
+    // given config key "spotter"
+    const configKey = "spotter"
 
     // when getAgentDisplayName called
     const result = getAgentDisplayName(configKey)
 
-    // then returns "multimodal-looker"
-    expect(result).toBe("multimodal-looker")
+    // then returns "spotter"
+    expect(result).toBe("spotter")
   })
 })
 
 describe("getAgentConfigKey", () => {
   it("resolves display name to config key", () => {
-    // given display name "Sisyphus - Ultraworker"
+    // given display name "Chief - Deepworker"
     // when getAgentConfigKey called
-    // then returns "sisyphus"
-    expect(getAgentConfigKey("Sisyphus - Ultraworker")).toBe("sisyphus")
+    // then returns "chief"
+    expect(getAgentConfigKey("Chief - Deepworker")).toBe("chief")
   })
 
   it("resolves display name case-insensitively", () => {
     // given display name in different case
     // when getAgentConfigKey called
-    // then returns "atlas"
-    expect(getAgentConfigKey("atlas - plan executor")).toBe("atlas")
+    // then returns "lead"
+    expect(getAgentConfigKey("lead - plan executor")).toBe("lead")
   })
 
   it("resolves legacy parenthesized display names", () => {
     // given legacy parenthesized display name from old configs/sessions
     // when getAgentConfigKey called
     // then resolves to canonical config key
-    expect(getAgentConfigKey("Sisyphus (Ultraworker)")).toBe("sisyphus")
-    expect(getAgentConfigKey("Atlas (Plan Executor)")).toBe("atlas")
+    expect(getAgentConfigKey("Chief (Deepworker)")).toBe("chief")
+    expect(getAgentConfigKey("Lead (Plan Executor)")).toBe("lead")
   })
 
   it("passes through lowercase config keys unchanged", () => {
-    // given lowercase config key "prometheus"
+    // given lowercase config key "planner"
     // when getAgentConfigKey called
-    // then returns "prometheus"
-    expect(getAgentConfigKey("prometheus")).toBe("prometheus")
+    // then returns "planner"
+    expect(getAgentConfigKey("planner")).toBe("planner")
   })
 
   it("returns lowercased unknown agents", () => {
@@ -175,71 +175,71 @@ describe("getAgentConfigKey", () => {
   it("resolves all core agent display names", () => {
     // given all core display names
     // when/then each resolves to its config key
-    expect(getAgentConfigKey("Hephaestus - Deep Agent")).toBe("hephaestus")
-    expect(getAgentConfigKey("Prometheus - Plan Builder")).toBe("prometheus")
-    expect(getAgentConfigKey("Atlas - Plan Executor")).toBe("atlas")
-    expect(getAgentConfigKey("Metis - Plan Consultant")).toBe("metis")
-    expect(getAgentConfigKey("Momus - Plan Critic")).toBe("momus")
-    expect(getAgentConfigKey("Sisyphus-Junior")).toBe("sisyphus-junior")
+    expect(getAgentConfigKey("Founder - Deep Agent")).toBe("founder")
+    expect(getAgentConfigKey("Planner - Plan Builder")).toBe("planner")
+    expect(getAgentConfigKey("Lead - Plan Executor")).toBe("lead")
+    expect(getAgentConfigKey("Reviewer - Plan Consultant")).toBe("reviewer")
+    expect(getAgentConfigKey("Critic - Plan Critic")).toBe("critic")
+    expect(getAgentConfigKey("Worker")).toBe("worker")
   })
 
-  it("resolves atlas even when the UI ordering prefix is present", () => {
-    expect(getAgentConfigKey(getAgentListDisplayName("atlas"))).toBe("atlas")
+  it("resolves lead even when the UI ordering prefix is present", () => {
+    expect(getAgentConfigKey(getAgentListDisplayName("lead"))).toBe("lead")
   })
 
   it("resolves display names even when zero-width characters are embedded", () => {
-    expect(getAgentConfigKey("Sisyphus\u200B - Ultraworker")).toBe("sisyphus")
-    expect(getAgentConfigKey("\uFEFFAtlas - Plan Executor")).toBe("atlas")
+    expect(getAgentConfigKey("Chief\u200B - Deepworker")).toBe("chief")
+    expect(getAgentConfigKey("\uFEFFLead - Plan Executor")).toBe("lead")
   })
 })
 
 describe("getAgentListDisplayName", () => {
   it("returns the canonical display name for the core agent list", () => {
-    expect(getAgentListDisplayName("sisyphus")).toBe("Sisyphus - Ultraworker")
-    expect(getAgentListDisplayName("hephaestus")).toBe("Hephaestus - Deep Agent")
-    expect(getAgentListDisplayName("prometheus")).toBe("Prometheus - Plan Builder")
-    expect(getAgentListDisplayName("atlas")).toBe("Atlas - Plan Executor")
+    expect(getAgentListDisplayName("chief")).toBe("Chief - Deepworker")
+    expect(getAgentListDisplayName("founder")).toBe("Founder - Deep Agent")
+    expect(getAgentListDisplayName("planner")).toBe("Planner - Plan Builder")
+    expect(getAgentListDisplayName("lead")).toBe("Lead - Plan Executor")
   })
 
   it("keeps non-core agents unchanged for list display", () => {
-    expect(getAgentListDisplayName("oracle")).toBe("oracle")
+    expect(getAgentListDisplayName("thinker")).toBe("thinker")
   })
 
   it("is a thin alias for getAgentDisplayName", () => {
-    expect(getAgentListDisplayName("sisyphus")).toBe(getAgentDisplayName("sisyphus"))
+    expect(getAgentListDisplayName("chief")).toBe(getAgentDisplayName("chief"))
   })
 })
 
 describe("stripAgentListSortPrefix", () => {
   it("strips legacy zero-width sort prefixes baked into v3.14.0–v3.16.0 sessions", () => {
-    expect(stripAgentListSortPrefix("\u200B\u200BHephaestus - Deep Agent")).toBe("Hephaestus - Deep Agent")
+    expect(stripAgentListSortPrefix("\u200B\u200BFounder - Deep Agent")).toBe("Founder - Deep Agent")
   })
 })
 
 describe("normalizeAgentForPrompt", () => {
   it("strips core UI ordering prefixes back to canonical display names", () => {
-    expect(normalizeAgentForPrompt(getAgentListDisplayName("sisyphus"))).toBe("Sisyphus - Ultraworker")
-    expect(normalizeAgentForPrompt(getAgentListDisplayName("hephaestus"))).toBe("Hephaestus - Deep Agent")
-    expect(normalizeAgentForPrompt(getAgentListDisplayName("prometheus"))).toBe("Prometheus - Plan Builder")
-    expect(normalizeAgentForPrompt(getAgentListDisplayName("atlas"))).toBe("Atlas - Plan Executor")
+    expect(normalizeAgentForPrompt(getAgentListDisplayName("chief"))).toBe("Chief - Deepworker")
+    expect(normalizeAgentForPrompt(getAgentListDisplayName("founder"))).toBe("Founder - Deep Agent")
+    expect(normalizeAgentForPrompt(getAgentListDisplayName("planner"))).toBe("Planner - Plan Builder")
+    expect(normalizeAgentForPrompt(getAgentListDisplayName("lead"))).toBe("Lead - Plan Executor")
   })
 
   it("removes zero-width characters before returning canonical names", () => {
-    expect(normalizeAgentForPrompt("Sisyphus\u200B - Ultraworker")).toBe("Sisyphus - Ultraworker")
+    expect(normalizeAgentForPrompt("Chief\u200B - Deepworker")).toBe("Chief - Deepworker")
   })
 
   it("converts legacy parenthesized names to canonical display names", () => {
-    expect(normalizeAgentForPrompt("Atlas (Plan Executor)")).toBe("Atlas - Plan Executor")
+    expect(normalizeAgentForPrompt("Lead (Plan Executor)")).toBe("Lead - Plan Executor")
   })
 })
 
 describe("normalizeAgentForPromptKey", () => {
   it("converts built-in display names to config keys", () => {
-    expect(normalizeAgentForPromptKey("Sisyphus (Ultraworker)")).toBe("sisyphus")
+    expect(normalizeAgentForPromptKey("Chief (Deepworker)")).toBe("chief")
   })
 
   it("strips UI ordering prefixes before returning config keys", () => {
-    expect(normalizeAgentForPromptKey(getAgentListDisplayName("atlas"))).toBe("atlas")
+    expect(normalizeAgentForPromptKey(getAgentListDisplayName("lead"))).toBe("lead")
   })
 
   it("preserves custom agents", () => {
@@ -251,19 +251,19 @@ describe("AGENT_DISPLAY_NAMES", () => {
   it("contains all expected agent mappings", () => {
     // given expected mappings
     const expectedMappings = {
-      sisyphus: "Sisyphus - Ultraworker",
-      hephaestus: "Hephaestus - Deep Agent",
-      prometheus: "Prometheus - Plan Builder",
-      atlas: "Atlas - Plan Executor",
-      "sisyphus-junior": "Sisyphus-Junior",
-      metis: "Metis - Plan Consultant",
-      momus: "Momus - Plan Critic",
+      chief: "Chief - Deepworker",
+      founder: "Founder - Deep Agent",
+      planner: "Planner - Plan Builder",
+      lead: "Lead - Plan Executor",
+      "worker": "Worker",
+      reviewer: "Reviewer - Plan Consultant",
+      critic: "Critic - Plan Critic",
       athena: "Athena - Council",
       "athena-junior": "Athena-Junior - Council",
-      oracle: "oracle",
-      librarian: "librarian",
-      explore: "explore",
-      "multimodal-looker": "multimodal-looker",
+      thinker: "thinker",
+      researcher: "researcher",
+      tracker: "tracker",
+      "spotter": "spotter",
       "council-member": "council-member",
     }
 

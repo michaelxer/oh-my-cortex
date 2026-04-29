@@ -10,7 +10,7 @@
 
 | Mode | Flow | Use Case |
 |------|------|----------|
-| **Background** (`run_in_background=true`) | Launch → BackgroundManager → poll → notify parent | Explore, librarian, parallel work |
+| **Background** (`run_in_background=true`) | Launch → BackgroundManager → poll → notify parent | Tracker, researcher, parallel work |
 | **Sync** (`run_in_background=false`) | Create session → send prompt → poll until idle → return result | Sequential tasks needing immediate result |
 
 ## KEY FILES

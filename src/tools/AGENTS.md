@@ -29,7 +29,7 @@
 
 | Tool | Factory | Parameters |
 |------|---------|------------|
-| `call_omo_agent` | `createCallOmoAgent` | description, prompt, subagent_type, run_in_background, session_id |
+| `call_cortex_agent` | `createCallCortexAgent` | description, prompt, subagent_type, run_in_background, session_id |
 
 ### Background Tasks (2)
 

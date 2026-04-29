@@ -4,15 +4,15 @@
 
 ## OVERVIEW
 
-`bunx oh-my-opencode doctor` — parallel diagnostic checks across 4 categories (System, Config, Tools, Models). Catches broken installs, config typos, missing dependencies, provider misconfigurations before they become runtime errors.
+`bunx oh-my-cortex doctor` — parallel diagnostic checks across 4 categories (System, Config, Tools, Models). Catches broken installs, config typos, missing dependencies, provider misconfigurations before they become runtime errors.
 
 ## COMMAND FLAGS
 
 ```bash
-bunx oh-my-opencode doctor              # Full diagnostics (all 4 categories)
-bunx oh-my-opencode doctor --status     # Compact dashboard (status only)
-bunx oh-my-opencode doctor --verbose    # Deep details (model resolution traces)
-bunx oh-my-opencode doctor --json       # Machine-readable output
+bunx oh-my-cortex doctor              # Full diagnostics (all 4 categories)
+bunx oh-my-cortex doctor --status     # Compact dashboard (status only)
+bunx oh-my-cortex doctor --verbose    # Deep details (model resolution traces)
+bunx oh-my-cortex doctor --json       # Machine-readable output
 ```
 
 ## CHECK CATEGORIES
@@ -41,7 +41,7 @@ checks/
 ├── tools-mcp.ts                           # Built-in + user MCP reachability
 ├── model-resolution.ts                    # Main Models aggregator
 ├── model-resolution-cache.ts              # models.json presence + freshness
-├── model-resolution-config.ts             # oh-my-opencode.jsonc parse
+├── model-resolution-config.ts             # oh-my-cortex.jsonc parse
 ├── model-resolution-effective-model.ts    # Per-agent fallback chain trace
 ├── model-resolution-variant.ts            # Model variant (max, high, medium) handling
 ├── model-resolution-details.ts            # Verbose output formatter

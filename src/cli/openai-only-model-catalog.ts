@@ -1,8 +1,8 @@
-import type { AgentConfig, CategoryConfig, GeneratedOmoConfig, ProviderAvailability } from "./model-fallback-types"
+import type { AgentConfig, CategoryConfig, GeneratedOmxConfig, ProviderAvailability } from "./model-fallback-types"
 
 const OPENAI_ONLY_AGENT_OVERRIDES: Record<string, AgentConfig> = {
-  explore: { model: "openai/gpt-5.4-mini-fast" },
-  librarian: { model: "openai/gpt-5.4-mini-fast" },
+  tracker: { model: "openai/gpt-5.4-mini-fast" },
+  researcher: { model: "openai/gpt-5.4-mini-fast" },
 }
 
 const OPENAI_ONLY_CATEGORY_OVERRIDES: Record<string, CategoryConfig> = {
@@ -25,7 +25,7 @@ export function isOpenAiOnlyAvailability(availability: ProviderAvailability): bo
   )
 }
 
-export function applyOpenAiOnlyModelCatalog(config: GeneratedOmoConfig): GeneratedOmoConfig {
+export function applyOpenAiOnlyModelCatalog(config: GeneratedOmxConfig): GeneratedOmxConfig {
   return {
     ...config,
     agents: {

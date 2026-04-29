@@ -97,7 +97,7 @@ describe("auto-slash command executor plugin dispatch", () => {
 
   beforeEach(() => {
     clearCommandLoaderCache()
-    tempDir = mkdtempSync(join(tmpdir(), "omo-executor-plugin-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omx-executor-plugin-test-"))
     envSnapshot = {
       CLAUDE_CONFIG_DIR: process.env.CLAUDE_CONFIG_DIR,
       CLAUDE_PLUGINS_HOME: process.env.CLAUDE_PLUGINS_HOME,
@@ -196,7 +196,7 @@ describe("auto-slash command executor plugin dispatch", () => {
     expect(result.replacementText).not.toContain("${user_message}")
   })
 
-  it("renders Atlas as the builtin start-work agent during slash-command execution", async () => {
+  it("renders Lead as the builtin start-work agent during slash-command execution", async () => {
     // given
 
     // when
@@ -213,6 +213,6 @@ describe("auto-slash command executor plugin dispatch", () => {
 
     // then
     expect(result.success).toBe(true)
-    expect(result.replacementText).toContain("**Agent**: atlas")
+    expect(result.replacementText).toContain("**Agent**: lead")
   })
 })

@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 
-import { OhMyOpenCodeConfigSchema } from "../config"
+import { OhMyCortexConfigSchema } from "../config"
 import * as mcpLoader from "../features/claude-code-mcp-loader"
 import * as skillLoader from "../features/opencode-skill-loader"
 import { createSkillContext } from "./skill-context"
@@ -60,7 +60,7 @@ describe("createSkillContext", () => {
       "getSystemMcpServerNames",
     ).mockReturnValue(new Set<string>())
 
-    const pluginConfig = OhMyOpenCodeConfigSchema.parse({
+    const pluginConfig = OhMyCortexConfigSchema.parse({
       browser_automation_engine: { provider: "agent-browser" },
     })
 
@@ -123,7 +123,7 @@ describe("createSkillContext", () => {
       "getSystemMcpServerNames",
     ).mockReturnValue(new Set<string>())
 
-    const pluginConfig = OhMyOpenCodeConfigSchema.parse({
+    const pluginConfig = OhMyCortexConfigSchema.parse({
       browser_automation_engine: { provider: "playwright" },
     })
 

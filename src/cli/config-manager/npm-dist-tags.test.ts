@@ -21,7 +21,7 @@ describe("fetchNpmDistTags", () => {
     ) as unknown as typeof fetch
 
     //#when
-    const result = await fetchNpmDistTags("oh-my-openagent")
+    const result = await fetchNpmDistTags("oh-my-cortex")
 
     //#then
     expect(result).toEqual({ latest: "3.13.1", beta: "3.14.0-beta.1" })
@@ -32,7 +32,7 @@ describe("fetchNpmDistTags", () => {
     globalThis.fetch = mock(() => Promise.reject(new Error("Network error"))) as unknown as typeof fetch
 
     //#when
-    const result = await fetchNpmDistTags("oh-my-openagent")
+    const result = await fetchNpmDistTags("oh-my-cortex")
 
     //#then
     expect(result).toBeNull()
@@ -48,7 +48,7 @@ describe("fetchNpmDistTags", () => {
     ) as unknown as typeof fetch
 
     //#when
-    const result = await fetchNpmDistTags("oh-my-openagent")
+    const result = await fetchNpmDistTags("oh-my-cortex")
 
     //#then
     expect(result).toBeNull()

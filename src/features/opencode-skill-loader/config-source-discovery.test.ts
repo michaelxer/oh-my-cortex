@@ -71,7 +71,7 @@ describe("config source discovery", () => {
 
   it("loads skills from ~/ sources path", async () => {
     // given
-    const homeSkillsDir = join(homedir(), `.omo-config-source-${Date.now()}`)
+    const homeSkillsDir = join(homedir(), `.omx-config-source-${Date.now()}`)
     writeSkill(join(homeSkillsDir, "tilde-skill"), "tilde-skill", "Loaded from tilde path")
     const config = SkillsConfigSchema.parse({
       sources: [{ path: `~/${homeSkillsDir.split(homedir())[1]?.replace(/^\//, "")}`, recursive: true }],

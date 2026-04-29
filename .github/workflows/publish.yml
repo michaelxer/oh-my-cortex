@@ -68,7 +68,7 @@ jobs:
   publish-main:
     runs-on: ubuntu-latest
     needs: [test, typecheck]
-    if: github.repository == 'code-yeongyu/oh-my-openagent'
+    if: github.repository == 'code-yeongyu/oh-my-cortex'
     outputs:
       version: ${{ steps.version.outputs.version }}
       dist_tag: ${{ steps.version.outputs.dist_tag }}
@@ -101,7 +101,7 @@ jobs:
         run: |
           VERSION="$RAW_VERSION"
           if [ -z "$VERSION" ]; then
-            PREV=$(curl -s https://registry.npmjs.org/oh-my-opencode/latest | jq -r '.version // "0.0.0"')
+            PREV=$(curl -s https://registry.npmjs.org/oh-my-cortex/latest | jq -r '.version // "0.0.0"')
             BASE="${PREV%%-*}"
             IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE"
             case "$BUMP" in
@@ -136,10 +136,10 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-opencode/${VERSION}")
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-cortex/${VERSION}")
           if [ "$STATUS" = "200" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
-            echo "✓ oh-my-opencode@${VERSION} already published"
+            echo "✓ oh-my-cortex@${VERSION} already published"
           else
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
@@ -166,7 +166,7 @@ jobs:
           bunx tsc --emitDeclarationOnly
           bun run build:schema
 
-      - name: Publish oh-my-opencode
+      - name: Publish oh-my-cortex
         if: steps.check.outputs.skip != 'true'
         env:
           DIST_TAG: ${{ steps.version.outputs.dist_tag }}
@@ -179,20 +179,20 @@ jobs:
             npm publish --access public --provenance
           fi
 
-      - name: Check if oh-my-openagent already published
+      - name: Check if oh-my-cortex already published
         id: check-openagent
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-openagent/${VERSION}")
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-cortex/${VERSION}")
           if [ "$STATUS" = "200" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
-            echo "✓ oh-my-openagent@${VERSION} already published"
+            echo "✓ oh-my-cortex@${VERSION} already published"
           else
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Publish oh-my-openagent
+      - name: Publish oh-my-cortex
         if: steps.check-openagent.outputs.skip != 'true'
         env:
           VERSION: ${{ steps.version.outputs.version }}
@@ -200,13 +200,13 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
         run: |
-          # Update package name, version, and optionalDependencies for oh-my-openagent
+          # Update package name, version, and optionalDependencies for oh-my-cortex
           jq --arg v "$VERSION" '
-            .name = "oh-my-openagent" |
+            .name = "oh-my-cortex" |
             .version = $v |
             .optionalDependencies = (
               .optionalDependencies | to_entries |
-              map(.key = (.key | sub("^oh-my-opencode-"; "oh-my-openagent-")) | .value = $v) |
+              map(.key = (.key | sub("^oh-my-cortex-"; "oh-my-cortex-")) | .value = $v) |
               from_entries
             )
           ' package.json > tmp.json && mv tmp.json package.json

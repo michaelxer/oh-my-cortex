@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig } from "../../config"
+import type { OhMyCortexConfig } from "../../config"
 import { HOOK_NAME } from "./constants"
 import { log } from "../../shared/logger"
 import { SessionCategoryRegistry } from "../../shared/session-category-registry"
@@ -8,7 +8,7 @@ type ResolveFallbackBootstrapModelOptions = {
   source: string
   eventModel?: string
   resolvedAgent?: string
-  pluginConfig?: OhMyOpenCodeConfig
+  pluginConfig?: OhMyCortexConfig
 }
 
 export function resolveFallbackBootstrapModel(

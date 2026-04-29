@@ -1,7 +1,7 @@
 {
   "eval_id": 2,
-  "eval_name": "bugfix-atlas-null-check",
-  "prompt": "The atlas hook has a bug where it crashes when boulder.json is missing the worktree_path field. Fix it and land the fix as a PR. Make sure CI passes.",
+  "eval_name": "bugfix-lead-null-check",
+  "prompt": "The lead hook has a bug where it crashes when workstate.json is missing the worktree_path field. Fix it and land the fix as a PR. Make sure CI passes.",
   "assertions": [
     {
       "id": "worktree-isolation",
@@ -24,8 +24,8 @@
       "type": "manual"
     },
     {
-      "id": "real-atlas-files",
-      "text": "References actual atlas hook files in src/hooks/atlas/",
+      "id": "real-lead-files",
+      "text": "References actual lead hook files in src/hooks/lead/",
       "type": "manual"
     },
     {

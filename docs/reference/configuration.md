@@ -1,6 +1,6 @@
 # Configuration Reference
 
-Complete reference for Oh My OpenCode plugin configuration. During the rename transition, the runtime recognizes both `oh-my-openagent.json[c]` and legacy `oh-my-opencode.json[c]` files.
+Complete reference for Oh My Cortex plugin configuration. During the rename transition, the runtime recognizes both `oh-my-cortex.json[c]` and legacy `oh-my-cortex.json[c]` files.
 
 ---
 
@@ -15,8 +15,8 @@ Complete reference for Oh My OpenCode plugin configuration. During the rename tr
   - [Model Resolution](#model-resolution)
 - [Task System](#task-system)
   - [Background Tasks](#background-tasks)
-  - [Sisyphus Agent](#sisyphus-agent)
-  - [Sisyphus Tasks](#sisyphus-tasks)
+  - [Chief Agent](#chief-agent)
+  - [Chief Tasks](#chief-tasks)
 - [Features](#features)
   - [Skills](#skills)
   - [Hooks](#hooks)
@@ -45,26 +45,26 @@ Complete reference for Oh My OpenCode plugin configuration. During the rename tr
 
 User config is loaded first, then project config overrides it. In each directory, the compatibility layer recognizes both the renamed and legacy basenames.
 
-1. Project config: `.opencode/oh-my-openagent.json[c]` or `.opencode/oh-my-opencode.json[c]`
+1. Project config: `.opencode/oh-my-cortex.json[c]` or `.opencode/oh-my-cortex.json[c]`
 2. User config (`.jsonc` preferred over `.json`):
 
 | Platform    | Path candidates |
 | ----------- | --------------- |
-| macOS/Linux | `~/.config/opencode/oh-my-openagent.json[c]`, `~/.config/opencode/oh-my-opencode.json[c]` |
-| Windows     | `%APPDATA%\opencode\oh-my-openagent.json[c]`, `%APPDATA%\opencode\oh-my-opencode.json[c]` |
+| macOS/Linux | `~/.config/opencode/oh-my-cortex.json[c]`, `~/.config/opencode/oh-my-cortex.json[c]` |
+| Windows     | `%APPDATA%\opencode\oh-my-cortex.json[c]`, `%APPDATA%\opencode\oh-my-cortex.json[c]` |
 
-**Rename compatibility:** The published package and CLI binary remain `oh-my-opencode`. OpenCode plugin registration prefers `oh-my-openagent`, while legacy `oh-my-opencode` entries and config basenames still load during the transition. Config detection checks `oh-my-opencode` before `oh-my-openagent`, so if both plugin config basenames exist in the same directory, the legacy `oh-my-opencode.*` file currently wins.
+**Rename compatibility:** The published package and CLI binary remain `oh-my-cortex`. OpenCode plugin registration prefers `oh-my-cortex`, while legacy `oh-my-cortex` entries and config basenames still load during the transition. Config detection checks `oh-my-cortex` before `oh-my-cortex`, so if both plugin config basenames exist in the same directory, the legacy `oh-my-cortex.*` file currently wins.
 JSONC supports `// line comments`, `/* block comments */`, and trailing commas.
 
 Enable schema autocomplete:
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json"
+  "$schema": "https://raw.githubusercontent.com/michaelxer/oh-my-cortex/dev/assets/oh-my-cortex.schema.json"
 }
 ```
 
-Run `bunx oh-my-opencode install` for guided setup. Run `opencode models` to list available models.
+Run `bunx oh-my-cortex install` for guided setup. Run `opencode models` to list available models.
 
 ### Quick Start Example
 
@@ -72,24 +72,24 @@ Here's a practical starting configuration:
 
 ```jsonc
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "$schema": "https://raw.githubusercontent.com/michaelxer/oh-my-cortex/dev/assets/oh-my-cortex.schema.json",
 
   "agents": {
     // Main orchestrator: Claude Opus or Kimi K2.5 work best
-    "sisyphus": {
+    "chief": {
       "model": "kimi-for-coding/k2p5",
-      "ultrawork": { "model": "anthropic/claude-opus-4-7", "variant": "max" },
+      "deepwork": { "model": "anthropic/claude-opus-4-7", "variant": "max" },
     },
 
     // Research agents: cheap fast models are fine
-    "librarian": { "model": "google/gemini-3-flash" },
-    "explore": { "model": "github-copilot/grok-code-fast-1" },
+    "researcher": { "model": "google/gemini-3-flash" },
+    "tracker": { "model": "github-copilot/grok-code-fast-1" },
 
     // Architecture consultation: GPT-5.4 or Claude Opus
-    "oracle": { "model": "openai/gpt-5.4", "variant": "high" },
+    "thinker": { "model": "openai/gpt-5.4", "variant": "high" },
 
-    // Prometheus inherits sisyphus model; just add prompt guidance
-    "prometheus": {
+    // Planner inherits chief model; just add prompt guidance
+    "planner": {
       "prompt_append": "Leverage deep & quick agents heavily, always in parallel.",
     },
   },
@@ -146,20 +146,20 @@ Here's a practical starting configuration:
 
 ### Agents
 
-Override built-in agent settings. Available agents: `sisyphus`, `hephaestus`, `prometheus`, `oracle`, `librarian`, `explore`, `multimodal-looker`, `metis`, `momus`, `atlas`, `sisyphus-junior`.
+Override built-in agent settings. Available agents: `chief`, `founder`, `planner`, `thinker`, `researcher`, `tracker`, `spotter`, `reviewer`, `critic`, `lead`, `worker`.
 
 ```json
 {
   "agents": {
-    "explore": { "model": "anthropic/claude-haiku-4-5", "temperature": 0.5 },
-    "multimodal-looker": { "disable": true }
+    "tracker": { "model": "anthropic/claude-haiku-4-5", "temperature": 0.5 },
+    "spotter": { "disable": true }
   }
 }
 ```
 
-Disable agents entirely: `{ "disabled_agents": ["oracle", "multimodal-looker"] }`
+Disable agents entirely: `{ "disabled_agents": ["thinker", "spotter"] }`
 
-Core agents receive an injected runtime `order` field for deterministic Tab cycling in the UI: Sisyphus = 1, Hephaestus = 2, Prometheus = 3, Atlas = 4. This is not a user-configurable config key.
+Core agents receive an injected runtime `order` field for deterministic Tab cycling in the UI: Chief = 1, Founder = 2, Planner = 3, Lead = 4. This is not a user-configurable config key.
 
 #### Agent Options
 
@@ -189,7 +189,7 @@ Core agents receive an injected runtime `order` field for deterministic Tab cycl
 ```json
 {
   "agents": {
-    "oracle": { "thinking": { "type": "enabled", "budgetTokens": 200000 } }
+    "thinker": { "thinking": { "type": "enabled", "budgetTokens": 200000 } }
   }
 }
 ```
@@ -201,7 +201,7 @@ Control what tools an agent can use:
 ```json
 {
   "agents": {
-    "explore": {
+    "tracker": {
       "permission": {
         "edit": "deny",
         "bash": "ask",
@@ -228,7 +228,7 @@ Control what tools an agent can use:
 ```jsonc
 {
   "agents": {
-    "sisyphus": {
+    "chief": {
       "model": "anthropic/claude-opus-4-7",
       "fallback_models": [
         // Simple string fallback
@@ -258,13 +258,13 @@ Both `prompt` and `prompt_append` support loading content from files via `file:/
 ```jsonc
 {
   "agents": {
-    "sisyphus": {
+    "chief": {
       "prompt_append": "file:///absolute/path/to/prompt.txt"
     },
-    "oracle": {
+    "thinker": {
       "prompt": "file://./relative/to/project/prompt.md"
     },
-    "explore": {
+    "tracker": {
       "prompt_append": "file://~/home/dir/prompt.txt"
     }
   },
@@ -277,11 +277,11 @@ Both `prompt` and `prompt_append` support loading content from files via `file:/
 }
 ```
 
-Paths can be absolute (`file:///abs/path`), relative to project root (`file://./rel/path`), or home-relative (`file://~/home/path`). If a file URI cannot be decoded, resolved, or read, OmO inserts a warning placeholder into the prompt instead of failing hard.
+Paths can be absolute (`file:///abs/path`), relative to project root (`file://./rel/path`), or home-relative (`file://~/home/path`). If a file URI cannot be decoded, resolved, or read, OMX inserts a warning placeholder into the prompt instead of failing hard.
 
 ### Categories
 
-Domain-specific model delegation used by the `task()` tool. When Sisyphus delegates work, it picks a category, not a model name.
+Domain-specific model delegation used by the `task()` tool. When Chief delegates work, it picks a category, not a model name.
 
 #### Built-in Categories
 
@@ -326,7 +326,7 @@ Runtime priority:
 2. **User override** - model set in config → used exactly as-is. Even on cold cache, explicit user configuration takes precedence over hardcoded fallback chains
 3. **Category default** - model inherited from the assigned category config
 4. **User `fallback_models`** - user-configured fallback list is tried before built-in fallback chains
-5. **Provider fallback chain** - built-in provider/model chain from OmO source
+5. **Provider fallback chain** - built-in provider/model chain from OMX source
 6. **System default** - OpenCode's configured default model
 
 #### Model Settings Compatibility
@@ -348,23 +348,23 @@ Examples:
 - o-series models support `none` through `high` - `xhigh` is downgraded to `high`
 - GPT-5 supports `none`, `minimal`, `low`, `medium`, `high`, `xhigh` - all pass through
 
-Capability data comes from provider runtime metadata first. OmO also ships bundled models.dev-backed capability data, supports a refreshable local models.dev cache, and falls back to heuristic family detection plus alias rules when exact metadata is unavailable. `bunx oh-my-opencode doctor` surfaces capability diagnostics and warns when a configured model relies on compatibility fallback.
+Capability data comes from provider runtime metadata first. OMX also ships bundled models.dev-backed capability data, supports a refreshable local models.dev cache, and falls back to heuristic family detection plus alias rules when exact metadata is unavailable. `bunx oh-my-cortex doctor` surfaces capability diagnostics and warns when a configured model relies on compatibility fallback.
 
 
 #### Agent Provider Chains
 
 | Agent                 | Default Model       | Provider Priority                                                            |
 | --------------------- | ------------------- | ---------------------------------------------------------------------------- |
-| **Sisyphus**          | `claude-opus-4-7`   | `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `opencode-go/kimi-k2.5` → `kimi-for-coding/k2p5` → `opencode\|moonshotai\|moonshotai-cn\|firmware\|ollama-cloud\|aihubmix/kimi-k2.5` → `openai\|github-copilot\|opencode/gpt-5.4 (medium)` → `zai-coding-plan\|opencode/glm-5` → `opencode/big-pickle` |
-| **Hephaestus**        | `gpt-5.4`           | `gpt-5.4 (medium)`                                                           |
-| **oracle**            | `gpt-5.4`           | `openai\|github-copilot\|opencode/gpt-5.4 (high)` → `google\|github-copilot\|opencode/gemini-3.1-pro (high)` → `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `opencode-go/glm-5` |
-| **librarian**         | `gpt-5.4-mini-fast` | `openai/gpt-5.4-mini-fast` → `opencode-go\|vercel/minimax-m2.7-highspeed` → `opencode-go\|vercel/minimax-m2.7` → `anthropic\|opencode\|vercel/claude-haiku-4-5` → `openai\|opencode\|vercel/gpt-5.4-nano` |
-| **explore**           | `gpt-5.4-mini-fast` | `openai/gpt-5.4-mini-fast` → `opencode-go\|vercel/minimax-m2.7-highspeed` → `opencode-go\|vercel/minimax-m2.7` → `anthropic\|opencode\|vercel/claude-haiku-4-5` → `openai\|opencode\|vercel/gpt-5.4-nano` |
-| **multimodal-looker** | `gpt-5.4`           | `openai\|opencode/gpt-5.4 (medium)` → `opencode-go/kimi-k2.5` → `zai-coding-plan/glm-4.6v` → `openai\|github-copilot\|opencode/gpt-5-nano` |
-| **Prometheus**        | `claude-opus-4-7`   | `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `openai\|github-copilot\|opencode/gpt-5.4 (high)` → `opencode-go/glm-5` → `google\|github-copilot\|opencode/gemini-3.1-pro` |
-| **Metis**             | `claude-opus-4-7`   | `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `openai\|github-copilot\|opencode/gpt-5.4 (high)` → `opencode-go/glm-5` → `kimi-for-coding/k2p5` |
-| **Momus**             | `gpt-5.4`           | `openai\|github-copilot\|opencode/gpt-5.4 (xhigh)` → `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `google\|github-copilot\|opencode/gemini-3.1-pro (high)` → `opencode-go/glm-5` |
-| **Atlas**             | `claude-sonnet-4-6` | `anthropic\|github-copilot\|opencode/claude-sonnet-4-6` → `opencode-go/kimi-k2.5` → `openai\|github-copilot\|opencode/gpt-5.4 (medium)` → `opencode-go/minimax-m2.7` |
+| **Chief**          | `claude-opus-4-7`   | `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `opencode-go/kimi-k2.5` → `kimi-for-coding/k2p5` → `opencode\|moonshotai\|moonshotai-cn\|firmware\|ollama-cloud\|aihubmix/kimi-k2.5` → `openai\|github-copilot\|opencode/gpt-5.4 (medium)` → `zai-coding-plan\|opencode/glm-5` → `opencode/big-pickle` |
+| **Founder**        | `gpt-5.4`           | `gpt-5.4 (medium)`                                                           |
+| **thinker**            | `gpt-5.4`           | `openai\|github-copilot\|opencode/gpt-5.4 (high)` → `google\|github-copilot\|opencode/gemini-3.1-pro (high)` → `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `opencode-go/glm-5` |
+| **researcher**         | `gpt-5.4-mini-fast` | `openai/gpt-5.4-mini-fast` → `opencode-go\|vercel/minimax-m2.7-highspeed` → `opencode-go\|vercel/minimax-m2.7` → `anthropic\|opencode\|vercel/claude-haiku-4-5` → `openai\|opencode\|vercel/gpt-5.4-nano` |
+| **tracker**           | `gpt-5.4-mini-fast` | `openai/gpt-5.4-mini-fast` → `opencode-go\|vercel/minimax-m2.7-highspeed` → `opencode-go\|vercel/minimax-m2.7` → `anthropic\|opencode\|vercel/claude-haiku-4-5` → `openai\|opencode\|vercel/gpt-5.4-nano` |
+| **spotter** | `gpt-5.4`           | `openai\|opencode/gpt-5.4 (medium)` → `opencode-go/kimi-k2.5` → `zai-coding-plan/glm-4.6v` → `openai\|github-copilot\|opencode/gpt-5-nano` |
+| **Planner**        | `claude-opus-4-7`   | `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `openai\|github-copilot\|opencode/gpt-5.4 (high)` → `opencode-go/glm-5` → `google\|github-copilot\|opencode/gemini-3.1-pro` |
+| **Reviewer**             | `claude-opus-4-7`   | `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `openai\|github-copilot\|opencode/gpt-5.4 (high)` → `opencode-go/glm-5` → `kimi-for-coding/k2p5` |
+| **Critic**             | `gpt-5.4`           | `openai\|github-copilot\|opencode/gpt-5.4 (xhigh)` → `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `google\|github-copilot\|opencode/gemini-3.1-pro (high)` → `opencode-go/glm-5` |
+| **Lead**             | `claude-sonnet-4-6` | `anthropic\|github-copilot\|opencode/claude-sonnet-4-6` → `opencode-go/kimi-k2.5` → `openai\|github-copilot\|opencode/gpt-5.4 (medium)` → `opencode-go/minimax-m2.7` |
 
 #### Category Provider Chains
 
@@ -379,7 +379,7 @@ Capability data comes from provider runtime metadata first. OmO also ships bundl
 | **unspecified-high**   | `claude-opus-4-7`   | `anthropic\|github-copilot\|opencode/claude-opus-4-7 (max)` → `openai\|github-copilot\|opencode/gpt-5.4 (high)` → `zai-coding-plan\|opencode/glm-5` → `kimi-for-coding/k2p5` → `opencode-go/glm-5` → `opencode/kimi-k2.5` → `opencode\|moonshotai\|moonshotai-cn\|firmware\|ollama-cloud\|aihubmix/kimi-k2.5` |
 | **writing**            | `gemini-3-flash`    | `google\|github-copilot\|opencode/gemini-3-flash` → `opencode-go/kimi-k2.5` → `anthropic\|github-copilot\|opencode/claude-sonnet-4-6` → `opencode-go/minimax-m2.7` |
 
-Run `bunx oh-my-opencode doctor --verbose` to see effective model resolution for your config.
+Run `bunx oh-my-cortex doctor --verbose` to see effective model resolution for your config.
 
 ---
 
@@ -409,13 +409,13 @@ Control parallel agent execution and concurrency limits.
 
 Priority: `modelConcurrency` > `providerConcurrency` > `defaultConcurrency`
 
-### Sisyphus Agent
+### Chief Agent
 
 Configure the main orchestration system.
 
 ```json
 {
-  "sisyphus_agent": {
+  "chief_agent": {
     "disabled": false,
     "default_builder_enabled": false,
     "planner_enabled": true,
@@ -426,23 +426,23 @@ Configure the main orchestration system.
 
 | Option                    | Default | Description                                                     |
 | ------------------------- | ------- | --------------------------------------------------------------- |
-| `disabled`                | `false` | Disable all Sisyphus orchestration, restore original build/plan |
+| `disabled`                | `false` | Disable all Chief orchestration, restore original build/plan |
 | `default_builder_enabled` | `false` | Enable OpenCode-Builder agent (off by default)                  |
-| `planner_enabled`         | `true`  | Enable Prometheus (Planner) agent                               |
+| `planner_enabled`         | `true`  | Enable Planner (Planner) agent                               |
 | `replace_plan`            | `true`  | Demote default plan agent to subagent mode                      |
 
-Sisyphus agents can also be customized under `agents` using their names: `Sisyphus`, `OpenCode-Builder`, `Prometheus (Planner)`, `Metis (Plan Consultant)`.
+Chief agents can also be customized under `agents` using their names: `Chief`, `OpenCode-Builder`, `Planner (Planner)`, `Reviewer (Plan Consultant)`.
 
-### Sisyphus Tasks
+### Chief Tasks
 
-Enable the Sisyphus Tasks system for cross-session task tracking.
+Enable the Chief Tasks system for cross-session task tracking.
 
 ```json
 {
-  "sisyphus": {
+  "chief": {
     "tasks": {
       "enabled": false,
-      "storage_path": ".sisyphus/tasks",
+      "storage_path": ".cortex/tasks",
       "claude_code_compat": false
     }
   }
@@ -451,8 +451,8 @@ Enable the Sisyphus Tasks system for cross-session task tracking.
 
 | Option               | Default           | Description                                |
 | -------------------- | ----------------- | ------------------------------------------ |
-| `enabled`            | `false`           | Enable Sisyphus Tasks system               |
-| `storage_path`       | `.sisyphus/tasks` | Storage path (relative to project root)    |
+| `enabled`            | `false`           | Enable Chief Tasks system               |
+| `storage_path`       | `.cortex/tasks` | Storage path (relative to project root)    |
 | `claude_code_compat` | `false`           | Enable Claude Code path compatibility mode |
 
 ---
@@ -509,12 +509,12 @@ Disable built-in hooks via `disabled_hooks`:
 { "disabled_hooks": ["comment-checker"] }
 ```
 
-Available hooks: `todo-continuation-enforcer`, `context-window-monitor`, `session-recovery`, `session-notification`, `comment-checker`, `grep-output-truncator`, `tool-output-truncator`, `directory-agents-injector`, `directory-readme-injector`, `empty-task-response-detector`, `think-mode`, `anthropic-context-window-limit-recovery`, `rules-injector`, `background-notification`, `auto-update-checker`, `startup-toast`, `keyword-detector`, `agent-usage-reminder`, `non-interactive-env`, `interactive-bash-session`, `compaction-context-injector`, `thinking-block-validator`, `claude-code-hooks`, `ralph-loop`, `preemptive-compaction`, `auto-slash-command`, `sisyphus-junior-notepad`, `no-sisyphus-gpt`, `start-work`, `runtime-fallback`
+Available hooks: `todo-continuation-enforcer`, `context-window-monitor`, `session-recovery`, `session-notification`, `comment-checker`, `grep-output-truncator`, `tool-output-truncator`, `directory-agents-injector`, `directory-readme-injector`, `empty-task-response-detector`, `think-mode`, `anthropic-context-window-limit-recovery`, `rules-injector`, `background-notification`, `auto-update-checker`, `startup-toast`, `keyword-detector`, `agent-usage-reminder`, `non-interactive-env`, `interactive-bash-session`, `compaction-context-injector`, `thinking-block-validator`, `claude-code-hooks`, `cortex-loop`, `preemptive-compaction`, `auto-slash-command`, `worker-notepad`, `no-chief-gpt`, `start-work`, `runtime-fallback`
 
 **Notes:**
 
 - `directory-agents-injector` - auto-disabled on OpenCode 1.1.37+ (native AGENTS.md support)
-- `no-sisyphus-gpt` - **do not disable**. It blocks incompatible GPT models for Sisyphus while allowing the dedicated GPT-5.4 prompt path.
+- `no-chief-gpt` - **do not disable**. It blocks incompatible GPT models for Chief while allowing the dedicated GPT-5.4 prompt path.
 - `startup-toast` is a sub-feature of `auto-update-checker`. Disable just the toast by adding `startup-toast` to `disabled_hooks`.
 - `session-recovery` - automatically recovers from recoverable session errors (missing tool results, unavailable tools, thinking block violations). Shows toast notifications during recovery. Enable `experimental.auto_resume` for automatic retry after recovery.
 
@@ -526,7 +526,7 @@ Disable built-in commands via `disabled_commands`:
 { "disabled_commands": ["init-deep", "start-work"] }
 ```
 
-Available commands: `init-deep`, `ralph-loop`, `ulw-loop`, `cancel-ralph`, `refactor`, `start-work`, `stop-continuation`, `handoff`
+Available commands: `init-deep`, `cortex-loop`, `dw-loop`, `cancel-cortex`, `refactor`, `start-work`, `stop-continuation`, `handoff`
 
 ### Browser Automation
 
@@ -677,7 +677,7 @@ Define `fallback_models` per agent or category:
 ```json
 {
   "agents": {
-    "sisyphus": {
+    "chief": {
       "model": "anthropic/claude-opus-4-7",
       "fallback_models": [
         "openai/gpt-5.4",
@@ -696,7 +696,7 @@ Define `fallback_models` per agent or category:
 ```json
 {
   "agents": {
-    "sisyphus": {
+    "chief": {
       "model": "anthropic/claude-opus-4-7",
       "fallback_models": [
         "openai/gpt-5.4",
@@ -726,7 +726,7 @@ Object entries use the following shape:
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| `model` | string | Fallback model ID. Provider prefix is optional when OmO can inherit the current/default provider. |
+| `model` | string | Fallback model ID. Provider prefix is optional when OMX can inherit the current/default provider. |
 | `variant` | string | Explicit variant override for this fallback entry. |
 | `reasoningEffort` | string | OpenAI reasoning effort override for this fallback entry. |
 | `temperature` | number | Temperature applied if this fallback model becomes active. |
@@ -743,7 +743,7 @@ Per-model settings are **fallback-only**. They are promoted only when that speci
 | `type` | string | `enabled` or `disabled` |
 | `budgetTokens` | number | Optional Anthropic thinking budget |
 
-Object entries can also omit the provider prefix when OmO can infer it from the current/default provider. If you provide both inline variant syntax in `model` and an explicit `variant` field, the explicit `variant` field wins.
+Object entries can also omit the provider prefix when OMX can infer it from the current/default provider. If you provide both inline variant syntax in `model` and an explicit `variant` field, the explicit `variant` field wins.
 
 #### Full examples
 
@@ -754,7 +754,7 @@ Use strings when you only need an ordered fallback chain:
 ```json
 {
   "agents": {
-    "atlas": {
+    "lead": {
       "model": "anthropic/claude-sonnet-4-6",
       "fallback_models": [
         "anthropic/claude-haiku-4-5",
@@ -773,7 +773,7 @@ If the primary model already establishes the provider, fallback entries can omit
 ```json
 {
   "agents": {
-    "atlas": {
+    "lead": {
       "model": "openai/gpt-5.4",
       "fallback_models": [
         "gpt-5.4-mini",
@@ -788,7 +788,7 @@ If the primary model already establishes the provider, fallback entries can omit
 }
 ```
 
-In this example OmO treats `gpt-5.4-mini` and `gpt-5.3-codex` as OpenAI fallback entries because the current/default provider is already `openai`.
+In this example OMX treats `gpt-5.4-mini` and `gpt-5.3-codex` as OpenAI fallback entries because the current/default provider is already `openai`.
 
 **3. Mixed cross-provider chain**
 
@@ -797,7 +797,7 @@ Mix string entries and object entries when only some fallback models need specia
 ```json
 {
   "agents": {
-    "sisyphus": {
+    "chief": {
       "model": "anthropic/claude-opus-4-7",
       "fallback_models": [
         "openai/gpt-5.4",
@@ -850,7 +850,7 @@ This shows every supported object-style parameter in one place:
 ```json
 {
   "agents": {
-    "oracle": {
+    "thinker": {
       "model": "openai/gpt-5.4",
       "fallback_models": [
         {
@@ -880,7 +880,7 @@ This final example is a **complete shape reference**. In real configs, prefer pr
 
 ### Model Capabilities
 
-OmO can refresh a local models.dev capability snapshot on startup. This cache is controlled by `model_capabilities`.
+OMX can refresh a local models.dev capability snapshot on startup. This cache is controlled by `model_capabilities`.
 
 ```jsonc
 {
@@ -903,8 +903,8 @@ OmO can refresh a local models.dev capability snapshot on startup. This cache is
 Notes:
 
 - Startup refresh runs through the auto-update checker hook.
-- Manual refresh is available via `bunx oh-my-opencode refresh-model-capabilities`.
-- Provider runtime metadata still takes priority when OmO resolves capabilities for compatibility checks.
+- Manual refresh is available via `bunx oh-my-cortex refresh-model-capabilities`.
+- Provider runtime metadata still takes priority when OMX resolves capabilities for compatibility checks.
 
 ### Hashline Edit
 
@@ -924,7 +924,7 @@ When enabled, two companion hooks are active: `hashline-read-enhancer` (annotate
     "truncate_all_tool_outputs": false,
     "aggressive_truncation": false,
     "auto_resume": false,
-    "disable_omo_env": false,
+    "disable_omx_env": false,
     "task_system": true,
     "dynamic_context_pruning": {
       "enabled": false,
@@ -954,8 +954,8 @@ When enabled, two companion hooks are active: `hashline-read-enhancer` (annotate
 | `truncate_all_tool_outputs`              | `false`    | Truncate all tool outputs (not just whitelisted)                                     |
 | `aggressive_truncation`                  | `false`    | Aggressively truncate when token limit exceeded                                      |
 | `auto_resume`                            | `false`    | Auto-resume after thinking block recovery                                            |
-| `disable_omo_env`                        | `false`    | Disable auto-injected `<omo-env>` block (date/time/locale). Improves cache hit rate. |
-| `task_system`                            | `false`    | Enable Sisyphus task system                                                          |
+| `disable_omx_env`                        | `false`    | Disable auto-injected `<omx-env>` block (date/time/locale). Improves cache hit rate. |
+| `task_system`                            | `false`    | Enable Chief task system                                                          |
 | `dynamic_context_pruning.enabled`        | `false`    | Auto-prune old tool outputs to manage context window                                 |
 | `dynamic_context_pruning.notification`   | `detailed` | Pruning notifications: `off` / `minimal` / `detailed`                                |
 | `turn_protection.turns`                  | `3`        | Recent turns protected from pruning (1–10)                                           |
@@ -973,8 +973,8 @@ When enabled, two companion hooks are active: `hashline-read-enhancer` (annotate
 | Variable              | Description                                                       |
 | --------------------- | ----------------------------------------------------------------- |
 | `OPENCODE_CONFIG_DIR` | Override OpenCode config directory (useful for profile isolation) |
-| `OMO_SEND_ANONYMOUS_TELEMETRY` | Set to `0`, `false`, or `no` to disable anonymous telemetry |
-| `OMO_DISABLE_POSTHOG` | Legacy telemetry opt-out flag. Set to `1` or `true` to disable PostHog |
+| `OMX_SEND_ANONYMOUS_TELEMETRY` | Set to `0`, `false`, or `no` to disable anonymous telemetry |
+| `OMX_DISABLE_POSTHOG` | Legacy telemetry opt-out flag. Set to `1` or `true` to disable PostHog |
 | `POSTHOG_API_KEY` | Optional override for the built-in PostHog project API key |
 | `POSTHOG_HOST` | Override the PostHog ingestion host. Defaults to `https://us.i.posthog.com` |
 
@@ -991,7 +991,7 @@ Install [`opencode-antigravity-auth`](https://github.com/NoeFabris/opencode-anti
 ```json
 {
   "agents": {
-    "explore": { "model": "ollama/qwen3-coder", "stream": false }
+    "tracker": { "model": "ollama/qwen3-coder", "stream": false }
   }
 }
 ```

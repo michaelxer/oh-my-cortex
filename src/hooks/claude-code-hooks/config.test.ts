@@ -15,7 +15,7 @@ describe("loadClaudeHooksConfig", () => {
   beforeEach(() => {
     //#given
     originalWorkingDirectory = process.cwd()
-    tempDirectory = mkdtempSync(join(tmpdir(), "omo-claude-hooks-config-"))
+    tempDirectory = mkdtempSync(join(tmpdir(), "omx-claude-hooks-config-"))
     customSettingsPath = join(tempDirectory, "custom-settings.json")
     mkdirSync(join(tempDirectory, ".claude"), { recursive: true })
     process.chdir(tempDirectory)

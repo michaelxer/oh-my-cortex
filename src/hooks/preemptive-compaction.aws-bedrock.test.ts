@@ -2,7 +2,7 @@
 
 import { describe, expect, it, mock } from "bun:test"
 
-import { OhMyOpenCodeConfigSchema } from "../config"
+import { OhMyCortexConfigSchema } from "../config"
 
 const { createPreemptiveCompactionHook } = await import("./preemptive-compaction")
 
@@ -27,7 +27,7 @@ describe("preemptive-compaction aws-bedrock-anthropic", () => {
   it("triggers compaction for aws-bedrock-anthropic provider when usage exceeds threshold", async () => {
     // given
     const ctx = createMockContext()
-    const pluginConfig = OhMyOpenCodeConfigSchema.parse({})
+    const pluginConfig = OhMyCortexConfigSchema.parse({})
     const hook = createPreemptiveCompactionHook(ctx, pluginConfig)
     const sessionID = "ses_aws_bedrock_anthropic_high"
 

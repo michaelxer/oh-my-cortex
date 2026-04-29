@@ -363,9 +363,9 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
       session: {
         messages: async () => ({
           data: [
-            { info: { id: "msg_001", role: "user", time: { created: 1000 }, agent: "oracle" } },
+            { info: { id: "msg_001", role: "user", time: { created: 1000 }, agent: "thinker" } },
             {
-              info: { id: "msg_002", role: "assistant", time: { created: 2000 }, finish: "end_turn", agent: "oracle", providerID: "openai", modelID: "gpt-5.4" },
+              info: { id: "msg_002", role: "assistant", time: { created: 2000 }, finish: "end_turn", agent: "thinker", providerID: "openai", modelID: "gpt-5.4" },
               parts: [{ type: "text", text: "Response" }],
             },
           ],
@@ -397,7 +397,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     const args = {
       task_id: "ses_test_12345678",
       prompt: "continue working",
-      description: "resume oracle task",
+      description: "resume thinker task",
       load_skills: [],
       run_in_background: false,
     }
@@ -407,7 +407,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
 
     //#then - task_metadata should contain subagent field with the agent name
     expect(result).toContain("<task_metadata>")
-    expect(result).toContain("subagent: oracle")
+    expect(result).toContain("subagent: thinker")
     expect(result).toContain("session_id: ses_test_12345678")
   })
 
@@ -465,8 +465,8 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     expect(result).not.toContain("subagent:")
   })
 
-  test("preserves restricted tool permissions for resumed explore sessions", async () => {
-    //#given - a resumed explore session should not regain delegation tools
+  test("preserves restricted tool permissions for resumed tracker sessions", async () => {
+    //#given - a resumed tracker session should not regain delegation tools
     const promptAsyncCalls: Array<{ path: { id: string }; body: Record<string, unknown> }> = []
     const mockClient = {
       session: {
@@ -479,7 +479,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
                 role: "assistant",
                 time: { created: 2000 },
                 finish: "end_turn",
-                agent: "explore",
+                agent: "tracker",
               },
               parts: [{ type: "text", text: "Response" }],
             },
@@ -516,7 +516,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     const args = {
       task_id: "ses_test_12345678",
       prompt: "continue working",
-      description: "resume explore task",
+      description: "resume tracker task",
       load_skills: [],
       run_in_background: false,
     }
@@ -528,15 +528,15 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     expect(promptAsyncCalls).toHaveLength(1)
     expect(promptAsyncCalls[0]?.body.tools).toEqual({
       task: false,
-      call_omo_agent: false,
+      call_cortex_agent: false,
       question: false,
       write: false,
       edit: false,
     })
   })
 
-  test("preserves restricted tool permissions for resumed librarian sessions", async () => {
-    //#given - a resumed librarian session should stay read-only for delegation tools
+  test("preserves restricted tool permissions for resumed researcher sessions", async () => {
+    //#given - a resumed researcher session should stay read-only for delegation tools
     const promptAsyncCalls: Array<{ path: { id: string }; body: Record<string, unknown> }> = []
     const mockClient = {
       session: {
@@ -549,7 +549,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
                 role: "assistant",
                 time: { created: 2000 },
                 finish: "end_turn",
-                agent: "librarian",
+                agent: "researcher",
               },
               parts: [{ type: "text", text: "Response" }],
             },
@@ -586,7 +586,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     const args = {
       task_id: "ses_test_12345678",
       prompt: "continue researching",
-      description: "resume librarian task",
+      description: "resume researcher task",
       load_skills: [],
       run_in_background: false,
     }
@@ -598,15 +598,15 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     expect(promptAsyncCalls).toHaveLength(1)
     expect(promptAsyncCalls[0]?.body.tools).toEqual({
       task: false,
-      call_omo_agent: false,
+      call_cortex_agent: false,
       question: false,
       write: false,
       edit: false,
     })
   })
 
-  test("keeps task delegation enabled during prometheus sync continuation", async () => {
-    //#given - a resumed prometheus session should keep plan-family task permission
+  test("keeps task delegation enabled during planner sync continuation", async () => {
+    //#given - a resumed planner session should keep plan-family task permission
     const promptAsyncCalls: Array<{ path: { id: string }; body: Record<string, unknown> }> = []
     const mockClient = {
       session: {
@@ -619,7 +619,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
                 role: "assistant",
                 time: { created: 2000 },
                 finish: "end_turn",
-                agent: "prometheus",
+                agent: "planner",
               },
               parts: [{ type: "text", text: "Response" }],
             },
@@ -656,7 +656,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     const args = {
       task_id: "ses_test_12345678",
       prompt: "continue planning",
-      description: "resume prometheus task",
+      description: "resume planner task",
       load_skills: [],
       run_in_background: false,
     }
@@ -668,7 +668,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     expect(promptAsyncCalls).toHaveLength(1)
     expect(promptAsyncCalls[0]?.body.tools).toEqual({
       task: true,
-      call_omo_agent: true,
+      call_cortex_agent: true,
       question: false,
     })
   })

@@ -18,7 +18,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
   let testConfigDir = ""
 
   beforeEach(() => {
-    testConfigDir = join(tmpdir(), `omo-legacy-migrate-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testConfigDir = join(tmpdir(), `omx-legacy-migrate-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     mkdirSync(testConfigDir, { recursive: true })
     mockMigrateLegacyPluginEntry.mockReset()
     mockMigrateLegacyPluginEntry.mockReturnValue(true)
@@ -29,11 +29,11 @@ describe("autoMigrateLegacyPluginEntry", () => {
   })
 
   describe("#given opencode.json has a bare legacy plugin entry", () => {
-    it("#then replaces oh-my-opencode with oh-my-openagent", async () => {
+    it("#then replaces oh-my-cortex with oh-my-cortex", async () => {
       // given
       writeFileSync(
         join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-opencode"] }, null, 2) + "\n",
+        JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2) + "\n",
       )
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
@@ -43,8 +43,8 @@ describe("autoMigrateLegacyPluginEntry", () => {
 
       // then
       expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-opencode")
-      expect(result.to).toBe("oh-my-openagent")
+      expect(result.from).toBe("oh-my-cortex")
+      expect(result.to).toBe("oh-my-cortex")
       expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.json"))
     })
   })
@@ -54,7 +54,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
       // given
       writeFileSync(
         join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-opencode@3.10.0"] }, null, 2) + "\n",
+        JSON.stringify({ plugin: ["oh-my-cortex@3.10.0"] }, null, 2) + "\n",
       )
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
@@ -64,8 +64,8 @@ describe("autoMigrateLegacyPluginEntry", () => {
 
       // then
       expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-opencode@3.10.0")
-      expect(result.to).toBe("oh-my-openagent@3.10.0")
+      expect(result.from).toBe("oh-my-cortex@3.10.0")
+      expect(result.to).toBe("oh-my-cortex@3.10.0")
       expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.json"))
     })
   })
@@ -75,7 +75,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
       // given
       writeFileSync(
         join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-openagent", "oh-my-opencode"] }, null, 2) + "\n",
+        JSON.stringify({ plugin: ["oh-my-cortex", "oh-my-cortex"] }, null, 2) + "\n",
       )
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
@@ -85,7 +85,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
 
       // then
       expect(result.migrated).toBe(true)
-      expect(result.to).toBe("oh-my-openagent")
+      expect(result.to).toBe("oh-my-cortex")
       expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.json"))
     })
   })
@@ -110,7 +110,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
       // given
       writeFileSync(
         join(testConfigDir, "opencode.jsonc"),
-        '{\n  // my config\n  "plugin": ["oh-my-opencode"]\n}\n',
+        '{\n  // my config\n  "plugin": ["oh-my-cortex"]\n}\n',
       )
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
@@ -120,7 +120,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
 
       // then
       expect(result.migrated).toBe(true)
-      expect(result.to).toBe("oh-my-openagent")
+      expect(result.to).toBe("oh-my-cortex")
       expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.jsonc"))
     })
   })
@@ -132,9 +132,9 @@ describe("autoMigrateLegacyPluginEntry", () => {
         join(testConfigDir, "opencode.jsonc"),
         `{
   "nested": {
-    "plugin": ["oh-my-opencode"]
+    "plugin": ["oh-my-cortex"]
   },
-  "plugin": ["oh-my-opencode@latest"]
+  "plugin": ["oh-my-cortex@latest"]
 }
 `,
       )
@@ -146,8 +146,8 @@ describe("autoMigrateLegacyPluginEntry", () => {
 
       // then
       expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-opencode@latest")
-      expect(result.to).toBe("oh-my-openagent@latest")
+      expect(result.from).toBe("oh-my-cortex@latest")
+      expect(result.to).toBe("oh-my-cortex@latest")
       expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.jsonc"))
     })
   })
@@ -155,7 +155,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
   describe("#given only canonical entry exists", () => {
     it("#then returns migrated false and leaves file untouched", async () => {
       // given
-      const original = JSON.stringify({ plugin: ["oh-my-openagent"] }, null, 2) + "\n"
+      const original = JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2) + "\n"
       writeFileSync(join(testConfigDir, "opencode.json"), original)
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise

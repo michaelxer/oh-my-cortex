@@ -32,7 +32,7 @@ describe("prompt-builder", () => {
 
         // when
         const result = buildSystemContent({
-          agentName: "sisyphus-junior",
+          agentName: "worker",
           availableSkills,
           availableCategories,
         })
@@ -43,7 +43,7 @@ describe("prompt-builder", () => {
         expect(result).toContain("git-master")
       })
 
-      test("#when agent is explore #then system content includes available_skills section", () => {
+      test("#when agent is tracker #then system content includes available_skills section", () => {
         // given
         const availableSkills: AvailableSkill[] = [
           { name: "review-work", description: "Review code quality", location: "project" },
@@ -51,7 +51,7 @@ describe("prompt-builder", () => {
 
         // when
         const result = buildSystemContent({
-          agentName: "explore",
+          agentName: "tracker",
           availableSkills,
         })
 
@@ -66,7 +66,7 @@ describe("prompt-builder", () => {
 
         // when
         const result = buildSystemContent({
-          agentName: "sisyphus-junior",
+          agentName: "worker",
           availableSkills,
           categoryPromptAppend: "some category context",
         })
@@ -110,7 +110,7 @@ describe("prompt-builder", () => {
 
         // when
         const result = buildSystemContent({
-          agentName: "sisyphus-junior",
+          agentName: "worker",
           agentsContext: "Custom agent context here",
           availableSkills,
         })

@@ -92,8 +92,8 @@ describe("createEventHandler - model fallback", () => {
             parentID: "msg_user_1",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            mode: "Sisyphus - Ultraworker",
-            agent: "Sisyphus - Ultraworker",
+            mode: "Chief - Deepworker",
+            agent: "Chief - Deepworker",
             path: { cwd: "/tmp", root: "/tmp" },
             cost: 0,
             tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },
@@ -167,7 +167,7 @@ describe("createEventHandler - model fallback", () => {
         claudeCodeHooks: null,
         autoSlashCommand: null,
         startWork: null,
-        ralphLoop: null,
+        cortexLoop: null,
       } as any,
     })
 
@@ -183,7 +183,7 @@ describe("createEventHandler - model fallback", () => {
             content: [],
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Chief - Deepworker",
             path: { cwd: "/tmp", root: "/tmp" },
           },
         },
@@ -211,7 +211,7 @@ describe("createEventHandler - model fallback", () => {
     await chatMessageHandler(
       {
         sessionID,
-        agent: "sisyphus",
+        agent: "chief",
         model: { providerID: "anthropic", modelID: "claude-opus-4-7-thinking" },
       },
       output,
@@ -245,7 +245,7 @@ describe("createEventHandler - model fallback", () => {
             role: "user",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Chief - Deepworker",
           },
         },
       },
@@ -313,7 +313,7 @@ describe("createEventHandler - model fallback", () => {
             role: "user",
             modelID: "claude-opus-4-7",
             providerID: "quotio",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Chief - Deepworker",
           },
         },
       },
@@ -349,7 +349,7 @@ describe("createEventHandler - model fallback", () => {
     clearPendingModelFallback(modelFallback, sessionID)
     const pluginConfig = {
       agents: {
-        sisyphus: {
+        chief: {
           fallback_models: ["quotio/gpt-5.2", "quotio/kimi-k2.5"],
         },
       },
@@ -377,7 +377,7 @@ describe("createEventHandler - model fallback", () => {
         claudeCodeHooks: null,
         autoSlashCommand: null,
         startWork: null,
-        ralphLoop: null,
+        cortexLoop: null,
       } as any,
     })
 
@@ -393,7 +393,7 @@ describe("createEventHandler - model fallback", () => {
             content: [],
             modelID: "claude-opus-4-7",
             providerID: "quotio",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Chief - Deepworker",
             path: { cwd: "/tmp", root: "/tmp" },
           },
         },
@@ -421,7 +421,7 @@ describe("createEventHandler - model fallback", () => {
     await chatMessageHandler(
       {
         sessionID,
-        agent: "sisyphus",
+        agent: "chief",
         model: { providerID: "quotio", modelID: "claude-opus-4-7" },
       },
       output,
@@ -506,7 +506,7 @@ describe("createEventHandler - model fallback", () => {
         claudeCodeHooks: null,
         autoSlashCommand: null,
         startWork: null,
-        ralphLoop: null,
+        cortexLoop: null,
       } as any,
     })
 
@@ -535,7 +535,7 @@ describe("createEventHandler - model fallback", () => {
       await chatMessageHandler(
         {
           sessionID,
-          agent: "sisyphus",
+          agent: "chief",
           model: { providerID: "anthropic", modelID: "claude-opus-4-7-thinking" },
         },
         output,
@@ -594,7 +594,7 @@ describe("createEventHandler - model fallback", () => {
             parentID: "msg_user_disabled_1",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Chief - Deepworker",
             path: { cwd: "/tmp", root: "/tmp" },
             cost: 0,
             tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },

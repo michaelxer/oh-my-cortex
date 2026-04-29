@@ -4,13 +4,13 @@ mock.module("../../shared/system-directive", () => ({
   createSystemDirective: (type: string) => `[DIRECTIVE:${type}]`,
   SystemDirectiveTypes: {
     TODO_CONTINUATION: "TODO CONTINUATION",
-    RALPH_LOOP: "RALPH LOOP",
-    BOULDER_CONTINUATION: "BOULDER CONTINUATION",
+    CORTEX_LOOP: "CORTEX LOOP",
+    WORKSTATE_CONTINUATION: "WORKSTATE CONTINUATION",
     DELEGATION_REQUIRED: "DELEGATION REQUIRED",
     SINGLE_TASK_ONLY: "SINGLE TASK ONLY",
     COMPACTION_CONTEXT: "COMPACTION CONTEXT",
     CONTEXT_WINDOW_MONITOR: "CONTEXT WINDOW MONITOR",
-    PROMETHEUS_READ_ONLY: "PROMETHEUS READ-ONLY",
+    PLANNER_READ_ONLY: "PLANNER READ-ONLY",
   },
 }))
 
@@ -113,7 +113,7 @@ describe("createCompactionContextInjector", () => {
     it("injects actual task history when backgroundManager and sessionID provided", async () => {
       //#given
       const mockManager = { taskHistory: new TaskHistory() } as any
-      mockManager.taskHistory.record("ses_parent", { id: "t1", sessionID: "ses_child", agent: "explore", description: "Find patterns", status: "completed", category: "quick" })
+      mockManager.taskHistory.record("ses_parent", { id: "t1", sessionID: "ses_child", agent: "tracker", description: "Find patterns", status: "completed", category: "quick" })
       const injector = createCompactionContextInjector({ backgroundManager: mockManager })
 
       //#when
@@ -121,7 +121,7 @@ describe("createCompactionContextInjector", () => {
 
       //#then
       expect(prompt).toContain("Active/Recent Delegated Sessions")
-      expect(prompt).toContain("**explore**")
+      expect(prompt).toContain("**tracker**")
       expect(prompt).toContain("[quick]")
       expect(prompt).toContain("`ses_child`")
     })
@@ -149,7 +149,7 @@ describe("createCompactionContextInjector", () => {
             {
               info: {
                 role: "user",
-                agent: "atlas",
+                agent: "lead",
                 model: { providerID: "openai", modelID: "gpt-5" },
                 tools: { bash: "allow" },
               },
@@ -168,7 +168,7 @@ describe("createCompactionContextInjector", () => {
             {
               info: {
                 role: "user",
-                agent: "atlas",
+                agent: "lead",
                 model: { providerID: "openai", modelID: "gpt-5" },
               },
             },
@@ -189,7 +189,7 @@ describe("createCompactionContextInjector", () => {
         path: { id: "ses_checkpoint" },
         body: {
           noReply: true,
-          agent: "atlas",
+          agent: "lead",
           model: { providerID: "openai", modelID: "gpt-5" },
           tools: { bash: true },
           parts: [
@@ -212,7 +212,7 @@ describe("createCompactionContextInjector", () => {
             {
               info: {
                 role: "user",
-                agent: "atlas",
+                agent: "lead",
                 model: { providerID: "openai", modelID: "gpt-5" },
               },
             },
@@ -221,7 +221,7 @@ describe("createCompactionContextInjector", () => {
             {
               info: {
                 role: "user",
-                agent: "atlas",
+                agent: "lead",
                 model: { providerID: "openai", modelID: "gpt-5" },
               },
             },
@@ -230,7 +230,7 @@ describe("createCompactionContextInjector", () => {
             {
               info: {
                 role: "user",
-                agent: "atlas",
+                agent: "lead",
                 model: { providerID: "openai", modelID: "gpt-5" },
               },
             },
@@ -271,7 +271,7 @@ describe("createCompactionContextInjector", () => {
           path: { id: "ses_no_text_tail" },
           body: expect.objectContaining({
             noReply: true,
-            agent: "atlas",
+            agent: "lead",
           }),
         }),
       )

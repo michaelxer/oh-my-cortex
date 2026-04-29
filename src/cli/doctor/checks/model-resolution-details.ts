@@ -1,7 +1,7 @@
 import { join } from "node:path"
 
 import { getOpenCodeCacheDir } from "../../../shared"
-import type { AvailableModelsInfo, ModelResolutionInfo, OmoConfig } from "./model-resolution-types"
+import type { AvailableModelsInfo, ModelResolutionInfo, OmxConfig } from "./model-resolution-types"
 import { formatModelWithVariant, getCategoryEffectiveVariant, getEffectiveVariant } from "./model-resolution-variant"
 
 function formatCapabilityResolutionLabel(mode: string | undefined): string {
@@ -11,7 +11,7 @@ function formatCapabilityResolutionLabel(mode: string | undefined): string {
 export function buildModelResolutionDetails(options: {
   info: ModelResolutionInfo
   available: AvailableModelsInfo
-  config: OmoConfig
+  config: OmxConfig
 }): string[] {
   const details: string[] = []
   const cacheFile = join(getOpenCodeCacheDir(), "models.json")

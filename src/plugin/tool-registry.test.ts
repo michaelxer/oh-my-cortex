@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, mock, spyOn, test } from "bun:test"
 import { tool } from "@opencode-ai/plugin"
 
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import * as openclawRuntimeDispatch from "../openclaw/runtime-dispatch"
 import type { ToolsRecord } from "./types"
 
@@ -33,7 +33,7 @@ const { createToolRegistry, trimToolsToCap } = await import("./tool-registry")
 const toolFactories: NonNullable<Parameters<typeof createToolRegistry>[0]["toolFactories"]> = {
   builtinTools: { bash: fakeTool, read: fakeTool },
   createBackgroundTools: mock(() => ({})),
-  createCallOmoAgent: mock(() => fakeTool),
+  createCallCortexAgent: mock(() => fakeTool),
   createLookAt: mock(() => fakeTool),
   createSkillMcpTool: mock(() => fakeTool),
   createSkillTool: mock(() => fakeTool),
@@ -54,7 +54,7 @@ const toolFactories: NonNullable<Parameters<typeof createToolRegistry>[0]["toolF
   createHashlineEditTool: mock(() => fakeTool),
 }
 
-function createPluginConfig(overrides: Partial<OhMyOpenCodeConfig> = {}): OhMyOpenCodeConfig {
+function createPluginConfig(overrides: Partial<OhMyCortexConfig> = {}): OhMyCortexConfig {
   return {
     git_master: {
       commit_footer: false,

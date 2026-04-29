@@ -10,42 +10,42 @@ Agent factories following `createXXXAgent(model) → AgentConfig` pattern. Each 
 
 | Agent | Model | Temp | Mode | Fallback Chain | Purpose |
 |-------|-------|------|------|----------------|---------|
-| **Sisyphus** | claude-opus-4-7 max | 0.1 | all | k2p5 -> kimi-k2.5 -> gpt-5.5 medium -> glm-5 -> big-pickle | Main orchestrator, plans + delegates |
-| **Hephaestus** | gpt-5.5 medium | 0.1 | all | — | Autonomous deep worker |
-| **Oracle** | gpt-5.5 high | 0.1 | subagent | gemini-3.1-pro high -> claude-opus-4-7 max | Read-only consultation |
-| **Librarian** | gpt-5.4-mini-fast | 0.1 | subagent | minimax-m2.7-highspeed -> minimax-m2.7 -> claude-haiku-4-5 -> gpt-5.4-nano | External docs/code search |
-| **Explore** | gpt-5.4-mini-fast | 0.1 | subagent | minimax-m2.7-highspeed -> minimax-m2.7 -> claude-haiku-4-5 -> gpt-5.4-nano | Contextual grep |
+| **Chief** | claude-opus-4-7 max | 0.1 | all | k2p5 -> kimi-k2.5 -> gpt-5.5 medium -> glm-5 -> big-pickle | Main orchestrator, plans + delegates |
+| **Founder** | gpt-5.5 medium | 0.1 | all | — | Autonomous deep worker |
+| **Thinker** | gpt-5.5 high | 0.1 | subagent | gemini-3.1-pro high -> claude-opus-4-7 max | Read-only consultation |
+| **Researcher** | gpt-5.4-mini-fast | 0.1 | subagent | minimax-m2.7-highspeed -> minimax-m2.7 -> claude-haiku-4-5 -> gpt-5.4-nano | External docs/code search |
+| **Tracker** | gpt-5.4-mini-fast | 0.1 | subagent | minimax-m2.7-highspeed -> minimax-m2.7 -> claude-haiku-4-5 -> gpt-5.4-nano | Contextual grep |
 | **Multimodal-Looker** | gpt-5.3-codex medium | 0.1 | subagent | k2p5 -> gemini-3-flash -> glm-4.6v -> gpt-5-nano | PDF/image analysis |
-| **Metis** | claude-opus-4-7 max | **0.3** | subagent | gpt-5.5 high -> gemini-3.1-pro high | Pre-planning consultant |
-| **Momus** | gpt-5.5 xhigh | 0.1 | subagent | claude-opus-4-7 max -> gemini-3.1-pro high | Plan reviewer |
-| **Atlas** | claude-sonnet-4-6 | 0.1 | primary | gpt-5.5 medium | Todo-list orchestrator |
-| **Prometheus** | claude-opus-4-7 max | 0.1 | — | internal planner | Strategic planner (internal) |
-| **Sisyphus-Junior** | claude-sonnet-4-6 | 0.1 | all | user-configurable | Category-spawned executor |
+| **Reviewer** | claude-opus-4-7 max | **0.3** | subagent | gpt-5.5 high -> gemini-3.1-pro high | Pre-planning consultant |
+| **Critic** | gpt-5.5 xhigh | 0.1 | subagent | claude-opus-4-7 max -> gemini-3.1-pro high | Plan reviewer |
+| **Lead** | claude-sonnet-4-6 | 0.1 | primary | gpt-5.5 medium | Todo-list orchestrator |
+| **Planner** | claude-opus-4-7 max | 0.1 | — | internal planner | Strategic planner (internal) |
+| **Worker** | claude-sonnet-4-6 | 0.1 | all | user-configurable | Category-spawned executor |
 
 ## TOOL RESTRICTIONS
 
 | Agent | Denied Tools |
 |-------|-------------|
-| Oracle | write, edit, task, call_omo_agent |
-| Librarian | write, edit, task, call_omo_agent |
-| Explore | write, edit, task, call_omo_agent |
+| Thinker | write, edit, task, call_cortex_agent |
+| Researcher | write, edit, task, call_cortex_agent |
+| Tracker | write, edit, task, call_cortex_agent |
 | Multimodal-Looker | ALL except read |
-| Atlas | task, call_omo_agent |
-| Momus | write, edit, task |
+| Lead | task, call_cortex_agent |
+| Critic | write, edit, task |
 
 ## STRUCTURE
 
 ```
 agents/
-├── sisyphus.ts            # 559 LOC, main orchestrator
-├── hephaestus.ts          # 507 LOC, autonomous worker
-├── oracle.ts              # Read-only consultant
-├── librarian.ts           # External search
-├── explore.ts             # Codebase grep
-├── multimodal-looker.ts   # Vision/PDF
-├── metis.ts               # Pre-planning
-├── momus.ts               # Plan review
-├── atlas/agent.ts         # Todo orchestrator
+├── chief.ts            # 559 LOC, main orchestrator
+├── founder.ts          # 507 LOC, autonomous worker
+├── thinker.ts              # Read-only consultant
+├── researcher.ts           # External search
+├── tracker.ts             # Codebase grep
+├── spotter.ts   # Vision/PDF
+├── reviewer.ts               # Pre-planning
+├── critic.ts               # Plan review
+├── lead/agent.ts         # Todo orchestrator
 ├── types.ts               # AgentFactory, AgentMode
 ├── agent-builder.ts       # buildAgent() composition
 ├── utils.ts               # Agent utilities
@@ -58,9 +58,9 @@ agents/
 ├── custom-agent-summaries.ts        # Custom agent summaries
 ├── env-context.ts                   # Environment context
 └── builtin-agents/        # maybeCreateXXXConfig conditional factories
-    ├── sisyphus-agent.ts
-    ├── hephaestus-agent.ts
-    ├── atlas-agent.ts
+    ├── chief-agent.ts
+    ├── founder-agent.ts
+    ├── lead-agent.ts
     ├── general-agents.ts  # collectPendingBuiltinAgents
     └── available-skills.ts
 ```
@@ -83,4 +83,4 @@ Model resolution: 4-step: override → category-default → provider-fallback �
 
 - **primary**: Respects UI-selected model, uses fallback chain
 - **subagent**: Uses own fallback chain, ignores UI selection
-- **all**: Available in both contexts (Sisyphus-Junior)
+- **all**: Available in both contexts (Worker)

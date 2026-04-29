@@ -31,7 +31,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         id: "bg_unresolved",
         sessionID: undefined,
         description: "Unresolved session",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
       }),
       getTask: () => undefined,
@@ -52,7 +52,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_1" },
-      "explore",
+      "tracker",
       undefined,
       undefined,
       undefined,
@@ -74,7 +74,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         id: "bg_resolved",
         sessionID: "ses_sub_123",
         description: "Resolved session",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
       }),
       getTask: () => ({ sessionID: "ses_sub_123" }),
@@ -95,7 +95,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_2" },
-      "explore",
+      "tracker",
       undefined,
       undefined,
       undefined,
@@ -106,7 +106,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
     expectFn(result).toContain("session_id: ses_sub_123")
     expectFn(result).toContain("task_id: ses_sub_123")
     expectFn(result).toContain("background_task_id: bg_resolved")
-    expectFn(result).toContain("subagent: explore")
+    expectFn(result).toContain("subagent: tracker")
     expectFn(result).toContain("Background Task ID: bg_resolved")
     expectFn(metadataCalls).toHaveLength(1)
     expectFn(metadataCalls[0].metadata.sessionId).toBe("ses_sub_123")
@@ -123,7 +123,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         id: "bg_late",
         sessionID: undefined,
         description: "Late session",
-        agent: "explore",
+        agent: "tracker",
         status: "running",
       }),
       getTask: () => {
@@ -147,7 +147,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_3" },
-      "explore",
+      "tracker",
       undefined,
       undefined,
       undefined,
@@ -173,7 +173,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
           id: "bg_permission",
           sessionID: "ses_permission_123",
           description: "Permission session",
-          agent: "explore",
+          agent: "tracker",
           status: "running",
         }
       },
@@ -196,7 +196,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_4" },
-      "explore",
+      "tracker",
       undefined,
       undefined,
       undefined,
@@ -219,7 +219,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
           id: "bg_clean_agent",
           sessionID: "ses_clean_agent",
           description: "Clean agent",
-          agent: "sisyphus-junior",
+          agent: "worker",
           status: "running",
         }
       },
@@ -242,7 +242,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_clean_agent" },
-      "\u200Bsisyphus-junior",
+      "\u200Bworker",
       undefined,
       undefined,
       undefined,
@@ -250,7 +250,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
 
     //#then
     expectFn(launchCalls).toHaveLength(1)
-    expectFn((launchCalls[0] as { agent: string }).agent).toBe("sisyphus-junior")
+    expectFn((launchCalls[0] as { agent: string }).agent).toBe("worker")
   })
 
   testFn("keeps launched background task alive when parent aborts before session id resolves", async () => {
@@ -262,7 +262,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         id: "bg_abort_after_launch",
         sessionID: undefined,
         description: "Abort after launch",
-        agent: "explore",
+        agent: "tracker",
         status: "pending",
       }),
       getTask: () => {
@@ -287,7 +287,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_abort_after_launch" },
-      "explore",
+      "tracker",
       undefined,
       undefined,
       undefined,
@@ -311,7 +311,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         id: "bg_abort_category",
         sessionID: undefined,
         description: "Abort category",
-        agent: "explore",
+        agent: "tracker",
         status: "pending",
       }),
       getTask: () => {
@@ -339,7 +339,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_abort_category" },
-      "explore",
+      "tracker",
       undefined,
       undefined,
       [{ providers: ["openai"], model: "gpt-5.4" }],
@@ -361,7 +361,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         id: "bg_abort_terminal",
         sessionID: undefined,
         description: "Abort terminal",
-        agent: "explore",
+        agent: "tracker",
         status: "pending",
       }),
       getTask: () => ({ sessionID: undefined, status: "interrupt" }),
@@ -383,7 +383,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_abort_terminal" },
-      "explore",
+      "tracker",
       undefined,
       undefined,
       undefined,
@@ -403,7 +403,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         id: "bg_crash_before_prompt",
         sessionID: undefined,
         description: "Crash before prompt",
-        agent: "explore",
+        agent: "tracker",
         status: "pending",
       }),
       getTask: () => {
@@ -431,7 +431,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_crash" },
-      "explore",
+      "tracker",
       undefined,
       undefined,
       undefined,
@@ -455,8 +455,8 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       launch: async () => {
         launchCount += 1
         return launchCount === 1
-          ? { id: "bg_first", sessionID: undefined, description: "First", agent: "explore", status: "pending" }
-          : { id: "bg_second", sessionID: undefined, description: "Second", agent: "explore", status: "pending" }
+          ? { id: "bg_first", sessionID: undefined, description: "First", agent: "tracker", status: "pending" }
+          : { id: "bg_second", sessionID: undefined, description: "Second", agent: "tracker", status: "pending" }
       },
       getTask: (taskID: string) => {
         const state = states.get(taskID)
@@ -488,7 +488,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         },
         { manager },
         { sessionID: "ses_parent", messageID: "msg_first" },
-        "explore",
+        "tracker",
         undefined,
         undefined,
         undefined,
@@ -508,7 +508,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
         },
         { manager },
         { sessionID: "ses_parent", messageID: "msg_second" },
-        "explore",
+        "tracker",
         undefined,
         undefined,
         undefined,
@@ -533,7 +533,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
           id: "bg_legacy_zwsp",
           sessionID: "ses_legacy_zwsp",
           description: "Legacy ZWSP",
-          agent: "Hephaestus - Deep Agent",
+          agent: "Founder - Deep Agent",
           status: "running",
         }
       },
@@ -556,7 +556,7 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
       },
       { manager },
       { sessionID: "ses_parent", messageID: "msg_legacy_zwsp" },
-      "\u200B\u200BHephaestus - Deep Agent",
+      "\u200B\u200BFounder - Deep Agent",
       undefined,
       undefined,
       undefined,
@@ -564,6 +564,6 @@ describeFn("executeBackgroundTask output/session metadata compatibility", () => 
 
     //#then
     expectFn(launchCalls).toHaveLength(1)
-    expectFn(launchCalls[0].agent).toBe("Hephaestus - Deep Agent")
+    expectFn(launchCalls[0].agent).toBe("Founder - Deep Agent")
   })
 })

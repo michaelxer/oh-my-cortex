@@ -97,11 +97,11 @@ function createContext() {
   return {
     project: {
       id: "project-id",
-      worktree: "/tmp/omo-fix-memory-leaks",
+      worktree: "/tmp/omx-fix-memory-leaks",
       time: { created: Date.now() },
     },
-    directory: "/tmp/omo-fix-memory-leaks",
-    worktree: "/tmp/omo-fix-memory-leaks",
+    directory: "/tmp/omx-fix-memory-leaks",
+    worktree: "/tmp/omx-fix-memory-leaks",
     serverUrl: new URL("http://localhost:4096"),
     $: shell,
     client: {

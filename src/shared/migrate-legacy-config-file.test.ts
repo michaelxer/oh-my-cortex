@@ -8,7 +8,7 @@ describe("migrateLegacyConfigFile", () => {
   let testDir = ""
 
   beforeEach(() => {
-    testDir = join(tmpdir(), `omo-migrate-config-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testDir = join(tmpdir(), `omx-migrate-config-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     mkdirSync(testDir, { recursive: true })
   })
 
@@ -16,20 +16,20 @@ describe("migrateLegacyConfigFile", () => {
     rmSync(testDir, { recursive: true, force: true })
   })
 
-  describe("#given oh-my-opencode.jsonc exists but oh-my-openagent.jsonc does not", () => {
+  describe("#given oh-my-cortex.jsonc exists but oh-my-cortex.jsonc does not", () => {
     describe("#when migrating the config file", () => {
-      it("#then writes oh-my-openagent.jsonc and renames the legacy file to a backup", () => {
-        const legacyPath = join(testDir, "oh-my-opencode.jsonc")
-        const backupPath = join(testDir, "oh-my-opencode.jsonc.bak")
+      it("#then writes oh-my-cortex.jsonc and renames the legacy file to a backup", () => {
+        const legacyPath = join(testDir, "oh-my-cortex.jsonc")
+        const backupPath = join(testDir, "oh-my-cortex.jsonc.bak")
         writeFileSync(legacyPath, '{ "agents": {} }')
 
         const result = migrateLegacyConfigFile(legacyPath)
 
         expect(result).toBe(true)
-        expect(existsSync(join(testDir, "oh-my-openagent.jsonc"))).toBe(true)
+        expect(existsSync(join(testDir, "oh-my-cortex.jsonc"))).toBe(true)
         expect(existsSync(legacyPath)).toBe(false)
         expect(existsSync(backupPath)).toBe(true)
-        expect(readFileSync(join(testDir, "oh-my-openagent.jsonc"), "utf-8")).toBe('{ "agents": {} }')
+        expect(readFileSync(join(testDir, "oh-my-cortex.jsonc"), "utf-8")).toBe('{ "agents": {} }')
         expect(readFileSync(backupPath, "utf-8")).toBe('{ "agents": {} }')
       })
     })
@@ -38,10 +38,10 @@ describe("migrateLegacyConfigFile", () => {
   describe("#given a legacy config sidecar exists", () => {
     describe("#when migrating the config file", () => {
       it("#then copies applied migration history to the canonical sidecar", () => {
-        const legacyPath = join(testDir, "oh-my-opencode.json")
+        const legacyPath = join(testDir, "oh-my-cortex.json")
         const legacySidecarPath = `${legacyPath}.migrations.json`
-        const canonicalSidecarPath = join(testDir, "oh-my-openagent.json.migrations.json")
-        writeFileSync(legacyPath, '{ "agents": { "oracle": { "model": "anthropic/claude-opus-4-6" } } }')
+        const canonicalSidecarPath = join(testDir, "oh-my-cortex.json.migrations.json")
+        writeFileSync(legacyPath, '{ "agents": { "thinker": { "model": "anthropic/claude-opus-4-6" } } }')
         writeFileSync(
           legacySidecarPath,
           JSON.stringify({
@@ -60,25 +60,25 @@ describe("migrateLegacyConfigFile", () => {
     })
   })
 
-  describe("#given oh-my-opencode.json exists but oh-my-openagent.json does not", () => {
+  describe("#given oh-my-cortex.json exists but oh-my-cortex.json does not", () => {
     describe("#when migrating the config file", () => {
-      it("#then copies to oh-my-openagent.json", () => {
-        const legacyPath = join(testDir, "oh-my-opencode.json")
+      it("#then copies to oh-my-cortex.json", () => {
+        const legacyPath = join(testDir, "oh-my-cortex.json")
         writeFileSync(legacyPath, '{ "agents": {} }')
 
         const result = migrateLegacyConfigFile(legacyPath)
 
         expect(result).toBe(true)
-        expect(existsSync(join(testDir, "oh-my-openagent.json"))).toBe(true)
+        expect(existsSync(join(testDir, "oh-my-cortex.json"))).toBe(true)
       })
     })
   })
 
-  describe("#given oh-my-openagent.jsonc already exists", () => {
+  describe("#given oh-my-cortex.jsonc already exists", () => {
     describe("#when attempting migration", () => {
       it("#then returns false and does not overwrite", () => {
-        const legacyPath = join(testDir, "oh-my-opencode.jsonc")
-        const canonicalPath = join(testDir, "oh-my-openagent.jsonc")
+        const legacyPath = join(testDir, "oh-my-cortex.jsonc")
+        const canonicalPath = join(testDir, "oh-my-cortex.jsonc")
         writeFileSync(legacyPath, '{ "old": true }')
         writeFileSync(canonicalPath, '{ "new": true }')
 
@@ -93,7 +93,7 @@ describe("migrateLegacyConfigFile", () => {
   describe("#given the file does not exist", () => {
     describe("#when attempting migration", () => {
       it("#then returns false", () => {
-        const result = migrateLegacyConfigFile(join(testDir, "oh-my-opencode.jsonc"))
+        const result = migrateLegacyConfigFile(join(testDir, "oh-my-cortex.jsonc"))
 
         expect(result).toBe(false)
       })
@@ -116,9 +116,9 @@ describe("migrateLegacyConfigFile", () => {
   describe("#given canonical write succeeds but archive fails", () => {
     describe("#when migrating the config file", () => {
       it("#then returns true", () => {
-        const legacyPath = join(testDir, "oh-my-opencode.jsonc")
+        const legacyPath = join(testDir, "oh-my-cortex.jsonc")
         const backupPath = `${legacyPath}.bak`
-        const canonicalPath = join(testDir, "oh-my-openagent.jsonc")
+        const canonicalPath = join(testDir, "oh-my-cortex.jsonc")
         writeFileSync(legacyPath, '{ "agents": {} }')
 
         // given: create backup path as directory (blocks rename, causing archive to return false)

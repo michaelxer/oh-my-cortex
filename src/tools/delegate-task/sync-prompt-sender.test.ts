@@ -34,7 +34,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "sisyphus-junior",
+      agentToUse: "worker",
       args: {
         description: "test task",
         prompt: "test prompt",
@@ -55,7 +55,7 @@ bunDescribe("sendSyncPrompt", () => {
     bunExpect(promptArgs.body.tools.question).toBe(false)
   })
 
-  bunTest("applies agent tool restrictions for explore agent", async () => {
+  bunTest("applies agent tool restrictions for tracker agent", async () => {
     //#given
     const { sendSyncPrompt } = require("./sync-prompt-sender")
 
@@ -73,7 +73,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "explore",
+      agentToUse: "tracker",
       args: {
         description: "test task",
         prompt: "test prompt",
@@ -92,10 +92,10 @@ bunDescribe("sendSyncPrompt", () => {
 
     //#then
     bunExpect(promptAsync).toHaveBeenCalled()
-    bunExpect(promptArgs.body.tools.call_omo_agent).toBe(false)
+    bunExpect(promptArgs.body.tools.call_cortex_agent).toBe(false)
   })
 
-  bunTest("applies agent tool restrictions for librarian agent", async () => {
+  bunTest("applies agent tool restrictions for researcher agent", async () => {
     //#given
     const { sendSyncPrompt } = require("./sync-prompt-sender")
 
@@ -113,7 +113,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "librarian",
+      agentToUse: "researcher",
       args: {
         description: "test task",
         prompt: "test prompt",
@@ -132,10 +132,10 @@ bunDescribe("sendSyncPrompt", () => {
 
     //#then
     bunExpect(promptAsync).toHaveBeenCalled()
-    bunExpect(promptArgs.body.tools.call_omo_agent).toBe(false)
+    bunExpect(promptArgs.body.tools.call_cortex_agent).toBe(false)
   })
 
-  bunTest("does not restrict call_omo_agent for sisyphus agent", async () => {
+  bunTest("does not restrict call_cortex_agent for chief agent", async () => {
     //#given
     const { sendSyncPrompt } = require("./sync-prompt-sender")
 
@@ -153,7 +153,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "sisyphus",
+      agentToUse: "chief",
       args: {
         description: "test task",
         prompt: "test prompt",
@@ -172,7 +172,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     //#then
     bunExpect(promptAsync).toHaveBeenCalled()
-    bunExpect(promptArgs.body.tools.call_omo_agent).toBe(true)
+    bunExpect(promptArgs.body.tools.call_cortex_agent).toBe(true)
   })
 
   bunTest("includes agent alongside explicit category model", async () => {
@@ -193,7 +193,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "sisyphus-junior",
+      agentToUse: "worker",
       args: {
         description: "test task",
         prompt: "test prompt",
@@ -216,7 +216,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     //#then
     bunExpect(promptAsync).toHaveBeenCalled()
-    bunExpect(promptArgs.body.agent).toBe("sisyphus-junior")
+    bunExpect(promptArgs.body.agent).toBe("worker")
     bunExpect(promptArgs.body.model).toEqual({
       providerID: "openai",
       modelID: "gpt-5.4",
@@ -235,7 +235,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "oracle",
+      agentToUse: "thinker",
       args: {
         description: "test task",
         prompt: "test prompt",
@@ -301,7 +301,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "sisyphus-junior",
+      agentToUse: "worker",
       args: {
         description: "test task",
         prompt: "test prompt",
@@ -333,7 +333,7 @@ bunDescribe("sendSyncPrompt", () => {
     bunExpect(promptWithModelSuggestionRetry).toHaveBeenCalledTimes(1)
     bunExpect(promptArgs.body.temperature).toBe(0.25)
   })
-  bunTest("retries with promptSync for oracle when promptAsync fails with unexpected EOF", async () => {
+  bunTest("retries with promptSync for thinker when promptAsync fails with unexpected EOF", async () => {
     //#given
     const { sendSyncPrompt } = require("./sync-prompt-sender")
 
@@ -344,7 +344,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "oracle",
+      agentToUse: "thinker",
       args: {
         description: "test task",
         prompt: "test prompt",
@@ -373,7 +373,7 @@ bunDescribe("sendSyncPrompt", () => {
     bunExpect(promptSyncWithModelSuggestionRetry).toHaveBeenCalledTimes(1)
   })
 
-  bunTest("does not retry with promptSync for non-oracle on unexpected EOF", async () => {
+  bunTest("does not retry with promptSync for non-thinker on unexpected EOF", async () => {
     //#given
     const { sendSyncPrompt } = require("./sync-prompt-sender")
 
@@ -384,7 +384,7 @@ bunDescribe("sendSyncPrompt", () => {
 
     const input = {
       sessionID: "test-session",
-      agentToUse: "metis",
+      agentToUse: "reviewer",
       args: {
         description: "test task",
         prompt: "test prompt",

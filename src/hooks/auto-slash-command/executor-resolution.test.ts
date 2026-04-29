@@ -53,7 +53,7 @@ function createRestrictedSkill(): LoadedSkill {
       name: "restricted-skill",
       description: "restricted",
       template: "restricted template",
-      agent: "hephaestus",
+      agent: "founder",
     },
     scope: "user",
   }
@@ -93,7 +93,7 @@ describe("executeSlashCommand resolution semantics", () => {
 
     //#then
     expect(result.success).toBe(false)
-    expect(result.error).toBe('Skill "restricted-skill" is restricted to agent "hephaestus"')
+    expect(result.error).toBe('Skill "restricted-skill" is restricted to agent "founder"')
   })
 
   it("allows slash skill invocation when invoking agent matches restriction", async () => {
@@ -108,7 +108,7 @@ describe("executeSlashCommand resolution semantics", () => {
     //#when
     const result = await executeSlashCommand(parsed, {
       skills: [createRestrictedSkill()],
-      agent: "hephaestus",
+      agent: "founder",
     })
 
     //#then

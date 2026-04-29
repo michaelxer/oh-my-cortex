@@ -2,9 +2,9 @@
 
 Last revised: April 11, 2026
 
-These Terms of Service govern your use of oh-my-opencode and oh-my-openagent, including the published CLI package, the OpenCode plugin runtime, the repository, and related distribution materials.
+These Terms of Service govern your use of oh-my-cortex and oh-my-cortex, including the published CLI package, the OpenCode plugin runtime, the repository, and related distribution materials.
 
-For these Terms, "Application" means the published `oh-my-opencode` package and plugin. "Service" means the Application and related project distribution surfaces. "We" and "our" refer to the maintainer of oh-my-opencode. "You" refer to the individual or entity using the Service.
+For these Terms, "Application" means the published `oh-my-cortex` package and plugin. "Service" means the Application and related project distribution surfaces. "We" and "our" refer to the maintainer of oh-my-cortex. "You" refer to the individual or entity using the Service.
 
 By accessing or using the Service, you agree to these Terms. If you do not agree, do not use the Service.
 

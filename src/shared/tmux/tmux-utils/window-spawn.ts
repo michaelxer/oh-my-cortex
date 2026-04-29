@@ -6,7 +6,7 @@ import { isInsideTmux } from "./environment"
 import { isServerRunning } from "./server-health"
 import { shellEscapeForDoubleQuotedCommand } from "../../shell-env"
 
-const ISOLATED_WINDOW_NAME = "omo-agents"
+const ISOLATED_WINDOW_NAME = "omx-agents"
 
 export async function spawnTmuxWindow(
 	sessionId: string,
@@ -71,7 +71,7 @@ export async function spawnTmuxWindow(
 		return { success: false }
 	}
 
-	const title = `omo-subagent-${description.slice(0, 20)}`
+	const title = `omx-subagent-${description.slice(0, 20)}`
 	const titleProc = spawn([tmux, "select-pane", "-t", paneId, "-T", title], {
 		stdout: "ignore",
 		stderr: "pipe",

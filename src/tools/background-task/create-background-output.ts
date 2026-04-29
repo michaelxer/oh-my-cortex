@@ -12,7 +12,7 @@ import { formatTaskStatus } from "./task-status-format"
 import { getAgentDisplayName } from "../../shared/agent-display-names"
 import { recordBackgroundOutputConsumption } from "../../shared/background-output-consumption"
 
-const SISYPHUS_JUNIOR_AGENT = getAgentDisplayName("sisyphus-junior")
+const WORKER_AGENT = getAgentDisplayName("worker")
 
 type ToolContextWithMetadata = {
   sessionID: string
@@ -24,7 +24,7 @@ type ToolContextWithMetadata = {
 }
 
 function formatResolvedTitle(task: BackgroundTask): string {
-  const label = task.agent === SISYPHUS_JUNIOR_AGENT && task.category ? task.category : task.agent
+  const label = task.agent === WORKER_AGENT && task.category ? task.category : task.agent
   return `${label} - ${task.description}`
 }
 

@@ -78,7 +78,7 @@ If binary is available locally:
 
 ```bash
 # Test with a file containing Note: comment
-echo '{"session_id":"test","tool_name":"Write","transcript_path":"","cwd":"/tmp","hook_event_name":"PostToolUse","tool_input":{"file_path":"/tmp/test.ts","content":"// Note: Thread-safe implementation\nconst x = 1"}}' | ~/.cache/oh-my-opencode/bin/comment-checker check
+echo '{"session_id":"test","tool_name":"Write","transcript_path":"","cwd":"/tmp","hook_event_name":"PostToolUse","tool_input":{"file_path":"/tmp/test.ts","content":"// Note: Thread-safe implementation\nconst x = 1"}}' | ~/.cache/oh-my-cortex/bin/comment-checker check
 echo "Exit code: $?"
 ```
 
@@ -89,7 +89,7 @@ Expected: Binary returns exit 2 (comment detected), but the TypeScript post-filt
 Test that config changes work:
 
 ```jsonc
-// .opencode/oh-my-opencode.jsonc
+// .opencode/oh-my-cortex.jsonc
 {
   "comment_checker": {
     // Override: only allow Note: and TODO:

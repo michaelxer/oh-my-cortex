@@ -1,7 +1,7 @@
 /// <reference types="bun-types" />
 
 import { describe, test, expect, spyOn, beforeEach, afterEach, mock } from "bun:test"
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 
 import * as mcpLoader from "../features/claude-code-mcp-loader"
 import * as mcpModule from "../mcp"
@@ -29,11 +29,11 @@ afterEach(() => {
   mock.restore()
 })
 
-function createPluginConfig(overrides: Partial<OhMyOpenCodeConfig> = {}): OhMyOpenCodeConfig {
+function createPluginConfig(overrides: Partial<OhMyCortexConfig> = {}): OhMyCortexConfig {
   return {
     disabled_mcps: [],
     ...overrides,
-  } as OhMyOpenCodeConfig
+  } as OhMyCortexConfig
 }
 
 const EMPTY_PLUGIN_COMPONENTS = {

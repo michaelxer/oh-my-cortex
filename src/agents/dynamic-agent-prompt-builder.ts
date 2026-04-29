@@ -12,9 +12,9 @@ export {
   buildKeyTriggersSection,
   buildToolSelectionTable,
   buildExploreSection,
-  buildLibrarianSection,
+  buildResearcherSection,
   buildDelegationTable,
-  buildOracleSection,
+  buildThinkerSection,
   buildNonClaudePlannerSection,
   buildParallelDelegationSection,
 } from "./dynamic-agent-core-sections"
@@ -25,6 +25,6 @@ export {
   buildHardBlocksSection,
   buildAntiPatternsSection,
   buildToolCallFormatSection,
-  buildUltraworkSection,
+  buildDeepworkSection,
   buildAntiDuplicationSection,
 } from "./dynamic-agent-policy-sections"

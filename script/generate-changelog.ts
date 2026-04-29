@@ -2,7 +2,7 @@
 
 import { $ } from "bun"
 
-const TEAM = ["actions-user", "github-actions[bot]", "code-yeongyu"]
+const TEAM = ["actions-user", "github-actions[bot]", "michaelxer"]
 
 async function getLatestReleasedTag(): Promise<string | null> {
   try {
@@ -105,7 +105,7 @@ async function getContributors(previousTag: string): Promise<string[]> {
 
   try {
     const compare =
-      await $`gh api "/repos/code-yeongyu/oh-my-openagent/compare/${previousTag}...HEAD" --jq '.commits[] | {login: .author.login, message: .commit.message}'`.text()
+      await $`gh api "/repos/michaelxer/oh-my-cortex/compare/${previousTag}...HEAD" --jq '.commits[] | {login: .author.login, message: .commit.message}'`.text()
     const contributors = new Map<string, string[]>()
 
     for (const line of compare.split("\n").filter(Boolean)) {

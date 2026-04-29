@@ -18,7 +18,7 @@ describe("loadPluginExtendedConfig", () => {
   beforeEach(() => {
     //#given
     originalWorkingDirectory = process.cwd()
-    tempDirectory = mkdtempSync(join(tmpdir(), "omo-cc-plugin-project-config-"))
+    tempDirectory = mkdtempSync(join(tmpdir(), "omx-cc-plugin-project-config-"))
     userConfigPath = join(getOpenCodeConfigDir({ binary: "opencode" }), "opencode-cc-plugin.json")
     projectConfigPath = join(tempDirectory, ".opencode", "opencode-cc-plugin.json")
     mkdirSync(getOpenCodeConfigDir({ binary: "opencode" }), { recursive: true })

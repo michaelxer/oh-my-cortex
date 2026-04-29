@@ -21,7 +21,7 @@ The existing concurrency system in `ConcurrencyManager` limits agents **per mode
 ## Config Usage
 
 ```jsonc
-// .opencode/oh-my-opencode.jsonc
+// .opencode/oh-my-cortex.jsonc
 {
   "background_task": {
     "maxBackgroundAgents": 10  // default: 5, min: 1

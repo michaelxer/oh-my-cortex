@@ -129,16 +129,16 @@ describe("OpenClaw Dispatcher", () => {
     expect(result.error).toContain("Invalid URL")
   })
 
-  test("resolveCommandTimeoutMs reads OMO env fallback", () => {
-    const original = process.env.OMO_OPENCLAW_COMMAND_TIMEOUT_MS
-    process.env.OMO_OPENCLAW_COMMAND_TIMEOUT_MS = "4321"
+  test("resolveCommandTimeoutMs reads OMX env fallback", () => {
+    const original = process.env.OMX_OPENCLAW_COMMAND_TIMEOUT_MS
+    process.env.OMX_OPENCLAW_COMMAND_TIMEOUT_MS = "4321"
 
     try {
       // Call without explicit envTimeoutRaw so the function reads from process.env itself
       expect(resolveCommandTimeoutMs(undefined)).toBe(4321)
     } finally {
-      if (original === undefined) delete process.env.OMO_OPENCLAW_COMMAND_TIMEOUT_MS
-      else process.env.OMO_OPENCLAW_COMMAND_TIMEOUT_MS = original
+      if (original === undefined) delete process.env.OMX_OPENCLAW_COMMAND_TIMEOUT_MS
+      else process.env.OMX_OPENCLAW_COMMAND_TIMEOUT_MS = original
     }
   })
 

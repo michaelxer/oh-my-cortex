@@ -50,7 +50,7 @@ describe("createAutoSlashCommandHook", () => {
     spyOn(shared, "log").mockImplementation((message: string, data?: unknown) => {
       logCalls.push([message, data])
     })
-    tempDir = mkdtempSync(join(tmpdir(), "omo-auto-slash-hook-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omx-auto-slash-hook-test-"))
     originalWorkingDirectory = process.cwd()
 
     const autoSlashCommandModule = await import(`./hook?test=${Date.now()}-${Math.random()}`)
@@ -168,12 +168,12 @@ describe("createAutoSlashCommandHook", () => {
   })
 
   describe("excluded commands", () => {
-    it("should NOT trigger for ralph-loop command", async () => {
-      // given ralph-loop command
+    it("should NOT trigger for cortex-loop command", async () => {
+      // given cortex-loop command
       const hook = createAutoSlashCommandHook()
-      const sessionID = `test-session-ralph-${Date.now()}`
+      const sessionID = `test-session-cortex-${Date.now()}`
       const input = createMockInput(sessionID)
-      const output = createMockOutput("/ralph-loop do something")
+      const output = createMockOutput("/cortex-loop do something")
       const originalText = output.parts[0].text
 
       // when hook is called
@@ -183,12 +183,12 @@ describe("createAutoSlashCommandHook", () => {
       expect(output.parts[0].text).toBe(originalText)
     })
 
-    it("should NOT trigger for cancel-ralph command", async () => {
-      // given cancel-ralph command
+    it("should NOT trigger for cancel-cortex command", async () => {
+      // given cancel-cortex command
       const hook = createAutoSlashCommandHook()
       const sessionID = `test-session-cancel-${Date.now()}`
       const input = createMockInput(sessionID)
-      const output = createMockOutput("/cancel-ralph")
+      const output = createMockOutput("/cancel-cortex")
       const originalText = output.parts[0].text
 
       // when hook is called
@@ -342,10 +342,10 @@ describe("createAutoSlashCommandHook", () => {
       expect(output.parts.length).toBe(0)
     })
 
-    it("should inject template for known builtin commands like ralph-loop", async () => {
+    it("should inject template for known builtin commands like cortex-loop", async () => {
       //#given
       const hook = createAutoSlashCommandHook()
-      const input = createCommandInput("ralph-loop")
+      const input = createCommandInput("cortex-loop")
       const output = createCommandOutput("original")
 
       //#when
@@ -353,13 +353,13 @@ describe("createAutoSlashCommandHook", () => {
 
       //#then
       expect(output.parts[0].text).toContain("<auto-slash-command>")
-      expect(output.parts[0].text).toContain("/ralph-loop Command")
+      expect(output.parts[0].text).toContain("/cortex-loop Command")
     })
 
-    it("should inject template for known builtin commands like ulw-loop", async () => {
+    it("should inject template for known builtin commands like dw-loop", async () => {
       //#given
       const hook = createAutoSlashCommandHook()
-      const input = createCommandInput("ulw-loop", '"Ship feature" --strategy=continue')
+      const input = createCommandInput("dw-loop", '"Ship feature" --strategy=continue')
       const output = createCommandOutput("original")
 
       //#when
@@ -367,7 +367,7 @@ describe("createAutoSlashCommandHook", () => {
 
       //#then
       expect(output.parts[0].text).toContain("<auto-slash-command>")
-      expect(output.parts[0].text).toContain("/ulw-loop Command")
+      expect(output.parts[0].text).toContain("/dw-loop Command")
       expect(output.parts[0].text).toContain("<user-task>")
       expect(output.parts[0].text).toContain('"Ship feature" --strategy=continue')
     })

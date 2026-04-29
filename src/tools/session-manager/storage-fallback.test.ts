@@ -4,7 +4,7 @@ import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { randomUUID } from "node:crypto"
 
-const TEST_DIR = join(tmpdir(), `omo-test-session-manager-fallback-${randomUUID()}`)
+const TEST_DIR = join(tmpdir(), `omx-test-session-manager-fallback-${randomUUID()}`)
 const TEST_MESSAGE_STORAGE = join(TEST_DIR, "message")
 const TEST_PART_STORAGE = join(TEST_DIR, "part")
 const TEST_SESSION_STORAGE = join(TEST_DIR, "session")

@@ -23,7 +23,7 @@ import { getPluginLoadedCaptureState } from "./shared/posthog-activity-state"
 const serverPlugin: Plugin = async (input, _options): Promise<Hooks> => {
   installAgentSortShim()
   initConfigContext("opencode", null)
-  log("[oh-my-openagent] ENTRY - plugin loading", {
+  log("[oh-my-cortex] ENTRY - plugin loading", {
     directory: input.directory,
   })
   logLegacyPluginStartupWarning()
@@ -139,14 +139,14 @@ const serverPlugin: Plugin = async (input, _options): Promise<Hooks> => {
 }
 
 const pluginModule: PluginModule = {
-  id: "oh-my-openagent",
+  id: "oh-my-cortex",
   server: serverPlugin,
 }
 
 export default pluginModule
 
 export type {
-  OhMyOpenCodeConfig,
+  OhMyCortexConfig,
   AgentName,
   AgentOverrideConfig,
   AgentOverrides,

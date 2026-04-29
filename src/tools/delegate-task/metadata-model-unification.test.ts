@@ -11,7 +11,7 @@ function makeMockCtx(): ToolContextWithMetadata & { captured: any[] } {
   return {
     sessionID: "ses_parent",
     messageID: "msg_parent",
-    agent: "sisyphus",
+    agent: "chief",
     abort: new AbortController().signal,
     callID: "call_001",
     metadata: async (input: any) => { captured.push(input) },
@@ -22,7 +22,7 @@ function makeMockCtx(): ToolContextWithMetadata & { captured: any[] } {
 const parentContext: ParentContext = {
   sessionID: "ses_parent",
   messageID: "msg_parent",
-  agent: "sisyphus",
+  agent: "chief",
   model: MODEL,
 }
 
@@ -48,7 +48,7 @@ describe("metadata model unification", () => {
           client: { session: { create: async () => ({ data: { id: "ses_sync" } }) } },
           directory: "/tmp",
           onSyncSessionCreated: null,
-        }, parentContext, "explore", MODEL, undefined, undefined, undefined, deps)
+        }, parentContext, "tracker", MODEL, undefined, undefined, undefined, deps)
 
         const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
         expect(meta).toBeDefined()
@@ -60,18 +60,18 @@ describe("metadata model unification", () => {
         const ctx = makeMockCtx()
         const args: DelegateTaskArgs = {
           description: "test", prompt: "do it",
-          load_skills: [], run_in_background: true, subagent_type: "explore",
+          load_skills: [], run_in_background: true, subagent_type: "tracker",
         }
 
         await executeBackgroundTask(args, ctx, {
           manager: {
             launch: async () => ({
-              id: "bg_1", description: "test", agent: "explore",
+              id: "bg_1", description: "test", agent: "tracker",
               status: "pending", sessionID: "ses_bg", model: MODEL,
             }),
             getTask: () => undefined,
           },
-        } as any, parentContext, "explore", MODEL, undefined)
+        } as any, parentContext, "tracker", MODEL, undefined)
 
         const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
         expect(meta).toBeDefined()
@@ -87,7 +87,7 @@ describe("metadata model unification", () => {
         }
 
         const launchedTask = {
-          id: "bg_unstable", description: "test", agent: "explore",
+          id: "bg_unstable", description: "test", agent: "tracker",
           status: "completed", sessionID: "ses_unstable", model: MODEL,
         }
         await executeUnstableAgentTask(
@@ -110,7 +110,7 @@ describe("metadata model unification", () => {
             },
             syncPollTimeoutMs: 100,
           } as any,
-          parentContext, "explore", MODEL, undefined, "anthropic/claude-sonnet-4-6",
+          parentContext, "tracker", MODEL, undefined, "anthropic/claude-sonnet-4-6",
         )
 
         const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
@@ -129,7 +129,7 @@ describe("metadata model unification", () => {
         await executeBackgroundContinuation(args, ctx, {
           manager: {
             resume: async () => ({
-              id: "bg_2", description: "continue", agent: "explore",
+              id: "bg_2", description: "continue", agent: "tracker",
               status: "running", sessionID: "ses_resumed", model: MODEL,
             }),
           },
@@ -157,7 +157,7 @@ describe("metadata model unification", () => {
           client: {
             session: {
               messages: async () => ({
-                data: [{ info: { agent: "explore", model: MODEL, providerID: "anthropic", modelID: "claude-sonnet-4-6" } }],
+                data: [{ info: { agent: "tracker", model: MODEL, providerID: "anthropic", modelID: "claude-sonnet-4-6" } }],
               }),
               prompt: async () => ({}),
             },
@@ -184,14 +184,14 @@ describe("metadata model unification", () => {
         }
         const args: DelegateTaskArgs = {
           description: "test", prompt: "do it",
-          subagent_type: "explore", load_skills: [], run_in_background: false,
+          subagent_type: "tracker", load_skills: [], run_in_background: false,
         }
 
         await executeSyncTask(args, ctx, {
           client: { session: { create: async () => ({ data: { id: "ses_sync" } }) } },
           directory: "/tmp",
           onSyncSessionCreated: null,
-        }, parentContext, "explore", undefined, undefined, undefined, undefined, deps)
+        }, parentContext, "tracker", undefined, undefined, undefined, undefined, deps)
 
         const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
         expect(meta).toBeDefined()
@@ -203,18 +203,18 @@ describe("metadata model unification", () => {
         const ctx = makeMockCtx()
         const args: DelegateTaskArgs = {
           description: "test", prompt: "do it",
-          load_skills: [], run_in_background: true, subagent_type: "explore",
+          load_skills: [], run_in_background: true, subagent_type: "tracker",
         }
 
         await executeBackgroundTask(args, ctx, {
           manager: {
             launch: async () => ({
-              id: "bg_1", description: "test", agent: "explore",
+              id: "bg_1", description: "test", agent: "tracker",
               status: "pending", sessionID: "ses_bg",
             }),
             getTask: () => undefined,
           },
-        } as any, parentContext, "explore", undefined, undefined)
+        } as any, parentContext, "tracker", undefined, undefined)
 
         const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
         expect(meta).toBeDefined()
@@ -230,7 +230,7 @@ describe("metadata model unification", () => {
         }
 
         const launchedTask = {
-          id: "bg_unstable", description: "test", agent: "explore",
+          id: "bg_unstable", description: "test", agent: "tracker",
           status: "completed", sessionID: "ses_unstable",
         }
 
@@ -254,7 +254,7 @@ describe("metadata model unification", () => {
             },
             syncPollTimeoutMs: 100,
           } as any,
-          parentContext, "explore", undefined, undefined, "anthropic/claude-sonnet-4-6",
+          parentContext, "tracker", undefined, undefined, "anthropic/claude-sonnet-4-6",
         )
 
         const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
@@ -273,7 +273,7 @@ describe("metadata model unification", () => {
         await executeBackgroundContinuation(args, ctx, {
           manager: {
             resume: async () => ({
-              id: "bg_2", description: "continue", agent: "explore",
+              id: "bg_2", description: "continue", agent: "tracker",
               status: "running", sessionID: "ses_resumed",
             }),
           },
@@ -325,20 +325,20 @@ describe("metadata model unification", () => {
       }
       const args: DelegateTaskArgs = {
         description: "test", prompt: "do it",
-        subagent_type: "explore", load_skills: [], run_in_background: false,
+        subagent_type: "tracker", load_skills: [], run_in_background: false,
       }
 
       const parentContextWithoutModel: ParentContext = {
         sessionID: "ses_parent",
         messageID: "msg_parent",
-        agent: "sisyphus",
+        agent: "chief",
       }
 
       await executeSyncTask(args, ctx, {
         client: { session: { create: async () => ({ data: { id: "ses_sync" } }) } },
         directory: "/tmp",
         onSyncSessionCreated: null,
-      }, parentContextWithoutModel, "explore", undefined, undefined, undefined, undefined, deps)
+      }, parentContextWithoutModel, "tracker", undefined, undefined, undefined, undefined, deps)
 
       const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
       expect(meta).toBeDefined()
@@ -366,7 +366,7 @@ describe("metadata model unification", () => {
           client: { session: { create: async () => ({ data: { id: "ses_sync_variant" } }) } },
           directory: "/tmp",
           onSyncSessionCreated: null,
-        }, parentContext, "explore", MODEL_WITH_VARIANT, undefined, undefined, undefined, deps)
+        }, parentContext, "tracker", MODEL_WITH_VARIANT, undefined, undefined, undefined, deps)
 
         const meta = ctx.captured.find((metadataEvent: any) => metadataEvent.metadata?.sessionId)
         expect(meta).toBeDefined()
@@ -378,18 +378,18 @@ describe("metadata model unification", () => {
         const ctx = makeMockCtx()
         const args: DelegateTaskArgs = {
           description: "test", prompt: "do it",
-          category: "visual-engineering", load_skills: [], run_in_background: true, subagent_type: "explore",
+          category: "visual-engineering", load_skills: [], run_in_background: true, subagent_type: "tracker",
         }
 
         await executeBackgroundTask(args, ctx, {
           manager: {
             launch: async () => ({
-              id: "bg_variant", description: "test", agent: "explore",
+              id: "bg_variant", description: "test", agent: "tracker",
               status: "pending", sessionID: "ses_bg_variant", model: MODEL_WITH_VARIANT,
             }),
             getTask: () => undefined,
           },
-        } as any, parentContext, "explore", MODEL_WITH_VARIANT, undefined)
+        } as any, parentContext, "tracker", MODEL_WITH_VARIANT, undefined)
 
         const meta = ctx.captured.find((metadataEvent: any) => metadataEvent.metadata?.sessionId)
         expect(meta).toBeDefined()
@@ -405,7 +405,7 @@ describe("metadata model unification", () => {
         }
 
         const launchedTask = {
-          id: "bg_unstable_variant", description: "test", agent: "explore",
+          id: "bg_unstable_variant", description: "test", agent: "tracker",
           status: "completed", sessionID: "ses_unstable_variant", model: MODEL_WITH_VARIANT,
         }
 
@@ -429,7 +429,7 @@ describe("metadata model unification", () => {
             },
             syncPollTimeoutMs: 100,
           } as any,
-          parentContext, "explore", MODEL_WITH_VARIANT, undefined, "google/gemini-3.1-pro high",
+          parentContext, "tracker", MODEL_WITH_VARIANT, undefined, "google/gemini-3.1-pro high",
         )
 
         const meta = ctx.captured.find((metadataEvent: any) => metadataEvent.metadata?.sessionId)
@@ -448,7 +448,7 @@ describe("metadata model unification", () => {
         await executeBackgroundContinuation(args, ctx, {
           manager: {
             resume: async () => ({
-              id: "bg_resume_variant", description: "continue", agent: "explore",
+              id: "bg_resume_variant", description: "continue", agent: "tracker",
               status: "running", sessionID: "ses_resumed_variant", model: MODEL_WITH_VARIANT,
             }),
           },
@@ -476,7 +476,7 @@ describe("metadata model unification", () => {
           client: {
             session: {
               messages: async () => ({
-                data: [{ info: { agent: "explore", model: MODEL_WITH_VARIANT, providerID: "google", modelID: "gemini-3.1-pro" } }],
+                data: [{ info: { agent: "tracker", model: MODEL_WITH_VARIANT, providerID: "google", modelID: "gemini-3.1-pro" } }],
               }),
               prompt: async () => ({}),
             },

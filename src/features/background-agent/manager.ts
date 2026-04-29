@@ -698,7 +698,7 @@ The fallback retry session is now created and can be inspected directly.
       tools: (() => {
         const tools = {
           task: false,
-          call_omo_agent: true,
+          call_cortex_agent: true,
           question: false,
           ...getAgentToolRestrictions(input.agent),
         }
@@ -1064,7 +1064,7 @@ The fallback retry session is now created and can be inspected directly.
         tools: (() => {
           const tools = {
             task: false,
-            call_omo_agent: true,
+            call_cortex_agent: true,
             question: false,
             ...getAgentToolRestrictions(existingTask.agent),
           }

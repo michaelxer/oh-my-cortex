@@ -12,7 +12,7 @@ describe("task tool metadata awaiting", () => {
     const ctx: ToolContextWithMetadata = {
       sessionID: "ses_parent",
       messageID: "msg_parent",
-      agent: "sisyphus",
+      agent: "chief",
       abort: abort.signal,
       metadata: async () => {
         await new Promise<void>((resolve) => setTimeout(resolve, 50))
@@ -25,7 +25,7 @@ describe("task tool metadata awaiting", () => {
       description: "Test task",
       prompt: "Do something",
       run_in_background: true,
-      subagent_type: "explore",
+      subagent_type: "tracker",
     }
 
     const executorCtx = {
@@ -34,7 +34,7 @@ describe("task tool metadata awaiting", () => {
           id: "task_1",
           description: "Test task",
           prompt: "Do something",
-          agent: "explore",
+          agent: "tracker",
           status: "pending",
           sessionID: "ses_child",
         }),
@@ -53,7 +53,7 @@ describe("task tool metadata awaiting", () => {
       ctx,
       executorCtx,
       parentContext,
-      "explore",
+      "tracker",
       undefined,
       undefined,
     )

@@ -10,7 +10,7 @@ function makeMockCtx(): ToolContextWithMetadata & { captured: any[] } {
   return {
     sessionID: "ses_parent",
     messageID: "msg_parent",
-    agent: "sisyphus",
+    agent: "chief",
     abort: new AbortController().signal,
     callID: "call_001",
     metadata: async (input: any) => { captured.push(input) },
@@ -21,7 +21,7 @@ function makeMockCtx(): ToolContextWithMetadata & { captured: any[] } {
 const parentContext: ParentContext = {
   sessionID: "ses_parent",
   messageID: "msg_parent",
-  agent: "sisyphus",
+  agent: "chief",
   model: MODEL,
 }
 
@@ -45,7 +45,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         client: { session: { create: async () => ({ data: { id: "ses_sync" } }) } },
         directory: "/tmp",
         onSyncSessionCreated: null,
-      }, parentContext, "explore", MODEL, undefined, undefined, undefined, deps)
+      }, parentContext, "tracker", MODEL, undefined, undefined, undefined, deps)
 
       const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
       expect(meta).toBeDefined()
@@ -61,18 +61,18 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
       const ctx = makeMockCtx()
       const args: DelegateTaskArgs = {
         description: "test", prompt: "do it",
-        load_skills: [], run_in_background: true, subagent_type: "explore",
+        load_skills: [], run_in_background: true, subagent_type: "tracker",
       }
 
       await executeBackgroundTask(args, ctx, {
         manager: {
           launch: async () => ({
-            id: "bg_abc123", description: "test", agent: "explore",
+            id: "bg_abc123", description: "test", agent: "tracker",
             status: "pending", sessionID: "ses_xyz789",
           }),
           getTask: () => undefined,
         },
-      } as any, parentContext, "explore", MODEL, undefined)
+      } as any, parentContext, "tracker", MODEL, undefined)
 
       const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
       expect(meta).toBeDefined()
@@ -92,7 +92,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
       }
 
       const launchedTask = {
-        id: "bg_unstable_abc", description: "test", agent: "explore",
+        id: "bg_unstable_abc", description: "test", agent: "tracker",
         status: "completed", sessionID: "ses_unstable_xyz",
       }
 
@@ -116,7 +116,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
           },
           syncPollTimeoutMs: 100,
         } as any,
-        parentContext, "explore", MODEL, undefined, "anthropic/claude-sonnet-4-6",
+        parentContext, "tracker", MODEL, undefined, "anthropic/claude-sonnet-4-6",
       )
 
       const meta = ctx.captured.find((m: any) => m.metadata?.sessionId)
@@ -139,7 +139,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
       await executeBackgroundContinuation(args, ctx, {
         manager: {
           resume: async () => ({
-            id: "bg_resumed_y", description: "continue", agent: "explore",
+            id: "bg_resumed_y", description: "continue", agent: "tracker",
             status: "running", sessionID: "ses_resumed_x", model: MODEL,
           }),
         },
@@ -163,7 +163,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
       await executeBackgroundContinuation(args, ctx, {
         manager: {
           resume: async () => ({
-            id: "bg_resumed_y", description: "continue", agent: "explore",
+            id: "bg_resumed_y", description: "continue", agent: "tracker",
             status: "running", sessionID: "ses_resumed_x", model: MODEL, category: "deep",
           }),
         },
@@ -181,7 +181,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         description: "continue",
         prompt: "keep going",
         category: "quick",
-        requested_subagent_type: "oracle",
+        requested_subagent_type: "thinker",
         load_skills: [],
         run_in_background: true,
         task_id: "ses_resumed_x",
@@ -190,7 +190,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
       await executeBackgroundContinuation(args, ctx, {
         manager: {
           resume: async () => ({
-            id: "bg_resumed_y", description: "continue", agent: "explore",
+            id: "bg_resumed_y", description: "continue", agent: "tracker",
             status: "running", sessionID: "ses_resumed_x", model: MODEL,
           }),
         },
@@ -198,7 +198,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
 
       const meta = ctx.captured.find((item: any) => item.metadata?.sessionId)
       expect(meta).toBeDefined()
-      expect(meta.metadata.requested_subagent_type).toBe("oracle")
+      expect(meta.metadata.requested_subagent_type).toBe("thinker")
     })
   })
 
@@ -220,7 +220,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         client: {
           session: {
             messages: async () => ({
-              data: [{ info: { agent: "explore", model: MODEL } }],
+              data: [{ info: { agent: "tracker", model: MODEL } }],
             }),
             prompt: async () => ({}),
           },
@@ -250,7 +250,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         client: {
           session: {
             messages: async () => ({
-              data: [{ info: { agent: "explore", model: MODEL } }],
+              data: [{ info: { agent: "tracker", model: MODEL } }],
             }),
             prompt: async () => ({}),
           },
@@ -259,7 +259,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
 
       const meta = ctx.captured.find((item: any) => item.metadata?.sessionId)
       expect(meta).toBeDefined()
-      expect(meta.metadata.agent).toBe("explore")
+      expect(meta.metadata.agent).toBe("tracker")
     })
 
     test("#when called with category arg #then metadata.category equals args.category", async () => {
@@ -279,7 +279,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         client: {
           session: {
             messages: async () => ({
-              data: [{ info: { agent: "explore", model: MODEL } }],
+              data: [{ info: { agent: "tracker", model: MODEL } }],
             }),
             prompt: async () => ({}),
           },
@@ -298,7 +298,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         description: "continue",
         prompt: "keep going",
         category: "quick",
-        requested_subagent_type: "oracle",
+        requested_subagent_type: "thinker",
         load_skills: [],
         run_in_background: false,
         task_id: "ses_cont",
@@ -313,7 +313,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         client: {
           session: {
             messages: async () => ({
-              data: [{ info: { agent: "explore", model: MODEL } }],
+              data: [{ info: { agent: "tracker", model: MODEL } }],
             }),
             prompt: async () => ({}),
           },
@@ -322,7 +322,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
 
       const meta = ctx.captured.find((item: any) => item.metadata?.sessionId)
       expect(meta).toBeDefined()
-      expect(meta.metadata.requested_subagent_type).toBe("oracle")
+      expect(meta.metadata.requested_subagent_type).toBe("thinker")
     })
   })
 
@@ -340,7 +340,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         description: "test",
         prompt: "do it",
         category: "quick",
-        requested_subagent_type: "oracle",
+        requested_subagent_type: "thinker",
         load_skills: [],
         run_in_background: false,
       }
@@ -349,11 +349,11 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         client: { session: { create: async () => ({ data: { id: "ses_sync" } }) } },
         directory: "/tmp",
         onSyncSessionCreated: null,
-      }, parentContext, "Sisyphus-Junior", MODEL, undefined, undefined, undefined, deps)
+      }, parentContext, "Worker", MODEL, undefined, undefined, undefined, deps)
 
       const meta = ctx.captured.find((item: any) => item.metadata?.sessionId)
       expect(meta).toBeDefined()
-      expect(meta.metadata.requested_subagent_type).toBe("oracle")
+      expect(meta.metadata.requested_subagent_type).toBe("thinker")
     })
 
     test("#when background-task publishes metadata #then metadata.requested_subagent_type preserves original", async () => {
@@ -363,7 +363,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         description: "test",
         prompt: "do it",
         category: "quick",
-        requested_subagent_type: "oracle",
+        requested_subagent_type: "thinker",
         load_skills: [],
         run_in_background: true,
       }
@@ -371,16 +371,16 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
       await executeBackgroundTask(args, ctx, {
         manager: {
           launch: async () => ({
-            id: "bg_abc123", description: "test", agent: "Sisyphus-Junior",
+            id: "bg_abc123", description: "test", agent: "Worker",
             status: "pending", sessionID: "ses_xyz789",
           }),
           getTask: () => undefined,
         },
-      } as any, parentContext, "Sisyphus-Junior", MODEL, undefined)
+      } as any, parentContext, "Worker", MODEL, undefined)
 
       const meta = ctx.captured.find((item: any) => item.metadata?.sessionId)
       expect(meta).toBeDefined()
-      expect(meta.metadata.requested_subagent_type).toBe("oracle")
+      expect(meta.metadata.requested_subagent_type).toBe("thinker")
     })
 
     test("#when unstable-agent-task publishes metadata #then metadata.requested_subagent_type preserves original", async () => {
@@ -390,13 +390,13 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         description: "test",
         prompt: "do it",
         category: "quick",
-        requested_subagent_type: "oracle",
+        requested_subagent_type: "thinker",
         load_skills: [],
         run_in_background: false,
       }
 
       const launchedTask = {
-        id: "bg_unstable_abc", description: "test", agent: "Sisyphus-Junior",
+        id: "bg_unstable_abc", description: "test", agent: "Worker",
         status: "completed", sessionID: "ses_unstable_xyz",
       }
 
@@ -420,12 +420,12 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
           },
           syncPollTimeoutMs: 100,
         } as any,
-        parentContext, "Sisyphus-Junior", MODEL, undefined, "anthropic/claude-sonnet-4-6",
+        parentContext, "Worker", MODEL, undefined, "anthropic/claude-sonnet-4-6",
       )
 
       const meta = ctx.captured.find((item: any) => item.metadata?.sessionId)
       expect(meta).toBeDefined()
-      expect(meta.metadata.requested_subagent_type).toBe("oracle")
+      expect(meta.metadata.requested_subagent_type).toBe("thinker")
     })
   })
 
@@ -437,7 +437,7 @@ describe("taskId and backgroundTaskId metadata consistency", () => {
         getTask: (id: string) => ({
           id,
           sessionID: "ses_bg_session",
-          agent: "explore",
+          agent: "tracker",
           category: "deep",
           description: "test",
           status: "completed" as const,

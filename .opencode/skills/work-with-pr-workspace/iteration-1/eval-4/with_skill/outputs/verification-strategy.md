@@ -27,9 +27,9 @@ Fix locally in worktree, new commit, `git push`.
 ### Agents and focus areas
 | Agent | What it checks for this PR |
 |-------|--------------------------|
-| Oracle (goal) | Does arxiv MCP satisfy issue #100 requirements? |
-| Oracle (code quality) | Follows `grep-app.ts` pattern? No SRP violations? < 200 LOC? |
-| Oracle (security) | No credentials hardcoded, no auth bypass |
+| Thinker (goal) | Does arxiv MCP satisfy issue #100 requirements? |
+| Thinker (code quality) | Follows `grep-app.ts` pattern? No SRP violations? < 200 LOC? |
+| Thinker (security) | No credentials hardcoded, no auth bypass |
 | QA (execution) | Run tests, verify disable mechanism works |
 | Context (mining) | Check issue #100 for any missed requirements |
 
@@ -65,5 +65,5 @@ Comment from `cubic-dev-ai[bot]` containing "No issues found".
 
 ## Post-merge
 1. `gh pr merge --squash --delete-branch`
-2. `git worktree remove ../omo-wt/feat/arxiv-mcp`
+2. `git worktree remove ../omx-wt/feat/arxiv-mcp`
 3. Verify merge commit on `dev` branch

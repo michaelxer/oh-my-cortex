@@ -88,41 +88,41 @@ describe("killTmuxSessionIfExists", () => {
 		getTmuxPathMock.mockImplementation(async (): Promise<string | undefined> => "tmux")
 	})
 
-	it("#given omo-agents session exists #when killTmuxSessionIfExists called #then kill-session invoked and returns true", async () => {
+	it("#given omx-agents session exists #when killTmuxSessionIfExists called #then kill-session invoked and returns true", async () => {
 		// given
 		const killTmuxSessionIfExists = await loadKillTmuxSessionIfExists()
 		queuedProcesses.push(createProcess(0), createProcess(0, { stdout: ["killed"], stderr: [] }))
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omx-agents")
 
 		// then
 		expect(result).toBe(true)
 		expect(spawnCalls).toEqual([
 			{
-				command: ["tmux", "has-session", "-t", "omo-agents"],
+				command: ["tmux", "has-session", "-t", "omx-agents"],
 				options: { stdout: "ignore", stderr: "ignore" },
 			},
 			{
-				command: ["tmux", "kill-session", "-t", "omo-agents"],
+				command: ["tmux", "kill-session", "-t", "omx-agents"],
 				options: { stdout: "pipe", stderr: "pipe" },
 			},
 		])
 	})
 
-	it("#given omo-agents session does NOT exist (has-session exits non-zero) #when killTmuxSessionIfExists called #then NO kill-session invocation and returns false", async () => {
+	it("#given omx-agents session does NOT exist (has-session exits non-zero) #when killTmuxSessionIfExists called #then NO kill-session invocation and returns false", async () => {
 		// given
 		const killTmuxSessionIfExists = await loadKillTmuxSessionIfExists()
 		queuedProcesses.push(createProcess(1))
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omx-agents")
 
 		// then
 		expect(result).toBe(false)
 		expect(spawnCalls).toEqual([
 			{
-				command: ["tmux", "has-session", "-t", "omo-agents"],
+				command: ["tmux", "has-session", "-t", "omx-agents"],
 				options: { stdout: "ignore", stderr: "ignore" },
 			},
 		])
@@ -134,7 +134,7 @@ describe("killTmuxSessionIfExists", () => {
 		isInsideTmuxMock.mockReturnValue(false)
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omx-agents")
 
 		// then
 		expect(result).toBe(false)
@@ -148,7 +148,7 @@ describe("killTmuxSessionIfExists", () => {
 		getTmuxPathMock.mockResolvedValue(undefined)
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omx-agents")
 
 		// then
 		expect(result).toBe(false)
@@ -164,7 +164,7 @@ describe("killTmuxSessionIfExists", () => {
 		)
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omx-agents")
 
 		// then
 		expect(result).toBe(false)

@@ -2,7 +2,7 @@ import type { DelegateTaskArgs } from "./types"
 import type { ExecutorContext } from "./executor-types"
 import type { DelegatedModelConfig } from "./types"
 import { isPlanFamily } from "./constants"
-import { SISYPHUS_JUNIOR_AGENT } from "./sisyphus-junior-agent"
+import { WORKER_AGENT } from "./worker-agent"
 import { applyCategoryParams } from "./delegated-model-config"
 import { resolveEffectiveFallbackEntry } from "./fallback-entry-resolution"
 import { applyFallbackEntrySettings } from "./fallback-entry-settings"
@@ -40,13 +40,13 @@ export async function resolveSubagentExecution(
 
   const agentName = sanitizeSubagentType(args.subagent_type)
 
-  if (agentName.toLowerCase() === SISYPHUS_JUNIOR_AGENT.toLowerCase()) {
+  if (agentName.toLowerCase() === WORKER_AGENT.toLowerCase()) {
     return {
       agentToUse: "",
       categoryModel: undefined,
-      error: `Cannot use subagent_type="${SISYPHUS_JUNIOR_AGENT}" directly. Use category parameter instead (e.g., ${categoryExamples}).
+      error: `Cannot use subagent_type="${WORKER_AGENT}" directly. Use category parameter instead (e.g., ${categoryExamples}).
 
-Sisyphus-Junior is spawned automatically when you specify a category. Pick the appropriate category for your task domain.`,
+Worker is spawned automatically when you specify a category. Pick the appropriate category for your task domain.`,
     }
   }
 
@@ -54,7 +54,7 @@ Sisyphus-Junior is spawned automatically when you specify a category. Pick the a
     return {
       agentToUse: "",
       categoryModel: undefined,
-    error: `You are a plan-family agent (plan/prometheus). You cannot delegate to other plan-family agents via task.
+    error: `You are a plan-family agent (plan/planner). You cannot delegate to other plan-family agents via task.
 
 Create the work plan directly - that's your job as the planning agent.`,
     }

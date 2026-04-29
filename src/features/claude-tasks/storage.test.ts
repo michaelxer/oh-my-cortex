@@ -13,20 +13,20 @@ import {
   resolveTaskListId,
   sanitizePathSegment,
 } from "./storage"
-import type { OhMyOpenCodeConfig } from "../../config/schema"
+import type { OhMyCortexConfig } from "../../config/schema"
 
 const TEST_DIR = ".test-claude-tasks"
 const TEST_DIR_ABS = join(process.cwd(), TEST_DIR)
 
 describe("getTaskDir", () => {
-  const originalTaskListId = process.env.ULTRAWORK_TASK_LIST_ID
+  const originalTaskListId = process.env.DEEPWORK_TASK_LIST_ID
   const originalClaudeTaskListId = process.env.CLAUDE_CODE_TASK_LIST_ID
 
   beforeEach(() => {
     if (originalTaskListId === undefined) {
-      delete process.env.ULTRAWORK_TASK_LIST_ID
+      delete process.env.DEEPWORK_TASK_LIST_ID
     } else {
-      process.env.ULTRAWORK_TASK_LIST_ID = originalTaskListId
+      process.env.DEEPWORK_TASK_LIST_ID = originalTaskListId
     }
 
     if (originalClaudeTaskListId === undefined) {
@@ -38,9 +38,9 @@ describe("getTaskDir", () => {
 
   afterEach(() => {
     if (originalTaskListId === undefined) {
-      delete process.env.ULTRAWORK_TASK_LIST_ID
+      delete process.env.DEEPWORK_TASK_LIST_ID
     } else {
-      process.env.ULTRAWORK_TASK_LIST_ID = originalTaskListId
+      process.env.DEEPWORK_TASK_LIST_ID = originalTaskListId
     }
 
     if (originalClaudeTaskListId === undefined) {
@@ -52,7 +52,7 @@ describe("getTaskDir", () => {
 
   test("returns global config path for default config", () => {
     //#given
-    const config: Partial<OhMyOpenCodeConfig> = {}
+    const config: Partial<OhMyCortexConfig> = {}
     const configDir = getOpenCodeConfigDir({ binary: "opencode" })
     const expectedListId = sanitizePathSegment(basename(process.cwd()))
 
@@ -63,9 +63,9 @@ describe("getTaskDir", () => {
     expect(result).toBe(join(configDir, "tasks", expectedListId))
   })
 
-  test("respects ULTRAWORK_TASK_LIST_ID env var", () => {
+  test("respects DEEPWORK_TASK_LIST_ID env var", () => {
     //#given
-    process.env.ULTRAWORK_TASK_LIST_ID = "custom list/id"
+    process.env.DEEPWORK_TASK_LIST_ID = "custom list/id"
     const configDir = getOpenCodeConfigDir({ binary: "opencode" })
 
     //#when
@@ -75,9 +75,9 @@ describe("getTaskDir", () => {
     expect(result).toBe(join(configDir, "tasks", "custom-list-id"))
   })
 
-  test("respects CLAUDE_CODE_TASK_LIST_ID env var when ULTRAWORK_TASK_LIST_ID not set", () => {
+  test("respects CLAUDE_CODE_TASK_LIST_ID env var when DEEPWORK_TASK_LIST_ID not set", () => {
     //#given
-    delete process.env.ULTRAWORK_TASK_LIST_ID
+    delete process.env.DEEPWORK_TASK_LIST_ID
     process.env.CLAUDE_CODE_TASK_LIST_ID = "claude list/id"
     const configDir = getOpenCodeConfigDir({ binary: "opencode" })
 
@@ -90,7 +90,7 @@ describe("getTaskDir", () => {
 
   test("falls back to sanitized cwd basename when env var not set", () => {
     //#given
-    delete process.env.ULTRAWORK_TASK_LIST_ID
+    delete process.env.DEEPWORK_TASK_LIST_ID
     const configDir = getOpenCodeConfigDir({ binary: "opencode" })
     const expectedListId = sanitizePathSegment(basename(process.cwd()))
 
@@ -103,8 +103,8 @@ describe("getTaskDir", () => {
 
   test("returns absolute storage_path without joining cwd", () => {
     //#given
-    const config: Partial<OhMyOpenCodeConfig> = {
-      sisyphus: {
+    const config: Partial<OhMyCortexConfig> = {
+      chief: {
         tasks: {
           storage_path: "/tmp/custom-task-path",
           claude_code_compat: false,
@@ -121,8 +121,8 @@ describe("getTaskDir", () => {
 
   test("joins relative storage_path with cwd", () => {
     //#given
-    const config: Partial<OhMyOpenCodeConfig> = {
-      sisyphus: {
+    const config: Partial<OhMyCortexConfig> = {
+      chief: {
         tasks: {
           storage_path: ".custom/tasks",
           claude_code_compat: false,
@@ -139,14 +139,14 @@ describe("getTaskDir", () => {
 })
 
 describe("resolveTaskListId", () => {
-  const originalTaskListId = process.env.ULTRAWORK_TASK_LIST_ID
+  const originalTaskListId = process.env.DEEPWORK_TASK_LIST_ID
   const originalClaudeTaskListId = process.env.CLAUDE_CODE_TASK_LIST_ID
 
   beforeEach(() => {
     if (originalTaskListId === undefined) {
-      delete process.env.ULTRAWORK_TASK_LIST_ID
+      delete process.env.DEEPWORK_TASK_LIST_ID
     } else {
-      process.env.ULTRAWORK_TASK_LIST_ID = originalTaskListId
+      process.env.DEEPWORK_TASK_LIST_ID = originalTaskListId
     }
 
     if (originalClaudeTaskListId === undefined) {
@@ -158,9 +158,9 @@ describe("resolveTaskListId", () => {
 
   afterEach(() => {
     if (originalTaskListId === undefined) {
-      delete process.env.ULTRAWORK_TASK_LIST_ID
+      delete process.env.DEEPWORK_TASK_LIST_ID
     } else {
-      process.env.ULTRAWORK_TASK_LIST_ID = originalTaskListId
+      process.env.DEEPWORK_TASK_LIST_ID = originalTaskListId
     }
 
     if (originalClaudeTaskListId === undefined) {
@@ -172,7 +172,7 @@ describe("resolveTaskListId", () => {
 
   test("returns env var when set", () => {
     //#given
-    process.env.ULTRAWORK_TASK_LIST_ID = "custom-list"
+    process.env.DEEPWORK_TASK_LIST_ID = "custom-list"
 
     //#when
     const result = resolveTaskListId()
@@ -181,9 +181,9 @@ describe("resolveTaskListId", () => {
     expect(result).toBe("custom-list")
   })
 
-  test("returns CLAUDE_CODE_TASK_LIST_ID when ULTRAWORK_TASK_LIST_ID not set", () => {
+  test("returns CLAUDE_CODE_TASK_LIST_ID when DEEPWORK_TASK_LIST_ID not set", () => {
     //#given
-    delete process.env.ULTRAWORK_TASK_LIST_ID
+    delete process.env.DEEPWORK_TASK_LIST_ID
     process.env.CLAUDE_CODE_TASK_LIST_ID = "claude-list"
 
     //#when
@@ -195,7 +195,7 @@ describe("resolveTaskListId", () => {
 
   test("sanitizes CLAUDE_CODE_TASK_LIST_ID special characters", () => {
     //#given
-    delete process.env.ULTRAWORK_TASK_LIST_ID
+    delete process.env.DEEPWORK_TASK_LIST_ID
     process.env.CLAUDE_CODE_TASK_LIST_ID = "claude list/id"
 
     //#when
@@ -207,7 +207,7 @@ describe("resolveTaskListId", () => {
 
   test("sanitizes special characters", () => {
     //#given
-    process.env.ULTRAWORK_TASK_LIST_ID = "custom list/id"
+    process.env.DEEPWORK_TASK_LIST_ID = "custom list/id"
 
     //#when
     const result = resolveTaskListId()
@@ -218,7 +218,7 @@ describe("resolveTaskListId", () => {
 
   test("returns sanitized cwd basename when env var not set", () => {
     //#given
-    delete process.env.ULTRAWORK_TASK_LIST_ID
+    delete process.env.DEEPWORK_TASK_LIST_ID
     const expected = sanitizePathSegment(basename(process.cwd()))
 
     //#when
@@ -263,9 +263,9 @@ describe("listTaskFiles", () => {
 
   test("returns empty array for non-existent directory", () => {
     //#given
-    const config: Partial<OhMyOpenCodeConfig> = {
+    const config: Partial<OhMyCortexConfig> = {
       new_task_system_enabled: false,
-      sisyphus: { tasks: { storage_path: TEST_DIR, claude_code_compat: false } }
+      chief: { tasks: { storage_path: TEST_DIR, claude_code_compat: false } }
     }
 
     //#when
@@ -277,9 +277,9 @@ describe("listTaskFiles", () => {
 
   test("returns empty array for directory with no task files", () => {
     //#given
-    const config: Partial<OhMyOpenCodeConfig> = {
+    const config: Partial<OhMyCortexConfig> = {
       new_task_system_enabled: false,
-      sisyphus: { tasks: { storage_path: TEST_DIR, claude_code_compat: false } }
+      chief: { tasks: { storage_path: TEST_DIR, claude_code_compat: false } }
     }
     mkdirSync(TEST_DIR_ABS, { recursive: true })
     writeFileSync(join(TEST_DIR_ABS, "other.json"), "{}", "utf-8")
@@ -293,9 +293,9 @@ describe("listTaskFiles", () => {
 
   test("lists task files with T- prefix and .json extension", () => {
     //#given
-    const config: Partial<OhMyOpenCodeConfig> = {
+    const config: Partial<OhMyCortexConfig> = {
       new_task_system_enabled: false,
-      sisyphus: { tasks: { storage_path: TEST_DIR, claude_code_compat: false } }
+      chief: { tasks: { storage_path: TEST_DIR, claude_code_compat: false } }
     }
     mkdirSync(TEST_DIR_ABS, { recursive: true })
     writeFileSync(join(TEST_DIR_ABS, "T-abc123.json"), "{}", "utf-8")
@@ -314,9 +314,9 @@ describe("listTaskFiles", () => {
 
   test("returns task IDs without .json extension", () => {
     //#given
-    const config: Partial<OhMyOpenCodeConfig> = {
+    const config: Partial<OhMyCortexConfig> = {
       new_task_system_enabled: false,
-      sisyphus: { tasks: { storage_path: TEST_DIR, claude_code_compat: false } }
+      chief: { tasks: { storage_path: TEST_DIR, claude_code_compat: false } }
     }
     mkdirSync(TEST_DIR_ABS, { recursive: true })
     writeFileSync(join(TEST_DIR_ABS, "T-test-id.json"), "{}", "utf-8")

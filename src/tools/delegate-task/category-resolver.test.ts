@@ -30,7 +30,7 @@ describe("resolveCategoryExecution", () => {
 		manager: {} as any,
 		directory: "/tmp/test",
 		userCategories: {},
-		sisyphusJuniorModel: undefined,
+		workerModel: undefined,
 	})
 
 	test("returns unpinned resolution when category cache is not ready on first run", async () => {
@@ -485,7 +485,7 @@ describe("resolveCategoryExecution", () => {
 		expect(result.fallbackChain).toBeUndefined()
 	})
 
-	test("does not inherit hardcoded fallbackChain when sisyphus-junior model override is set [regression #2941]", async () => {
+	test("does not inherit hardcoded fallbackChain when worker model override is set [regression #2941]", async () => {
 		//#given
 		const args = {
 			category: "quick",
@@ -497,7 +497,7 @@ describe("resolveCategoryExecution", () => {
 			enableSkillTools: false,
 		}
 		const executorCtx = createMockExecutorContext()
-		executorCtx.sisyphusJuniorModel = "anthropic/claude-sonnet-4-6"
+		executorCtx.workerModel = "anthropic/claude-sonnet-4-6"
 
 		//#when
 		const result = await resolveCategoryExecution(args, executorCtx, undefined, "anthropic/claude-sonnet-4-6")
@@ -563,7 +563,7 @@ describe("resolveCategoryExecution", () => {
 		expect(result.error).toBeUndefined()
 		expect(result.actualModel).toBe("openai/gpt-5.4")
 		expect(result.categoryPromptAppend).toBeDefined()
-		expect(result.categoryPromptAppend).toContain("GOAL-ORIENTED AUTONOMOUS")
+		expect(result.categoryPromptAppend).toContain("GOAL-ORIENTED AUTONOMXUS")
 		expect(result.categoryPromptAppend).not.toContain("operating in DEEP mode")
 	})
 
@@ -619,7 +619,7 @@ describe("resolveCategoryExecution", () => {
 
 		//#then
 		expect(result.error).toBeUndefined()
-		expect(result.categoryPromptAppend).toContain("GOAL-ORIENTED AUTONOMOUS")
+		expect(result.categoryPromptAppend).toContain("GOAL-ORIENTED AUTONOMXUS")
 		expect(result.categoryPromptAppend).toContain("USER_CUSTOM_INSTRUCTION_LEGACY")
 	})
 })

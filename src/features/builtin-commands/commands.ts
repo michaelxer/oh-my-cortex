@@ -2,7 +2,7 @@ import type { CommandDefinition } from "../claude-code-command-loader"
 import { isAgentRegistered } from "../claude-code-session-state"
 import type { BuiltinCommandName, BuiltinCommands } from "./types"
 import { INIT_DEEP_TEMPLATE } from "./templates/init-deep"
-import { RALPH_LOOP_TEMPLATE, ULW_LOOP_TEMPLATE, CANCEL_RALPH_TEMPLATE } from "./templates/ralph-loop"
+import { CORTEX_LOOP_TEMPLATE, DEEPWORK_LOOP_TEMPLATE, CANCEL_CORTEX_TEMPLATE } from "./templates/cortex-loop"
 import { STOP_CONTINUATION_TEMPLATE } from "./templates/stop-continuation"
 import { REFACTOR_TEMPLATE } from "./templates/refactor"
 import { START_WORK_TEMPLATE } from "./templates/start-work"
@@ -13,12 +13,12 @@ interface LoadBuiltinCommandsOptions {
   useRegisteredAgents?: boolean
 }
 
-function resolveStartWorkAgent(options?: LoadBuiltinCommandsOptions): "atlas" | "sisyphus" {
+function resolveStartWorkAgent(options?: LoadBuiltinCommandsOptions): "lead" | "chief" {
   if (options?.useRegisteredAgents) {
-    return isAgentRegistered("atlas") ? "atlas" : "sisyphus"
+    return isAgentRegistered("lead") ? "lead" : "chief"
   }
 
-  return "atlas"
+  return "lead"
 }
 
 function createBuiltinCommandDefinitions(
@@ -36,10 +36,10 @@ $ARGUMENTS
 </user-request>`,
       argumentHint: "[--create-new] [--max-depth=N]",
     },
-     "ralph-loop": {
+     "cortex-loop": {
        description: "(builtin) Start self-referential development loop until completion",
        template: `<command-instruction>
-${RALPH_LOOP_TEMPLATE}
+${CORTEX_LOOP_TEMPLATE}
 </command-instruction>
 
 <user-task>
@@ -47,10 +47,10 @@ $ARGUMENTS
 </user-task>`,
        argumentHint: '"task description" [--completion-promise=TEXT] [--max-iterations=N] [--strategy=reset|continue]',
      },
-     "ulw-loop": {
-        description: "(builtin) Start ultrawork loop - continues until completion with ultrawork mode",
+     "dw-loop": {
+        description: "(builtin) Start deepwork loop - continues until completion with deepwork mode",
         template: `<command-instruction>
-${ULW_LOOP_TEMPLATE}
+${DEEPWORK_LOOP_TEMPLATE}
 </command-instruction>
 
 <user-task>
@@ -58,10 +58,10 @@ $ARGUMENTS
 </user-task>`,
         argumentHint: '"task description" [--completion-promise=TEXT] [--strategy=reset|continue]',
       },
-    "cancel-ralph": {
-      description: "(builtin) Cancel active Ralph Loop",
+    "cancel-cortex": {
+      description: "(builtin) Cancel active Cortex Loop",
       template: `<command-instruction>
-${CANCEL_RALPH_TEMPLATE}
+${CANCEL_CORTEX_TEMPLATE}
 </command-instruction>`,
     },
     refactor: {
@@ -73,7 +73,7 @@ ${REFACTOR_TEMPLATE}
       argumentHint: "<refactoring-target> [--scope=<file|module|project>] [--strategy=<safe|aggressive>]",
     },
     "start-work": {
-      description: "(builtin) Start Sisyphus work session from Prometheus plan",
+      description: "(builtin) Start Chief work session from Planner plan",
       agent: resolveStartWorkAgent(options),
       template: `<command-instruction>
 ${START_WORK_TEMPLATE}
@@ -90,7 +90,7 @@ $ARGUMENTS
       argumentHint: "[plan-name]",
     },
     "stop-continuation": {
-      description: "(builtin) Stop all continuation mechanisms (ralph loop, todo continuation, boulder) for this session",
+      description: "(builtin) Stop all continuation mechanisms (cortex loop, todo continuation, workstate) for this session",
       template: `<command-instruction>
 ${STOP_CONTINUATION_TEMPLATE}
 </command-instruction>`,

@@ -6,6 +6,15 @@ import type {
 import type { AvailableTool } from "./dynamic-agent-prompt-types"
 import { getToolsPromptDisplay } from "./dynamic-agent-tool-categorization"
 
+const CORTEX_OPERATING_PRINCIPLES = `<cortex-operating-principles>
+Classify each request by goal, stakes, risk surface, and urgency before choosing depth or delegation.
+Challenge the strongest hidden assumption and the weakest point in the current plan; scale the challenge to the stakes.
+Use domain lenses when relevant: software, business, security, health, legal, finance, communication, and crisis response.
+Separate facts, inferences, and speculation for non-obvious claims. Use confidence labels when the answer could materially affect decisions.
+Prefer direct action for clear low-risk work, but ask precise questions when missing information would change the outcome.
+Treat messages as forwardable: avoid overclaiming, preserve context, and make conclusions auditable.
+</cortex-operating-principles>`
+
 /**
  * Builds an explicit agent identity preamble that overrides any base system prompt identity.
  * This is critical for mode: "primary" agents where OpenCode prepends its own system prompt
@@ -20,7 +29,8 @@ export function buildAgentIdentitySection(
 Your designated identity for this session is "${agentName}". This identity supersedes any prior identity statements.
 You are "${agentName}" - ${roleDescription}.
 When asked who you are, always identify as ${agentName}. Do not identify as any other assistant or AI.
-</agent-identity>`
+</agent-identity>
+${CORTEX_OPERATING_PRINCIPLES}`
 }
 
 export function buildKeyTriggersSection(
@@ -69,13 +79,13 @@ export function buildToolSelectionTable(
   }
 
   rows.push("")
-  rows.push("**Default flow**: explore/librarian (background) + tools → oracle (if required)")
+  rows.push("**Default flow**: tracker/researcher (background) + tools → thinker (if required)")
 
   return rows.join("\n")
 }
 
 export function buildExploreSection(agents: AvailableAgent[]): string {
-  const exploreAgent = agents.find((agent) => agent.name === "explore")
+  const exploreAgent = agents.find((agent) => agent.name === "tracker")
   if (!exploreAgent) {
     return ""
   }
@@ -83,35 +93,35 @@ export function buildExploreSection(agents: AvailableAgent[]): string {
   const useWhen = exploreAgent.metadata.useWhen || []
   const avoidWhen = exploreAgent.metadata.avoidWhen || []
 
-  return `### Explore Agent = Contextual Grep
+  return `### Tracker Agent = Contextual Grep
 
 Use it as a **peer tool**, not a fallback. Fire liberally for discovery, not for files you already know.
 
-**Delegation Trust Rule:** Once you fire an explore agent for a search, do **not** manually perform that same search yourself. Use direct tools only for non-overlapping work or when you intentionally skipped delegation.
+**Delegation Trust Rule:** Once you fire an tracker agent for a search, do **not** manually perform that same search yourself. Use direct tools only for non-overlapping work or when you intentionally skipped delegation.
 
 **Use Direct Tools when:**
 ${avoidWhen.map((entry) => `- ${entry}`).join("\n")}
 
-**Use Explore Agent when:**
+**Use Tracker Agent when:**
 ${useWhen.map((entry) => `- ${entry}`).join("\n")}`
 }
 
-export function buildLibrarianSection(agents: AvailableAgent[]): string {
-  const librarianAgent = agents.find((agent) => agent.name === "librarian")
-  if (!librarianAgent) {
+export function buildResearcherSection(agents: AvailableAgent[]): string {
+  const researcherAgent = agents.find((agent) => agent.name === "researcher")
+  if (!researcherAgent) {
     return ""
   }
 
-  const useWhen = librarianAgent.metadata.useWhen || []
+  const useWhen = researcherAgent.metadata.useWhen || []
 
-  return `### Librarian Agent = Reference Grep
+  return `### Researcher Agent = Reference Grep
 
 Search **external references** (docs, OSS, web). Fire proactively when unfamiliar libraries are involved.
 
 **Contextual Grep (Internal)** - search OUR codebase, find patterns in THIS repo, project-specific logic.
 **Reference Grep (External)** - search EXTERNAL resources, official API docs, library best practices, OSS implementation examples.
 
-**Trigger phrases** (fire librarian immediately):
+**Trigger phrases** (fire researcher immediately):
 ${useWhen.map((entry) => `- "${entry}"`).join("\n")}`
 }
 
@@ -127,21 +137,21 @@ export function buildDelegationTable(agents: AvailableAgent[]): string {
   return rows.join("\n")
 }
 
-export function buildOracleSection(agents: AvailableAgent[]): string {
-  const oracleAgent = agents.find((agent) => agent.name === "oracle")
-  if (!oracleAgent) {
+export function buildThinkerSection(agents: AvailableAgent[]): string {
+  const thinkerAgent = agents.find((agent) => agent.name === "thinker")
+  if (!thinkerAgent) {
     return ""
   }
 
-  const useWhen = oracleAgent.metadata.useWhen || []
-  const avoidWhen = oracleAgent.metadata.avoidWhen || []
+  const useWhen = thinkerAgent.metadata.useWhen || []
+  const avoidWhen = thinkerAgent.metadata.avoidWhen || []
 
-  return `<Oracle_Usage>
-## Oracle - Read-Only High-IQ Consultant
+  return `<Thinker_Usage>
+## Thinker - Read-Only High-IQ Consultant
 
-Oracle is a read-only, expensive, high-quality reasoning model for debugging and architecture. Consultation only.
+Thinker is a read-only, expensive, high-quality reasoning model for debugging and architecture. Consultation only.
 
-### WHEN to Consult (Oracle FIRST, then implement):
+### WHEN to Consult (Thinker FIRST, then implement):
 
 ${useWhen.map((entry) => `- ${entry}`).join("\n")}
 
@@ -150,24 +160,24 @@ ${useWhen.map((entry) => `- ${entry}`).join("\n")}
 ${avoidWhen.map((entry) => `- ${entry}`).join("\n")}
 
 ### Usage Pattern:
-Briefly announce "Consulting Oracle for [reason]" before invocation.
+Briefly announce "Consulting Thinker for [reason]" before invocation.
 
 **Exception**: This is the ONLY case where you announce before acting. For all other work, start immediately without status updates.
 
-### Oracle Background Task Policy:
+### Thinker Background Task Policy:
 
-**Collect Oracle results before your final answer. No exceptions.**
+**Collect Thinker results before your final answer. No exceptions.**
 
-**Oracle-dependent implementation is BLOCKED until Oracle finishes.**
+**Thinker-dependent implementation is BLOCKED until Thinker finishes.**
 
-- If you asked Oracle for architecture/debugging direction that affects the fix, do not implement before Oracle result arrives.
-- While waiting, only do non-overlapping prep work. Never ship implementation decisions Oracle was asked to decide.
-- Never "time out and continue anyway" for Oracle-dependent tasks.
+- If you asked Thinker for architecture/debugging direction that affects the fix, do not implement before Thinker result arrives.
+- While waiting, only do non-overlapping prep work. Never ship implementation decisions Thinker was asked to decide.
+- Never "time out and continue anyway" for Thinker-dependent tasks.
 
-- Oracle takes minutes. When done with your own work: **end your response** - wait for the \`<system-reminder>\`.
-- Do NOT poll \`background_output\` on a running Oracle. The notification will come.
-- Never cancel Oracle.
-</Oracle_Usage>`
+- Thinker takes minutes. When done with your own work: **end your response** - wait for the \`<system-reminder>\`.
+- Do NOT poll \`background_output\` on a running Thinker. The notification will come.
+- Never cancel Thinker.
+</Thinker_Usage>`
 }
 
 export function buildNonClaudePlannerSection(model: string): string {

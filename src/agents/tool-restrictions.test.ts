@@ -1,24 +1,24 @@
 /// <reference types="bun-types" />
 
 import { describe, test, expect } from "bun:test"
-import { createOracleAgent } from "./oracle"
-import { createLibrarianAgent } from "./librarian"
-import { createExploreAgent } from "./explore"
-import { createMomusAgent } from "./momus"
-import { createMetisAgent } from "./metis"
-import { createAtlasAgent } from "./atlas"
-import { createSisyphusAgent } from "./sisyphus"
-import { createHephaestusAgent } from "./hephaestus"
+import { createThinkerAgent } from "./thinker"
+import { createResearcherAgent } from "./researcher"
+import { createExploreAgent } from "./tracker"
+import { createCriticAgent } from "./critic"
+import { createReviewerAgent } from "./reviewer"
+import { createLeadAgent } from "./lead"
+import { createChiefAgent } from "./chief"
+import { createFounderAgent } from "./founder"
 
 const TEST_MODEL = "anthropic/claude-sonnet-4-5"
 
 describe("read-only agent tool restrictions", () => {
   const FILE_WRITE_TOOLS = ["write", "edit", "apply_patch"]
 
-  describe("Oracle", () => {
+  describe("Thinker", () => {
     test("denies all file-writing tools", () => {
       // given
-      const agent = createOracleAgent(TEST_MODEL)
+      const agent = createThinkerAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -29,23 +29,23 @@ describe("read-only agent tool restrictions", () => {
       }
     })
 
-    test("denies task but allows call_omo_agent for research", () => {
+    test("denies task but allows call_cortex_agent for research", () => {
       // given
-      const agent = createOracleAgent(TEST_MODEL)
+      const agent = createThinkerAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
 
       // then
       expect(permission["task"]).toBe("deny")
-      expect(permission["call_omo_agent"]).toBeUndefined()
+      expect(permission["call_cortex_agent"]).toBeUndefined()
     })
   })
 
-  describe("Librarian", () => {
+  describe("Researcher", () => {
     test("denies all file-writing tools", () => {
       // given
-      const agent = createLibrarianAgent(TEST_MODEL)
+      const agent = createResearcherAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -57,7 +57,7 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Explore", () => {
+  describe("Tracker", () => {
     test("denies all file-writing tools", () => {
       // given
       const agent = createExploreAgent(TEST_MODEL)
@@ -72,10 +72,10 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Momus", () => {
+  describe("Critic", () => {
     test("denies all file-writing tools", () => {
       // given
-      const agent = createMomusAgent(TEST_MODEL)
+      const agent = createCriticAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -87,10 +87,10 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Metis", () => {
+  describe("Reviewer", () => {
     test("denies all file-writing tools", () => {
       // given
-      const agent = createMetisAgent(TEST_MODEL)
+      const agent = createReviewerAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -102,26 +102,26 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Atlas", () => {
+  describe("Lead", () => {
     test("allows delegation tools for orchestration", () => {
       // given
-      const agent = createAtlasAgent({ model: TEST_MODEL })
+      const agent = createLeadAgent({ model: TEST_MODEL })
 
       // when
       const permission = (agent.permission ?? {}) as Record<string, string>
 
       // then
       expect(permission["task"]).toBeUndefined()
-      expect(permission["call_omo_agent"]).toBeUndefined()
+      expect(permission["call_cortex_agent"]).toBeUndefined()
     })
   })
 
-  describe("Sisyphus GPT variants", () => {
+  describe("Chief GPT variants", () => {
     test("deny apply_patch for GPT models but not Claude models", () => {
       // given
-      const gpt54Agent = createSisyphusAgent("openai/gpt-5.4")
-      const gptGenericAgent = createSisyphusAgent("openai/gpt-5.2")
-      const claudeAgent = createSisyphusAgent(TEST_MODEL)
+      const gpt54Agent = createChiefAgent("openai/gpt-5.4")
+      const gptGenericAgent = createChiefAgent("openai/gpt-5.2")
+      const claudeAgent = createChiefAgent(TEST_MODEL)
 
       // when
       const gpt54Permission = (gpt54Agent.permission ?? {}) as Record<string, string>
@@ -135,16 +135,16 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Sisyphus and Hephaestus frontier tool schema restrictions", () => {
+  describe("Chief and Founder frontier tool schema restrictions", () => {
     test("deny grep and glob for Opus 4.7 and GPT 5.5 models", () => {
       // given
       const frontierAgents = [
-        createSisyphusAgent("anthropic/claude-opus-4-7"),
-        createSisyphusAgent("anthropic/claude-opus-4.7"),
-        createSisyphusAgent("openai/gpt-5.5"),
-        createHephaestusAgent("anthropic/claude-opus-4-7"),
-        createHephaestusAgent("anthropic/claude-opus-4.7"),
-        createHephaestusAgent("openai/gpt-5.5"),
+        createChiefAgent("anthropic/claude-opus-4-7"),
+        createChiefAgent("anthropic/claude-opus-4.7"),
+        createChiefAgent("openai/gpt-5.5"),
+        createFounderAgent("anthropic/claude-opus-4-7"),
+        createFounderAgent("anthropic/claude-opus-4.7"),
+        createFounderAgent("openai/gpt-5.5"),
       ]
 
       // when
@@ -162,9 +162,9 @@ describe("read-only agent tool restrictions", () => {
     test("keeps grep and glob available for other models", () => {
       // given
       const otherAgents = [
-        createSisyphusAgent("anthropic/claude-sonnet-4-5"),
-        createSisyphusAgent("openai/gpt-5.4"),
-        createHephaestusAgent("openai/gpt-5.4"),
+        createChiefAgent("anthropic/claude-sonnet-4-5"),
+        createChiefAgent("openai/gpt-5.4"),
+        createFounderAgent("openai/gpt-5.4"),
       ]
 
       // when

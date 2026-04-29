@@ -23,7 +23,7 @@ Standalone feature modules wired into plugin/ layer. Each is self-contained with
 | **context-injector** | 6 | MEDIUM | AGENTS.md/README.md injection into context |
 | **run-continuation-state** | 5 | LOW | Persistent state for `run` command continuation across sessions |
 | **hook-message-injector** | 5 | MEDIUM | System message injection for hooks |
-| **boulder-state** | 5 | LOW | Persistent state for multi-step operations |
+| **work-state** | 5 | LOW | Persistent state for multi-step operations |
 | **task-toast-manager** | 4 | MEDIUM | Task progress notifications |
 | **tool-metadata-store** | 3 | LOW | Tool execution metadata cache |
 | **claude-code-session-state** | 3 | LOW | Subagent session state tracking |

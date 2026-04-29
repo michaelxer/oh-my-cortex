@@ -593,7 +593,7 @@ describe("ConcurrencyManager.globalLimit (maxBackgroundAgents)", () => {
 
 ## Config Usage Example
 
-User's `.opencode/oh-my-opencode.jsonc`:
+User's `.opencode/oh-my-cortex.jsonc`:
 
 ```jsonc
 {

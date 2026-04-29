@@ -1,11 +1,11 @@
 {
-  "name": "oh-my-opencode-darwin-x64-baseline",
+  "name": "oh-my-cortex-darwin-x64-baseline",
   "version": "3.17.6",
-  "description": "Platform-specific binary for oh-my-opencode (darwin-x64-baseline, no AVX2)",
+  "description": "Platform-specific binary for oh-my-cortex (darwin-x64-baseline, no AVX2)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/code-yeongyu/oh-my-openagent"
+    "url": "https://github.com/michaelxer/oh-my-cortex"
   },
   "os": [
     "darwin"
@@ -17,6 +17,6 @@
     "bin"
   ],
   "bin": {
-    "oh-my-opencode": "./bin/oh-my-opencode"
+    "oh-my-cortex": "./bin/oh-my-cortex"
   }
 }

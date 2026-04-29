@@ -2,8 +2,8 @@ import type { AgentConfig } from "@opencode-ai/sdk";
 
 /**
  * Agent mode determines UI model selection behavior:
- * - "primary": Respects user's UI-selected model (sisyphus, atlas)
- * - "subagent": Uses own fallback chain, ignores UI selection (oracle, explore, etc.)
+ * - "primary": Respects user's UI-selected model (chief, lead)
+ * - "subagent": Uses own fallback chain, ignores UI selection (thinker, tracker, etc.)
  * - "all": Available in both contexts (OpenCode compatibility)
  */
 export type AgentMode = "primary" | "subagent" | "all";
@@ -17,7 +17,7 @@ export type AgentFactory = ((model: string) => AgentConfig) & {
 };
 
 /**
- * Agent category for grouping in Sisyphus prompt sections
+ * Agent category for grouping in Chief prompt sections
  */
 export type AgentCategory =
   | "exploration"
@@ -31,7 +31,7 @@ export type AgentCategory =
 export type AgentCost = "FREE" | "CHEAP" | "EXPENSIVE";
 
 /**
- * Delegation trigger for Sisyphus prompt's Delegation Table
+ * Delegation trigger for Chief prompt's Delegation Table
  */
 export interface DelegationTrigger {
   /** Domain of work (e.g., "Frontend UI/UX") */
@@ -41,8 +41,8 @@ export interface DelegationTrigger {
 }
 
 /**
- * Metadata for generating Sisyphus prompt sections dynamically
- * This allows adding/removing agents without manually updating the Sisyphus prompt
+ * Metadata for generating Chief prompt sections dynamically
+ * This allows adding/removing agents without manually updating the Chief prompt
  */
 export interface AgentPromptMetadata {
   /** Category for grouping in prompt sections */
@@ -60,13 +60,13 @@ export interface AgentPromptMetadata {
   /** When NOT to use this agent */
   avoidWhen?: string[];
 
-  /** Optional dedicated prompt section (markdown) - for agents like Oracle that have special sections */
+  /** Optional dedicated prompt section (markdown) - for agents like Thinker that have special sections */
   dedicatedSection?: string;
 
-  /** Nickname/alias used in prompt (e.g., "Oracle" instead of "oracle") */
+  /** Nickname/alias used in prompt (e.g., "Thinker" instead of "thinker") */
   promptAlias?: string;
 
-  /** Key triggers that should appear in Phase 0 (e.g., "External library mentioned → fire librarian") */
+  /** Key triggers that should appear in Phase 0 (e.g., "External library mentioned → fire researcher") */
   keyTrigger?: string;
 }
 
@@ -79,11 +79,11 @@ export function isGptModel(model: string): boolean {
   return modelName.includes("gpt");
 }
 
-const GPT_NATIVE_SISYPHUS_RE = /gpt-5[.-](?:[4-9]|\d{2,})/i;
+const GPT_NATIVE_CHIEF_RE = /gpt-5[.-](?:[4-9]|\d{2,})/i;
 
-export function isGptNativeSisyphusModel(model: string): boolean {
+export function isGptNativeChiefModel(model: string): boolean {
   const modelName = extractModelName(model).toLowerCase();
-  return GPT_NATIVE_SISYPHUS_RE.test(modelName);
+  return GPT_NATIVE_CHIEF_RE.test(modelName);
 }
 
 export function isGpt5_5Model(model: string): boolean {
@@ -144,16 +144,17 @@ export function isGeminiModel(model: string): boolean {
 }
 
 export type BuiltinAgentName =
-  | "sisyphus"
-  | "hephaestus"
-  | "oracle"
-  | "librarian"
-  | "explore"
-  | "multimodal-looker"
-  | "metis"
-  | "momus"
-  | "atlas"
-  | "sisyphus-junior";
+  | "chief"
+  | "founder"
+  | "planner"
+  | "thinker"
+  | "researcher"
+  | "tracker"
+  | "spotter"
+  | "reviewer"
+  | "critic"
+  | "lead"
+  | "worker";
 
 export type OverridableAgentName = "build" | BuiltinAgentName;
 

@@ -1,15 +1,15 @@
 import { statSync } from "node:fs"
 import type { PluginInput } from "@opencode-ai/plugin"
 import {
-  readBoulderState,
-  writeBoulderState,
+  readWorkStateState,
+  writeWorkStateState,
   appendSessionId,
-  findPrometheusPlans,
+  findPlannerPlans,
   getPlanProgress,
-  createBoulderState,
+  createWorkStateState,
   getPlanName,
-  clearBoulderState,
-} from "../../features/boulder-state"
+  clearWorkStateState,
+} from "../../features/work-state"
 import { log } from "../../shared/logger"
 import {
   isAgentRegistered,
@@ -22,7 +22,7 @@ import { buildStartWorkContextInfo } from "./context-info-builder"
 import { createWorktreeActiveBlock } from "./worktree-block"
 
 export const HOOK_NAME = "start-work" as const
-const START_WORK_TEMPLATE_MARKER = "You are starting a Sisyphus work session."
+const START_WORK_TEMPLATE_MARKER = "You are starting a Chief work session."
 
 interface StartWorkHookInput {
   sessionID: string
@@ -54,7 +54,7 @@ function resolveWorktreeContext(
 
   return {
     worktreePath: undefined,
-    block: `\n**Worktree** (needs setup): \`git worktree add ${explicitWorktreePath} <branch>\`, then add \`"worktree_path"\` to boulder.json`,
+    block: `\n**Worktree** (needs setup): \`git worktree add ${explicitWorktreePath} <branch>\`, then add \`"worktree_path"\` to workstate.json`,
   }
 }
 
@@ -79,15 +79,15 @@ export function createStartWorkHook(ctx: PluginInput) {
     }
 
     log(`[${HOOK_NAME}] Processing start-work command`, { sessionID: input.sessionID })
-    const activeAgent = isAgentRegistered("atlas")
-      ? "atlas"
-      : "sisyphus"
+    const activeAgent = isAgentRegistered("lead")
+      ? "lead"
+      : "chief"
     updateSessionAgent(input.sessionID, activeAgent)
     if (output.message) {
       output.message["agent"] = resolveRegisteredAgentName(activeAgent) ?? activeAgent
     }
 
-    const existingState = readBoulderState(ctx.directory)
+    const existingState = readWorkStateState(ctx.directory)
     const sessionId = input.sessionID
     const timestamp = new Date().toISOString()
 

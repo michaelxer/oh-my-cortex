@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, spyOn, test, mock } from "bun:test"
 
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import * as agentConfigHandler from "./agent-config-handler"
 import * as commandConfigHandler from "./command-config-handler"
 import * as mcpConfigHandler from "./mcp-config-handler"
@@ -22,7 +22,7 @@ async function importFreshConfigHandlerModule(): Promise<typeof import("./config
   return import(`./config-handler?test=${Date.now()}-${Math.random()}`)
 }
 
-function createPluginConfig(overrides: Partial<OhMyOpenCodeConfig> = {}): OhMyOpenCodeConfig {
+function createPluginConfig(overrides: Partial<OhMyCortexConfig> = {}): OhMyCortexConfig {
   return {
     git_master: {
       commit_footer: true,

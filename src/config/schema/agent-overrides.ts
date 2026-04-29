@@ -40,8 +40,8 @@ export const AgentOverrideConfigSchema = z.object({
   textVerbosity: z.enum(["low", "medium", "high"]).optional(),
   /** Provider-specific options. Passed directly to OpenCode SDK. */
   providerOptions: z.record(z.string(), z.unknown()).optional(),
-  /** Per-message ultrawork override model/variant when ultrawork keyword is detected. */
-  ultrawork: z
+  /** Per-message deepwork override model/variant when deepwork keyword is detected. */
+  deepwork: z
     .object({
       model: z.string().optional(),
       variant: z.string().optional(),
@@ -58,20 +58,20 @@ export const AgentOverrideConfigSchema = z.object({
 export const AgentOverridesSchema = z.object({
   build: AgentOverrideConfigSchema.optional(),
   plan: AgentOverrideConfigSchema.optional(),
-  sisyphus: AgentOverrideConfigSchema.optional(),
-  hephaestus: AgentOverrideConfigSchema.extend({
+  chief: AgentOverrideConfigSchema.optional(),
+  founder: AgentOverrideConfigSchema.extend({
     allow_non_gpt_model: z.boolean().optional(),
   }).optional(),
-  "sisyphus-junior": AgentOverrideConfigSchema.optional(),
+  "worker": AgentOverrideConfigSchema.optional(),
   "OpenCode-Builder": AgentOverrideConfigSchema.optional(),
-  prometheus: AgentOverrideConfigSchema.optional(),
-  metis: AgentOverrideConfigSchema.optional(),
-  momus: AgentOverrideConfigSchema.optional(),
-  oracle: AgentOverrideConfigSchema.optional(),
-  librarian: AgentOverrideConfigSchema.optional(),
-  explore: AgentOverrideConfigSchema.optional(),
-  "multimodal-looker": AgentOverrideConfigSchema.optional(),
-  atlas: AgentOverrideConfigSchema.optional(),
+  planner: AgentOverrideConfigSchema.optional(),
+  reviewer: AgentOverrideConfigSchema.optional(),
+  critic: AgentOverrideConfigSchema.optional(),
+  thinker: AgentOverrideConfigSchema.optional(),
+  researcher: AgentOverrideConfigSchema.optional(),
+  tracker: AgentOverrideConfigSchema.optional(),
+  "spotter": AgentOverrideConfigSchema.optional(),
+  lead: AgentOverrideConfigSchema.optional(),
 })
 
 export type AgentOverrideConfig = z.infer<typeof AgentOverrideConfigSchema>

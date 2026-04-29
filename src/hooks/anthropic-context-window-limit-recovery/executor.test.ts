@@ -1,6 +1,6 @@
 /// <reference types="bun-types" />
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test"
-import { OhMyOpenCodeConfigSchema } from "../../config"
+import { OhMyCortexConfigSchema } from "../../config"
 import { executeCompact } from "./executor"
 import type { AutoCompactState } from "./types"
 import * as recoveryStrategy from "./recovery-strategy"
@@ -81,7 +81,7 @@ describe("executeCompact lock management", () => {
   let autoCompactState: AutoCompactState
   let mockClient: any
   let fakeTimeouts: FakeTimeouts
-  let pluginConfig: ReturnType<typeof OhMyOpenCodeConfigSchema.parse>
+  let pluginConfig: ReturnType<typeof OhMyCortexConfigSchema.parse>
   const sessionID = "test-session-123"
   const directory = "/test/dir"
   const msg = { providerID: "anthropic", modelID: "claude-opus-4-7" }
@@ -110,7 +110,7 @@ describe("executeCompact lock management", () => {
       },
     }
 
-    pluginConfig = OhMyOpenCodeConfigSchema.parse({})
+    pluginConfig = OhMyCortexConfigSchema.parse({})
     fakeTimeouts = createFakeTimeouts()
   })
 

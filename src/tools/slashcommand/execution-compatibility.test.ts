@@ -27,7 +27,7 @@ describe("slashcommand discovery and execution compatibility", () => {
 
   beforeEach(() => {
     clearCommandLoaderCache()
-    tempDir = mkdtempSync(join(tmpdir(), "omo-slashcommand-compat-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omx-slashcommand-compat-test-"))
     originalWorkingDirectory = process.cwd()
     originalOpencodeConfigDir = process.env.OPENCODE_CONFIG_DIR
   })

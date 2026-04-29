@@ -2,7 +2,7 @@
 
 ## Overview
 
-Add a `max_background_agents` config option to oh-my-opencode that limits total simultaneous background agents across all models/providers. Currently, concurrency is only limited per-model/provider key (default 5 per key). This new option adds a **global ceiling** on total running background agents.
+Add a `max_background_agents` config option to oh-my-cortex that limits total simultaneous background agents across all models/providers. Currently, concurrency is only limited per-model/provider key (default 5 per key). This new option adds a **global ceiling** on total running background agents.
 
 ## Step-by-Step Plan
 
@@ -80,7 +80,7 @@ Check `src/config/schema/background-task.ts` and `src/features/background-agent/
 
 | File | Reason |
 |------|--------|
-| `src/config/schema/oh-my-opencode-config.ts` | No change needed - `BackgroundTaskConfigSchema` is already composed into root schema via `background_task` field |
+| `src/config/schema/oh-my-cortex-config.ts` | No change needed - `BackgroundTaskConfigSchema` is already composed into root schema via `background_task` field |
 | `src/create-managers.ts` | No change needed - `pluginConfig.background_task` already passed to `BackgroundManager` constructor |
 | `src/features/background-agent/manager.ts` | No change needed - already passes config to `ConcurrencyManager` |
 | `src/plugin-config.ts` | No change needed - `background_task` is a simple object field, uses default override merge |

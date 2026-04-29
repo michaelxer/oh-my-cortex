@@ -27,7 +27,7 @@ export function remapAgentKeysToDisplayNames(
       // Regression guard: do not also assign result[key].
       // This line was repeatedly re-added and caused duplicate agent rows in the UI.
       // Runtime callers that previously depended on config-key aliases were fixed in:
-      // - hooks/atlas/boulder-continuation-injector.ts (prompt agent normalization)
+      // - hooks/lead/workstate-continuation-injector.ts (prompt agent normalization)
       // - features/claude-code-session-state/state.ts (dual registration for display + config forms)
     } else {
       result[key] = value

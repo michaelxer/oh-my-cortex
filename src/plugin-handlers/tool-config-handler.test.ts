@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from "bun:test"
 import { applyToolConfig } from "./tool-config-handler"
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import { getAgentDisplayName } from "../shared/agent-display-names"
 
 function createParams(overrides: {
@@ -18,7 +18,7 @@ function createParams(overrides: {
     pluginConfig: {
       experimental: overrides.taskSystem === undefined ? undefined : { task_system: overrides.taskSystem },
       disabled_tools: overrides.disabledTools,
-    } as OhMyOpenCodeConfig,
+    } as OhMyCortexConfig,
     agentResult: agentResult as Record<string, unknown>,
   }
 }
@@ -26,7 +26,7 @@ function createParams(overrides: {
 describe("applyToolConfig", () => {
   describe("#given config permission sets webfetch and external_directory", () => {
     describe("#when applying tool config", () => {
-      it("#then should preserve explicit deny over OmO defaults", () => {
+      it("#then should preserve explicit deny over OMX defaults", () => {
         const params = createParams({})
         params.config.permission = {
           webfetch: "deny",
@@ -67,11 +67,11 @@ describe("applyToolConfig", () => {
       })
 
       it.each([
-        "atlas",
-        "sisyphus",
-        "hephaestus",
-        "prometheus",
-        "sisyphus-junior",
+        "lead",
+        "chief",
+        "founder",
+        "planner",
+        "worker",
       ])("#then should deny todo tools for %s agent", (agentName) => {
         const params = createParams({
           taskSystem: true,
@@ -112,7 +112,7 @@ describe("applyToolConfig", () => {
     })
 
     describe("#when config explicitly denies question permission", () => {
-      it.each(["sisyphus", "hephaestus", "prometheus"])(
+      it.each(["chief", "founder", "planner"])(
         "#then should deny question for %s even without CLI_RUN_MODE",
         (agentName) => {
           process.env.OPENCODE_CONFIG_CONTENT = JSON.stringify({
@@ -132,7 +132,7 @@ describe("applyToolConfig", () => {
     })
 
     describe("#when config does not deny question permission", () => {
-      it.each(["sisyphus", "hephaestus", "prometheus"])(
+      it.each(["chief", "founder", "planner"])(
         "#then should allow question for %s in interactive mode",
         (agentName) => {
           process.env.OPENCODE_CONFIG_CONTENT = JSON.stringify({
@@ -152,7 +152,7 @@ describe("applyToolConfig", () => {
     })
 
     describe("#when CLI_RUN_MODE is true and config does not deny", () => {
-      it.each(["sisyphus", "hephaestus", "prometheus"])(
+      it.each(["chief", "founder", "planner"])(
         "#then should deny question for %s via CLI_RUN_MODE",
         (agentName) => {
           process.env.OPENCODE_CONFIG_CONTENT = JSON.stringify({
@@ -172,7 +172,7 @@ describe("applyToolConfig", () => {
     })
 
     describe("#when config deny overrides CLI_RUN_MODE allow", () => {
-      it.each(["sisyphus", "hephaestus", "prometheus"])(
+      it.each(["chief", "founder", "planner"])(
         "#then should deny question for %s when config says deny regardless of CLI_RUN_MODE",
         (agentName) => {
           process.env.OPENCODE_CONFIG_CONTENT = JSON.stringify({
@@ -195,11 +195,11 @@ describe("applyToolConfig", () => {
   describe("#given task_system is disabled", () => {
     describe("#when applying tool config", () => {
       it.each([
-        "atlas",
-        "sisyphus",
-        "hephaestus",
-        "prometheus",
-        "sisyphus-junior",
+        "lead",
+        "chief",
+        "founder",
+        "planner",
+        "worker",
       ])("#then should NOT deny todo tools for %s agent", (agentName) => {
         const params = createParams({
           taskSystem: false,
@@ -230,11 +230,11 @@ describe("applyToolConfig", () => {
       })
 
       it.each([
-        "atlas",
-        "sisyphus",
-        "hephaestus",
-        "prometheus",
-        "sisyphus-junior",
+        "lead",
+        "chief",
+        "founder",
+        "planner",
+        "worker",
       ])("#then should NOT deny todo tools for %s agent by default", (agentName) => {
         const params = createParams({
           agents: [agentName],
@@ -252,13 +252,13 @@ describe("applyToolConfig", () => {
   })
 
   describe("#given agentResult uses clean display keys", () => {
-    it("#then should still resolve atlas permissions through the display key", () => {
-      const atlasKey = getAgentDisplayName("atlas")
-      const params = createParams({ agents: [atlasKey] })
+    it("#then should still resolve lead permissions through the display key", () => {
+      const leadKey = getAgentDisplayName("lead")
+      const params = createParams({ agents: [leadKey] })
 
       applyToolConfig(params)
 
-      const agent = params.agentResult[atlasKey] as {
+      const agent = params.agentResult[leadKey] as {
         permission: Record<string, unknown>
       }
       expect(agent.permission.task).toBe("allow")
@@ -292,7 +292,7 @@ describe("applyToolConfig", () => {
     })
 
     describe("#when question is in disabled_tools", () => {
-      it.each(["sisyphus", "hephaestus", "prometheus"])(
+      it.each(["chief", "founder", "planner"])(
         "#then should deny question for %s agent",
         (agentName) => {
           const params = createParams({
@@ -311,7 +311,7 @@ describe("applyToolConfig", () => {
     })
 
     describe("#when question is in disabled_tools alongside other tools", () => {
-      it.each(["sisyphus", "hephaestus", "prometheus"])(
+      it.each(["chief", "founder", "planner"])(
         "#then should deny question for %s agent",
         (agentName) => {
           const params = createParams({
@@ -330,7 +330,7 @@ describe("applyToolConfig", () => {
     })
 
     describe("#when disabled_tools does not include question", () => {
-      it.each(["sisyphus", "hephaestus", "prometheus"])(
+      it.each(["chief", "founder", "planner"])(
         "#then should allow question for %s agent",
         (agentName) => {
           const params = createParams({

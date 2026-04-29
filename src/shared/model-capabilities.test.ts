@@ -401,7 +401,7 @@ describe("getModelCapabilities", () => {
     })
   })
 
-  test("keeps every built-in OmO requirement model snapshot-backed", () => {
+  test("keeps every built-in OMX requirement model snapshot-backed", () => {
     const bundledSnapshot = getBundledModelCapabilitiesSnapshot()
     const requirementModels = new Set<string>()
 

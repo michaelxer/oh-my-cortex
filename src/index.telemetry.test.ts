@@ -112,7 +112,7 @@ function installModuleMocks(): void {
   }))
 }
 
-describe("oh-my-openagent telemetry isolation", () => {
+describe("oh-my-cortex telemetry isolation", () => {
   beforeEach(() => {
     mock.restore()
     installModuleMocks()

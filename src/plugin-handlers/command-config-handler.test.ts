@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test";
 import * as builtinCommands from "../features/builtin-commands";
 import * as commandLoader from "../features/claude-code-command-loader";
 import * as skillLoader from "../features/opencode-skill-loader";
-import type { OhMyOpenCodeConfig } from "../config";
+import type { OhMyCortexConfig } from "../config";
 import type { PluginComponents } from "./plugin-components-loader";
 import { applyCommandConfig } from "./command-config-handler";
 import {
@@ -24,7 +24,7 @@ function createPluginComponents(): PluginComponents {
   };
 }
 
-function createPluginConfig(): OhMyOpenCodeConfig {
+function createPluginConfig(): OhMyCortexConfig {
   return {
     git_master: {
       commit_footer: true,
@@ -108,14 +108,14 @@ describe("applyCommandConfig", () => {
     expect(commandConfig["agents-global-skill"]?.description).toContain("Agents global skill");
   });
 
-  test("normalizes Atlas command agents to the runtime list name used by opencode command routing", async () => {
+  test("normalizes Lead command agents to the runtime list name used by opencode command routing", async () => {
     // given
     loadBuiltinCommandsSpy.mockReturnValue({
       "start-work": {
         name: "start-work",
         description: "(builtin) Start work",
         template: "template",
-        agent: "atlas",
+        agent: "lead",
       },
     });
     const config: Record<string, unknown> = { command: {} };
@@ -130,7 +130,7 @@ describe("applyCommandConfig", () => {
 
     // then
     const commandConfig = config.command as Record<string, { agent?: string }>;
-    expect(commandConfig["start-work"]?.agent).toBe(getAgentListDisplayName("atlas"));
+    expect(commandConfig["start-work"]?.agent).toBe(getAgentListDisplayName("lead"));
   });
 
   test("normalizes legacy display-name command agents to the runtime list name", async () => {
@@ -140,7 +140,7 @@ describe("applyCommandConfig", () => {
         name: "start-work",
         description: "(builtin) Start work",
         template: "template",
-        agent: getAgentDisplayName("atlas"),
+        agent: getAgentDisplayName("lead"),
       },
     });
     const config: Record<string, unknown> = { command: {} };
@@ -155,6 +155,6 @@ describe("applyCommandConfig", () => {
 
     // then
     const commandConfig = config.command as Record<string, { agent?: string }>;
-    expect(commandConfig["start-work"]?.agent).toBe(getAgentListDisplayName("atlas"));
+    expect(commandConfig["start-work"]?.agent).toBe(getAgentListDisplayName("lead"));
   });
 });

@@ -27,7 +27,7 @@ You are working on VISUAL/UI tasks.
    - Typography scale (heading levels, body, caption - how many? What font stack?)
    - Component composition patterns (slots? children? compound components?)
 
-**DO NOT proceed to Phase 2 until you can answer ALL of these. If you cannot, you have not explored enough. EXPLORE MORE.**
+**DO NOT proceed to Phase 2 until you can answer ALL of these. If you cannot, you have not explored enough. TRACKER MORE.**
 
 ### PHASE 2: NO DESIGN SYSTEM? BUILD ONE. NOW.
 
@@ -94,7 +94,7 @@ You are working on HIGHLY CREATIVE / ARTISTIC tasks.
 
 Artistic genius mindset:
 - Push far beyond conventional boundaries
-- Explore radical, unconventional directions
+- Tracker radical, unconventional directions
 - Surprise and delight: unexpected twists, novel combinations
 - Rich detail and vivid expression
 - Break patterns deliberately when it serves the creative vision

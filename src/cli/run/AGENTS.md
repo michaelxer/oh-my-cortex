@@ -4,7 +4,7 @@
 
 ## OVERVIEW
 
-37 files. Powers the `oh-my-opencode run <message>` command. Connects to OpenCode server, creates/resumes sessions, streams events, and polls for completion.
+37 files. Powers the `oh-my-cortex run <message>` command. Connects to OpenCode server, creates/resumes sessions, streams events, and polls for completion.
 
 ## EXECUTION FLOW
 
@@ -12,7 +12,7 @@
 runner.ts
   1. opencode-binary-resolver.ts → Find OpenCode binary
   2. server-connection.ts → Connect to OpenCode server (start if needed)
-  3. agent-resolver.ts → Flag → env → config → Sisyphus
+  3. agent-resolver.ts → Flag → env → config → Chief
   4. session-resolver.ts → Create new or resume existing session
   5. events.ts → Stream SSE events from session
   6. event-handlers.ts → Process each event type
@@ -26,7 +26,7 @@ runner.ts
 |------|---------|
 | `runner.ts` | Main orchestration — connects, resolves, runs, completes |
 | `server-connection.ts` | Start OpenCode server process, create SDK client |
-| `agent-resolver.ts` | Resolve agent: `--agent` flag → `OPENCODE_AGENT` env → config → Sisyphus |
+| `agent-resolver.ts` | Resolve agent: `--agent` flag → `OPENCODE_AGENT` env → config → Chief |
 | `session-resolver.ts` | Create new session or resume via `--attach` / `--session-id` |
 | `events.ts` | SSE event stream subscription |
 | `event-handlers.ts` | Route events to handlers (message, tool, error, idle) |
@@ -44,7 +44,7 @@ runner.ts
 1. --agent CLI flag
 2. OPENCODE_AGENT environment variable
 3. default_run_agent config
-4. "sisyphus" (default)
+4. "chief" (default)
 ```
 
 ## COMPLETION DETECTION

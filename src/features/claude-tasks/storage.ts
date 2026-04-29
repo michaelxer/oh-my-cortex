@@ -3,10 +3,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, unlinkS
 import { randomUUID } from "crypto"
 import { getOpenCodeConfigDir } from "../../shared/opencode-config-dir"
 import type { z } from "zod"
-import type { OhMyOpenCodeConfig } from "../../config/schema"
+import type { OhMyCortexConfig } from "../../config/schema"
 
-export function getTaskDir(config: Partial<OhMyOpenCodeConfig> = {}): string {
-  const tasksConfig = config.sisyphus?.tasks
+export function getTaskDir(config: Partial<OhMyCortexConfig> = {}): string {
+  const tasksConfig = config.chief?.tasks
   const storagePath = tasksConfig?.storage_path
 
   if (storagePath) {
@@ -22,14 +22,14 @@ export function sanitizePathSegment(value: string): string {
   return value.replace(/[^a-zA-Z0-9_-]/g, "-") || "default"
 }
 
-export function resolveTaskListId(config: Partial<OhMyOpenCodeConfig> = {}): string {
-  const envId = process.env.ULTRAWORK_TASK_LIST_ID?.trim()
+export function resolveTaskListId(config: Partial<OhMyCortexConfig> = {}): string {
+  const envId = process.env.DEEPWORK_TASK_LIST_ID?.trim()
   if (envId) return sanitizePathSegment(envId)
 
   const claudeEnvId = process.env.CLAUDE_CODE_TASK_LIST_ID?.trim()
   if (claudeEnvId) return sanitizePathSegment(claudeEnvId)
 
-  const configId = config.sisyphus?.tasks?.task_list_id?.trim()
+  const configId = config.chief?.tasks?.task_list_id?.trim()
   if (configId) return sanitizePathSegment(configId)
 
   return sanitizePathSegment(basename(process.cwd()))
@@ -88,7 +88,7 @@ export function generateTaskId(): string {
   return `T-${randomUUID()}`
 }
 
-export function listTaskFiles(config: Partial<OhMyOpenCodeConfig> = {}): string[] {
+export function listTaskFiles(config: Partial<OhMyCortexConfig> = {}): string[] {
   const dir = getTaskDir(config)
   if (!existsSync(dir)) return []
   return readdirSync(dir)

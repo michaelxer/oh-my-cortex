@@ -12,7 +12,7 @@ import { applyModelResolution, getFirstFallbackModel } from "./model-resolution"
 import { log } from "../../shared/logger"
 
 export function collectPendingBuiltinAgents(input: {
-  agentSources: Record<BuiltinAgentName, import("../agent-builder").AgentSource>
+  agentSources: Partial<Record<BuiltinAgentName, import("../agent-builder").AgentSource>>
   agentMetadata: Partial<Record<BuiltinAgentName, AgentPromptMetadata>>
   disabledAgents: string[]
   agentOverrides: AgentOverrides
@@ -26,7 +26,7 @@ export function collectPendingBuiltinAgents(input: {
   isFirstRunNoCache: boolean
   disabledSkills?: Set<string>
   useTaskSystem?: boolean
-  disableOmoEnv?: boolean
+  disableCortexEnv?: boolean
 }): { pendingAgentConfigs: Map<string, AgentConfig>; availableAgents: AvailableAgent[] } {
   const {
     agentSources,
@@ -42,7 +42,7 @@ export function collectPendingBuiltinAgents(input: {
     availableModels,
     isFirstRunNoCache,
     disabledSkills,
-    disableOmoEnv = false,
+    disableCortexEnv = false,
   } = input
 
   const availableAgents: AvailableAgent[] = []
@@ -51,10 +51,10 @@ export function collectPendingBuiltinAgents(input: {
   for (const [name, source] of Object.entries(agentSources)) {
     const agentName = name as BuiltinAgentName
 
-    if (agentName === "sisyphus") continue
-    if (agentName === "hephaestus") continue
-    if (agentName === "atlas") continue
-    if (agentName === "sisyphus-junior") continue
+    if (agentName === "chief") continue
+    if (agentName === "founder") continue
+    if (agentName === "lead") continue
+    if (agentName === "worker") continue
     if (disabledAgents.some((name) => name.toLowerCase() === agentName.toLowerCase())) continue
 
     const override = agentOverrides[agentName]
@@ -100,14 +100,14 @@ export function collectPendingBuiltinAgents(input: {
       config = { ...config, variant: resolvedVariant }
     }
 
-    if (agentName === "librarian") {
-      config = applyEnvironmentContext(config, directory, { disableOmoEnv })
+    if (agentName === "researcher") {
+      config = applyEnvironmentContext(config, directory, { disableCortexEnv })
     }
 
     config = applyOverrides(config, override, mergedCategories, directory)
     config = resolveAgentSkills(config, { gitMasterConfig, browserProvider, disabledSkills })
 
-    // Store for later - will be added after sisyphus and hephaestus
+    // Store for later - will be added after chief and founder
     pendingAgentConfigs.set(name, config)
 
     const metadata = agentMetadata[agentName]

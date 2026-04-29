@@ -12,8 +12,8 @@ Before pushing, run the exact CI steps locally to catch failures early:
 
 ```bash
 # Targeted test runs first (fast feedback)
-bun test src/features/boulder-state/storage.test.ts
-bun test src/hooks/atlas/index.test.ts
+bun test src/features/work-state/storage.test.ts
+bun test src/hooks/lead/index.test.ts
 
 # Full test suite
 bun test
@@ -35,20 +35,20 @@ After each fix-commit-push: `gh pr checks --watch` to re-enter gate
 ## Gate B: review-work (5-agent review)
 
 ### The 5 parallel agents
-1. **Oracle (goal/constraint verification)**: Checks the fix matches the stated problem — `worktree_path` crash resolved, no scope creep
-2. **Oracle (code quality)**: Validates code follows existing patterns — factory pattern, given/when/then tests, < 200 LOC, no catch-all files
-3. **Oracle (security)**: Ensures no new security issues — JSON parse injection, path traversal in worktree_path
+1. **Thinker (goal/constraint verification)**: Checks the fix matches the stated problem — `worktree_path` crash resolved, no scope creep
+2. **Thinker (code quality)**: Validates code follows existing patterns — factory pattern, given/when/then tests, < 200 LOC, no catch-all files
+3. **Thinker (security)**: Ensures no new security issues — JSON parse injection, path traversal in worktree_path
 4. **QA agent (hands-on execution)**: Actually runs the tests, checks `lsp_diagnostics` on changed files, verifies the fix in action
 5. **Context mining agent**: Checks GitHub issues, git history, related PRs for context alignment
 
 ### Expected focus areas for this PR
-- Oracle (goal): Does the sanitization in `readBoulderState` actually prevent the crash? Is the `typeof` guard necessary or redundant?
-- Oracle (quality): Are the new tests following the given/when/then pattern? Do they use the same mock setup as existing tests?
-- Oracle (security): Is the `worktree_path` value ever used in path operations without sanitization? (Answer: no, it's only used in template strings)
-- QA: Run `bun test src/hooks/atlas/index.test.ts` — does the null worktree_path test actually trigger the bug before fix?
+- Thinker (goal): Does the sanitization in `readWorkStateState` actually prevent the crash? Is the `typeof` guard necessary or redundant?
+- Thinker (quality): Are the new tests following the given/when/then pattern? Do they use the same mock setup as existing tests?
+- Thinker (security): Is the `worktree_path` value ever used in path operations without sanitization? (Answer: no, it's only used in template strings)
+- QA: Run `bun test src/hooks/lead/index.test.ts` — does the null worktree_path test actually trigger the bug before fix?
 
 ### Failure handling
-- Each oracle produces a PASS/FAIL verdict with specific issues
+- Each thinker produces a PASS/FAIL verdict with specific issues
 - On FAIL: read the specific issue, fix in the worktree, commit, push, re-run review-work
 - All 5 agents must PASS
 
@@ -73,12 +73,12 @@ After each fix-commit-push: `gh pr checks --watch` to re-enter gate
 Once all 3 gates pass:
 ```bash
 gh pr merge --squash --delete-branch
-git worktree remove ../omo-wt/fix-atlas-worktree-path-crash
+git worktree remove ../omx-wt/fix-lead-worktree-path-crash
 ```
 
 On merge failure (conflicts):
 ```bash
-cd ../omo-wt/fix-atlas-worktree-path-crash
+cd ../omx-wt/fix-lead-worktree-path-crash
 git fetch origin dev
 git rebase origin/dev
 # Resolve conflicts if any

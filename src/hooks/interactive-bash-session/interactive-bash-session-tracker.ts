@@ -3,15 +3,15 @@ import {
   saveInteractiveBashSessionState,
   clearInteractiveBashSessionState,
 } from "./storage";
-import { OMO_SESSION_PREFIX, buildSessionReminderMessage } from "./constants";
+import { OMX_SESSION_PREFIX, buildSessionReminderMessage } from "./constants";
 import type { InteractiveBashSessionState } from "./types";
 import { subagentSessions } from "../../features/claude-code-session-state";
 import { spawnWithWindowsHide } from "../../shared/spawn-with-windows-hide";
 
 type AbortSession = (args: { path: { id: string } }) => Promise<unknown>
 
-function isOmoSession(sessionName: string | null): sessionName is string {
-  return sessionName !== null && sessionName.startsWith(OMO_SESSION_PREFIX)
+function isOmxSession(sessionName: string | null): sessionName is string {
+  return sessionName !== null && sessionName.startsWith(OMX_SESSION_PREFIX)
 }
 
 async function killAllTrackedSessions(
@@ -90,10 +90,10 @@ export function createInteractiveBashSessionTracker(options: {
     const isKillSession = subCommand === "kill-session"
     const isKillServer = subCommand === "kill-server"
 
-    if (isNewSession && isOmoSession(sessionName)) {
+    if (isNewSession && isOmxSession(sessionName)) {
       state.tmuxSessions.add(sessionName)
       stateChanged = true
-    } else if (isKillSession && isOmoSession(sessionName)) {
+    } else if (isKillSession && isOmxSession(sessionName)) {
       state.tmuxSessions.delete(sessionName)
       stateChanged = true
     } else if (isKillServer) {

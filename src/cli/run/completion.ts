@@ -39,13 +39,13 @@ function areContinuationHooksIdle(
   ctx: RunContext,
   continuationState: ContinuationState
 ): boolean {
-  if (continuationState.hasActiveBoulder) {
-    logWaiting(ctx, "boulder continuation is active")
+  if (continuationState.hasActiveWorkState) {
+    logWaiting(ctx, "workstate continuation is active")
     return false
   }
 
-  if (continuationState.hasActiveRalphLoop) {
-    logWaiting(ctx, "ralph-loop continuation is active")
+  if (continuationState.hasActiveCortexLoop) {
+    logWaiting(ctx, "cortex-loop continuation is active")
     return false
   }
 

@@ -13,7 +13,7 @@ describe("executeUnstableAgentTask session permission", () => {
           id: "bg_unstable_permission",
           sessionID: "ses_unstable_permission",
           description: "test task",
-          agent: "sisyphus-junior",
+          agent: "worker",
           status: "running",
         }
       },
@@ -22,14 +22,14 @@ describe("executeUnstableAgentTask session permission", () => {
         sessionID: "ses_unstable_permission",
         status: "interrupt",
         description: "test task",
-        agent: "sisyphus-junior",
+        agent: "worker",
         error: "stop after launch",
       }),
     }
     const toolContext = {
       sessionID: "parent-session",
       messageID: "msg_parent",
-      agent: "sisyphus",
+      agent: "chief",
       metadata: () => {},
       abort: new AbortController().signal,
     } satisfies Parameters<typeof executeUnstableAgentTask>[1]
@@ -59,7 +59,7 @@ describe("executeUnstableAgentTask session permission", () => {
       toolContext,
       executorContext,
       parentContext,
-      "sisyphus-junior",
+      "worker",
       undefined,
       undefined,
       "test-model",

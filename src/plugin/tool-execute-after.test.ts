@@ -43,7 +43,7 @@ describe("createToolExecuteAfterHandler", () => {
     // given
     storeToolMetadata("ses_parent", "call_legacy", {
       title: "stored title",
-      metadata: { sessionId: "ses_child", agent: "oracle" },
+      metadata: { sessionId: "ses_child", agent: "thinker" },
     })
 
     const handler = createToolExecuteAfterHandler({
@@ -61,14 +61,14 @@ describe("createToolExecuteAfterHandler", () => {
 
     // then
     expect(output.title).toBe("stored title")
-    expect(output.metadata).toEqual({ truncated: true, sessionId: "ses_child", agent: "oracle" })
+    expect(output.metadata).toEqual({ truncated: true, sessionId: "ses_child", agent: "thinker" })
   })
 
   it("#given native session metadata #when stored metadata exists #then stored metadata does not overwrite native session linkage", async () => {
     // given
     storeToolMetadata("ses_parent", "call_native", {
       title: "stored title",
-      metadata: { sessionId: "ses_stored", agent: "oracle" },
+      metadata: { sessionId: "ses_stored", agent: "thinker" },
     })
 
     const handler = createToolExecuteAfterHandler({
@@ -79,7 +79,7 @@ describe("createToolExecuteAfterHandler", () => {
     const output = {
       title: "result",
       output: "original output",
-      metadata: { sessionId: "ses_native", agent: "hephaestus" },
+      metadata: { sessionId: "ses_native", agent: "founder" },
     }
 
     // when
@@ -90,6 +90,6 @@ describe("createToolExecuteAfterHandler", () => {
 
     // then
     expect(output.title).toBe("stored title")
-    expect(output.metadata).toEqual({ sessionId: "ses_native", agent: "hephaestus" })
+    expect(output.metadata).toEqual({ sessionId: "ses_native", agent: "founder" })
   })
 })

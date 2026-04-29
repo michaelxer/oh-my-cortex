@@ -1,5 +1,5 @@
 import type { AutoCompactState } from "./types"
-import type { OhMyOpenCodeConfig } from "../../config"
+import type { OhMyCortexConfig } from "../../config"
 import { RETRY_CONFIG } from "./types"
 import type { Client } from "./client"
 import {
@@ -44,7 +44,7 @@ export async function runSummarizeRetryStrategy(params: {
   autoCompactState: AutoCompactState
   client: Client
   directory: string
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   errorType?: string
   messageIndex?: number
 }): Promise<void> {

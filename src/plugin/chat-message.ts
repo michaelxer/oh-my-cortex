@@ -1,13 +1,13 @@
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import type { PluginContext } from "./types"
 
 import { isModelCacheAvailable, log } from "../shared"
 import { getAgentConfigKey } from "../shared/agent-display-names"
 import { getSessionModel, setSessionModel } from "../shared/session-model-state"
 import { getMainSessionID, setSessionAgent, subagentSessions } from "../features/claude-code-session-state"
-import { applyUltraworkModelOverrideOnMessage } from "./ultrawork-model-override"
+import { applyDeepworkModelOverrideOnMessage } from "./deepwork-model-override"
 import { NATIVE_LOOP_TRIGGERED_FLAG } from "./command-execute-before"
-import { parseRalphLoopArguments } from "../hooks/ralph-loop/command-arguments"
+import { parseCortexLoopArguments } from "../hooks/cortex-loop/command-arguments"
 
 import type { CreatedHooks } from "../create-hooks"
 
@@ -26,11 +26,11 @@ export type ChatMessageInput = {
 type StartWorkHookOutput = { parts: Array<{ type: string; text?: string }> }
 
 type SessionModelOverride = { providerID: string; modelID: string }
-const START_WORK_TEMPLATE_MARKER = "You are starting a Sisyphus work session."
+const START_WORK_TEMPLATE_MARKER = "You are starting a Chief work session."
 
 type RawLoopCommand =
-  | { command: "ralph-loop" | "ulw-loop"; args: string }
-  | { command: "cancel-ralph"; args: "" }
+  | { command: "cortex-loop" | "dw-loop"; args: string }
+  | { command: "cancel-cortex"; args: "" }
 
 function isStartWorkHookOutput(value: unknown): value is StartWorkHookOutput {
   if (typeof value !== "object" || value === null) return false
@@ -46,7 +46,7 @@ function isStartWorkHookOutput(value: unknown): value is StartWorkHookOutput {
 
 function hasExplicitAgentModelOverride(
   agent: string | undefined,
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
 ): boolean {
   const configuredAgents = pluginConfig.agents
   const normalizedAgent = typeof agent === "string" ? getAgentConfigKey(agent) : undefined
@@ -61,7 +61,7 @@ function hasExplicitAgentModelOverride(
 
 function getStoredMainSessionModel(
   input: ChatMessageInput,
-  pluginConfig: OhMyOpenCodeConfig,
+  pluginConfig: OhMyCortexConfig,
   isFirstMessage: boolean,
   output: ChatMessageHandlerOutput
 ): SessionModelOverride | undefined {
@@ -99,19 +99,19 @@ function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
     : trimmed
         .split("\n")
         .map((line) => line.trim())
-        .filter((line) => /^\/(?:ralph-loop|ulw-loop|cancel-ralph)\b/i.test(line))
+        .filter((line) => /^\/(?:cortex-loop|dw-loop|cancel-cortex)\b/i.test(line))
         .at(-1)
 
   if (!commandText) {
     return null
   }
 
-  const cancelMatch = commandText.match(/^\/cancel-ralph(?:\s+.*)?$/i)
+  const cancelMatch = commandText.match(/^\/cancel-cortex(?:\s+.*)?$/i)
   if (cancelMatch) {
-    return { command: "cancel-ralph", args: "" }
+    return { command: "cancel-cortex", args: "" }
   }
 
-  const loopMatch = commandText.match(/^\/(ralph-loop|ulw-loop)\s*([\s\S]*)$/i)
+  const loopMatch = commandText.match(/^\/(cortex-loop|dw-loop)\s*([\s\S]*)$/i)
   if (!loopMatch) {
     return null
   }
@@ -119,7 +119,7 @@ function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
   const command = loopMatch[1]?.toLowerCase()
   const args = loopMatch[2]?.trim() ?? ""
 
-  if (command === "ralph-loop" || command === "ulw-loop") {
+  if (command === "cortex-loop" || command === "dw-loop") {
     return { command, args }
   }
 
@@ -146,7 +146,7 @@ function isStartWorkFallbackTemplate(promptText: string): boolean {
 function clearStoppedContinuationBeforeWorkStart(
   hooks: CreatedHooks,
   sessionID: string,
-  command: "start-work" | "ralph-loop" | "ulw-loop"
+  command: "start-work" | "cortex-loop" | "dw-loop"
 ): void {
   if (hooks.stopContinuationGuard?.isStopped(sessionID)) {
     hooks.stopContinuationGuard.clear(sessionID)
@@ -159,7 +159,7 @@ function clearStoppedContinuationBeforeWorkStart(
 
 export function createChatMessageHandler(args: {
   ctx: PluginContext
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   firstMessageVariantGate: FirstMessageVariantGate
   hooks: CreatedHooks
 }): (
@@ -236,8 +236,8 @@ export function createChatMessageHandler(args: {
     await hooks.thinkMode?.["chat.message"]?.(input, output)
     await hooks.claudeCodeHooks?.["chat.message"]?.(input, output)
     await hooks.autoSlashCommand?.["chat.message"]?.(input, output)
-    await hooks.noSisyphusGpt?.["chat.message"]?.(input, output)
-    await hooks.noHephaestusNonGpt?.["chat.message"]?.(input, output)
+    await hooks.noChiefGpt?.["chat.message"]?.(input, output)
+    await hooks.noFounderNonGpt?.["chat.message"]?.(input, output)
     if (hooks.startWork && isStartWorkHookOutput(output)) {
       const promptText = extractPromptText(output.parts)
       if (isStartWorkFallbackTemplate(promptText)) {
@@ -260,44 +260,44 @@ export function createChatMessageHandler(args: {
         .catch(() => {})
     }
 
-    if (hooks.ralphLoop && output.message[NATIVE_LOOP_TRIGGERED_FLAG] !== true) {
+    if (hooks.cortexLoop && output.message[NATIVE_LOOP_TRIGGERED_FLAG] !== true) {
       const parts = output.parts
       const promptText = extractPromptText(parts)
 
-      const isRalphLoopTemplate =
-        promptText.includes("You are starting a Ralph Loop") &&
+      const isCortexLoopTemplate =
+        promptText.includes("You are starting a Cortex Loop") &&
         promptText.includes("<user-task>")
       const isUlwLoopTemplate =
-        promptText.includes("You are starting an ULTRAWORK Loop") &&
+        promptText.includes("You are starting an DEEPWORK Loop") &&
         promptText.includes("<user-task>")
       const isCancelRalphTemplate = promptText.includes(
-        "Cancel the currently active Ralph Loop",
+        "Cancel the currently active Cortex Loop",
       )
       const rawLoopCommand =
-        !isRalphLoopTemplate && !isUlwLoopTemplate && !isCancelRalphTemplate
+        !isCortexLoopTemplate && !isUlwLoopTemplate && !isCancelRalphTemplate
           ? parseRawLoopSlashCommand(promptText)
           : null
 
-      if (isRalphLoopTemplate || isUlwLoopTemplate || rawLoopCommand?.command === "ralph-loop" || rawLoopCommand?.command === "ulw-loop") {
+      if (isCortexLoopTemplate || isUlwLoopTemplate || rawLoopCommand?.command === "cortex-loop" || rawLoopCommand?.command === "dw-loop") {
         const taskMatch = promptText.match(/<user-task>\s*([\s\S]*?)\s*<\/user-task>/i)
         const rawTask = taskMatch?.[1]?.trim() || rawLoopCommand?.args || ""
-        const parsedArguments = parseRalphLoopArguments(rawTask)
-        const ultrawork = isUlwLoopTemplate || rawLoopCommand?.command === "ulw-loop"
-        const command = ultrawork ? "ulw-loop" : "ralph-loop"
+        const parsedArguments = parseCortexLoopArguments(rawTask)
+        const deepwork = isUlwLoopTemplate || rawLoopCommand?.command === "dw-loop"
+        const command = deepwork ? "dw-loop" : "cortex-loop"
 
         clearStoppedContinuationBeforeWorkStart(hooks, input.sessionID, command)
-        hooks.ralphLoop.startLoop(input.sessionID, parsedArguments.prompt, {
-          ultrawork,
+        hooks.cortexLoop.startLoop(input.sessionID, parsedArguments.prompt, {
+          deepwork,
           maxIterations: parsedArguments.maxIterations,
           completionPromise: parsedArguments.completionPromise,
           strategy: parsedArguments.strategy,
         })
-      } else if (isCancelRalphTemplate || rawLoopCommand?.command === "cancel-ralph") {
-        hooks.ralphLoop.cancelLoop(input.sessionID)
+      } else if (isCancelRalphTemplate || rawLoopCommand?.command === "cancel-cortex") {
+        hooks.cortexLoop.cancelLoop(input.sessionID)
       }
     }
 
-    await applyUltraworkModelOverrideOnMessage(
+    await applyDeepworkModelOverrideOnMessage(
       pluginConfig,
       input.agent,
       output,

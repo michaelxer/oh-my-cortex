@@ -84,22 +84,22 @@ export function createToolExecuteAfterHandler(args: {
       const prompt = getMetadataString(output.metadata, ["prompt"])
       const verificationAttemptId = prompt?.match(VERIFICATION_ATTEMPT_PATTERN)?.[1]?.trim()
       const loopState = directory
-        ? (await import("../hooks/ralph-loop/storage")).readState(directory)
+        ? (await import("../hooks/cortex-loop/storage")).readState(directory)
         : null
       const isVerificationContext =
-        (agent ? stripInvisibleAgentCharacters(agent) : agent) === "oracle"
+        (agent ? stripInvisibleAgentCharacters(agent) : agent) === "thinker"
         && !!sessionId
         && !!directory
         && loopState?.active === true
-        && loopState.ultrawork === true
+        && loopState.deepwork === true
         && loopState.verification_pending === true
         && loopState.session_id === input.sessionID
 
-      log("[tool-execute-after] ULW verification tracking check", {
+      log("[tool-execute-after] DW verification tracking check", {
         tool: input.tool,
         agent,
         parentSessionID: input.sessionID,
-        oracleSessionID: sessionId,
+        thinkerSessionID: sessionId,
         hasPromptInMetadata: typeof prompt === "string",
         extractedVerificationAttemptId: verificationAttemptId,
       })
@@ -109,23 +109,23 @@ export function createToolExecuteAfterHandler(args: {
         && verificationAttemptId
         && loopState.verification_attempt_id === verificationAttemptId
       ) {
-        ;(await import("../hooks/ralph-loop/storage")).writeState(directory, {
+        ;(await import("../hooks/cortex-loop/storage")).writeState(directory, {
           ...loopState,
           verification_session_id: sessionId,
         })
-        log("[tool-execute-after] Stored oracle verification session via attempt match", {
+        log("[tool-execute-after] Stored thinker verification session via attempt match", {
           parentSessionID: input.sessionID,
-          oracleSessionID: sessionId,
+          thinkerSessionID: sessionId,
           verificationAttemptId,
         })
       } else if (isVerificationContext && !verificationAttemptId) {
-        ;(await import("../hooks/ralph-loop/storage")).writeState(directory, {
+        ;(await import("../hooks/cortex-loop/storage")).writeState(directory, {
           ...loopState,
           verification_session_id: sessionId,
         })
-        log("[tool-execute-after] Fallback: stored oracle verification session without attempt match", {
+        log("[tool-execute-after] Fallback: stored thinker verification session without attempt match", {
           parentSessionID: input.sessionID,
-          oracleSessionID: sessionId,
+          thinkerSessionID: sessionId,
           hasPromptInMetadata: typeof prompt === "string",
           expectedAttemptId: loopState.verification_attempt_id,
           extractedAttemptId: verificationAttemptId,
@@ -148,7 +148,7 @@ export function createToolExecuteAfterHandler(args: {
       await hooks.interactiveBashSession?.["tool.execute.after"]?.(hookInput, output)
       await hooks.editErrorRecovery?.["tool.execute.after"]?.(hookInput, output)
       await hooks.delegateTaskRetry?.["tool.execute.after"]?.(hookInput, output)
-      await hooks.atlasHook?.["tool.execute.after"]?.(hookInput, output)
+      await hooks.leadHook?.["tool.execute.after"]?.(hookInput, output)
       await hooks.taskResumeInfo?.["tool.execute.after"]?.(hookInput, output)
       await hooks.readImageResizer?.["tool.execute.after"]?.(hookInput, output)
       await hooks.hashlineReadEnhancer?.["tool.execute.after"]?.(hookInput, output)

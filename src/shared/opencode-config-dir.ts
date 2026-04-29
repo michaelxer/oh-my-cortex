@@ -99,7 +99,7 @@ export function getOpenCodeConfigPaths(options: OpenCodeConfigDirOptions): OpenC
     configJson: join(configDir, "opencode.json"),
     configJsonc: join(configDir, "opencode.jsonc"),
     packageJson: join(configDir, "package.json"),
-    omoConfig: join(configDir, `${CONFIG_BASENAME}.json`),
+    omxConfig: join(configDir, `${CONFIG_BASENAME}.json`),
   }
 }
 

@@ -1,13 +1,13 @@
 # GPT-5.5 System Prompt Drafts
 
-This directory contains ground-up rewrites of the Sisyphus, Hephaestus, Oracle, and Deep system prompts, styled after OpenAI Codex's gpt-5.4 prompt architecture and targeted at GPT-5.5.
+This directory contains ground-up rewrites of the Chief, Founder, Thinker, and Deep system prompts, styled after OpenAI Codex's gpt-5.4 prompt architecture and targeted at GPT-5.5.
 
 ## Files
 
-- `sisyphus.md` — Orchestrator. Intent gate, delegation philosophy, parallel execution discipline, verification.
-- `hephaestus.md` — Autonomous deep worker. Persistence, exploration-first, forbidden stops, root-cause bias.
-- `oracle.md` — Read-only strategic advisor. Three-tier response structure, hard verbosity limits, confidence signaling.
-- `deep.md` — Category-spawned deep worker (runs as Sisyphus-Junior under the `deep` category). Goal-oriented autonomous execution.
+- `chief.md` — Orchestrator. Intent gate, delegation philosophy, parallel execution discipline, verification.
+- `founder.md` — Autonomous deep worker. Persistence, exploration-first, forbidden stops, root-cause bias.
+- `thinker.md` — Read-only strategic advisor. Three-tier response structure, hard verbosity limits, confidence signaling.
+- `deep.md` — Category-spawned deep worker (runs as Worker under the `deep` category). Goal-oriented autonomous execution.
 
 ## Design principles applied
 
@@ -23,14 +23,14 @@ Each prompt applies the same small set of principles, borrowed and adapted from 
 
 ## Agent-specific shape
 
-### Sisyphus
+### Chief
 - Intent classification table (surface form → true intent → routing).
 - Zero-tolerance visual-engineering delegation rule.
 - Six-section delegation prompt contract.
 - Session continuity (`task_id` reuse) as a first-class topic.
-- Oracle consultation as a separate section with clear use/not-use guidance.
+- Thinker consultation as a separate section with clear use/not-use guidance.
 
-### Hephaestus
+### Founder
 - Forbidden stops as a named list.
 - Three-attempt failure protocol.
 - Exploration-first as explicit philosophy (5-15 minutes is normal).
@@ -38,7 +38,7 @@ Each prompt applies the same small set of principles, borrowed and adapted from 
 - Ambition vs precision distinction for greenfield vs existing codebase work.
 - Task-tool restriction stated as an intentional design decision with rationale.
 
-### Oracle
+### Thinker
 - Three-tier response structure (Essential / Expanded / Edge cases) with hard numerical limits.
 - Effort estimation (Quick / Short / Medium / Large) as a required field.
 - Confidence signaling (high / medium / low) added as a required field — new in v5.5, borrowed from Codex's `review_prompt.md`.
@@ -46,18 +46,18 @@ Each prompt applies the same small set of principles, borrowed and adapted from 
 - "No commentary channel; every word is the final answer" constraint acknowledged.
 
 ### Deep
-- Explicitly positioned as Sisyphus-Junior in `deep` mode (category-spawned counterpart to Hephaestus).
+- Explicitly positioned as Worker in `deep` mode (category-spawned counterpart to Founder).
 - Extensive exploration expectation stated.
 - Final-answer structure tuned for orchestrator relay: "What changed / Key decisions / Verification / Observations / Blockers".
 - Commentary cadence tuned down (sparse) since the user is not directly on the other side.
 
 ## Known deviations from Codex
 
-These are intentional choices where oh-my-opencode's architecture differs from Codex's:
+These are intentional choices where oh-my-cortex's architecture differs from Codex's:
 
-- **`task()` delegation is central** for Sisyphus (it is the orchestrator), entirely absent for Oracle (read-only consultant), research-only for Hephaestus and Deep (they execute directly).
+- **`task()` delegation is central** for Chief (it is the orchestrator), entirely absent for Thinker (read-only consultant), research-only for Founder and Deep (they execute directly).
 - **No `update_plan` tool**; the harness uses `task_create` / `task_update` instead. Each prompt references its own tool set.
-- **Sub-agent ecosystem** (explore, librarian, oracle, metis, momus) is specific to this harness and does not exist in Codex. Each prompt explains when and how to use these agents.
+- **Sub-agent ecosystem** (tracker, researcher, thinker, reviewer, critic) is specific to this harness and does not exist in Codex. Each prompt explains when and how to use these agents.
 - **Skill loading** is a first-class concept via the `skill` tool. Codex has a simpler skill model.
 - **Commentary / final channels** are named the same way as Codex's output contract, but the actual transport layer is different (OpenCode, not Codex CLI).
 
@@ -67,12 +67,12 @@ For reference, approximate line counts after this rewrite versus the current pro
 
 | Agent | Current (assembled) | Draft | Delta |
 |---|---:|---:|---:|
-| Sisyphus GPT-5.4 | ~500 | ~270 | -46% |
-| Hephaestus GPT-5.4 | ~400 | ~270 | -33% |
-| Oracle GPT | ~120 | ~160 | +33% |
+| Chief GPT-5.4 | ~500 | ~270 | -46% |
+| Founder GPT-5.4 | ~400 | ~270 | -33% |
+| Thinker GPT | ~120 | ~160 | +33% |
 | Deep category append | ~20 | ~250 (as standalone) | N/A |
 
-Oracle grew because v5.5 adds Confidence signaling and explicitly documents follow-up session behavior. Deep grew because the draft is a standalone prompt rather than a category append; in production it would either replace Sisyphus-Junior's GPT-5.5 variant entirely or layer on top of a minimal Sisyphus-Junior base.
+Thinker grew because v5.5 adds Confidence signaling and explicitly documents follow-up session behavior. Deep grew because the draft is a standalone prompt rather than a category append; in production it would either replace Worker's GPT-5.5 variant entirely or layer on top of a minimal Worker base.
 
 ## What this draft is not
 

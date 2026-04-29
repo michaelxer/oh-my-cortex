@@ -1,5 +1,5 @@
 ---
-description: Remove unused code from this project with ultrawork mode, LSP-verified safety, atomic commits
+description: Remove unused code from this project with deepwork mode, LSP-verified safety, atomic commits
 ---
 
 <command-instruction>
@@ -36,14 +36,14 @@ bunx tsc --noEmit --noUnusedLocals --noUnusedParameters 2>&1
 ```
 This gives you the definitive list of unused locals, imports, parameters, and types with exact file:line locations.
 
-**Explore agents (fire ALL simultaneously as background):**
+**Tracker agents (fire ALL simultaneously as background):**
 
 ```
-task(subagent_type="explore", run_in_background=true, load_skills=[],
+task(subagent_type="tracker", run_in_background=true, load_skills=[],
   description="Find orphaned files",
   prompt="Find files in src/ NOT imported by any other file. Check all import statements. EXCLUDE: index.ts, *.test.ts, entry points, .md, packages/. Return: file paths.")
 
-task(subagent_type="explore", run_in_background=true, load_skills=[],
+task(subagent_type="tracker", run_in_background=true, load_skills=[],
   description="Find unused exported symbols",
   prompt="Find exported functions/types/constants in src/ that are never imported by other files. Cross-reference: for each export, grep the symbol name across src/ — if it only appears in its own file, it's a candidate. EXCLUDE: src/index.ts exports, test files. Return: file path, line, symbol name, export type.")
 ```

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "bun:test"
 import { _resetForTesting, setMainSession } from "../../features/claude-code-session-state"
 import type { BackgroundTask } from "../../features/background-agent"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+import { OMX_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import { createUnstableAgentBabysitterHook } from "./index"
 
 const projectDir = process.cwd()
@@ -70,7 +70,7 @@ describe("unstable-agent-babysitter hook", () => {
     const ctx = createMockPluginInput({
       messagesBySession: {
         "main-1": [
-          { info: { agent: "sisyphus", model: { providerID: "openai", modelID: "gpt-4" } } },
+          { info: { agent: "chief", model: { providerID: "openai", modelID: "gpt-4" } } },
         ],
         "bg-1": [
           { info: { role: "assistant" }, parts: [{ type: "thinking", thinking: "deep thought" }] },
@@ -94,7 +94,7 @@ describe("unstable-agent-babysitter hook", () => {
     expect(text).toContain("background_output")
     expect(text).toContain("background_cancel")
     expect(text).toContain("deep thought")
-    expect(text).toContain(OMO_INTERNAL_INITIATOR_MARKER)
+    expect(text).toContain(OMX_INTERNAL_INITIATOR_MARKER)
   })
 
   test("fires reminder for hung minimax task", async () => {
@@ -104,7 +104,7 @@ describe("unstable-agent-babysitter hook", () => {
     const ctx = createMockPluginInput({
       messagesBySession: {
         "main-1": [
-          { info: { agent: "sisyphus", model: { providerID: "openai", modelID: "gpt-4" } } },
+          { info: { agent: "chief", model: { providerID: "openai", modelID: "gpt-4" } } },
         ],
         "bg-1": [
           { info: { role: "assistant" }, parts: [{ type: "thinking", thinking: "minimax thought" }] },
@@ -130,7 +130,7 @@ describe("unstable-agent-babysitter hook", () => {
     expect(text).toContain("background_output")
     expect(text).toContain("background_cancel")
     expect(text).toContain("minimax thought")
-    expect(text).toContain(OMO_INTERNAL_INITIATOR_MARKER)
+    expect(text).toContain(OMX_INTERNAL_INITIATOR_MARKER)
   })
 
   test("does not remind stable model tasks", async () => {
@@ -188,7 +188,7 @@ describe("unstable-agent-babysitter hook", () => {
     const ctx = createMockPluginInput({
       messagesBySession: {
         "main-1": [
-          { info: { agent: "sisyphus", model: { providerID: "openai", modelID: "gpt-4" } } },
+          { info: { agent: "chief", model: { providerID: "openai", modelID: "gpt-4" } } },
         ],
         "bg-1": [
           { info: { role: "assistant" }, parts: [{ type: "thinking", thinking: "deep thought" }] },
@@ -227,7 +227,7 @@ describe("unstable-agent-babysitter hook", () => {
     const ctx = createMockPluginInput({
       messagesBySession: {
         "main-1": [
-          { info: { agent: "sisyphus", model: mainModel } },
+          { info: { agent: "chief", model: mainModel } },
         ],
         "bg-1": [
           { info: { role: "assistant" }, parts: [{ type: "thinking", thinking: "deep thought" }] },

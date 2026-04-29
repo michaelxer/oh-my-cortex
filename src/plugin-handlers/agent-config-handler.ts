@@ -1,6 +1,6 @@
 import { createBuiltinAgents } from "../agents";
-import { createSisyphusJuniorAgentWithOverrides } from "../agents/sisyphus-junior";
-import type { OhMyOpenCodeConfig } from "../config";
+import { createWorkerAgentWithOverrides } from "../agents/worker";
+import type { OhMyCortexConfig } from "../config";
 import { isTaskSystemEnabled, log, migrateAgentConfig } from "../shared";
 import {
   getAgentConfigKey,
@@ -33,7 +33,7 @@ import {
   createProtectedAgentNameSet,
   filterProtectedAgentOverrides,
 } from "./agent-override-protection";
-import { buildPrometheusAgentConfig } from "./prometheus-agent-config-builder";
+import { buildPlannerAgentConfig } from "./planner-agent-config-builder";
 import { buildPlanDemoteConfig } from "./plan-model-inheritance";
 
 type AgentConfigRecord = Record<string, Record<string, unknown> | undefined> & {
@@ -50,7 +50,7 @@ function getConfiguredDefaultAgent(config: Record<string, unknown>): string | un
 
 export async function applyAgentConfig(params: {
   config: Record<string, unknown>;
-  pluginConfig: OhMyOpenCodeConfig;
+  pluginConfig: OhMyCortexConfig;
   ctx: { directory: string; client?: any };
   pluginComponents: PluginComponents;
 }): Promise<Record<string, unknown>> {
@@ -101,7 +101,7 @@ export async function applyAgentConfig(params: {
   const currentModel = params.config.model as string | undefined;
   const disabledSkills = new Set<string>(params.pluginConfig.disabled_skills ?? []);
   const useTaskSystem = isTaskSystemEnabled(params.pluginConfig);
-  const disableOmoEnv = params.pluginConfig.experimental?.disable_omo_env ?? false;
+  const disableCortexEnv = params.pluginConfig.experimental?.disable_omx_env ?? false;
 
   const includeClaudeAgents = params.pluginConfig.claude_code?.agents ?? true;
   const userAgents = includeClaudeAgents ? loadUserAgents() : {};
@@ -171,7 +171,7 @@ export async function applyAgentConfig(params: {
     currentModel,
     disabledSkills,
     useTaskSystem,
-    disableOmoEnv,
+    disableCortexEnv,
   );
 
   const disabledAgentNames = new Set(
@@ -183,15 +183,16 @@ export async function applyAgentConfig(params: {
       Object.entries(agents).filter(([name]) => !disabledAgentNames.has(name.toLowerCase()))
     );
 
-  const isSisyphusEnabled = params.pluginConfig.sisyphus_agent?.disabled !== true;
+  const chiefAgentConfig = params.pluginConfig.chief_agent ?? params.pluginConfig.chief_agent;
+  const isChiefEnabled = chiefAgentConfig?.disabled !== true;
   const builderEnabled =
-    params.pluginConfig.sisyphus_agent?.default_builder_enabled ?? false;
-  const plannerEnabled = params.pluginConfig.sisyphus_agent?.planner_enabled ?? true;
-  const replacePlan = params.pluginConfig.sisyphus_agent?.replace_plan ?? true;
+    chiefAgentConfig?.default_builder_enabled ?? false;
+  const plannerEnabled = chiefAgentConfig?.planner_enabled ?? true;
+  const replacePlan = chiefAgentConfig?.replace_plan ?? true;
   const shouldDemotePlan = plannerEnabled && replacePlan;
   const configuredDefaultAgent = getConfiguredDefaultAgent(params.config);
 
-  if (isSisyphusEnabled && builtinAgents.sisyphus) {
+  if (isChiefEnabled && builtinAgents.cortex) {
     if (configuredDefaultAgent) {
       const configKey = getAgentConfigKey(configuredDefaultAgent);
       const runtimeConfigKey = normalizeAgentForPromptKey(configuredDefaultAgent) ?? configKey;
@@ -199,39 +200,39 @@ export async function applyAgentConfig(params: {
         getAgentDisplayName(runtimeConfigKey);
     } else {
       (params.config as { default_agent?: string }).default_agent =
-        getAgentDisplayName("sisyphus");
+        getAgentDisplayName("chief");
     }
 
-    // Assembly order: Sisyphus -> Hephaestus -> Prometheus -> Atlas
+    // Assembly order: Chief -> Founder -> Planner -> Lead
     const agentConfig: Record<string, unknown> = {
-      sisyphus: builtinAgents.sisyphus,
+      chief: builtinAgents.cortex,
     };
 
-    if (builtinAgents.hephaestus) {
-      agentConfig["hephaestus"] = builtinAgents.hephaestus;
+    if (builtinAgents.founder) {
+      agentConfig["founder"] = builtinAgents.founder;
     }
 
     if (plannerEnabled) {
-      const prometheusOverride = params.pluginConfig.agents?.["prometheus"] as
+      const plannerOverride = params.pluginConfig.agents?.["planner"] as
         | (Record<string, unknown> & { prompt_append?: string })
         | undefined;
 
-      agentConfig["prometheus"] = await buildPrometheusAgentConfig({
+      agentConfig["planner"] = await buildPlannerAgentConfig({
         configAgentPlan: configAgent?.plan,
-        pluginPrometheusOverride: prometheusOverride,
+        pluginPlannerOverride: plannerOverride,
         userCategories: params.pluginConfig.categories,
         currentModel,
         disabledTools: params.pluginConfig.disabled_tools,
       });
     }
 
-    if (builtinAgents.atlas) {
-      agentConfig["atlas"] = builtinAgents.atlas;
+    if (builtinAgents.lead) {
+      agentConfig["lead"] = builtinAgents.lead;
     }
 
-    agentConfig["sisyphus-junior"] = createSisyphusJuniorAgentWithOverrides(
-      params.pluginConfig.agents?.["sisyphus-junior"],
-      (builtinAgents.atlas as { model?: string } | undefined)?.model,
+    agentConfig["worker"] = createWorkerAgentWithOverrides(
+      params.pluginConfig.agents?.["worker"],
+      (builtinAgents.lead as { model?: string } | undefined)?.model,
       useTaskSystem,
     );
 
@@ -273,7 +274,7 @@ export async function applyAgentConfig(params: {
 
     const planDemoteConfig = shouldDemotePlan
       ? buildPlanDemoteConfig(
-          agentConfig["prometheus"] as Record<string, unknown> | undefined,
+          agentConfig["planner"] as Record<string, unknown> | undefined,
           params.pluginConfig.agents?.plan as Record<string, unknown> | undefined,
         )
       : undefined;
@@ -315,7 +316,7 @@ export async function applyAgentConfig(params: {
       ...agentConfig,
       ...Object.fromEntries(
         Object.entries(builtinAgents).filter(
-          ([key]) => key !== "sisyphus" && key !== "hephaestus" && key !== "atlas",
+          ([key]) => key !== "chief" && key !== "founder" && key !== "lead",
         ),
       ),
       // Precedence: later entries override earlier (project > global > user > plugin)

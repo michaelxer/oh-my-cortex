@@ -1,9 +1,9 @@
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import { stripInvisibleAgentCharacters } from "./agent-display-names"
 import { AGENT_MODEL_REQUIREMENTS, CATEGORY_MODEL_REQUIREMENTS } from "./model-requirements"
 
 export function resolveAgentVariant(
-  config: OhMyOpenCodeConfig,
+  config: OhMyCortexConfig,
   agentName?: string
 ): string | undefined {
   if (!agentName) {
@@ -35,7 +35,7 @@ export function resolveAgentVariant(
 }
 
 export function resolveVariantForModel(
-  config: OhMyOpenCodeConfig,
+  config: OhMyCortexConfig,
   agentName: string,
   currentModel: { providerID: string; modelID: string },
 ): string | undefined {
@@ -90,7 +90,7 @@ function findVariantInChain(
 }
 
 export function applyAgentVariant(
-  config: OhMyOpenCodeConfig,
+  config: OhMyCortexConfig,
   agentName: string | undefined,
   message: { variant?: string }
 ): void {

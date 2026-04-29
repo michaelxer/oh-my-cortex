@@ -1,6 +1,6 @@
-# Contributing to Oh My OpenCode
+# Contributing to Oh My Cortex
 
-First off, thanks for taking the time to contribute! This document provides guidelines and instructions for contributing to oh-my-opencode.
+First off, thanks for taking the time to contribute! This document provides guidelines and instructions for contributing to oh-my-cortex.
 
 ## Table of Contents
 
@@ -62,8 +62,8 @@ If English isn't your first language, don't worry! We value your contributions r
 
 ```bash
 # Clone the repository
-git clone https://github.com/code-yeongyu/oh-my-openagent.git
-cd oh-my-openagent
+git clone https://github.com/michaelxer/oh-my-cortex.git
+cd oh-my-cortex
 
 # Install dependencies (bun only - never use npm/yarn)
 bun install
@@ -86,32 +86,32 @@ After making changes, you can test your local build in OpenCode:
 
    ```json
    {
-     "plugin": ["file:///absolute/path/to/oh-my-opencode/dist/index.js"]
+     "plugin": ["file:///absolute/path/to/oh-my-cortex/dist/index.js"]
    }
    ```
 
-   For example, if your project is at `/Users/yourname/projects/oh-my-opencode`:
+   For example, if your project is at `/Users/yourname/projects/oh-my-cortex`:
 
    ```json
    {
-     "plugin": ["file:///Users/yourname/projects/oh-my-opencode/dist/index.js"]
+     "plugin": ["file:///Users/yourname/projects/oh-my-cortex/dist/index.js"]
    }
    ```
 
-   > **Note**: Remove `"oh-my-opencode"` from the plugin array if it exists, to avoid conflicts with the npm version.
+   > **Note**: Remove `"oh-my-cortex"` from the plugin array if it exists, to avoid conflicts with the npm version.
 
 3. **Restart OpenCode** to load the changes.
 
-4. **Verify** the plugin is loaded by checking for OmO agent availability or startup messages.
+4. **Verify** the plugin is loaded by checking for OMX agent availability or startup messages.
 
 ## Project Structure
 
 ```
-oh-my-opencode/
+oh-my-cortex/
 ├── src/
 │   ├── index.ts         # Plugin entry (V1 PluginModule, default export)
 │   ├── plugin-config.ts # JSONC multi-level config (Zod v4)
-│   ├── agents/          # 11 agents (Sisyphus, Hephaestus, Oracle, Librarian, Explore, Atlas, Prometheus, Metis, Momus, Multimodal-Looker, Sisyphus-Junior)
+│   ├── agents/          # 11 agents (Chief, Founder, Thinker, Researcher, Tracker, Lead, Planner, Reviewer, Critic, Multimodal-Looker, Worker)
 │   ├── hooks/           # 52 lifecycle hooks across 55 dedicated modules
 │   ├── tools/           # 26 tools across 16 directories
 │   ├── mcp/             # 3 built-in remote MCPs (websearch, context7, grep_app)
@@ -271,4 +271,4 @@ export function createMyHook(input: PluginInput) {
 
 ---
 
-Thank you for contributing to Oh My OpenCode! Your efforts help make AI-assisted coding better for everyone.
+Thank you for contributing to Oh My Cortex! Your efforts help make AI-assisted coding better for everyone.

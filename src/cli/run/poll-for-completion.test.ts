@@ -314,7 +314,7 @@ describe("pollForCompletion", () => {
   })
 
   it("simulates race condition: brief idle with 0 todos does not cause immediate exit", async () => {
-    //#given - simulate Sisyphus outputting text, session goes idle briefly, then tool fires
+    //#given - simulate Chief outputting text, session goes idle briefly, then tool fires
     const ctx = createMockContext()
     const eventState = createEventState()
     eventState.mainSessionIdle = true

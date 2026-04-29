@@ -38,7 +38,7 @@ describe("checkAndInterruptStaleTasks", () => {
       parentMessageID: "msg-1",
       description: "test",
       prompt: "test",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(Date.now() - 120_000),
       ...overrides,
@@ -749,7 +749,7 @@ describe("pruneStaleTasksAndNotifications", () => {
       parentMessageID: "msg",
       description: "terminal",
       prompt: "terminal",
-      agent: "explore",
+      agent: "tracker",
       status: "completed",
       startedAt: new Date(Date.now() - 40 * 60 * 1000),
       completedAt: new Date(Date.now() - 31 * 60 * 1000),
@@ -766,7 +766,7 @@ describe("pruneStaleTasksAndNotifications", () => {
       parentMessageID: "msg",
       description: "old",
       prompt: "old",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(Date.now() - 31 * 60 * 1000),
     }
@@ -795,7 +795,7 @@ describe("pruneStaleTasksAndNotifications", () => {
       parentMessageID: "msg",
       description: "active",
       prompt: "active",
-      agent: "oracle",
+      agent: "thinker",
       status: "running",
       startedAt: new Date(Date.now() - 45 * 60 * 1000),
       progress: {
@@ -828,7 +828,7 @@ describe("pruneStaleTasksAndNotifications", () => {
       parentMessageID: "msg",
       description: "stale",
       prompt: "stale",
-      agent: "oracle",
+      agent: "thinker",
       status: "running",
       startedAt: new Date(Date.now() - 60 * 60 * 1000),
       progress: {
@@ -861,7 +861,7 @@ describe("pruneStaleTasksAndNotifications", () => {
       parentMessageID: "msg",
       description: "custom",
       prompt: "custom",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(Date.now() - 61 * 60 * 1000),
     }
@@ -891,7 +891,7 @@ describe("pruneStaleTasksAndNotifications", () => {
       parentMessageID: "msg",
       description: "within",
       prompt: "within",
-      agent: "explore",
+      agent: "tracker",
       status: "running",
       startedAt: new Date(Date.now() - 45 * 60 * 1000),
     }

@@ -19,7 +19,7 @@ describe("createSyncSession", () => {
     // when
     const result = await createSyncSession(client as never, {
       parentSessionID: "ses_parent",
-      agentToUse: "explore",
+      agentToUse: "tracker",
       description: "test task",
       defaultDirectory: "/fallback",
     })
@@ -29,7 +29,7 @@ describe("createSyncSession", () => {
     expect(createCalls).toHaveLength(1)
     expect(createCalls[0]?.body).toEqual({
       parentID: "ses_parent",
-      title: "test task (@explore subagent)",
+      title: "test task (@tracker subagent)",
       permission: [
         { permission: "question", action: "deny", pattern: "*" },
       ],

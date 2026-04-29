@@ -4,7 +4,7 @@
 
 ## OVERVIEW
 
-Cross-cutting utilities used throughout the plugin. Barrel-exported from `index.ts`. Logger writes to `/tmp/oh-my-opencode.log`.
+Cross-cutting utilities used throughout the plugin. Barrel-exported from `index.ts`. Logger writes to `/tmp/oh-my-cortex.log`.
 
 ## CATEGORY MAP
 
@@ -38,7 +38,7 @@ Key files: `model-resolver.ts` (entry), `model-resolution-pipeline.ts` (orchestr
 ## MIGRATION SYSTEM
 
 Automatically transforms legacy config on load:
-- `agent-names.ts`: Old agent names → new (e.g., `junior` → `sisyphus-junior`)
+- `agent-names.ts`: Old agent names → new (e.g., `junior` → `worker`)
 - `hook-names.ts`: Old hook names → new
 - `model-versions.ts`: Old model IDs → current
 - `agent-category.ts`: Legacy agent configs → category system
@@ -47,7 +47,7 @@ Automatically transforms legacy config on load:
 
 | Utility | Import Count | Purpose |
 |---------|-------------|---------|
-| `logger.ts` | 62 | `/tmp/oh-my-opencode.log` |
+| `logger.ts` | 62 | `/tmp/oh-my-cortex.log` |
 | `data-path.ts` | 11 | XDG storage resolution |
 | `model-requirements.ts` | 11 | Agent fallback chains |
 | `system-directive.ts` | 11 | System message filtering |

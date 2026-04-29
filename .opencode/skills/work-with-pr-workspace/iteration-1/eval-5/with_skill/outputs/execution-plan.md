@@ -5,8 +5,8 @@
 1. Create worktree from `origin/dev`:
    ```bash
    git fetch origin dev
-   git worktree add ../omo-wt/fix/comment-checker-note-false-positive origin/dev
-   cd ../omo-wt/fix/comment-checker-note-false-positive
+   git worktree add ../omx-wt/fix/comment-checker-note-false-positive origin/dev
+   cd ../omx-wt/fix/comment-checker-note-false-positive
    git checkout -b fix/comment-checker-note-false-positive
    bun install
    ```
@@ -20,7 +20,7 @@
 
 ### Problem Analysis
 
-The comment-checker delegates to an external Go binary (`code-yeongyu/go-claude-code-comment-checker` v0.4.1). The binary contains the regex `(?i)^[\s#/*-]*note:\s*\w` which matches ANY comment starting with "Note:" followed by a word character. This flags legitimate technical notes like:
+The comment-checker delegates to an external Go binary (`michaelxer/go-claude-code-comment-checker` v0.4.1). The binary contains the regex `(?i)^[\s#/*-]*note:\s*\w` which matches ANY comment starting with "Note:" followed by a word character. This flags legitimate technical notes like:
 
 - `// Note: Thread-safe by design`
 - `# Note: See RFC 7231 for details`
@@ -47,11 +47,11 @@ Full list of 24 embedded regex patterns extracted from the binary:
 
 Since the regex lives in the Go binary and this repo wraps it, the fix is two-pronged:
 
-**A. Go binary update** (separate repo: `code-yeongyu/go-claude-code-comment-checker`):
+**A. Go binary update** (separate repo: `michaelxer/go-claude-code-comment-checker`):
 - Relax `(?i)^[\s#/*-]*note:\s*\w` to only match AI-style memo patterns like `Note: this was changed...`, `Note: implementation details...`
 - Add `--exclude-pattern` CLI flag for user-configurable exclusions
 
-**B. This repo (oh-my-opencode)** - the PR scope:
+**B. This repo (oh-my-cortex)** - the PR scope:
 1. Add `exclude_patterns` config field to `CommentCheckerConfigSchema`
 2. Pass `--exclude-pattern` flags to the CLI binary
 3. Add integration tests with mock binaries for false positive scenarios
@@ -90,11 +90,11 @@ gh pr create --base dev \
 
 ### Gate B: review-work (5-agent)
 - Run `/review-work` to trigger 5 parallel sub-agents:
-  - Oracle (goal/constraint verification)
-  - Oracle (code quality)
-  - Oracle (security)
-  - Hephaestus (hands-on QA execution)
-  - Hephaestus (context mining)
+  - Thinker (goal/constraint verification)
+  - Thinker (code quality)
+  - Thinker (security)
+  - Founder (hands-on QA execution)
+  - Founder (context mining)
 - All 5 must pass
 
 ### Gate C: Cubic
@@ -107,6 +107,6 @@ gh pr create --base dev \
 ```bash
 gh pr merge --squash --auto
 # Cleanup worktree
-cd /Users/yeongyu/local-workspaces/omo
-git worktree remove ../omo-wt/fix/comment-checker-note-false-positive
+cd /Users/yeongyu/local-workspaces/omx
+git worktree remove ../omx-wt/fix/comment-checker-note-false-positive
 ```

@@ -48,10 +48,10 @@ export function getCacheDir(): string {
 }
 
 /**
- * Returns the oh-my-opencode cache directory.
- * All platforms: ~/.cache/oh-my-opencode
+ * Returns the oh-my-cortex cache directory.
+ * All platforms: ~/.cache/oh-my-cortex
  */
-export function getOmoOpenCodeCacheDir(): string {
+export function getOmxCacheDir(): string {
   return path.join(getCacheDir(), CACHE_DIR_NAME)
 }
 

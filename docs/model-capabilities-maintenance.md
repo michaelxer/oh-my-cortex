@@ -9,8 +9,8 @@ This project treats model capability resolution as a layered system:
 
 ## Internal policy
 
-- Built-in OmO agent/category requirement models must use canonical model IDs.
-- Aliases exist only to preserve compatibility with historical OmO names or provider-specific decorations.
+- Built-in OMX agent/category requirement models must use canonical model IDs.
+- Aliases exist only to preserve compatibility with historical OMX names or provider-specific decorations.
 - New decorated names like `-high`, `-low`, or `-thinking` should not be added to built-in requirements when a canonical model ID plus structured settings can express the same thing.
 - If a provider or config input still uses an alias, normalize it at the edge and continue internally with the canonical ID.
 

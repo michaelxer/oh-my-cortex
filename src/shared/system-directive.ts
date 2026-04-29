@@ -1,25 +1,25 @@
 /**
- * Unified system directive prefix for oh-my-opencode internal messages.
+ * Unified system directive prefix for oh-my-cortex internal messages.
  * All system-generated messages should use this prefix for consistent filtering.
  *
- * Format: [SYSTEM DIRECTIVE: OH-MY-OPENCODE - {TYPE}]
+ * Format: [SYSTEM DIRECTIVE: OH-MY-CORTEX - {TYPE}]
  */
 
-export const SYSTEM_DIRECTIVE_PREFIX = "[SYSTEM DIRECTIVE: OH-MY-OPENCODE"
+export const SYSTEM_DIRECTIVE_PREFIX = "[SYSTEM DIRECTIVE: OH-MY-CORTEX"
 
-const SYSTEM_DIRECTIVE_LEADING_KEYWORD_PATTERN = /^\s*(?:ultrawork|ulw)\s+/i
+const SYSTEM_DIRECTIVE_LEADING_KEYWORD_PATTERN = /^\s*(?:deepwork|dw)\s+/i
 
 /**
  * Creates a system directive header with the given type.
- * @param type - The directive type (e.g., "TODO CONTINUATION", "RALPH LOOP")
- * @returns Formatted directive string like "[SYSTEM DIRECTIVE: OH-MY-OPENCODE - TODO CONTINUATION]"
+ * @param type - The directive type (e.g., "TODO CONTINUATION", "CORTEX LOOP")
+ * @returns Formatted directive string like "[SYSTEM DIRECTIVE: OH-MY-CORTEX - TODO CONTINUATION]"
  */
 export function createSystemDirective(type: string): string {
   return `${SYSTEM_DIRECTIVE_PREFIX} - ${type}]`
 }
 
 /**
- * Checks if a message starts with the oh-my-opencode system directive prefix.
+ * Checks if a message starts with the oh-my-cortex system directive prefix.
  * Used by keyword-detector and other hooks to skip system-generated messages.
  * @param text - The message text to check
  * @returns true if the message is a system directive
@@ -55,13 +55,13 @@ export function removeSystemReminders(text: string): string {
 
 export const SystemDirectiveTypes = {
   TODO_CONTINUATION: "TODO CONTINUATION",
-  RALPH_LOOP: "RALPH LOOP",
-  BOULDER_CONTINUATION: "BOULDER CONTINUATION",
+  CORTEX_LOOP: "CORTEX LOOP",
+  WORKSTATE_CONTINUATION: "WORKSTATE CONTINUATION",
   DELEGATION_REQUIRED: "DELEGATION REQUIRED",
   SINGLE_TASK_ONLY: "SINGLE TASK ONLY",
   COMPACTION_CONTEXT: "COMPACTION CONTEXT",
   CONTEXT_WINDOW_MONITOR: "CONTEXT WINDOW MONITOR",
-  PROMETHEUS_READ_ONLY: "PROMETHEUS READ-ONLY",
+  PLANNER_READ_ONLY: "PLANNER READ-ONLY",
 } as const
 
 export type SystemDirectiveType = (typeof SystemDirectiveTypes)[keyof typeof SystemDirectiveTypes]

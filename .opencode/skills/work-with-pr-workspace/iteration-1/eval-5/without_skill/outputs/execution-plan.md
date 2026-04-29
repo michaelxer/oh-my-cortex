@@ -2,7 +2,7 @@
 
 ## Problem Analysis
 
-The comment-checker hook delegates to an external Go binary (`code-yeongyu/go-claude-code-comment-checker`). The binary:
+The comment-checker hook delegates to an external Go binary (`michaelxer/go-claude-code-comment-checker`). The binary:
 1. Detects ALL comments in written/edited code using tree-sitter
 2. Filters out only BDD markers, linter directives, and shebangs
 3. Flags every remaining comment as problematic (exit code 2)
@@ -20,7 +20,7 @@ Additionally, the binary flags ALL non-filtered comments (not just agent memos),
 ## Architecture Understanding
 
 ```
-TypeScript (oh-my-opencode)              Go Binary (go-claude-code-comment-checker)
+TypeScript (oh-my-cortex)              Go Binary (go-claude-code-comment-checker)
 ─────────────────────────────             ──────────────────────────────────────────
 hook.ts                                   main.go
  ├─ tool.execute.before                    ├─ Read JSON from stdin
@@ -33,7 +33,7 @@ hook.ts                                   main.go
              └─ append to output
 ```
 
-Key files in oh-my-opencode:
+Key files in oh-my-cortex:
 - `src/hooks/comment-checker/hook.ts` - Hook factory, registers before/after handlers
 - `src/hooks/comment-checker/cli-runner.ts` - Orchestrates CLI invocation, semaphore
 - `src/hooks/comment-checker/cli.ts` - Binary resolution, process spawning, timeout handling
@@ -121,7 +121,7 @@ gh pr create --title "fix(comment-checker): reduce false positives for legitimat
 ```
 
 ### Step 10 (Follow-up): Upstream Go binary fix
-File an issue or PR on `code-yeongyu/go-claude-code-comment-checker` to:
+File an issue or PR on `michaelxer/go-claude-code-comment-checker` to:
 1. Relax `(?i)^[\s#/*-]*note:\s*\w` to be more specific (e.g., `note:\s*(changed|modified|updated|added|removed|implemented|refactored)`)
 2. Add a dedicated `LegitimateCommentFilter` to the filter pipeline in `main.go`
 3. Support `--allow-prefix` CLI flag for external configuration

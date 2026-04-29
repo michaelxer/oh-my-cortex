@@ -3,10 +3,10 @@ import { getModelCapabilities } from "../../../shared/model-capabilities"
 import { CHECK_IDS, CHECK_NAMES } from "../constants"
 import type { CheckResult, DoctorIssue } from "../types"
 import { loadAvailableModelsFromCache } from "./model-resolution-cache"
-import { loadOmoConfig } from "./model-resolution-config"
+import { loadOmxConfig } from "./model-resolution-config"
 import { buildModelResolutionDetails } from "./model-resolution-details"
 import { buildEffectiveResolution, getEffectiveModel } from "./model-resolution-effective-model"
-import type { AgentResolutionInfo, CategoryResolutionInfo, ModelResolutionInfo, OmoConfig } from "./model-resolution-types"
+import type { AgentResolutionInfo, CategoryResolutionInfo, ModelResolutionInfo, OmxConfig } from "./model-resolution-types"
 
 export function parseProviderModel(value: string): { providerID: string; modelID: string } | null {
   const slashIndex = value.indexOf("/")
@@ -58,7 +58,7 @@ export function getModelResolutionInfo(): ModelResolutionInfo {
   return { agents, categories }
 }
 
-export function getModelResolutionInfoWithOverrides(config: OmoConfig): ModelResolutionInfo {
+export function getModelResolutionInfoWithOverrides(config: OmxConfig): ModelResolutionInfo {
   const agents: AgentResolutionInfo[] = Object.entries(AGENT_MODEL_REQUIREMENTS).map(([name, requirement]) => {
     const userOverride = config.agents?.[name]?.model
     const userVariant = config.agents?.[name]?.variant
@@ -117,7 +117,7 @@ export function collectCapabilityResolutionIssues(info: ModelResolutionInfo): Do
 }
 
 export async function checkModels(): Promise<CheckResult> {
-  const config = loadOmoConfig() ?? {}
+  const config = loadOmxConfig() ?? {}
   const info = getModelResolutionInfoWithOverrides(config)
   const available = loadAvailableModelsFromCache()
   const issues: DoctorIssue[] = []

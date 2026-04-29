@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "I need to add a `max_background_agents` config option to oh-my-opencode that limits how many background agents can run simultaneously. It should be in the plugin config schema with a default of 5. Add validation and make sure the background manager respects it. Create a PR for this.",
+      "prompt": "I need to add a `max_background_agents` config option to oh-my-cortex that limits how many background agents can run simultaneously. It should be in the plugin config schema with a default of 5. Add validation and make sure the background manager respects it. Create a PR for this.",
       "expected_output": "Agent creates worktree, implements config option with schema validation, adds tests, creates PR, iterates through verification gates until merged",
       "files": [],
       "assertions": [
@@ -21,7 +21,7 @@
     },
     {
       "id": 2,
-      "prompt": "The atlas hook has a bug where it crashes when boulder.json is missing the worktree_path field. Fix it and land the fix as a PR. Make sure CI passes.",
+      "prompt": "The lead hook has a bug where it crashes when workstate.json is missing the worktree_path field. Fix it and land the fix as a PR. Make sure CI passes.",
       "expected_output": "Agent creates worktree for the fix branch, adds null check and test for missing worktree_path, creates PR, iterates verification loop",
       "files": [],
       "assertions": [
@@ -29,7 +29,7 @@
         {"id": "minimal-fix", "text": "Fix is minimal — adds null check, doesn't refactor unrelated code"},
         {"id": "test-added", "text": "Test case added for the missing worktree_path scenario"},
         {"id": "three-gates", "text": "Verification loop includes all 3 gates: CI, review-work, Cubic"},
-        {"id": "real-atlas-files", "text": "References actual atlas hook files in src/hooks/atlas/"},
+        {"id": "real-lead-files", "text": "References actual lead hook files in src/hooks/lead/"},
         {"id": "fix-branch-naming", "text": "Branch name follows fix/ prefix convention"}
       ]
     },

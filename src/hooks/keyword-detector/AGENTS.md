@@ -4,13 +4,13 @@
 
 ## OVERVIEW
 
-8 files + 3 mode subdirs (~1665 LOC). Transform Tier hook on `messages.transform`. Scans first user message for mode keywords (ultrawork, search, analyze) and injects mode-specific system prompts.
+8 files + 3 mode subdirs (~1665 LOC). Transform Tier hook on `messages.transform`. Scans first user message for mode keywords (deepwork, search, analyze) and injects mode-specific system prompts.
 
 ## KEYWORDS
 
 | Keyword | Pattern | Effect |
 |---------|---------|--------|
-| `ultrawork` / `ulw` | `/\b(ultrawork|ulw)\b/i` | Full orchestration mode — parallel agents, deep exploration, relentless execution |
+| `deepwork` / `dw` | `/\b(deepwork|dw)\b/i` | Full orchestration mode — parallel agents, deep exploration, relentless execution |
 | Search mode | `SEARCH_PATTERN` (from `search/`) | Web/doc search focus prompt injection |
 | Analyze mode | `ANALYZE_PATTERN` (from `analyze/`) | Deep analysis mode prompt injection |
 
@@ -23,9 +23,9 @@ keyword-detector/
 ├── detector.ts        # detectKeywordsWithType() + extractPromptText()
 ├── constants.ts       # KEYWORD_DETECTORS array, re-exports from submodules
 ├── types.ts           # KeywordDetector, DetectedKeyword types
-├── ultrawork/
+├── deepwork/
 │   ├── index.ts
-│   ├── message.ts     # getUltraworkMessage() — dynamic prompt by agent/model
+│   ├── message.ts     # getDeepworkMessage() — dynamic prompt by agent/model
 │   └── isPlannerAgent.ts
 ├── search/
 │   ├── index.ts
@@ -45,13 +45,13 @@ chat.message (user input)
   → isSystemDirective? → skip
   → removeSystemReminders(text)  # strip <SYSTEM_REMINDER> blocks
   → detectKeywordsWithType(cleanText, agentName, modelID)
-  → isPlannerAgent(agentName)? → filter out ultrawork
+  → isPlannerAgent(agentName)? → filter out deepwork
   → for each detected keyword: inject mode message into output
 ```
 
 ## GUARDS
 
 - **System directive skip**: Messages tagged as system directives are not scanned (prevents infinite loops)
-- **Planner agent filter**: Prometheus/plan agents do not receive `ultrawork` injection
+- **Planner agent filter**: Planner/plan agents do not receive `deepwork` injection
 - **Session agent tracking**: Uses `getSessionAgent()` to get actual agent (not just input hint)
-- **Model-aware messages**: `getUltraworkMessage(agentName, modelID)` adapts message to active model
+- **Model-aware messages**: `getDeepworkMessage(agentName, modelID)` adapts message to active model

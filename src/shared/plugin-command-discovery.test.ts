@@ -97,7 +97,7 @@ describe("plugin command discovery utility", () => {
   let envSnapshot: EnvSnapshot
 
   beforeEach(() => {
-    tempDir = mkdtempSync(join(tmpdir(), "omo-shared-plugin-discovery-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omx-shared-plugin-discovery-test-"))
     envSnapshot = {
       CLAUDE_CONFIG_DIR: process.env.CLAUDE_CONFIG_DIR,
       CLAUDE_PLUGINS_HOME: process.env.CLAUDE_PLUGINS_HOME,

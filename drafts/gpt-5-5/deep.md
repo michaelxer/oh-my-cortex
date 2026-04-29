@@ -1,15 +1,15 @@
 <!--
   This file is a CATEGORY CONTEXT APPEND, not a standalone prompt.
-  It is injected at runtime on top of the Sisyphus-Junior base prompt
-  (see sisyphus-junior.md) via the harness's `buildSystemContent` pipeline:
+  It is injected at runtime on top of the Worker base prompt
+  (see worker.md) via the harness's `buildSystemContent` pipeline:
 
-      [Sisyphus-Junior base]
+      [Worker base]
         + [skill content]
         + <Category_Context>...</Category_Context>  <-- THIS FILE
         + [user task]
 
   Keep it short and mode-specific. Do not restate anything already in the
-  Sisyphus-Junior base; only the delta that makes "deep" different from
+  Worker base; only the delta that makes "deep" different from
   "quick", "ultrabrain", "writing", and other categories.
 -->
 
@@ -20,7 +20,7 @@ The orchestrator chose this category because the task benefits from depth over s
 
 # How deep mode adjusts the base behavior
 
-**Exploration budget: generous.** Read the files you need, trace dependencies both directions, fire 2-5 explore/librarian sub-agents in parallel for broader questions. Build a complete mental model before the first `apply_patch`. Exploration here is an investment, not overhead.
+**Exploration budget: generous.** Read the files you need, trace dependencies both directions, fire 2-5 tracker/researcher sub-agents in parallel for broader questions. Build a complete mental model before the first `apply_patch`. Exploration here is an investment, not overhead.
 
 **Goal, not plan.** You receive a GOAL describing the desired outcome. You figure out HOW to achieve it. The orchestrator deliberately did not hand you a step-by-step plan; producing one and asking for approval is not what was asked. Execute.
 

@@ -21,7 +21,7 @@ describe("project skill discovery", () => {
   let tempDir = ""
 
   beforeEach(() => {
-    tempDir = mkdtempSync(join(tmpdir(), "omo-project-skill-discovery-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omx-project-skill-discovery-"))
   })
 
   afterEach(() => {

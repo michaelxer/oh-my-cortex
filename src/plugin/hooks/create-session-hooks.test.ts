@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import type { OhMyOpenCodeConfig } from "../../config"
+import type { OhMyCortexConfig } from "../../config"
 import type { ModelCacheState } from "../../plugin-state"
 import type { PluginContext } from "../types"
 import { createSessionHooks } from "./create-session-hooks"
@@ -22,7 +22,7 @@ const mockModelCacheState = {} as ModelCacheState
 describe("createSessionHooks", () => {
   it("keeps model fallback disabled when config is unset", () => {
     // given
-    const pluginConfig = {} as OhMyOpenCodeConfig
+    const pluginConfig = {} as OhMyCortexConfig
 
     // when
     const result = createSessionHooks({
@@ -39,7 +39,7 @@ describe("createSessionHooks", () => {
 
   it("creates model fallback hook when config explicitly enables it", () => {
     // given
-    const pluginConfig = { model_fallback: true } as OhMyOpenCodeConfig
+    const pluginConfig = { model_fallback: true } as OhMyCortexConfig
 
     // when
     const result = createSessionHooks({
@@ -65,7 +65,7 @@ describe("createSessionHooks", () => {
         agent_pane_min_width: 40,
         isolation: "inline",
       },
-    } as OhMyOpenCodeConfig
+    } as OhMyCortexConfig
 
     // when
     const result = createSessionHooks({

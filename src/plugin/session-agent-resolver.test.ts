@@ -9,8 +9,8 @@ describe("resolveSessionAgent", () => {
         messages: async () => ({
           data: [
             { info: { role: "user" } },
-            { info: { role: "assistant", agent: "explore" } },
-            { info: { role: "assistant", agent: "oracle" } },
+            { info: { role: "assistant", agent: "tracker" } },
+            { info: { role: "assistant", agent: "thinker" } },
           ],
         }),
       },
@@ -20,7 +20,7 @@ describe("resolveSessionAgent", () => {
     const agent = await resolveSessionAgent(client, "ses_test")
 
     //#then
-    expect(agent).toBe("explore")
+    expect(agent).toBe("tracker")
   })
 
   test("skips messages without agent field", async () => {

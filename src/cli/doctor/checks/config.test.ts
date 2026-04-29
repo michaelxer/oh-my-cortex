@@ -31,21 +31,21 @@ describe("config check", () => {
       const originalConfigDir = process.env.OPENCODE_CONFIG_DIR
       const testConfigDir = join(
         tmpdir(),
-        `omo-doctor-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        `omx-doctor-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
       )
 
       try {
         mkdirSync(testConfigDir, { recursive: true })
         process.env.OPENCODE_CONFIG_DIR = testConfigDir
         writeFileSync(
-          join(testConfigDir, "oh-my-openagent.json"),
+          join(testConfigDir, "oh-my-cortex.json"),
           JSON.stringify({ disabled_hooks: ["comment-checker"] }, null, 2) + "\n",
           "utf-8",
         )
 
         const result = await config.checkConfig()
 
-        expect(result.details?.[0]).toEndWith("/oh-my-openagent.json")
+        expect(result.details?.[0]).toEndWith("/oh-my-cortex.json")
       } finally {
         rmSync(testConfigDir, { recursive: true, force: true })
         if (originalConfigDir === undefined) {

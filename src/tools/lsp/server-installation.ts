@@ -49,7 +49,7 @@ export function isServerInstalled(command: string[]): boolean {
     }
   }
 
-  // Runtime wrappers (bun/node) are always available in oh-my-opencode context
+  // Runtime wrappers (bun/node) are always available in oh-my-cortex context
   if (cmd === "bun" || cmd === "node") {
     return true
   }

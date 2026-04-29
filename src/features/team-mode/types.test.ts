@@ -28,7 +28,7 @@ describe("team-mode types", () => {
       kind: "category",
       name: "m1",
       category: "deep",
-      subagent_type: "sisyphus",
+      subagent_type: "chief",
       prompt: "impl X",
     }
 
@@ -66,29 +66,29 @@ describe("team-mode types", () => {
     // then
     expect(entries).toHaveLength(11)
     expect(verdictCounts).toEqual({ eligible: 3, conditional: 1, "hard-reject": 7 })
-    expect(AGENT_ELIGIBILITY_REGISTRY.hephaestus.rejectionMessage).toBe(
-      "Agent 'hephaestus' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"sisyphus\" instead.",
+    expect(AGENT_ELIGIBILITY_REGISTRY.founder.rejectionMessage).toBe(
+      "Agent 'founder' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"chief\" instead.",
     )
-    expect(AGENT_ELIGIBILITY_REGISTRY.oracle.rejectionMessage).toBe(
-      "Agent 'oracle' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'oracle' for read-only analysis instead.",
+    expect(AGENT_ELIGIBILITY_REGISTRY.thinker.rejectionMessage).toBe(
+      "Agent 'thinker' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'thinker' for read-only analysis instead.",
     )
-    expect(AGENT_ELIGIBILITY_REGISTRY.librarian.rejectionMessage).toBe(
-      "Agent 'librarian' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
+    expect(AGENT_ELIGIBILITY_REGISTRY.researcher.rejectionMessage).toBe(
+      "Agent 'researcher' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
     )
-    expect(AGENT_ELIGIBILITY_REGISTRY.explore.rejectionMessage).toBe(
-      "Agent 'explore' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for codebase exploration instead.",
+    expect(AGENT_ELIGIBILITY_REGISTRY.tracker.rejectionMessage).toBe(
+      "Agent 'tracker' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for codebase exploration instead.",
     )
-    expect(AGENT_ELIGIBILITY_REGISTRY["multimodal-looker"].rejectionMessage).toBe(
-      "Agent 'multimodal-looker' has read-only tool access (only 'read' allowed). Cannot write to mailbox as team member.",
+    expect(AGENT_ELIGIBILITY_REGISTRY["spotter"].rejectionMessage).toBe(
+      "Agent 'spotter' has read-only tool access (only 'read' allowed). Cannot write to mailbox as team member.",
     )
-    expect(AGENT_ELIGIBILITY_REGISTRY.metis.rejectionMessage).toBe(
-      "Agent 'metis' is read-only (pre-planning consultant). Cannot write to mailbox as team member. Use delegate-task for pre-planning analysis instead.",
+    expect(AGENT_ELIGIBILITY_REGISTRY.reviewer.rejectionMessage).toBe(
+      "Agent 'reviewer' is read-only (pre-planning consultant). Cannot write to mailbox as team member. Use delegate-task for pre-planning analysis instead.",
     )
-    expect(AGENT_ELIGIBILITY_REGISTRY.momus.rejectionMessage).toBe(
-      "Agent 'momus' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
+    expect(AGENT_ELIGIBILITY_REGISTRY.critic.rejectionMessage).toBe(
+      "Agent 'critic' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
     )
-    expect(AGENT_ELIGIBILITY_REGISTRY.prometheus.rejectionMessage).toBe(
-      "Agent 'prometheus' is plan-mode-only; can only write to .sisyphus/*.md (enforced by prometheusMdOnly hook). Cannot write to team mailbox. Use category: 'plan' instead.",
+    expect(AGENT_ELIGIBILITY_REGISTRY.planner.rejectionMessage).toBe(
+      "Agent 'planner' is plan-mode-only; can only write to .cortex/*.md (enforced by plannerMdOnly hook). Cannot write to team mailbox. Use category: 'plan' instead.",
     )
     expect(CategoryMemberSchema).toBeDefined()
     expect(SubagentMemberSchema).toBeDefined()

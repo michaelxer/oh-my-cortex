@@ -4,13 +4,13 @@
 
 ## OVERVIEW
 
-32 schema files composing `OhMyOpenCodeConfigSchema`. Zod v4 validation with `safeParse()`. All fields optional — omitted fields use plugin defaults.
+32 schema files composing `OhMyCortexConfigSchema`. Zod v4 validation with `safeParse()`. All fields optional — omitted fields use plugin defaults.
 
 ## SCHEMA TREE
 
 ```
 config/schema/
-├── oh-my-opencode-config.ts    # ROOT: OhMyOpenCodeConfigSchema (composes all below)
+├── oh-my-cortex-config.ts    # ROOT: OhMyCortexConfigSchema (composes all below)
 ├── agent-names.ts              # BuiltinAgentNameSchema (11), OverridableAgentNameSchema (14)
 ├── agent-overrides.ts          # AgentOverrideConfigSchema (21 fields per agent)
 ├── categories.ts               # 8 built-in + custom categories
@@ -18,9 +18,9 @@ config/schema/
 ├── skills.ts                   # SkillsConfigSchema (sources, paths, recursive)
 ├── commands.ts                 # BuiltinCommandNameSchema
 ├── experimental.ts             # Feature flags (plugin_load_timeout_ms min 1000)
-├── sisyphus.ts                 # SisyphusConfigSchema (task system)
-├── sisyphus-agent.ts           # SisyphusAgentConfigSchema
-├── ralph-loop.ts               # RalphLoopConfigSchema
+├── chief.ts                 # ChiefConfigSchema (task system)
+├── chief-agent.ts           # ChiefAgentConfigSchema
+├── cortex-loop.ts               # CortexLoopConfigSchema
 ├── tmux.ts                     # TmuxConfigSchema + TmuxLayoutSchema
 ├── websearch.ts                # provider: "exa" | "tavily"
 ├── claude-code.ts              # CC compatibility settings
@@ -43,7 +43,7 @@ config/schema/
 
 ## ROOT SCHEMA FIELDS (32)
 
-`$schema`, `new_task_system_enabled`, `default_run_agent`, `disabled_mcps`, `disabled_agents`, `disabled_skills`, `disabled_hooks`, `disabled_commands`, `disabled_tools`, `hashline_edit`, `agents`, `categories`, `claude_code`, `sisyphus_agent`, `comment_checker`, `experimental`, `auto_update`, `skills`, `ralph_loop`, `background_task`, `notification`, `babysitting`, `git_master`, `browser_automation_engine`, `websearch`, `tmux`, `sisyphus`, `start_work`, `_migrations`, `model_fallback`, `model_capabilities`, `openclaw`, `mcp_env_allowlist`
+`$schema`, `new_task_system_enabled`, `default_run_agent`, `disabled_mcps`, `disabled_agents`, `disabled_skills`, `disabled_hooks`, `disabled_commands`, `disabled_tools`, `hashline_edit`, `agents`, `categories`, `claude_code`, `chief_agent`, `comment_checker`, `experimental`, `auto_update`, `skills`, `cortex_loop`, `background_task`, `notification`, `babysitting`, `git_master`, `browser_automation_engine`, `websearch`, `tmux`, `chief`, `start_work`, `_migrations`, `model_fallback`, `model_capabilities`, `openclaw`, `mcp_env_allowlist`
 
 ## AGENT OVERRIDE FIELDS (21)
 
@@ -52,6 +52,6 @@ config/schema/
 ## HOW TO ADD CONFIG
 
 1. Create `src/config/schema/{name}.ts` with Zod schema
-2. Add field to `oh-my-opencode-config.ts` root schema
+2. Add field to `oh-my-cortex-config.ts` root schema
 3. Reference via `z.infer<typeof YourSchema>` for TypeScript types
 4. Access in handlers via `pluginConfig.{name}`

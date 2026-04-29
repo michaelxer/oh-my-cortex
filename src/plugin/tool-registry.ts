@@ -4,7 +4,7 @@ import type { SkillLoadOptions } from "../tools/skill/types"
 import type {
   AvailableCategory,
 } from "../agents/dynamic-agent-prompt-builder"
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import { isInteractiveBashEnabled } from "../create-runtime-tmux-config"
 import * as openclawRuntimeDispatch from "../openclaw/runtime-dispatch"
 import type { PluginContext, ToolsRecord } from "./types"
@@ -12,7 +12,7 @@ import type { PluginContext, ToolsRecord } from "./types"
 import {
   builtinTools,
   createBackgroundTools,
-  createCallOmoAgent,
+  createCallCortexAgent,
   createLookAt,
   createSkillMcpTool,
   createSkillTool,
@@ -40,7 +40,7 @@ import { normalizeToolArgSchemas } from "./normalize-tool-arg-schemas"
 type ToolRegistryFactories = {
   builtinTools: typeof builtinTools
   createBackgroundTools: typeof createBackgroundTools
-  createCallOmoAgent: typeof createCallOmoAgent
+  createCallCortexAgent: typeof createCallCortexAgent
   createLookAt: typeof createLookAt
   createSkillMcpTool: typeof createSkillMcpTool
   createSkillTool: typeof createSkillTool
@@ -61,7 +61,7 @@ type ToolRegistryFactories = {
 const defaultToolRegistryFactories: ToolRegistryFactories = {
   builtinTools,
   createBackgroundTools,
-  createCallOmoAgent,
+  createCallCortexAgent,
   createLookAt,
   createSkillMcpTool,
   createSkillTool,
@@ -91,7 +91,7 @@ const LOW_PRIORITY_TOOL_ORDER = [
   "session_info",
   "interactive_bash",
   "look_at",
-  "call_omo_agent",
+  "call_cortex_agent",
   "task_create",
   "task_get",
   "task_list",
@@ -143,7 +143,7 @@ export function trimToolsToCap(filteredTools: ToolsRecord, maxTools: number): vo
 
 export function createToolRegistry(args: {
   ctx: PluginContext
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   managers: Pick<Managers, "backgroundManager" | "tmuxSessionManager" | "skillMcpManager" | "modelFallbackControllerAccessor">
   skillContext: SkillContext
   availableCategories: AvailableCategory[]
@@ -164,7 +164,7 @@ export function createToolRegistry(args: {
     ...toolFactories,
   }
   const backgroundTools = factories.createBackgroundTools(managers.backgroundManager, ctx.client)
-  const callOmoAgent = factories.createCallOmoAgent(
+  const callCortexAgent = factories.createCallCortexAgent(
     ctx,
     managers.backgroundManager,
     pluginConfig.disabled_agents ?? [],
@@ -173,10 +173,10 @@ export function createToolRegistry(args: {
     managers.modelFallbackControllerAccessor,
   )
 
-  const isMultimodalLookerEnabled = !(pluginConfig.disabled_agents ?? []).some(
-    (agent) => agent.toLowerCase() === "multimodal-looker",
+  const isSpotterEnabled = !(pluginConfig.disabled_agents ?? []).some(
+    (agent) => agent.toLowerCase() === "spotter",
   )
-  const lookAt = isMultimodalLookerEnabled ? factories.createLookAt(ctx) : null
+  const lookAt = isSpotterEnabled ? factories.createLookAt(ctx) : null
 
   const delegateTask = factories.createDelegateTask({
     manager: managers.backgroundManager,
@@ -185,12 +185,12 @@ export function createToolRegistry(args: {
     userCategories: pluginConfig.categories,
     agentOverrides: pluginConfig.agents,
     gitMasterConfig: pluginConfig.git_master,
-    sisyphusJuniorModel: pluginConfig.agents?.["sisyphus-junior"]?.model,
+    workerModel: pluginConfig.agents?.["worker"]?.model,
     browserProvider: skillContext.browserProvider,
     disabledSkills: skillContext.disabledSkills,
     availableCategories,
     availableSkills: skillContext.availableSkills,
-    sisyphusAgentConfig: pluginConfig.sisyphus_agent,
+    chiefAgentConfig: pluginConfig.chief_agent ?? pluginConfig.chief_agent,
     syncPollTimeoutMs: pluginConfig.background_task?.syncPollTimeoutMs,
     modelFallbackControllerAccessor: managers.modelFallbackControllerAccessor,
     onSyncSessionCreated: async (event) => {
@@ -268,7 +268,7 @@ export function createToolRegistry(args: {
     ...factories.createAstGrepTools(ctx),
     ...factories.createSessionManagerTools(ctx),
     ...backgroundTools,
-    call_omo_agent: callOmoAgent,
+    call_cortex_agent: callCortexAgent,
     ...(lookAt ? { look_at: lookAt } : {}),
     task: delegateTask,
     skill_mcp: skillMcpTool,

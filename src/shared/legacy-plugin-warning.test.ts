@@ -8,7 +8,7 @@ const { checkForLegacyPluginEntry } = await import(
 )
 
 function createTestConfigDir(): string {
-  return mkdtempSync(join(tmpdir(), "omo-legacy-check-"))
+  return mkdtempSync(join(tmpdir(), "omx-legacy-check-"))
 }
 
 function cleanupTestConfigDir(testConfigDir: string): void {
@@ -21,7 +21,7 @@ describe("checkForLegacyPluginEntry", () => {
 
     try {
       // given
-      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-opencode"] }, null, 2))
+      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2))
 
       // when
       const result = checkForLegacyPluginEntry(testConfigDir)
@@ -29,7 +29,7 @@ describe("checkForLegacyPluginEntry", () => {
       // then
       expect(result.hasLegacyEntry).toBe(true)
       expect(result.hasCanonicalEntry).toBe(false)
-      expect(result.legacyEntries).toEqual(["oh-my-opencode"])
+      expect(result.legacyEntries).toEqual(["oh-my-cortex"])
       expect(result.configPath).toBe(join(testConfigDir, "opencode.json"))
     } finally {
       cleanupTestConfigDir(testConfigDir)
@@ -41,7 +41,7 @@ describe("checkForLegacyPluginEntry", () => {
 
     try {
       // given
-      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-opencode@3.10.0"] }, null, 2))
+      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-cortex@3.10.0"] }, null, 2))
 
       // when
       const result = checkForLegacyPluginEntry(testConfigDir)
@@ -49,7 +49,7 @@ describe("checkForLegacyPluginEntry", () => {
       // then
       expect(result.hasLegacyEntry).toBe(true)
       expect(result.hasCanonicalEntry).toBe(false)
-      expect(result.legacyEntries).toEqual(["oh-my-opencode@3.10.0"])
+      expect(result.legacyEntries).toEqual(["oh-my-cortex@3.10.0"])
     } finally {
       cleanupTestConfigDir(testConfigDir)
     }
@@ -60,7 +60,7 @@ describe("checkForLegacyPluginEntry", () => {
 
     try {
       // given
-      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-openagent"] }, null, 2))
+      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2))
 
       // when
       const result = checkForLegacyPluginEntry(testConfigDir)
@@ -79,14 +79,14 @@ describe("checkForLegacyPluginEntry", () => {
 
     try {
       // given
-      writeFileSync(join(testConfigDir, "opencode.jsonc"), '{\n  "plugin": ["oh-my-opencode"]\n}\n')
+      writeFileSync(join(testConfigDir, "opencode.jsonc"), '{\n  "plugin": ["oh-my-cortex"]\n}\n')
 
       // when
       const result = checkForLegacyPluginEntry(testConfigDir)
 
       // then
       expect(result.hasLegacyEntry).toBe(true)
-      expect(result.legacyEntries).toEqual(["oh-my-opencode"])
+      expect(result.legacyEntries).toEqual(["oh-my-cortex"])
     } finally {
       cleanupTestConfigDir(testConfigDir)
     }

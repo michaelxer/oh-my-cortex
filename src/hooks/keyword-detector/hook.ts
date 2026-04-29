@@ -1,6 +1,6 @@
 import type { PluginInput } from "@opencode-ai/plugin"
 import { detectKeywordsWithType, extractPromptText } from "./detector"
-import { isPlannerAgent, isNonOmoAgent } from "./constants"
+import { isPlannerAgent, isNonCortexAgent } from "./constants"
 import { log } from "../../shared"
 import {
   isSystemDirective,
@@ -12,12 +12,12 @@ import {
   subagentSessions,
 } from "../../features/claude-code-session-state"
 import type { ContextCollector } from "../../features/context-injector"
-import type { RalphLoopHook } from "../ralph-loop"
+import type { CortexLoopHook } from "../cortex-loop"
 
 export function createKeywordDetectorHook(
   ctx: PluginInput,
   _collector?: ContextCollector,
-  _ralphLoop?: Pick<RalphLoopHook, "startLoop">
+  _cortexLoop?: Pick<CortexLoopHook, "startLoop">
 ) {
   function getRuntimeVariant(input: { variant?: string }, message: Record<string, unknown>): string | undefined {
     if (typeof message["variant"] === "string") {
@@ -50,9 +50,9 @@ export function createKeywordDetectorHook(
 
       const currentAgent = getSessionAgent(input.sessionID) ?? input.agent
 
-      // Skip all keyword injection for non-OMO agents (e.g., OpenCode-Builder, Plan)
-      if (isNonOmoAgent(currentAgent)) {
-        log(`[keyword-detector] Skipping keyword injection for non-OMO agent`, { sessionID: input.sessionID, agent: currentAgent })
+      // Skip all keyword injection for non-OMX agents (e.g., OpenCode-Builder, Plan)
+      if (isNonCortexAgent(currentAgent)) {
+        log(`[keyword-detector] Skipping keyword injection for non-OMX agent`, { sessionID: input.sessionID, agent: currentAgent })
         return
       }
 
@@ -63,9 +63,9 @@ export function createKeywordDetectorHook(
 
       if (isPlannerAgent(currentAgent)) {
         const preFilterCount = detectedKeywords.length
-        detectedKeywords = detectedKeywords.filter((k) => k.type !== "ultrawork")
+        detectedKeywords = detectedKeywords.filter((k) => k.type !== "deepwork")
         if (preFilterCount > detectedKeywords.length) {
-          log(`[keyword-detector] Filtered ultrawork keywords for planner agent`, { sessionID: input.sessionID, agent: currentAgent })
+          log(`[keyword-detector] Filtered deepwork keywords for planner agent`, { sessionID: input.sessionID, agent: currentAgent })
         }
       }
 
@@ -83,9 +83,9 @@ export function createKeywordDetectorHook(
       const isNonMainSession = mainSessionID && input.sessionID !== mainSessionID
 
       if (isNonMainSession) {
-        detectedKeywords = detectedKeywords.filter((k) => k.type === "ultrawork")
+        detectedKeywords = detectedKeywords.filter((k) => k.type === "deepwork")
         if (detectedKeywords.length === 0) {
-          log(`[keyword-detector] Skipping non-ultrawork keywords in non-main session`, {
+          log(`[keyword-detector] Skipping non-deepwork keywords in non-main session`, {
             sessionID: input.sessionID,
             mainSessionID,
           })
@@ -93,12 +93,12 @@ export function createKeywordDetectorHook(
         }
       }
 
-      const hasUltrawork = detectedKeywords.some((k) => k.type === "ultrawork")
-      if (hasUltrawork) {
+      const hasDeepwork = detectedKeywords.some((k) => k.type === "deepwork")
+      if (hasDeepwork) {
         const runtimeVariant = getRuntimeVariant(input, output.message)
         const isRuntimeMax = runtimeVariant === "max"
 
-        log(`[keyword-detector] Ultrawork mode activated`, {
+        log(`[keyword-detector] Deepwork mode activated`, {
           sessionID: input.sessionID,
           runtimeVariant,
         })
@@ -106,7 +106,7 @@ export function createKeywordDetectorHook(
         ctx.client.tui
           .showToast({
             body: {
-              title: "Ultrawork Mode Activated",
+              title: "Deepwork Mode Activated",
               message: isRuntimeMax
                 ? "Maximum precision engaged. All agents at your disposal."
                 : "Runtime variant preserved. All agents at your disposal.",

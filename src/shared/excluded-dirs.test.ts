@@ -11,7 +11,7 @@ describe("EXCLUDED_DIRS", () => {
       "dist",
       "build",
       ".next",
-      ".sisyphus",
+      ".cortex",
       ".omx",
       ".turbo",
       "coverage",

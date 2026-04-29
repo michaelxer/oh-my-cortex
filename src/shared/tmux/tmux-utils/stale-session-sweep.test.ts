@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock } from "bun:test"
-import { sweepStaleOmoAgentSessionsWith, type SweepDeps } from "./stale-session-sweep"
+import { sweepStaleCortexAgentSessionsWith, type SweepDeps } from "./stale-session-sweep"
 
 type SweepFixture = {
 	deps: SweepDeps
@@ -45,7 +45,7 @@ function createFixture(): SweepFixture {
 	}
 }
 
-describe("sweepStaleOmoAgentSessionsWith", () => {
+describe("sweepStaleCortexAgentSessionsWith", () => {
 	let fixture: SweepFixture
 
 	beforeEach(() => {
@@ -57,7 +57,7 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 		const deps: SweepDeps = { ...fixture.deps, isInsideTmux: () => false }
 
 		// when
-		const result = await sweepStaleOmoAgentSessionsWith(deps)
+		const result = await sweepStaleCortexAgentSessionsWith(deps)
 
 		// then
 		expect(result).toBe(0)
@@ -68,7 +68,7 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 		const deps: SweepDeps = { ...fixture.deps, getTmuxPath: async () => undefined }
 
 		// when
-		const result = await sweepStaleOmoAgentSessionsWith(deps)
+		const result = await sweepStaleCortexAgentSessionsWith(deps)
 
 		// then
 		expect(result).toBe(0)
@@ -79,7 +79,7 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 		fixture.setCandidates([])
 
 		// when
-		const result = await sweepStaleOmoAgentSessionsWith(fixture.deps)
+		const result = await sweepStaleCortexAgentSessionsWith(fixture.deps)
 
 		// then
 		expect(result).toBe(0)
@@ -88,37 +88,37 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 
 	it("#given sessions with dead PIDs #when sweep called #then each dead session is killed once", async () => {
 		// given
-		fixture.setCandidates(["omo-agents-99991", "omo-agents-99992"])
+		fixture.setCandidates(["omx-agents-99991", "omx-agents-99992"])
 		fixture.setAlive(() => false)
 
 		// when
-		const result = await sweepStaleOmoAgentSessionsWith(fixture.deps)
+		const result = await sweepStaleCortexAgentSessionsWith(fixture.deps)
 
 		// then
 		expect(result).toBe(2)
-		expect(fixture.killed).toEqual(["omo-agents-99991", "omo-agents-99992"])
+		expect(fixture.killed).toEqual(["omx-agents-99991", "omx-agents-99992"])
 	})
 
 	it("#given session matches current PID #when sweep called #then it is NOT killed", async () => {
 		// given
-		fixture.setCandidates([`omo-agents-${fixture.deps.currentPid}`, "omo-agents-99999"])
+		fixture.setCandidates([`omx-agents-${fixture.deps.currentPid}`, "omx-agents-99999"])
 		fixture.setAlive(() => false)
 
 		// when
-		const result = await sweepStaleOmoAgentSessionsWith(fixture.deps)
+		const result = await sweepStaleCortexAgentSessionsWith(fixture.deps)
 
 		// then
 		expect(result).toBe(1)
-		expect(fixture.killed).toEqual(["omo-agents-99999"])
+		expect(fixture.killed).toEqual(["omx-agents-99999"])
 	})
 
 	it("#given session PID is still alive #when sweep called #then it is NOT killed", async () => {
 		// given
-		fixture.setCandidates(["omo-agents-88888"])
+		fixture.setCandidates(["omx-agents-88888"])
 		fixture.setAlive((pid) => pid === 88888)
 
 		// when
-		const result = await sweepStaleOmoAgentSessionsWith(fixture.deps)
+		const result = await sweepStaleCortexAgentSessionsWith(fixture.deps)
 
 		// then
 		expect(result).toBe(0)
@@ -127,28 +127,28 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 
 	it("#given killSession returns false #when sweep called #then session is not counted toward killedCount", async () => {
 		// given
-		fixture.setCandidates(["omo-agents-55555"])
+		fixture.setCandidates(["omx-agents-55555"])
 		fixture.setAlive(() => false)
 		fixture.killSessionMock.mockImplementation(async () => false)
 
 		// when
-		const result = await sweepStaleOmoAgentSessionsWith(fixture.deps)
+		const result = await sweepStaleCortexAgentSessionsWith(fixture.deps)
 
 		// then
 		expect(result).toBe(0)
 		expect(fixture.killSessionMock).toHaveBeenCalledTimes(1)
 	})
 
-	it("#given non-matching sessions mixed in #when sweep called #then only omo-agents-<pid> sessions are considered", async () => {
+	it("#given non-matching sessions mixed in #when sweep called #then only omx-agents-<pid> sessions are considered", async () => {
 		// given
-		fixture.setCandidates(["main", "omo-agents-99999", "other-session", "omo-agents-abc"])
+		fixture.setCandidates(["main", "omx-agents-99999", "other-session", "omx-agents-abc"])
 		fixture.setAlive(() => false)
 
 		// when
-		const result = await sweepStaleOmoAgentSessionsWith(fixture.deps)
+		const result = await sweepStaleCortexAgentSessionsWith(fixture.deps)
 
 		// then
 		expect(result).toBe(1)
-		expect(fixture.killed).toEqual(["omo-agents-99999"])
+		expect(fixture.killed).toEqual(["omx-agents-99999"])
 	})
 })

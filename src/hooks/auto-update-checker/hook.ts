@@ -57,21 +57,21 @@ export function createAutoUpdateCheckerHook(
 ) {
   const {
     showStartupToast = true,
-    isSisyphusEnabled = false,
+    isChiefEnabled = false,
     autoUpdate = true,
     modelCapabilities,
   } = options
   const isCliRunMode = process.env.OPENCODE_CLI_RUN_MODE === "true"
 
   const getToastMessage = (isUpdate: boolean, latestVersion?: string): string => {
-    if (isSisyphusEnabled) {
+    if (isChiefEnabled) {
       return isUpdate
-        ? `Sisyphus on steroids is steering OpenCode.\nv${latestVersion} available. Restart to apply.`
-        : "Sisyphus on steroids is steering OpenCode."
+        ? `Chief is steering OpenCode.\nv${latestVersion} available. Restart to apply.`
+        : "Chief is steering OpenCode."
     }
     return isUpdate
-      ? `OpenCode is now on Steroids. oMoMoMoMo...\nv${latestVersion} available. Restart OpenCode to apply.`
-      : "OpenCode is now on Steroids. oMoMoMoMo..."
+      ? `OMX updated. Think deeper.\nv${latestVersion} available. Restart OpenCode to apply.`
+      : "OMX loaded. Think deeper."
   }
 
   let hasChecked = false
@@ -100,7 +100,7 @@ export function createAutoUpdateCheckerHook(
 
           if (localDevVersion) {
             if (showStartupToast) {
-              deps.showLocalDevToast(ctx, displayVersion, isSisyphusEnabled).catch(() => {})
+              deps.showLocalDevToast(ctx, displayVersion, isChiefEnabled).catch(() => {})
             }
             deps.log("[auto-update-checker] Local development mode")
             return

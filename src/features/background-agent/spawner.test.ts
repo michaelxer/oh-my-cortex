@@ -24,7 +24,7 @@ describe("background-agent spawner agent-not-found fallback", () => {
           callCount++
           promptCalls.push({ body: { ...args.body }, path: { ...args.path } })
           if (callCount === 1) {
-            throw new Error('Agent not found: "Sisyphus-Junior". Available agents: build, explore, general, plan')
+            throw new Error('Agent not found: "Worker". Available agents: build, tracker, general, plan')
           }
           return { data: {} }
         },
@@ -36,7 +36,7 @@ describe("background-agent spawner agent-not-found fallback", () => {
     const task = createTask({
       description: "Implement feature",
       prompt: "Please implement the break-even analysis",
-      agent: "Sisyphus-Junior",
+      agent: "Worker",
       parentSessionID: "ses_parent",
       parentMessageID: "msg_parent",
     })
@@ -72,14 +72,14 @@ describe("background-agent spawner agent-not-found fallback", () => {
     //#then
     // Should have called promptAsync twice: once with original agent, once with fallback
     expect(promptCalls).toHaveLength(2)
-    expect(promptCalls[0].body.agent).toBe("Sisyphus-Junior")
+    expect(promptCalls[0].body.agent).toBe("Worker")
     expect(promptCalls[1].body.agent).toBe("general")
     // Original prompt content preserved in fallback
     expect(promptCalls[1].body.parts).toEqual(promptCalls[0].body.parts)
     // Tool restrictions recomputed for fallback agent (general has no restrictions)
     expect(promptCalls[1].body.tools).toEqual({
       task: false,
-      call_omo_agent: true,
+      call_cortex_agent: true,
       question: false,
     })
     // Task agent identity updated to reflect fallback
@@ -108,7 +108,7 @@ describe("background-agent spawner agent-not-found fallback", () => {
     const task = createTask({
       description: "Implement feature",
       prompt: "Do work",
-      agent: "Sisyphus-Junior",
+      agent: "Worker",
       parentSessionID: "ses_parent",
       parentMessageID: "msg_parent",
     })
@@ -151,7 +151,7 @@ describe("background-agent spawner agent-not-found fallback", () => {
         create: async () => ({ data: { id: "session-fallback" } }),
         promptAsync: async () => {
           callCount++
-          throw new Error('Agent not found: "Sisyphus-Junior". Available agents: build, explore, general, plan')
+          throw new Error('Agent not found: "Worker". Available agents: build, tracker, general, plan')
         },
       },
     } as any
@@ -161,7 +161,7 @@ describe("background-agent spawner agent-not-found fallback", () => {
     const task = createTask({
       description: "Implement feature",
       prompt: "Do work",
-      agent: "Sisyphus-Junior",
+      agent: "Worker",
       parentSessionID: "ses_parent",
       parentMessageID: "msg_parent",
     })
@@ -220,7 +220,7 @@ describe("background-agent spawner agent-not-found fallback", () => {
     const task = createTask({
       description: "Test task",
       prompt: "Do work",
-      agent: "Sisyphus-Junior",
+      agent: "Worker",
       parentSessionID: "ses_parent",
       parentMessageID: "msg_parent",
     })
@@ -253,7 +253,7 @@ describe("background-agent spawner agent-not-found fallback", () => {
 
     //#then
     expect(promptCalls).toHaveLength(2)
-    expect(promptCalls[0].body.agent).toBe("Sisyphus-Junior")
+    expect(promptCalls[0].body.agent).toBe("Worker")
     expect(promptCalls[1].body.agent).toBe("general")
     expect(onTaskError).not.toHaveBeenCalled()
   })
@@ -352,7 +352,7 @@ describe("background-agent spawner fallback model promotion", () => {
       queuedAt: new Date(),
       description: "Test task",
       prompt: "Do the thing",
-      agent: "oracle",
+      agent: "thinker",
       parentSessionID: "parent-1",
       parentMessageID: "message-1",
       model: {
@@ -370,7 +370,7 @@ describe("background-agent spawner fallback model promotion", () => {
     const input = {
       description: "Test task",
       prompt: "Do the thing",
-      agent: "oracle",
+      agent: "thinker",
       parentSessionID: "parent-1",
       parentMessageID: "message-1",
       model: task.model,
@@ -426,7 +426,7 @@ describe("background-agent spawner fallback model promotion", () => {
     const task = createTask({
       description: "Test task",
       prompt: "Do work",
-      agent: "sisyphus-junior",
+      agent: "worker",
       parentSessionID: "ses_parent",
       parentMessageID: "msg_parent",
       model: { providerID: "openai", modelID: "gpt-5.4", variant: "medium" },
@@ -459,7 +459,7 @@ describe("background-agent spawner fallback model promotion", () => {
 
     //#then
     expect(promptCalls).toHaveLength(1)
-    expect(promptCalls[0]?.body?.agent).toBe("sisyphus-junior")
+    expect(promptCalls[0]?.body?.agent).toBe("worker")
     expect(promptCalls[0]?.body?.model).toEqual({
       providerID: "openai",
       modelID: "gpt-5.4",
@@ -485,7 +485,7 @@ describe("background-agent spawner fallback model promotion", () => {
     const task = createTask({
       description: "Test task",
       prompt: "Do work",
-      agent: "sisyphus-junior",
+      agent: "worker",
       parentSessionID: "ses_parent",
       parentMessageID: "msg_parent",
     })
@@ -541,7 +541,7 @@ describe("background-agent spawner fallback model promotion", () => {
     const task = createTask({
       description: "Test task",
       prompt: "Do work",
-      agent: "\u200Bsisyphus-junior",
+      agent: "\u200Bworker",
       parentSessionID: "ses_parent",
       parentMessageID: "msg_parent",
     })
@@ -574,7 +574,7 @@ describe("background-agent spawner fallback model promotion", () => {
 
     //#then
     expect(promptCalls).toHaveLength(1)
-    expect(promptCalls[0]?.body?.agent).toBe("sisyphus-junior")
+    expect(promptCalls[0]?.body?.agent).toBe("worker")
   })
 
   test("strips legacy ZWSP-prefixed agent names from persisted background spawn prompt body (GH-3259)", async () => {
@@ -595,7 +595,7 @@ describe("background-agent spawner fallback model promotion", () => {
     const task = createTask({
       description: "Legacy ZWSP",
       prompt: "Do work",
-      agent: "\u200B\u200BHephaestus - Deep Agent",
+      agent: "\u200B\u200BFounder - Deep Agent",
       parentSessionID: "ses_parent",
       parentMessageID: "msg_parent",
     })
@@ -628,7 +628,7 @@ describe("background-agent spawner fallback model promotion", () => {
 
     //#then
     expect(promptCalls).toHaveLength(1)
-    expect(promptCalls[0]?.body?.agent).toBe("Hephaestus - Deep Agent")
+    expect(promptCalls[0]?.body?.agent).toBe("Founder - Deep Agent")
   })
 })
 

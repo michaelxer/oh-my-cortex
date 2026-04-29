@@ -8,7 +8,7 @@
 
 ## WHY IT EXISTS
 
-Claude Code plugins ship commands/agents/skills as separate files with `plugin.json` manifest. OmO uses this loader to ingest them into its own registry so existing Claude Code plugins work unchanged under OmO.
+Claude Code plugins ship commands/agents/skills as separate files with `plugin.json` manifest. OMX uses this loader to ingest them into its own registry so existing Claude Code plugins work unchanged under OMX.
 
 ## LOAD PIPELINE
 
@@ -69,7 +69,7 @@ Called from `src/plugin-handlers/plugin-components-loader.ts` during Phase 2 of 
 
 ## ERROR ISOLATION
 
-Each plugin loads in isolation — if one fails (bad manifest, missing file, syntax error), others still load. Errors surface as warnings in `bunx oh-my-opencode doctor`.
+Each plugin loads in isolation — if one fails (bad manifest, missing file, syntax error), others still load. Errors surface as warnings in `bunx oh-my-cortex doctor`.
 
 ## RELATED
 

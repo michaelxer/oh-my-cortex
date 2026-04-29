@@ -58,7 +58,7 @@ function createChatMessageHandlerHooks(modelFallback: ReturnType<typeof createMo
 		claudeCodeHooks: null,
 		autoSlashCommand: null,
 		startWork: null,
-		ralphLoop: null,
+		cortexLoop: null,
 	} as unknown as ChatMessageHandlerArgs["hooks"]
 }
 
@@ -85,7 +85,7 @@ describe("createEventHandler - category runtime fallback suppression", () => {
 
 		const modelFallback = createModelFallbackHook()
 		clearPendingModelFallback(modelFallback, sessionID)
-		setSessionAgent(sessionID, "sisyphus-junior")
+		setSessionAgent(sessionID, "worker")
 		setSessionFallbackChain(modelFallback, sessionID, undefined)
 		const eventHandler = createEventHandler({
 			ctx: asEventHandlerContext({
@@ -150,7 +150,7 @@ describe("createEventHandler - category runtime fallback suppression", () => {
 		await chatMessageHandler(
 			{
 				sessionID,
-				agent: "sisyphus-junior",
+				agent: "worker",
 				model: { providerID: "anthropic", modelID: "claude-sonnet-4-6" },
 			},
 			output,

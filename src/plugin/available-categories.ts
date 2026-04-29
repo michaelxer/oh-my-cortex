@@ -1,10 +1,10 @@
 import type { AvailableCategory } from "../agents/dynamic-agent-prompt-builder"
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import { CATEGORY_DESCRIPTIONS } from "../tools/delegate-task/constants"
 import { mergeCategories } from "../shared/merge-categories"
 
 export function createAvailableCategories(
-  pluginConfig: OhMyOpenCodeConfig,
+  pluginConfig: OhMyCortexConfig,
 ): AvailableCategory[] {
   const categories = mergeCategories(pluginConfig.categories)
 

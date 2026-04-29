@@ -191,10 +191,10 @@ describe("createEventHandler - idle deduplication", () => {
 				agentUsageReminder: { event: async () => {} },
 				categorySkillReminder: { event: async () => {} },
 				interactiveBashSession: { event: async () => {} },
-				ralphLoop: { event: async () => {} },
+				cortexLoop: { event: async () => {} },
 				stopContinuationGuard: { event: async () => {} },
 				compactionTodoPreserver: { event: async () => {} },
-				atlasHook: { handler: async () => {} },
+				leadHook: { handler: async () => {} },
 			} as any,
 		})
 
@@ -276,10 +276,10 @@ describe("createEventHandler - idle deduplication", () => {
 				agentUsageReminder: { event: async () => {} },
 				categorySkillReminder: { event: async () => {} },
 				interactiveBashSession: { event: async () => {} },
-				ralphLoop: { event: async () => {} },
+				cortexLoop: { event: async () => {} },
 				stopContinuationGuard: { event: async () => {} },
 				compactionTodoPreserver: { event: async () => {} },
-				atlasHook: { handler: async () => {} },
+				leadHook: { handler: async () => {} },
 			} as any,
 		})
 
@@ -333,10 +333,10 @@ describe("createEventHandler - idle deduplication", () => {
 				agentUsageReminder: { event: async () => {} },
 				categorySkillReminder: { event: async () => {} },
 				interactiveBashSession: { event: async () => {} },
-				ralphLoop: { event: async () => {} },
+				cortexLoop: { event: async () => {} },
 				stopContinuationGuard: { event: async () => {} },
 				compactionTodoPreserver: { event: async () => {} },
-				atlasHook: { handler: async () => {} },
+				leadHook: { handler: async () => {} },
 			} as any,
 		})
 
@@ -765,7 +765,7 @@ describe("createEventHandler - retry dedupe lifecycle", () => {
 				claudeCodeHooks: null,
 				autoSlashCommand: null,
 				startWork: null,
-				ralphLoop: null,
+				cortexLoop: null,
 			}),
 		})
 
@@ -786,7 +786,7 @@ describe("createEventHandler - retry dedupe lifecycle", () => {
 						role: "user",
 						modelID: "claude-opus-4-7-thinking",
 						providerID: "anthropic",
-						agent: "Sisyphus - Ultraworker",
+						agent: "Chief - Deepworker",
 					},
 				},
 			},
@@ -805,7 +805,7 @@ describe("createEventHandler - retry dedupe lifecycle", () => {
 		await chatMessageHandler(
 			{
 				sessionID,
-				agent: "sisyphus",
+				agent: "chief",
 				model: { providerID: "anthropic", modelID: "claude-opus-4-7-thinking" },
 			},
 			firstOutput,

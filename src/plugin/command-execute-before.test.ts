@@ -3,14 +3,14 @@ import { describe, expect, mock, test } from "bun:test"
 import { createCommandExecuteBeforeHandler } from "./command-execute-before"
 
 describe("createCommandExecuteBeforeHandler", () => {
-  test("#given stopped session and /ulw-loop #when command.execute.before runs #then clear is called", async () => {
+  test("#given stopped session and /dw-loop #when command.execute.before runs #then clear is called", async () => {
     // given
     const clear = mock(() => {})
     const isStopped = mock(() => true)
     const startLoop = mock(() => true)
     const handler = createCommandExecuteBeforeHandler({
       hooks: {
-        ralphLoop: {
+        cortexLoop: {
           startLoop,
           cancelLoop: mock(() => true),
         },
@@ -24,7 +24,7 @@ describe("createCommandExecuteBeforeHandler", () => {
     // when
     await handler(
       {
-        command: "ulw-loop",
+        command: "dw-loop",
         sessionID: "ses-stopped",
         arguments: "Ship feature",
       },
@@ -76,14 +76,14 @@ describe("createCommandExecuteBeforeHandler", () => {
     expect(clear).toHaveBeenCalledWith("ses-stopped")
   })
 
-  test("#given non-stopped session and /ulw-loop #when command.execute.before runs #then clear is not called", async () => {
+  test("#given non-stopped session and /dw-loop #when command.execute.before runs #then clear is not called", async () => {
     // given
     const clear = mock(() => {})
     const isStopped = mock(() => false)
     const startLoop = mock(() => true)
     const handler = createCommandExecuteBeforeHandler({
       hooks: {
-        ralphLoop: {
+        cortexLoop: {
           startLoop,
           cancelLoop: mock(() => true),
         },
@@ -97,7 +97,7 @@ describe("createCommandExecuteBeforeHandler", () => {
     // when
     await handler(
       {
-        command: "ulw-loop",
+        command: "dw-loop",
         sessionID: "ses-running",
         arguments: "Ship feature",
       },

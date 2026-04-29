@@ -13,7 +13,7 @@ export {
 
 /**
  * System prompt prepended to plan agent invocations.
- * Instructs the plan agent to first gather context via explore/librarian agents,
+ * Instructs the plan agent to first gather context via tracker/researcher agents,
  * then summarize user requirements and clarify uncertainties before proceeding.
  * Also MANDATES dependency graphs, parallel execution analysis, and category+skill recommendations.
  */
@@ -22,8 +22,8 @@ BEFORE you begin planning, you MUST first understand the user's request deeply.
 
 MANDATORY CONTEXT GATHERING PROTOCOL:
 1. Launch background agents to gather context:
-   - call_omo_agent(description="Explore codebase patterns", subagent_type="explore", run_in_background=true, prompt="<search for relevant patterns, files, and implementations in the codebase related to user's request>")
-   - call_omo_agent(description="Research documentation", subagent_type="librarian", run_in_background=true, prompt="<search for external documentation, examples, and best practices related to user's request>")
+   - call_cortex_agent(description="Tracker codebase patterns", subagent_type="tracker", run_in_background=true, prompt="<search for relevant patterns, files, and implementations in the codebase related to user's request>")
+   - call_cortex_agent(description="Research documentation", subagent_type="researcher", run_in_background=true, prompt="<search for external documentation, examples, and best practices related to user's request>")
 
 2. After gathering context, ALWAYS present:
    - **User Request Summary**: Concise restatement of what the user is asking for
@@ -190,7 +190,7 @@ YOUR PLAN OUTPUT MUST FOLLOW THIS EXACT STRUCTURE:
 #####################################################################
 #                                                                   #
 #   FAILURE TO INCLUDE THESE SECTIONS = PLAN WILL BE REJECTED      #
-#   BY MOMUS REVIEW. DO NOT SKIP. DO NOT ABBREVIATE.               #
+#   BY CRITIC REVIEW. DO NOT SKIP. DO NOT ABBREVIATE.               #
 #                                                                   #
 #####################################################################
 </CRITICAL_REQUIREMENT_DEPENDENCY_PARALLEL_EXECUTION_CATEGORY_SKILLS>
@@ -331,10 +331,10 @@ export function isPlanAgent(agentName: string | undefined): boolean {
 }
 
 /**
- * Plan family: plan + prometheus. Shares mutual delegation blocking and task tool permission.
+ * Plan family: plan + planner. Shares mutual delegation blocking and task tool permission.
  * Does NOT share system prompt (only isPlanAgent controls that).
  */
-export const PLAN_FAMILY_NAMES = ["plan", "prometheus"]
+export const PLAN_FAMILY_NAMES = ["plan", "planner"]
 
 /**
  * Check if the given agent belongs to the plan family (blocking + task permission).

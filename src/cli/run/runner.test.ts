@@ -1,12 +1,12 @@
 /// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, it, spyOn } from "bun:test"
-import { OhMyOpenCodeConfigSchema, type OhMyOpenCodeConfig } from "../../config"
+import { OhMyCortexConfigSchema, type OhMyCortexConfig } from "../../config"
 import { resolveRunAgent } from "./agent-resolver"
 import { getAgentDisplayName } from "../../shared/agent-display-names"
 
-const createConfig = (overrides: Partial<OhMyOpenCodeConfig> = {}): OhMyOpenCodeConfig =>
-  OhMyOpenCodeConfigSchema.parse(overrides)
+const createConfig = (overrides: Partial<OhMyCortexConfig> = {}): OhMyCortexConfig =>
+  OhMyCortexConfigSchema.parse(overrides)
 
 describe("resolveRunAgent", () => {
   let consoleLogSpy: ReturnType<typeof spyOn>
@@ -21,44 +21,44 @@ describe("resolveRunAgent", () => {
 
   it("uses CLI agent over env and config", () => {
     // given
-    const config = createConfig({ default_run_agent: "prometheus" })
-    const env = { OPENCODE_DEFAULT_AGENT: "Atlas" }
+    const config = createConfig({ default_run_agent: "planner" })
+    const env = { OPENCODE_DEFAULT_AGENT: "Lead" }
 
     // when
     const agent = resolveRunAgent(
-      { message: "test", agent: "Hephaestus" },
+      { message: "test", agent: "Founder" },
       config,
       env
     )
 
     // then
-    expect(agent).toBe(getAgentDisplayName("hephaestus"))
+    expect(agent).toBe(getAgentDisplayName("founder"))
   })
 
   it("uses env agent over config", () => {
     // given
-    const config = createConfig({ default_run_agent: "prometheus" })
-    const env = { OPENCODE_DEFAULT_AGENT: "Atlas" }
+    const config = createConfig({ default_run_agent: "planner" })
+    const env = { OPENCODE_DEFAULT_AGENT: "Lead" }
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, env)
 
     // then
-    expect(agent).toBe(getAgentDisplayName("atlas"))
+    expect(agent).toBe(getAgentDisplayName("lead"))
   })
 
   it("uses config agent over default", () => {
     // given
-    const config = createConfig({ default_run_agent: "Prometheus" })
+    const config = createConfig({ default_run_agent: "Planner" })
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, {})
 
     // then
-    expect(agent).toBe(getAgentDisplayName("prometheus"))
+    expect(agent).toBe(getAgentDisplayName("planner"))
   })
 
-  it("falls back to sisyphus when none set", () => {
+  it("falls back to chief when none set", () => {
     // given
     const config = createConfig()
 
@@ -66,29 +66,29 @@ describe("resolveRunAgent", () => {
     const agent = resolveRunAgent({ message: "test" }, config, {})
 
     // then
-    expect(agent).toBe(getAgentDisplayName("sisyphus"))
+    expect(agent).toBe(getAgentDisplayName("chief"))
   })
 
-  it("skips disabled sisyphus for next available core agent", () => {
+  it("skips disabled chief for next available core agent", () => {
     // given
-    const config = createConfig({ disabled_agents: ["sisyphus"] })
+    const config = createConfig({ disabled_agents: ["chief"] })
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, {})
 
     // then
-    expect(agent).toBe(getAgentDisplayName("hephaestus"))
+    expect(agent).toBe(getAgentDisplayName("founder"))
   })
 
   it("maps display-name style default_run_agent values to canonical runtime names", () => {
     // given
-    const config = createConfig({ default_run_agent: "Sisyphus - Ultraworker" })
+    const config = createConfig({ default_run_agent: "Chief - Deepworker" })
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, {})
 
     // then
-    expect(agent).toBe(getAgentDisplayName("sisyphus"))
+    expect(agent).toBe(getAgentDisplayName("chief"))
   })
 })
 

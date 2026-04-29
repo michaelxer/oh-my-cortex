@@ -1,11 +1,11 @@
 {
-  "name": "oh-my-opencode-linux-x64-musl",
+  "name": "oh-my-cortex-linux-x64-musl",
   "version": "3.17.6",
-  "description": "Platform-specific binary for oh-my-opencode (linux-x64-musl)",
+  "description": "Platform-specific binary for oh-my-cortex (linux-x64-musl)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/code-yeongyu/oh-my-openagent"
+    "url": "https://github.com/michaelxer/oh-my-cortex"
   },
   "os": [
     "linux"
@@ -20,6 +20,6 @@
     "bin"
   ],
   "bin": {
-    "oh-my-opencode": "./bin/oh-my-opencode"
+    "oh-my-cortex": "./bin/oh-my-cortex"
   }
 }

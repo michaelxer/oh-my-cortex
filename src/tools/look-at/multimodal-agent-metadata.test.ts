@@ -2,7 +2,7 @@
 
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
-import { resolveMultimodalLookerAgentMetadata } from "./multimodal-agent-metadata"
+import { resolveSpotterAgentMetadata } from "./multimodal-agent-metadata"
 import { setVisionCapableModelsCache, clearVisionCapableModelsCache } from "../../shared/vision-capable-models-cache"
 import * as connectedProvidersCache from "../../shared/connected-providers-cache"
 import * as modelAvailability from "../../shared/model-availability"
@@ -25,7 +25,7 @@ function createPluginInput(agentData: Array<Record<string, unknown>>): PluginInp
   }
 }
 
-describe("resolveMultimodalLookerAgentMetadata", () => {
+describe("resolveSpotterAgentMetadata", () => {
   beforeEach(() => {
     clearVisionCapableModelsCache()
   })
@@ -36,7 +36,7 @@ describe("resolveMultimodalLookerAgentMetadata", () => {
     ;(connectedProvidersCache.readConnectedProvidersCache as unknown as { mockRestore?: () => void }).mockRestore?.()
   })
 
-  test("returns configured multimodal-looker model when it already matches a vision-capable override", async () => {
+  test("returns configured spotter model when it already matches a vision-capable override", async () => {
     // given
     setVisionCapableModelsCache(new Map([
       [
@@ -50,13 +50,13 @@ describe("resolveMultimodalLookerAgentMetadata", () => {
     spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(["rundao"])
     const ctx = createPluginInput([
       {
-        name: "multimodal-looker",
+        name: "spotter",
         model: { providerID: "rundao", modelID: "public/qwen3.5-397b" },
       },
     ])
 
     // when
-    const result = await resolveMultimodalLookerAgentMetadata(ctx)
+    const result = await resolveSpotterAgentMetadata(ctx)
 
     // then
     expect(result).toEqual({
@@ -79,13 +79,13 @@ describe("resolveMultimodalLookerAgentMetadata", () => {
     spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(["openai"])
     const ctx = createPluginInput([
       {
-        name: "multimodal-looker",
+        name: "spotter",
         model: { providerID: "openai", modelID: "gpt-5.4" },
       },
     ])
 
     // when
-    const result = await resolveMultimodalLookerAgentMetadata(ctx)
+    const result = await resolveSpotterAgentMetadata(ctx)
 
     // then - returns registered metadata directly, variant is undefined since none was set
     expect(result).toEqual({
@@ -108,14 +108,14 @@ describe("resolveMultimodalLookerAgentMetadata", () => {
     spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(["openai", "rundao"])
     const ctx = createPluginInput([
       {
-        name: "multimodal-looker",
+        name: "spotter",
         model: { providerID: "openai", modelID: "gpt-5.4" },
         variant: "medium",
       },
     ])
 
     // when
-    const result = await resolveMultimodalLookerAgentMetadata(ctx)
+    const result = await resolveSpotterAgentMetadata(ctx)
 
     // then - registered model takes priority even when not in vision cache
     expect(result).toEqual({
@@ -139,7 +139,7 @@ describe("resolveMultimodalLookerAgentMetadata", () => {
     const ctx = createPluginInput([])
 
     // when
-    const result = await resolveMultimodalLookerAgentMetadata(ctx)
+    const result = await resolveSpotterAgentMetadata(ctx)
 
     // then
     expect(result).toEqual({
@@ -156,13 +156,13 @@ describe("resolveMultimodalLookerAgentMetadata", () => {
     spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(["openai"])
     const ctx = createPluginInput([
       {
-        name: "multimodal-looker",
+        name: "spotter",
         model: { providerID: "openai", modelID: "gpt-5.4" },
       },
     ])
 
     // when
-    const result = await resolveMultimodalLookerAgentMetadata(ctx)
+    const result = await resolveSpotterAgentMetadata(ctx)
 
     // then - trusts user's configured model regardless of vision cache
     expect(result).toEqual({

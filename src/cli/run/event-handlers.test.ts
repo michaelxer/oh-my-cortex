@@ -250,7 +250,7 @@ describe("handleMessagePartUpdated", () => {
             id: "msg_1",
             sessionID: "ses_main",
             role: "assistant",
-            agent: "Sisyphus",
+            agent: "Chief",
             modelID: "claude-sonnet-4-6",
           },
         },
@@ -298,7 +298,7 @@ describe("handleMessagePartUpdated", () => {
 
     // then
     const output = stdoutSpy.mock.calls.map(call => String(call[0])).join("")
-    const metaCount = output.split("Sisyphus · claude-sonnet-4-6 · 2.4s").length - 1
+    const metaCount = output.split("Chief · claude-sonnet-4-6 · 2.4s").length - 1
     expect(metaCount).toBe(1)
     expect(state.completionMetaPrintedByMessageId["msg_1"]).toBe(true)
 

@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig } from "../config";
+import type { OhMyCortexConfig } from "../config";
 import { getAgentDisplayName, getAgentListDisplayName } from "../shared/agent-display-names";
 import { isTaskSystemEnabled } from "../shared";
 
@@ -23,7 +23,7 @@ function agentByKey(agentResult: Record<string, unknown>, key: string): AgentWit
 
 export function applyToolConfig(params: {
   config: Record<string, unknown>;
-  pluginConfig: OhMyOpenCodeConfig;
+  pluginConfig: OhMyCortexConfig;
   agentResult: Record<string, unknown>;
 }): void {
   const taskSystemEnabled = isTaskSystemEnabled(params.pluginConfig)
@@ -59,30 +59,30 @@ export function applyToolConfig(params: {
     isCliRunMode ? "deny" :
     "allow";
 
-  const librarian = agentByKey(params.agentResult, "librarian");
-  if (librarian) {
-    librarian.permission = { ...librarian.permission, "grep_app_*": "allow" };
+  const researcher = agentByKey(params.agentResult, "researcher");
+  if (researcher) {
+    researcher.permission = { ...researcher.permission, "grep_app_*": "allow" };
   }
-  const looker = agentByKey(params.agentResult, "multimodal-looker");
+  const looker = agentByKey(params.agentResult, "spotter");
   if (looker) {
     looker.permission = { ...looker.permission, task: "deny", look_at: "deny" };
   }
-  const atlas = agentByKey(params.agentResult, "atlas");
-  if (atlas) {
-    atlas.permission = {
-      ...atlas.permission,
+  const lead = agentByKey(params.agentResult, "lead");
+  if (lead) {
+    lead.permission = {
+      ...lead.permission,
       task: "allow",
-      call_omo_agent: "deny",
+      call_cortex_agent: "deny",
       "task_*": "allow",
       teammate: "allow",
       ...denyTodoTools,
     };
   }
-  const sisyphus = agentByKey(params.agentResult, "sisyphus");
-  if (sisyphus) {
-    sisyphus.permission = {
-      ...sisyphus.permission,
-      call_omo_agent: "deny",
+  const chief = agentByKey(params.agentResult, "chief");
+  if (chief) {
+    chief.permission = {
+      ...chief.permission,
+      call_cortex_agent: "deny",
       task: "allow",
       question: questionPermission,
       "task_*": "allow",
@@ -90,21 +90,21 @@ export function applyToolConfig(params: {
       ...denyTodoTools,
     };
   }
-  const hephaestus = agentByKey(params.agentResult, "hephaestus");
-  if (hephaestus) {
-    hephaestus.permission = {
-      ...hephaestus.permission,
-      call_omo_agent: "deny",
+  const founder = agentByKey(params.agentResult, "founder");
+  if (founder) {
+    founder.permission = {
+      ...founder.permission,
+      call_cortex_agent: "deny",
       task: "allow",
       question: questionPermission,
       ...denyTodoTools,
     };
   }
-  const prometheus = agentByKey(params.agentResult, "prometheus");
-  if (prometheus) {
-    prometheus.permission = {
-      ...prometheus.permission,
-      call_omo_agent: "deny",
+  const planner = agentByKey(params.agentResult, "planner");
+  if (planner) {
+    planner.permission = {
+      ...planner.permission,
+      call_cortex_agent: "deny",
       task: "allow",
       question: questionPermission,
       "task_*": "allow",
@@ -112,7 +112,7 @@ export function applyToolConfig(params: {
       ...denyTodoTools,
     };
   }
-  const junior = agentByKey(params.agentResult, "sisyphus-junior");
+  const junior = agentByKey(params.agentResult, "worker");
   if (junior) {
     junior.permission = {
       ...junior.permission,

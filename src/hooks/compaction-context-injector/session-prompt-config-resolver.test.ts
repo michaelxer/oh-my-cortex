@@ -48,7 +48,7 @@ describe("session prompt config resolver", () => {
     const ctx = createMockContext([
       {
         info: {
-          agent: "atlas",
+          agent: "lead",
           model: { providerID: "openai", modelID: "gpt-5" },
           tools: { bash: "allow" },
         },
@@ -66,7 +66,7 @@ describe("session prompt config resolver", () => {
 
     // then
     expect(promptConfig).toEqual({
-      agent: "atlas",
+      agent: "lead",
       model: { providerID: "openai", modelID: "gpt-5" },
       tools: { bash: true },
     })
@@ -77,7 +77,7 @@ describe("session prompt config resolver", () => {
     const ctx = createMockContext([
       {
         info: {
-          agent: "atlas",
+          agent: "lead",
           model: { providerID: "openai", modelID: "gpt-5" },
         },
       },

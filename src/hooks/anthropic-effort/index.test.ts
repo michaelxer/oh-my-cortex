@@ -31,7 +31,7 @@ function createMockParams(overrides: {
   const providerID = overrides.providerID ?? "anthropic"
   const modelID = overrides.modelID ?? "claude-opus-4-7"
   const variant = "variant" in overrides ? overrides.variant : "max"
-  const agentName = overrides.agentName ?? "sisyphus"
+  const agentName = overrides.agentName ?? "chief"
   const existingOptions = overrides.existingOptions ?? {}
 
   return {

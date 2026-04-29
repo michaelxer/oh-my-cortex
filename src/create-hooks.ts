@@ -1,5 +1,5 @@
 import type { AvailableSkill } from "./agents/dynamic-agent-prompt-builder"
-import type { HookName, OhMyOpenCodeConfig } from "./config"
+import type { HookName, OhMyCortexConfig } from "./config"
 import type { LoadedSkill } from "./features/opencode-skill-loader/types"
 import type { BackgroundManager } from "./features/background-agent"
 import type { ModelFallbackControllerAccessor } from "./hooks/model-fallback"
@@ -34,7 +34,7 @@ export function disposeCreatedHooks(hooks: DisposableCreatedHooks): void {
 
 export function createHooks(args: {
   ctx: PluginContext
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   modelCacheState: ModelCacheState
   backgroundManager: BackgroundManager
   modelFallbackControllerAccessor?: ModelFallbackControllerAccessor

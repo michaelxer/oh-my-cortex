@@ -37,9 +37,9 @@ describe("loadJsonFile", () => {
     unlinkSync(tempPath)
   })
 
-  it("discovers JSONC-only user config (oh-my-opencode.jsonc)", () => {
+  it("discovers JSONC-only user config (oh-my-cortex.jsonc)", () => {
     const originalEnv = process.env.OPENCODE_CONFIG_DIR
-    const tempBase = join(tmpdir(), `omo-test-user-jsonc-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    const tempBase = join(tmpdir(), `omx-test-user-jsonc-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     try {
       mkdirSync(tempBase, { recursive: true })
       process.env.OPENCODE_CONFIG_DIR = tempBase
@@ -53,7 +53,7 @@ describe("loadJsonFile", () => {
     }
   }
 }`
-      const userPath = join(tempBase, "oh-my-opencode.jsonc")
+      const userPath = join(tempBase, "oh-my-cortex.jsonc")
       writeFileSync(userPath, userJsonc, "utf-8")
 
       const servers = getMergedServers()
@@ -68,7 +68,7 @@ describe("loadJsonFile", () => {
 
   it("discovers JSONC-only opencode config (opencode.jsonc)", () => {
     const originalEnv = process.env.OPENCODE_CONFIG_DIR
-    const tempBase = join(tmpdir(), `omo-test-oc-jsonc-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    const tempBase = join(tmpdir(), `omx-test-oc-jsonc-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     try {
       mkdirSync(tempBase, { recursive: true })
       process.env.OPENCODE_CONFIG_DIR = tempBase
@@ -95,9 +95,9 @@ describe("loadJsonFile", () => {
     }
   })
 
-  it("discovers JSONC-only project config (.opencode/oh-my-opencode.jsonc)", () => {
+  it("discovers JSONC-only project config (.opencode/oh-my-cortex.jsonc)", () => {
     const originalCwd = process.cwd()
-    const tempProject = join(tmpdir(), `omo-test-project-jsonc-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    const tempProject = join(tmpdir(), `omx-test-project-jsonc-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     try {
       mkdirSync(join(tempProject, ".opencode"), { recursive: true })
       const projectJsonc = `{
@@ -109,7 +109,7 @@ describe("loadJsonFile", () => {
     }
   }
 }`
-      const projectPath = join(tempProject, ".opencode", "oh-my-opencode.jsonc")
+      const projectPath = join(tempProject, ".opencode", "oh-my-cortex.jsonc")
       writeFileSync(projectPath, projectJsonc, "utf-8")
 
       process.chdir(tempProject)
@@ -124,7 +124,7 @@ describe("loadJsonFile", () => {
 
   it("prefers .jsonc over .json when both exist for same config id", () => {
     const originalEnv = process.env.OPENCODE_CONFIG_DIR
-    const tempBase = join(tmpdir(), `omo-test-precedence-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    const tempBase = join(tmpdir(), `omx-test-precedence-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     try {
       mkdirSync(tempBase, { recursive: true })
       process.env.OPENCODE_CONFIG_DIR = tempBase
@@ -146,8 +146,8 @@ describe("loadJsonFile", () => {
     }
   }
 }`
-      writeFileSync(join(tempBase, "oh-my-opencode.json"), jsonContent, "utf-8")
-      writeFileSync(join(tempBase, "oh-my-opencode.jsonc"), jsoncContent, "utf-8")
+      writeFileSync(join(tempBase, "oh-my-cortex.json"), jsonContent, "utf-8")
+      writeFileSync(join(tempBase, "oh-my-cortex.jsonc"), jsoncContent, "utf-8")
 
       const servers = getMergedServers()
       const found = servers.find(s => s.id === "conflict" && s.source === "user")

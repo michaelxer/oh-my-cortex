@@ -1,6 +1,6 @@
 import { mock } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
-import type { OhMyOpenCodeConfig } from "../../config"
+import type { OhMyCortexConfig } from "../../config"
 import { createAnthropicContextWindowLimitRecoveryHook } from "./recovery-hook"
 
 type ExecuteCompactFn = typeof import("./executor").executeCompact
@@ -38,7 +38,7 @@ const pluginConfig = {
     include_co_authored_by: false,
     git_env_prefix: "",
   },
-} satisfies OhMyOpenCodeConfig
+} satisfies OhMyCortexConfig
 
 export function createRecoveryHook() {
   return createAnthropicContextWindowLimitRecoveryHook(

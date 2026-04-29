@@ -4,7 +4,7 @@
 
 ## CRITICAL: AGENT ORDERING
 
-The canonical agent order is **sisyphus → hephaestus → prometheus → atlas**.
+The canonical agent order is **chief → founder → planner → lead**.
 
 This order is enforced via two cooperating mechanisms:
 1. `CANONICAL_CORE_AGENT_ORDER` in `agent-priority-order.ts` controls object key insertion order in the agent map produced by `applyAgentConfig`.
@@ -15,7 +15,7 @@ This order is enforced via two cooperating mechanisms:
 OpenCode 1.4.x sorts agents purely by `agent.name` via Remeda `sortBy`, which uses native string `<` / `>` comparison (NOT `localeCompare`). It currently ignores the agent `order` field. Until that lands (sst/opencode#19127), object-key insertion order alone does not survive `Agent.list()`, and biasing the sort key with invisible characters all failed:
 - ZWSP (U+200B): `Bun.stringWidth` returns 0 but terminals (Ghostty, WezTerm, Alacritty, certain Windows Terminal builds) render it as 1-cell wide. Visible gap in the status bar; column truncation in the agent picker (#3259).
 - U+2060 WORD JOINER, U+00AD SOFT HYPHEN, ANSI escape: same width-mismatch class.
-- Removing the prefix and relying on insertion order alone falls back to alphabetical Atlas → Hephaestus → Prometheus → Sisyphus.
+- Removing the prefix and relying on insertion order alone falls back to alphabetical Lead → Founder → Planner → Chief.
 
 The sort shim resolves this by intercepting only the narrow case it cares about, with strict activation guards to prevent collateral damage from a global prototype patch:
 - The activation predicate (`isAgentArray`) requires `arr.length >= 2`, every element is a non-null object with a string `.name`, and at least 2 elements have a `.name` matching one of the four canonical core display names. This rejects mixed-type arrays (numbers, strings, plain objects without `.name`) so unrelated `.sort()` / `.toSorted()` calls execute native semantics.
@@ -25,7 +25,7 @@ The sort shim resolves this by intercepting only the narrow case it cares about,
 ### History
 
 Agent ordering has caused 15+ commits, 8+ PRs, and multiple reverts. Notable milestones:
-- #3260 (merged): removed ZWSP injection. Reverted by `0d5b08744` because OpenCode 1.4.x ignores `order`, and removal alone causes alphabetical fallback (Atlas → Hephaestus → Prometheus → Sisyphus).
+- #3260 (merged): removed ZWSP injection. Reverted by `0d5b08744` because OpenCode 1.4.x ignores `order`, and removal alone causes alphabetical fallback (Lead → Founder → Planner → Chief).
 - #3329 (merged): introduced `CANONICAL_CORE_AGENT_ORDER` and locked the policy. Insertion order alone still does not survive OpenCode's `Agent.list()` sort.
 - #3267 (closed): proposed a sort shim. Closed at the time on the assumption that #3329 was sufficient. Revived in this commit with cubic P1 mitigations (defensive comparator, strict activation predicate, idempotent install).
 
@@ -68,9 +68,9 @@ PRs attempting any of the forbidden patterns will be rejected.
 | `command-config-handler.ts` | ~200 | 9 parallel sources for commands/skills |
 | `tool-config-handler.ts` | ~100 | Agent-specific tool grants/denials |
 | `provider-config-handler.ts` | ~80 | Provider config + model cache |
-| `prometheus-agent-config-builder.ts` | ~100 | Prometheus config with model resolution |
+| `planner-agent-config-builder.ts` | ~100 | Planner config with model resolution |
 | `plan-model-inheritance.ts` | 28 | Plan demotion logic |
-| `agent-priority-order.ts` | ~30 | sisyphus, hephaestus, prometheus, atlas first |
+| `agent-priority-order.ts` | ~30 | chief, founder, planner, lead first |
 | `agent-key-remapper.ts` | ~30 | Agent key → display name |
 | `category-config-resolver.ts` | ~40 | User vs default category lookup |
 | `index.ts` | ~10 | Barrel exports |
@@ -79,17 +79,17 @@ PRs attempting any of the forbidden patterns will be rejected.
 
 | Agent | Granted | Denied |
 |-------|---------|--------|
-| Librarian | grep_app_* | — |
-| Atlas, Sisyphus, Prometheus | task, task_*, teammate | — |
-| Hephaestus | task | — |
+| Researcher | grep_app_* | — |
+| Lead, Chief, Planner | task, task_*, teammate | — |
+| Founder | task | — |
 | Default (all others) | — | grep_app_*, task_*, teammate, LSP |
 
 ## MULTI-LEVEL CONFIG MERGE
 
 ```
-User (~/.config/opencode/oh-my-opencode.jsonc)
+User (~/.config/opencode/oh-my-cortex.jsonc)
   ↓ deepMerge
-Project (.opencode/oh-my-opencode.jsonc)
+Project (.opencode/oh-my-cortex.jsonc)
   ↓ Zod defaults
 Final Config
 ```

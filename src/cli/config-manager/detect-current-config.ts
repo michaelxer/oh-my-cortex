@@ -1,12 +1,12 @@
 import { existsSync, readFileSync } from "node:fs"
 import { parseJsonc, LEGACY_PLUGIN_NAME, PLUGIN_NAME } from "../../shared"
 import type { DetectedConfig } from "../types"
-import { getOmoConfigPath } from "./config-context"
+import { getOmxConfigPath } from "./config-context"
 import { detectConfigFormat } from "./opencode-config-format"
 import { parseOpenCodeConfigFileWithError } from "./parse-opencode-config-file"
 import { extractVersionFromPluginEntry } from "./version-compatibility"
 
-function detectProvidersFromOmoConfig(): {
+function detectProvidersFromOmxConfig(): {
   hasOpenAI: boolean
   hasOpencodeZen: boolean
   hasZaiCodingPlan: boolean
@@ -14,8 +14,8 @@ function detectProvidersFromOmoConfig(): {
   hasOpencodeGo: boolean
   hasVercelAiGateway: boolean
 } {
-  const omoConfigPath = getOmoConfigPath()
-  if (!existsSync(omoConfigPath)) {
+  const omxConfigPath = getOmxConfigPath()
+  if (!existsSync(omxConfigPath)) {
     return {
       hasOpenAI: true,
       hasOpencodeZen: true,
@@ -27,9 +27,9 @@ function detectProvidersFromOmoConfig(): {
   }
 
   try {
-    const content = readFileSync(omoConfigPath, "utf-8")
-    const omoConfig = parseJsonc<Record<string, unknown>>(content)
-    if (!omoConfig || typeof omoConfig !== "object") {
+    const content = readFileSync(omxConfigPath, "utf-8")
+    const omxConfig = parseJsonc<Record<string, unknown>>(content)
+    if (!omxConfig || typeof omxConfig !== "object") {
       return {
         hasOpenAI: true,
         hasOpencodeZen: true,
@@ -40,7 +40,7 @@ function detectProvidersFromOmoConfig(): {
       }
     }
 
-    const configStr = JSON.stringify(omoConfig)
+    const configStr = JSON.stringify(omxConfig)
     const hasOpenAI = configStr.includes('"openai/')
     const hasOpencodeZen = configStr.includes('"opencode/')
     const hasZaiCodingPlan = configStr.includes('"zai-coding-plan/')
@@ -112,7 +112,7 @@ export function detectCurrentConfig(): DetectedConfig {
   const providers = openCodeConfig.provider as Record<string, unknown> | undefined
   result.hasGemini = providers ? "google" in providers : false
 
-  const { hasOpenAI, hasOpencodeZen, hasZaiCodingPlan, hasKimiForCoding, hasOpencodeGo, hasVercelAiGateway } = detectProvidersFromOmoConfig()
+  const { hasOpenAI, hasOpencodeZen, hasZaiCodingPlan, hasKimiForCoding, hasOpencodeGo, hasVercelAiGateway } = detectProvidersFromOmxConfig()
   result.hasOpenAI = hasOpenAI
   result.hasOpencodeZen = hasOpencodeZen
   result.hasZaiCodingPlan = hasZaiCodingPlan

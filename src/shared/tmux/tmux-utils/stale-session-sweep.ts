@@ -1,4 +1,4 @@
-const STALE_SESSION_PATTERN = /^omo-agents-(\d+)$/
+const STALE_SESSION_PATTERN = /^omx-agents-(\d+)$/
 
 function isProcessAlive(pid: number): boolean {
 	try {
@@ -10,7 +10,7 @@ function isProcessAlive(pid: number): boolean {
 	}
 }
 
-async function listOmoAgentSessionsViaTmux(tmux: string): Promise<string[]> {
+async function listCortexAgentSessionsViaTmux(tmux: string): Promise<string[]> {
 	const { spawn } = await import("./spawn-process")
 	const proc = spawn([tmux, "list-sessions", "-F", "#{session_name}"], {
 		stdout: "pipe",
@@ -53,7 +53,7 @@ async function buildRuntimeDeps(): Promise<SweepDeps> {
 	return {
 		isInsideTmux,
 		getTmuxPath,
-		listCandidateSessions: listOmoAgentSessionsViaTmux,
+		listCandidateSessions: listCortexAgentSessionsViaTmux,
 		killSession: killTmuxSessionIfExists,
 		processAlive: isProcessAlive,
 		currentPid: process.pid,
@@ -61,7 +61,7 @@ async function buildRuntimeDeps(): Promise<SweepDeps> {
 	}
 }
 
-export async function sweepStaleOmoAgentSessionsWith(deps: SweepDeps): Promise<number> {
+export async function sweepStaleCortexAgentSessionsWith(deps: SweepDeps): Promise<number> {
 	if (!deps.isInsideTmux()) {
 		return 0
 	}
@@ -83,7 +83,7 @@ export async function sweepStaleOmoAgentSessionsWith(deps: SweepDeps): Promise<n
 		if (pid === deps.currentPid) continue
 		if (deps.processAlive(pid)) continue
 
-		deps.log("[sweepStaleOmoAgentSessions] killing stale session", { sessionName, deadPid: pid })
+		deps.log("[sweepStaleCortexAgentSessions] killing stale session", { sessionName, deadPid: pid })
 		const killed = await deps.killSession(sessionName)
 		if (killed) {
 			killedCount += 1
@@ -93,7 +93,7 @@ export async function sweepStaleOmoAgentSessionsWith(deps: SweepDeps): Promise<n
 	return killedCount
 }
 
-export async function sweepStaleOmoAgentSessions(): Promise<number> {
+export async function sweepStaleCortexAgentSessions(): Promise<number> {
 	const deps = await buildRuntimeDeps()
-	return sweepStaleOmoAgentSessionsWith(deps)
+	return sweepStaleCortexAgentSessionsWith(deps)
 }

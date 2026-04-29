@@ -26,7 +26,7 @@ For each commit, you MUST:
 
 <version-context>
 <published-version>
-!`npm view oh-my-opencode version 2>/dev/null || echo "not published"`
+!`npm view oh-my-cortex version 2>/dev/null || echo "not published"`
 </published-version>
 <local-version>
 !`node -p "require('./package.json').version" 2>/dev/null || echo "unknown"`
@@ -38,13 +38,13 @@ For each commit, you MUST:
 
 <git-context>
 <commits-since-release>
-!`npm view oh-my-opencode version 2>/dev/null | xargs -I{} git log "v{}"..HEAD --oneline 2>/dev/null || echo "no commits since release"`
+!`npm view oh-my-cortex version 2>/dev/null | xargs -I{} git log "v{}"..HEAD --oneline 2>/dev/null || echo "no commits since release"`
 </commits-since-release>
 <diff-stat>
-!`npm view oh-my-opencode version 2>/dev/null | xargs -I{} git diff "v{}"..HEAD --stat 2>/dev/null || echo "no diff available"`
+!`npm view oh-my-cortex version 2>/dev/null | xargs -I{} git diff "v{}"..HEAD --stat 2>/dev/null || echo "no diff available"`
 </diff-stat>
 <files-changed-summary>
-!`npm view oh-my-opencode version 2>/dev/null | xargs -I{} git diff "v{}"..HEAD --stat 2>/dev/null | tail -1 || echo ""`
+!`npm view oh-my-cortex version 2>/dev/null | xargs -I{} git diff "v{}"..HEAD --stat 2>/dev/null | tail -1 || echo ""`
 </files-changed-summary>
 </git-context>
 
@@ -82,10 +82,10 @@ None or list
 - **Reason**: Reason for recommendation
 </output-format>
 
-<oracle-safety-review>
-## Oracle Deployment Safety Review (Only when user explicitly requests)
+<thinker-safety-review>
+## Thinker Deployment Safety Review (Only when user explicitly requests)
 
-**Trigger keywords**: "safe to deploy", "can I deploy", "is it safe", "review", "check", "oracle"
+**Trigger keywords**: "safe to deploy", "can I deploy", "is it safe", "review", "check", "thinker"
 
 When user includes any of the above keywords in their request:
 
@@ -94,11 +94,11 @@ When user includes any of the above keywords in their request:
 bun run typecheck
 bun test
 ```
-- On failure → Report "❌ Cannot deploy" immediately without invoking Oracle
+- On failure → Report "❌ Cannot deploy" immediately without invoking Thinker
 
-### 2. Oracle Invocation Prompt
+### 2. Thinker Invocation Prompt
 
-Collect the following information and pass to Oracle:
+Collect the following information and pass to Thinker:
 
 ```
 ## Deployment Safety Review Request
@@ -126,9 +126,9 @@ If there are risks, explain with specific scenarios.
 Suggest keywords to monitor after deployment if any.
 ```
 
-### 3. Output Format After Oracle Response
+### 3. Output Format After Thinker Response
 
-## 🔍 Oracle Deployment Safety Review Result
+## 🔍 Thinker Deployment Safety Review Result
 
 ### Verdict: ✅ SAFE / ⚠️ CAUTION / ❌ UNSAFE
 
@@ -144,5 +144,5 @@ Suggest keywords to monitor after deployment if any.
 - ...
 
 ### Conclusion
-{Oracle's final judgment}
-</oracle-safety-review>
+{Thinker's final judgment}
+</thinker-safety-review>

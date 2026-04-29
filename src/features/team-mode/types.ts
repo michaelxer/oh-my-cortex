@@ -136,49 +136,49 @@ export const AGENT_ELIGIBILITY_REGISTRY: Readonly<Record<string, {
   verdict: "eligible" | "conditional" | "hard-reject"
   rejectionMessage?: string
 }>> = {
-  sisyphus: { verdict: "eligible" },
-  hephaestus: {
+  chief: { verdict: "eligible" },
+  founder: {
     verdict: "conditional",
     rejectionMessage:
-      "Agent 'hephaestus' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"sisyphus\" instead.",
+      "Agent 'founder' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"chief\" instead.",
   },
-  oracle: {
+  thinker: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'oracle' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'oracle' for read-only analysis instead.",
+      "Agent 'thinker' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'thinker' for read-only analysis instead.",
   },
-  librarian: {
+  researcher: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'librarian' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
+      "Agent 'researcher' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
   },
-  explore: {
+  tracker: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'explore' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for codebase exploration instead.",
+      "Agent 'tracker' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for codebase exploration instead.",
   },
-  "multimodal-looker": {
+  "spotter": {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'multimodal-looker' has read-only tool access (only 'read' allowed). Cannot write to mailbox as team member.",
+      "Agent 'spotter' has read-only tool access (only 'read' allowed). Cannot write to mailbox as team member.",
   },
-  metis: {
+  reviewer: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'metis' is read-only (pre-planning consultant). Cannot write to mailbox as team member. Use delegate-task for pre-planning analysis instead.",
+      "Agent 'reviewer' is read-only (pre-planning consultant). Cannot write to mailbox as team member. Use delegate-task for pre-planning analysis instead.",
   },
-  momus: {
+  critic: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'momus' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
+      "Agent 'critic' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
   },
-  atlas: { verdict: "eligible" },
-  prometheus: {
+  lead: { verdict: "eligible" },
+  planner: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'prometheus' is plan-mode-only; can only write to .sisyphus/*.md (enforced by prometheusMdOnly hook). Cannot write to team mailbox. Use category: 'plan' instead.",
+      "Agent 'planner' is plan-mode-only; can only write to .cortex/*.md (enforced by plannerMdOnly hook). Cannot write to team mailbox. Use category: 'plan' instead.",
   },
-  "sisyphus-junior": { verdict: "eligible" },
+  "worker": { verdict: "eligible" },
 } as const
 
 export type TeamSpec = z.infer<typeof TeamSpecSchema>

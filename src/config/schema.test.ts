@@ -10,7 +10,7 @@ import {
   ExperimentalConfigSchema,
   GitMasterConfigSchema,
   HookNameSchema,
-  OhMyOpenCodeConfigSchema,
+  OhMyCortexConfigSchema,
 } from "./schema"
 
 describe("disabled_mcps schema", () => {
@@ -21,7 +21,7 @@ describe("disabled_mcps schema", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
@@ -37,7 +37,7 @@ describe("disabled_mcps schema", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
@@ -53,7 +53,7 @@ describe("disabled_mcps schema", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
@@ -69,7 +69,7 @@ describe("disabled_mcps schema", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
@@ -85,7 +85,7 @@ describe("disabled_mcps schema", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(false)
@@ -96,7 +96,7 @@ describe("disabled_mcps schema", () => {
     const config = {}
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
@@ -112,7 +112,7 @@ describe("disabled_mcps schema", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(false)
@@ -131,7 +131,7 @@ describe("disabled_mcps schema", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
@@ -147,7 +147,7 @@ describe("disabled_mcps schema", () => {
   })
 })
 
-describe("OhMyOpenCodeConfigSchema - model_capabilities", () => {
+describe("OhMyCortexConfigSchema - model_capabilities", () => {
   test("accepts valid model capabilities config", () => {
     const input = {
       model_capabilities: {
@@ -158,7 +158,7 @@ describe("OhMyOpenCodeConfigSchema - model_capabilities", () => {
       },
     }
 
-    const result = OhMyOpenCodeConfigSchema.safeParse(input)
+    const result = OhMyCortexConfigSchema.safeParse(input)
 
     expect(result.success).toBe(true)
     if (result.success) {
@@ -167,7 +167,7 @@ describe("OhMyOpenCodeConfigSchema - model_capabilities", () => {
   })
 
   test("rejects invalid model capabilities config", () => {
-    const result = OhMyOpenCodeConfigSchema.safeParse({
+    const result = OhMyCortexConfigSchema.safeParse({
       model_capabilities: {
         refresh_timeout_ms: -1,
         source_url: "not-a-url",
@@ -471,12 +471,12 @@ describe("HookNameSchema", () => {
   })
 })
 
-describe("Sisyphus-Junior agent override", () => {
-  test("schema accepts agents['Sisyphus-Junior'] and retains the key after parsing", () => {
+describe("Worker agent override", () => {
+  test("schema accepts agents['Worker'] and retains the key after parsing", () => {
     // given
     const config = {
       agents: {
-        "sisyphus-junior": {
+        "worker": {
           model: "openai/gpt-5.4",
           temperature: 0.2,
         },
@@ -484,44 +484,44 @@ describe("Sisyphus-Junior agent override", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.["sisyphus-junior"]).toBeDefined()
-      expect(result.data.agents?.["sisyphus-junior"]?.model).toBe("openai/gpt-5.4")
-      expect(result.data.agents?.["sisyphus-junior"]?.temperature).toBe(0.2)
+      expect(result.data.agents?.["worker"]).toBeDefined()
+      expect(result.data.agents?.["worker"]?.model).toBe("openai/gpt-5.4")
+      expect(result.data.agents?.["worker"]?.temperature).toBe(0.2)
     }
   })
 
-  test("schema accepts sisyphus-junior with prompt_append", () => {
+  test("schema accepts worker with prompt_append", () => {
     // given
     const config = {
       agents: {
-        "sisyphus-junior": {
-          prompt_append: "Additional instructions for sisyphus-junior",
+        "worker": {
+          prompt_append: "Additional instructions for worker",
         },
       },
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.["sisyphus-junior"]?.prompt_append).toBe(
-        "Additional instructions for sisyphus-junior"
+      expect(result.data.agents?.["worker"]?.prompt_append).toBe(
+        "Additional instructions for worker"
       )
     }
   })
 
-  test("schema accepts sisyphus-junior with tools override", () => {
+  test("schema accepts worker with tools override", () => {
     // given
     const config = {
       agents: {
-        "sisyphus-junior": {
+        "worker": {
           tools: {
             read: true,
             write: false,
@@ -531,67 +531,67 @@ describe("Sisyphus-Junior agent override", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.["sisyphus-junior"]?.tools).toEqual({
+      expect(result.data.agents?.["worker"]?.tools).toEqual({
         read: true,
         write: false,
       })
     }
   })
 
-  test("schema accepts lowercase agent names (sisyphus, atlas, prometheus)", () => {
+  test("schema accepts lowercase agent names (chief, lead, planner)", () => {
     // given
     const config = {
       agents: {
-        sisyphus: {
+        chief: {
           temperature: 0.1,
         },
-        atlas: {
+        lead: {
           temperature: 0.2,
         },
-        prometheus: {
+        planner: {
           temperature: 0.3,
         },
       },
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.sisyphus?.temperature).toBe(0.1)
-      expect(result.data.agents?.atlas?.temperature).toBe(0.2)
-      expect(result.data.agents?.prometheus?.temperature).toBe(0.3)
+      expect(result.data.agents?.chief?.temperature).toBe(0.1)
+      expect(result.data.agents?.lead?.temperature).toBe(0.2)
+      expect(result.data.agents?.planner?.temperature).toBe(0.3)
     }
   })
 
-  test("schema accepts lowercase metis and momus agent names", () => {
+  test("schema accepts lowercase reviewer and critic agent names", () => {
     // given
     const config = {
       agents: {
-        metis: {
+        reviewer: {
           category: "ultrabrain",
         },
-        momus: {
+        critic: {
           category: "quick",
         },
       },
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.metis?.category).toBe("ultrabrain")
-      expect(result.data.agents?.momus?.category).toBe("quick")
+      expect(result.data.agents?.reviewer?.category).toBe("ultrabrain")
+      expect(result.data.agents?.critic?.category).toBe("quick")
     }
   })
 })
@@ -680,7 +680,7 @@ describe("BrowserAutomationConfigSchema", () => {
   })
 })
 
-describe("OhMyOpenCodeConfigSchema - browser_automation_engine", () => {
+describe("OhMyCortexConfigSchema - browser_automation_engine", () => {
   test("accepts browser_automation_engine config", () => {
     // given
     const input = {
@@ -690,7 +690,7 @@ describe("OhMyOpenCodeConfigSchema - browser_automation_engine", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(input)
+    const result = OhMyCortexConfigSchema.safeParse(input)
 
     // then
     expect(result.success).toBe(true)
@@ -702,7 +702,7 @@ describe("OhMyOpenCodeConfigSchema - browser_automation_engine", () => {
     const input = {}
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(input)
+    const result = OhMyCortexConfigSchema.safeParse(input)
 
     // then
     expect(result.success).toBe(true)
@@ -714,7 +714,7 @@ describe("OhMyOpenCodeConfigSchema - browser_automation_engine", () => {
     const input = { browser_automation_engine: { provider: "playwright-cli" } }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(input)
+    const result = OhMyCortexConfigSchema.safeParse(input)
 
     // then
     expect(result.success).toBe(true)
@@ -722,13 +722,13 @@ describe("OhMyOpenCodeConfigSchema - browser_automation_engine", () => {
   })
 })
 
-describe("OhMyOpenCodeConfigSchema - hashline_edit", () => {
+describe("OhMyCortexConfigSchema - hashline_edit", () => {
   test("accepts hashline_edit as true", () => {
     //#given
     const input = { hashline_edit: true }
 
     //#when
-    const result = OhMyOpenCodeConfigSchema.safeParse(input)
+    const result = OhMyCortexConfigSchema.safeParse(input)
 
     //#then
     expect(result.success).toBe(true)
@@ -740,7 +740,7 @@ describe("OhMyOpenCodeConfigSchema - hashline_edit", () => {
     const input = { hashline_edit: false }
 
     //#when
-    const result = OhMyOpenCodeConfigSchema.safeParse(input)
+    const result = OhMyCortexConfigSchema.safeParse(input)
 
     //#then
     expect(result.success).toBe(true)
@@ -752,7 +752,7 @@ describe("OhMyOpenCodeConfigSchema - hashline_edit", () => {
     const input = { auto_update: true }
 
     //#when
-    const result = OhMyOpenCodeConfigSchema.safeParse(input)
+    const result = OhMyCortexConfigSchema.safeParse(input)
 
     //#then
     expect(result.success).toBe(true)
@@ -764,7 +764,7 @@ describe("OhMyOpenCodeConfigSchema - hashline_edit", () => {
     const input = { hashline_edit: "true" }
 
     //#when
-    const result = OhMyOpenCodeConfigSchema.safeParse(input)
+    const result = OhMyCortexConfigSchema.safeParse(input)
 
     //#then
     expect(result.success).toBe(false)
@@ -826,9 +826,9 @@ describe("ExperimentalConfigSchema feature flags", () => {
     }
   })
 
-  test("accepts disable_omo_env as true", () => {
+  test("accepts disable_omx_env as true", () => {
     //#given
-    const config = { disable_omo_env: true }
+    const config = { disable_omx_env: true }
 
     //#when
     const result = ExperimentalConfigSchema.safeParse(config)
@@ -836,13 +836,13 @@ describe("ExperimentalConfigSchema feature flags", () => {
     //#then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.disable_omo_env).toBe(true)
+      expect(result.data.disable_omx_env).toBe(true)
     }
   })
 
-  test("accepts disable_omo_env as false", () => {
+  test("accepts disable_omx_env as false", () => {
     //#given
-    const config = { disable_omo_env: false }
+    const config = { disable_omx_env: false }
 
     //#when
     const result = ExperimentalConfigSchema.safeParse(config)
@@ -850,11 +850,11 @@ describe("ExperimentalConfigSchema feature flags", () => {
     //#then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.disable_omo_env).toBe(false)
+      expect(result.data.disable_omx_env).toBe(false)
     }
   })
 
-  test("disable_omo_env is optional", () => {
+  test("disable_omx_env is optional", () => {
     //#given
     const config = { safe_hook_creation: true }
 
@@ -864,13 +864,13 @@ describe("ExperimentalConfigSchema feature flags", () => {
     //#then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.disable_omo_env).toBeUndefined()
+      expect(result.data.disable_omx_env).toBeUndefined()
     }
   })
 
-  test("rejects non-boolean disable_omo_env", () => {
+  test("rejects non-boolean disable_omx_env", () => {
     //#given
-    const config = { disable_omo_env: "true" }
+    const config = { disable_omx_env: "true" }
 
     //#when
     const result = ExperimentalConfigSchema.safeParse(config)
@@ -969,13 +969,13 @@ describe("GitMasterConfigSchema", () => {
   })
 })
 
-describe("OhMyOpenCodeConfigSchema - git_master defaults (#2040)", () => {
+describe("OhMyCortexConfigSchema - git_master defaults (#2040)", () => {
   test("git_master defaults are applied when section is missing from config", () => {
     //#given
     const config = {}
 
     //#when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     //#then
     expect(result.success).toBe(true)
@@ -997,7 +997,7 @@ describe("OhMyOpenCodeConfigSchema - git_master defaults (#2040)", () => {
     }
 
     //#when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     //#then
     expect(result.success).toBe(true)
@@ -1018,7 +1018,7 @@ describe("skills schema", () => {
     }
 
     //#when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     //#then
     expect(result.success).toBe(true)

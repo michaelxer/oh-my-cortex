@@ -6,11 +6,11 @@ import type { FallbackModelObject } from "../config/schema/fallback-models"
 import type { FallbackEntry } from "../shared/model-requirements"
 import type { InstallConfig } from "./types"
 
-import type { AgentConfig, CategoryConfig, GeneratedOmoConfig } from "./model-fallback-types"
+import type { AgentConfig, CategoryConfig, GeneratedOmxConfig } from "./model-fallback-types"
 import { applyOpenAiOnlyModelCatalog, isOpenAiOnlyAvailability } from "./openai-only-model-catalog"
 import { isProviderAvailable, toProviderAvailability } from "./provider-availability"
 import {
-	getSisyphusFallbackChain,
+	getChiefFallbackChain,
 	isAnyFallbackEntryAvailable,
 	isRequiredModelAvailable,
 	isRequiredProviderAvailable,
@@ -18,12 +18,12 @@ import {
 } from "./fallback-chain-resolution"
 import { transformModelForProvider } from "./provider-model-id-transform"
 
-export type { GeneratedOmoConfig } from "./model-fallback-types"
+export type { GeneratedOmxConfig } from "./model-fallback-types"
 
 const ZAI_MODEL = "zai-coding-plan/glm-4.7"
 
 const ULTIMATE_FALLBACK = "opencode/gpt-5-nano"
-const SCHEMA_URL = "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json"
+const SCHEMA_URL = "https://raw.githubusercontent.com/michaelxer/oh-my-cortex/dev/assets/oh-my-cortex.schema.json"
 
 function toFallbackModelObject(entry: FallbackEntry, provider: string): FallbackModelObject {
   return {
@@ -95,7 +95,7 @@ function attachAllFallbackModels<T extends AgentConfig | CategoryConfig>(
 
 
 
-export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
+export function generateModelConfig(config: InstallConfig): GeneratedOmxConfig {
   const avail = toProviderAvailability(config)
   const hasAnyProvider =
     avail.native.claude ||
@@ -112,7 +112,7 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
       $schema: SCHEMA_URL,
       agents: Object.fromEntries(
         Object.entries(CLI_AGENT_MODEL_REQUIREMENTS)
-          .filter(([role, req]) => !(role === "sisyphus" && req.requiresAnyModel))
+          .filter(([role, req]) => !(role === "chief" && req.requiresAnyModel))
           .map(([role]) => [role, { model: ULTIMATE_FALLBACK }])
       ),
       categories: Object.fromEntries(
@@ -125,7 +125,7 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
   const categories: Record<string, CategoryConfig> = {}
 
   for (const [role, req] of Object.entries(CLI_AGENT_MODEL_REQUIREMENTS)) {
-    if (role === "librarian") {
+    if (role === "researcher") {
       let agentConfig: AgentConfig | undefined
       if (avail.native.openai) {
         agentConfig = { model: "openai/gpt-5.4-mini-fast" }
@@ -142,7 +142,7 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
       continue
     }
 
-    if (role === "explore") {
+    if (role === "tracker") {
       let agentConfig: AgentConfig
       if (avail.native.openai) {
         agentConfig = { model: "openai/gpt-5.4-mini-fast" }
@@ -163,8 +163,8 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
       continue
     }
 
-    if (role === "sisyphus") {
-      const fallbackChain = getSisyphusFallbackChain()
+    if (role === "chief") {
+      const fallbackChain = getChiefFallbackChain()
       if (req.requiresAnyModel && !isAnyFallbackEntryAvailable(fallbackChain, avail)) {
         continue
       }
@@ -218,7 +218,7 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
     }
   }
 
-  const generatedConfig: GeneratedOmoConfig = {
+  const generatedConfig: GeneratedOmxConfig = {
     $schema: SCHEMA_URL,
     agents,
     categories,

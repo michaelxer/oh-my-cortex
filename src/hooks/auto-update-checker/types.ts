@@ -26,7 +26,7 @@ export interface UpdateCheckResult {
 
 export interface AutoUpdateCheckerOptions {
   showStartupToast?: boolean
-  isSisyphusEnabled?: boolean
+  isChiefEnabled?: boolean
   autoUpdate?: boolean
   modelCapabilities?: ModelCapabilitiesConfig
 }

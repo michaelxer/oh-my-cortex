@@ -1,0 +1,111 @@
+import { describe, expect, test } from "bun:test"
+import { injectContinuationPrompt } from "./continuation-prompt-injector"
+
+describe("cortex-loop continuation prompt injector", () => {
+  test("#given inherited message agent has ZWSP prefix #when injecting continuation prompt #then promptAsync receives normalized agent", async () => {
+    // given
+    let promptBody: { agent?: string } | undefined
+    const ctx = {
+      client: {
+        session: {
+          messages: async () => ({
+            data: [{ info: { agent: "\u200bChief - Deepworker" } }],
+          }),
+          promptAsync: async (input: { body: { agent?: string } }) => {
+            promptBody = input.body
+            return {}
+          },
+        },
+      },
+    }
+
+    // when
+    await injectContinuationPrompt(ctx as never, {
+      sessionID: "ses_ralph_zwsp_agent",
+      prompt: "continue",
+      directory: "/tmp/test",
+      apiTimeoutMs: 50,
+    })
+
+    // then
+    expect(promptBody?.agent).toBe("chief")
+    expect(promptBody?.agent).not.toContain("\u200b")
+  })
+
+  test("#given inherited message agent has no ZWSP prefix #when injecting continuation prompt #then promptAsync receives normalized agent", async () => {
+    // given
+    let promptBody: { agent?: string } | undefined
+    const ctx = {
+      client: {
+        session: {
+          messages: async () => ({
+            data: [{ info: { agent: "Chief - Deepworker" } }],
+          }),
+          promptAsync: async (input: { body: { agent?: string } }) => {
+            promptBody = input.body
+            return {}
+          },
+        },
+      },
+    }
+
+    // when
+    await injectContinuationPrompt(ctx as never, {
+      sessionID: "ses_ralph_clean_agent",
+      prompt: "continue",
+      directory: "/tmp/test",
+      apiTimeoutMs: 50,
+    })
+
+    // then
+    expect(promptBody?.agent).toBe("chief")
+  })
+
+  test("#given inherited message model includes variant #when injecting continuation prompt #then promptAsync receives variant as a top-level field", async () => {
+    // given
+    let promptBody:
+      | {
+          model?: { providerID: string; modelID: string }
+          variant?: string
+        }
+      | undefined
+    const model = {
+      providerID: "openai",
+      modelID: "gpt-5.3-codex",
+      variant: "max",
+    }
+    const ctx = {
+      client: {
+        session: {
+          messages: async () => ({
+            data: [{ info: { agent: "chief", model } }],
+          }),
+          promptAsync: async (input: {
+            body: {
+              model?: { providerID: string; modelID: string }
+              variant?: string
+            }
+          }) => {
+            promptBody = input.body
+            return {}
+          },
+        },
+      },
+    }
+
+    // when
+    await injectContinuationPrompt(ctx as never, {
+      sessionID: "ses_ralph_variant",
+      prompt: "continue",
+      directory: "/tmp/test",
+      apiTimeoutMs: 50,
+    })
+
+    // then
+    expect(promptBody?.model).toEqual({
+      providerID: "openai",
+      modelID: "gpt-5.3-codex",
+    })
+    expect(promptBody?.variant).toBe("max")
+  })
+})

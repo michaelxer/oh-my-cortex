@@ -126,7 +126,7 @@ const x = 1;
   })
 
   describe("isSystemDirective", () => {
-    test("should return true for OH-MY-OPENCODE system directives", () => {
+    test("should return true for OH-MY-CORTEX system directives", () => {
       const directive = createSystemDirective("TEST")
       expect(isSystemDirective(directive)).toBe(true)
     })
@@ -145,9 +145,9 @@ const x = 1;
       expect(isSystemDirective(directive)).toBe(true)
     })
 
-    test("#given a ralph-loop ULW continuation prefixed with 'ultrawork ' #when checking system directive #then returns true", () => {
+    test("#given a cortex-loop DW continuation prefixed with 'deepwork ' #when checking system directive #then returns true", () => {
       // given
-      const directive = `ultrawork ${createSystemDirective("RALPH LOOP 2/500")}\n\nYour previous attempt did not output the completion promise.`
+      const directive = `deepwork ${createSystemDirective("CORTEX LOOP 2/500")}\n\nYour previous attempt did not output the completion promise.`
 
       // when
       const result = isSystemDirective(directive)
@@ -156,9 +156,9 @@ const x = 1;
       expect(result).toBe(true)
     })
 
-    test("#given a continuation prefixed with 'ulw ' shorthand #when checking system directive #then returns true", () => {
+    test("#given a continuation prefixed with 'dw ' shorthand #when checking system directive #then returns true", () => {
       // given
-      const directive = `ulw ${createSystemDirective("ULTRAWORK LOOP VERIFICATION 1/500")}\n\nYou already emitted <promise>DONE</promise>.`
+      const directive = `dw ${createSystemDirective("DEEPWORK LOOP VERIFICATION 1/500")}\n\nYou already emitted <promise>DONE</promise>.`
 
       // when
       const result = isSystemDirective(directive)
@@ -167,9 +167,9 @@ const x = 1;
       expect(result).toBe(true)
     })
 
-    test("#given a continuation prefixed with uppercase 'ULTRAWORK ' #when checking system directive #then returns true", () => {
+    test("#given a continuation prefixed with uppercase 'DEEPWORK ' #when checking system directive #then returns true", () => {
       // given
-      const directive = `ULTRAWORK ${createSystemDirective("RALPH LOOP 5/500")}`
+      const directive = `DEEPWORK ${createSystemDirective("CORTEX LOOP 5/500")}`
 
       // when
       const result = isSystemDirective(directive)
@@ -178,9 +178,9 @@ const x = 1;
       expect(result).toBe(true)
     })
 
-    test("#given user text that legitimately starts with 'ultrawork' word #when no directive follows #then returns false", () => {
+    test("#given user text that legitimately starts with 'deepwork' word #when no directive follows #then returns false", () => {
       // given
-      const text = "ultrawork is a great mode but I have a question about it"
+      const text = "deepwork is a great mode but I have a question about it"
 
       // when
       const result = isSystemDirective(text)
@@ -219,14 +219,14 @@ Please search for the bug in the code.`
 System will search and investigate.
 </system-reminder>
 
-User wants to explore the codebase and analyze the implementation.
+User wants to tracker the codebase and analyze the implementation.
 
 <system-reminder>
 Another system reminder with research keyword.
 </system-reminder>`
 
       const cleanText = removeSystemReminders(text)
-      expect(cleanText).toContain("explore")
+      expect(cleanText).toContain("tracker")
       expect(cleanText).toContain("analyze")
       expect(cleanText).not.toContain("search and investigate")
       expect(cleanText).not.toContain("research")

@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig } from "../../config"
+import type { OhMyCortexConfig } from "../../config"
 import type { FallbackModelObject } from "../../config/schema/fallback-models"
 import { agentPattern } from "./agent-resolver"
 import { HOOK_NAME } from "./constants"
@@ -14,7 +14,7 @@ import { normalizeFallbackModels, flattenToFallbackModelStrings } from "../../sh
 export function getFallbackModelsForSession(
   sessionID: string,
   agent: string | undefined,
-  pluginConfig: OhMyOpenCodeConfig | undefined
+  pluginConfig: OhMyCortexConfig | undefined
 ): string[] {
   if (!pluginConfig) return []
 
@@ -30,7 +30,7 @@ export function getFallbackModelsForSession(
 export function getRawFallbackModels(
   sessionID: string,
   agent: string | undefined,
-  pluginConfig: OhMyOpenCodeConfig | undefined,
+  pluginConfig: OhMyCortexConfig | undefined,
 ): (string | FallbackModelObject)[] | undefined {
   if (!pluginConfig) return undefined
   return getRawFallbackModelsForSession(sessionID, agent, pluginConfig)
@@ -39,7 +39,7 @@ export function getRawFallbackModels(
 function getRawFallbackModelsForSession(
   sessionID: string,
   agent: string | undefined,
-  pluginConfig: OhMyOpenCodeConfig,
+  pluginConfig: OhMyCortexConfig,
 ): (string | FallbackModelObject)[] | undefined {
   const sessionCategory = SessionCategoryRegistry.get(sessionID)
   if (sessionCategory && pluginConfig.categories?.[sessionCategory]) {

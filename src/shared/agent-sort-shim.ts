@@ -4,8 +4,8 @@
  * OpenCode 1.4.x ignores the agent `order` field (sst/opencode#19127) and
  * sorts the agent list by `agent.name` via Remeda `sortBy(x => x.name, "asc")`
  * at packages/opencode/src/agent/agent.ts. Without intervention, the four
- * core agents collapse into Atlas -> Hephaestus -> Prometheus -> Sisyphus,
- * which inverts the canonical sisyphus -> hephaestus -> prometheus -> atlas
+ * core agents collapse into Lead -> Founder -> Planner -> Chief,
+ * which inverts the canonical chief -> founder -> planner -> lead
  * order this project ships.
  *
  * Earlier attempts to bias the sort key with invisible characters (ZWSP,

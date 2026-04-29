@@ -1,22 +1,22 @@
-export const START_WORK_TEMPLATE = `You are starting a Sisyphus work session.
+export const START_WORK_TEMPLATE = `You are starting a Chief work session.
 
 ## ARGUMENTS
 
 - \`/start-work [plan-name] [--worktree <path>]\`
   - \`plan-name\` (optional): name or partial match of the plan to start
   - \`--worktree <path>\` (optional): absolute path to an existing git worktree to work in
-    - If specified and valid: hook pre-sets worktree_path in boulder.json
+    - If specified and valid: hook pre-sets worktree_path in workstate.json
     - If specified but invalid: you must run \`git worktree add <path> <branch>\` first
     - If omitted: work directly in the current project directory (no worktree)
 
 ## WHAT TO DO
 
-1. **Find available plans**: Search for Prometheus-generated plan files at \`.sisyphus/plans/\`
+1. **Find available plans**: Search for Planner-generated plan files at \`.cortex/plans/\`
 
-2. **Check for active boulder state**: Read \`.sisyphus/boulder.json\` if it exists
+2. **Check for active workstate state**: Read \`.cortex/workstate.json\` if it exists
 
 3. **Decision logic**:
-   - If \`.sisyphus/boulder.json\` exists AND plan is NOT complete (has unchecked boxes):
+   - If \`.cortex/workstate.json\` exists AND plan is NOT complete (has unchecked boxes):
      - **APPEND** current session to session_ids
      - Continue work on existing plan
    - If no active plan OR plan is complete:
@@ -24,13 +24,13 @@ export const START_WORK_TEMPLATE = `You are starting a Sisyphus work session.
      - If ONE plan: auto-select it
      - If MULTIPLE plans: show list with timestamps, ask user to select
 
-4. **Worktree Setup** (ONLY when \`--worktree\` was explicitly specified and \`worktree_path\` not already set in boulder.json):
+4. **Worktree Setup** (ONLY when \`--worktree\` was explicitly specified and \`worktree_path\` not already set in workstate.json):
    1. \`git worktree list --porcelain\` - see available worktrees
    2. Create: \`git worktree add <absolute-path> <branch-or-HEAD>\`
-   3. Update boulder.json to add \`"worktree_path": "<absolute-path>"\`
+   3. Update workstate.json to add \`"worktree_path": "<absolute-path>"\`
    4. All work happens inside that worktree directory
 
-5. **Create/Update boulder.json**:
+5. **Create/Update workstate.json**:
    \`\`\`json
    {
      "active_plan": "/absolute/path/to/plan.md",
@@ -41,7 +41,7 @@ export const START_WORK_TEMPLATE = `You are starting a Sisyphus work session.
    }
    \`\`\`
 
-6. **Read the plan file** and start executing tasks according to atlas workflow
+6. **Read the plan file** and start executing tasks according to lead workflow
 
 ## OUTPUT FORMAT
 
@@ -85,10 +85,10 @@ Reading plan and beginning execution...
 ## CRITICAL
 
 - The session_id is injected by the hook - use it directly
-- Always update boulder.json BEFORE starting work
-- If worktree_path is set in boulder.json, all work happens inside that worktree directory
+- Always update workstate.json BEFORE starting work
+- If worktree_path is set in workstate.json, all work happens inside that worktree directory
 - Read the FULL plan file before delegating any tasks
-- Follow atlas delegation protocols (7-section format)
+- Follow lead delegation protocols (7-section format)
 
 ## TASK BREAKDOWN (MANDATORY)
 
@@ -113,16 +113,16 @@ Register these as task/todo items so progress is tracked and visible throughout 
 
 ## WORKTREE COMPLETION
 
-When working in a worktree (\`worktree_path\` is set in boulder.json) and ALL plan tasks are complete:
+When working in a worktree (\`worktree_path\` is set in workstate.json) and ALL plan tasks are complete:
 1. Commit all remaining changes in the worktree
-2. **Sync .sisyphus state back**: Copy \`.sisyphus/\` from the worktree to the main repo before removal.
-   This is CRITICAL when \`.sisyphus/\` is gitignored - state written during worktree execution would otherwise be lost.
+2. **Sync .cortex state back**: Copy \`.cortex/\` from the worktree to the main repo before removal.
+   This is CRITICAL when \`.cortex/\` is gitignored - state written during worktree execution would otherwise be lost.
    \`\`\`bash
-   cp -r <worktree-path>/.sisyphus/* <main-repo>/.sisyphus/ 2>/dev/null || true
+   cp -r <worktree-path>/.cortex/* <main-repo>/.cortex/ 2>/dev/null || true
    \`\`\`
 3. Switch to the main working directory (the original repo, NOT the worktree)
 4. Merge the worktree branch into the current branch: \`git merge <worktree-branch>\`
 5. If merge succeeds, clean up: \`git worktree remove <worktree-path>\`
-6. Remove the boulder.json state
+6. Remove the workstate.json state
 
 This is the DEFAULT behavior when \`--worktree\` was used. Skip merge only if the user explicitly instructs otherwise (e.g., asks to create a PR instead).`

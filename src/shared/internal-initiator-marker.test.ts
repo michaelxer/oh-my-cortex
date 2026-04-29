@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import {
-  OMO_INTERNAL_INITIATOR_MARKER,
+  OMX_INTERNAL_INITIATOR_MARKER,
   createInternalAgentTextPart,
   stripInternalInitiatorMarkers,
 } from "./internal-initiator-marker"
@@ -16,38 +16,38 @@ describe("internal-initiator-marker", () => {
 
       // then
       expect(part.type).toBe("text")
-      expect(part.text).toBe(`Hello world\n${OMO_INTERNAL_INITIATOR_MARKER}`)
+      expect(part.text).toBe(`Hello world\n${OMX_INTERNAL_INITIATOR_MARKER}`)
     })
 
     test("#given text already ending with the marker #when creating a text part #then does not duplicate the marker", () => {
       // given
-      const text = `Already marked\n${OMO_INTERNAL_INITIATOR_MARKER}`
+      const text = `Already marked\n${OMX_INTERNAL_INITIATOR_MARKER}`
 
       // when
       const part = createInternalAgentTextPart(text)
 
       // then
-      const markerCount = part.text.split(OMO_INTERNAL_INITIATOR_MARKER).length - 1
+      const markerCount = part.text.split(OMX_INTERNAL_INITIATOR_MARKER).length - 1
       expect(markerCount).toBe(1)
-      expect(part.text).toBe(`Already marked\n${OMO_INTERNAL_INITIATOR_MARKER}`)
+      expect(part.text).toBe(`Already marked\n${OMX_INTERNAL_INITIATOR_MARKER}`)
     })
 
     test("#given text containing multiple embedded markers #when creating a text part #then collapses to a single trailing marker", () => {
       // given
-      const text = `First\n${OMO_INTERNAL_INITIATOR_MARKER}\nSecond\n${OMO_INTERNAL_INITIATOR_MARKER}\nThird\n${OMO_INTERNAL_INITIATOR_MARKER}`
+      const text = `First\n${OMX_INTERNAL_INITIATOR_MARKER}\nSecond\n${OMX_INTERNAL_INITIATOR_MARKER}\nThird\n${OMX_INTERNAL_INITIATOR_MARKER}`
 
       // when
       const part = createInternalAgentTextPart(text)
 
       // then
-      const markerCount = part.text.split(OMO_INTERNAL_INITIATOR_MARKER).length - 1
+      const markerCount = part.text.split(OMX_INTERNAL_INITIATOR_MARKER).length - 1
       expect(markerCount).toBe(1)
-      expect(part.text.endsWith(OMO_INTERNAL_INITIATOR_MARKER)).toBe(true)
+      expect(part.text.endsWith(OMX_INTERNAL_INITIATOR_MARKER)).toBe(true)
     })
 
     test("#given text with embedded markers between content #when creating a text part #then strips embedded markers and keeps content", () => {
       // given
-      const text = `Line one\n${OMO_INTERNAL_INITIATOR_MARKER}\nLine two\n${OMO_INTERNAL_INITIATOR_MARKER}`
+      const text = `Line one\n${OMX_INTERNAL_INITIATOR_MARKER}\nLine two\n${OMX_INTERNAL_INITIATOR_MARKER}`
 
       // when
       const part = createInternalAgentTextPart(text)
@@ -55,7 +55,7 @@ describe("internal-initiator-marker", () => {
       // then
       expect(part.text).toContain("Line one")
       expect(part.text).toContain("Line two")
-      const markerCount = part.text.split(OMO_INTERNAL_INITIATOR_MARKER).length - 1
+      const markerCount = part.text.split(OMX_INTERNAL_INITIATOR_MARKER).length - 1
       expect(markerCount).toBe(1)
     })
 
@@ -67,7 +67,7 @@ describe("internal-initiator-marker", () => {
       const part = createInternalAgentTextPart(text)
 
       // then
-      expect(part.text).toBe(`\n${OMO_INTERNAL_INITIATOR_MARKER}`)
+      expect(part.text).toBe(`\n${OMX_INTERNAL_INITIATOR_MARKER}`)
     })
   })
 
@@ -85,7 +85,7 @@ describe("internal-initiator-marker", () => {
 
     test("#given text with one trailing marker #when stripping #then removes the marker", () => {
       // given
-      const text = `Content\n${OMO_INTERNAL_INITIATOR_MARKER}`
+      const text = `Content\n${OMX_INTERNAL_INITIATOR_MARKER}`
 
       // when
       const result = stripInternalInitiatorMarkers(text)
@@ -96,7 +96,7 @@ describe("internal-initiator-marker", () => {
 
     test("#given text with multiple stacked markers #when stripping #then removes all of them", () => {
       // given
-      const text = `Content\n${OMO_INTERNAL_INITIATOR_MARKER}\n${OMO_INTERNAL_INITIATOR_MARKER}\n${OMO_INTERNAL_INITIATOR_MARKER}`
+      const text = `Content\n${OMX_INTERNAL_INITIATOR_MARKER}\n${OMX_INTERNAL_INITIATOR_MARKER}\n${OMX_INTERNAL_INITIATOR_MARKER}`
 
       // when
       const result = stripInternalInitiatorMarkers(text)
@@ -107,7 +107,7 @@ describe("internal-initiator-marker", () => {
 
     test("#given text with markers on consecutive lines without separators #when stripping #then removes all markers", () => {
       // given
-      const text = `${OMO_INTERNAL_INITIATOR_MARKER}${OMO_INTERNAL_INITIATOR_MARKER}${OMO_INTERNAL_INITIATOR_MARKER}`
+      const text = `${OMX_INTERNAL_INITIATOR_MARKER}${OMX_INTERNAL_INITIATOR_MARKER}${OMX_INTERNAL_INITIATOR_MARKER}`
 
       // when
       const result = stripInternalInitiatorMarkers(text)

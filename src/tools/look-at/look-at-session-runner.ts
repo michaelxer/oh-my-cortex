@@ -2,10 +2,10 @@ import type { PluginInput } from "@opencode-ai/plugin"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 import { log, promptSyncWithModelSuggestionRetry } from "../../shared"
 import { extractLatestAssistantText } from "./assistant-message-extractor"
-import { MULTIMODAL_LOOKER_AGENT } from "./constants"
+import { SPOTTER_AGENT } from "./constants"
 import { READ_ENABLED, buildLookAtPrompt } from "./look-at-prompt"
 import type { LookAtFilePart } from "./look-at-input-preparer"
-import { resolveMultimodalLookerAgentMetadata } from "./multimodal-agent-metadata"
+import { resolveSpotterAgentMetadata } from "./multimodal-agent-metadata"
 
 interface RunLookAtSessionInput {
   ctx: PluginInput
@@ -23,7 +23,7 @@ export async function runLookAtSession({
   isBase64Input,
 }: RunLookAtSessionInput): Promise<string> {
   const prompt = buildLookAtPrompt(goal, isBase64Input)
-  const { agentModel, agentVariant } = await resolveMultimodalLookerAgentMetadata(ctx)
+  const { agentModel, agentVariant } = await resolveSpotterAgentMetadata(ctx)
 
   log(`[look_at] Creating session with parent: ${toolContext.sessionID}`)
   const parentSession = await ctx.client.session.get({
@@ -64,10 +64,10 @@ Original error: ${createResult.error}`
     await promptSyncWithModelSuggestionRetry(ctx.client, {
       path: { id: sessionID },
       body: {
-        agent: MULTIMODAL_LOOKER_AGENT,
+        agent: SPOTTER_AGENT,
         tools: {
           task: false,
-          call_omo_agent: false,
+          call_cortex_agent: false,
           look_at: false,
           read: READ_ENABLED,
         },
@@ -99,7 +99,7 @@ Original error: ${createResult.error}`
   const responseText = extractLatestAssistantText(messages)
   if (!responseText) {
     log("[look_at] No assistant message found")
-    return "Error: No response from multimodal-looker agent"
+    return "Error: No response from spotter agent"
   }
 
   log(`[look_at] Got response, length: ${responseText.length}`)

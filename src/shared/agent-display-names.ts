@@ -1,7 +1,7 @@
 /**
  * Agent config keys to display names mapping.
- * Config keys are lowercase (e.g., "sisyphus", "atlas").
- * Display names include suffixes for UI/logs (e.g., "Sisyphus - Ultraworker").
+ * Config keys are lowercase (e.g., "chief", "lead").
+ * Display names include suffixes for UI/logs (e.g., "Chief - Deepworker").
  *
  * IMPORTANT: Display names MUST NOT contain parentheses or other characters
  * that are invalid in HTTP header values per RFC 7230. OpenCode passes the
@@ -10,19 +10,19 @@
  * type selector dropdown. Use ` - ` (space-dash-space) instead of `(...)`.
  */
 export const AGENT_DISPLAY_NAMES: Record<string, string> = {
-  sisyphus: "Sisyphus - Ultraworker",
-  hephaestus: "Hephaestus - Deep Agent",
-  prometheus: "Prometheus - Plan Builder",
-  atlas: "Atlas - Plan Executor",
-  "sisyphus-junior": "Sisyphus-Junior",
-  metis: "Metis - Plan Consultant",
-  momus: "Momus - Plan Critic",
+  chief: "Chief - Deepworker",
+  founder: "Founder - Deep Agent",
+  planner: "Planner - Plan Builder",
+  lead: "Lead - Plan Executor",
+  "worker": "Worker",
+  reviewer: "Reviewer - Plan Consultant",
+  critic: "Critic - Plan Critic",
   athena: "Athena - Council",
   "athena-junior": "Athena-Junior - Council",
-  oracle: "oracle",
-  librarian: "librarian",
-  explore: "explore",
-  "multimodal-looker": "multimodal-looker",
+  thinker: "thinker",
+  researcher: "researcher",
+  tracker: "tracker",
+  "spotter": "spotter",
   "council-member": "council-member",
 }
 
@@ -76,12 +76,12 @@ const REVERSE_DISPLAY_NAMES: Record<string, string> = Object.fromEntries(
 // Legacy parenthesized display names for backward compatibility.
 // Old configs/sessions may reference these names; resolve them to config keys.
 const LEGACY_DISPLAY_NAMES: Record<string, string> = {
-  "sisyphus (ultraworker)": "sisyphus",
-  "hephaestus (deep agent)": "hephaestus",
-  "prometheus (plan builder)": "prometheus",
-  "atlas (plan executor)": "atlas",
-  "metis (plan consultant)": "metis",
-  "momus (plan critic)": "momus",
+  "chief (deepworker)": "chief",
+  "founder (deep agent)": "founder",
+  "planner (plan builder)": "planner",
+  "lead (plan executor)": "lead",
+  "reviewer (plan consultant)": "reviewer",
+  "critic (plan critic)": "critic",
   "athena (council)": "athena",
   "athena-junior (council)": "athena-junior",
 }
@@ -98,7 +98,7 @@ function resolveKnownAgentConfigKey(agentName: string): string | undefined {
 
 /**
  * Resolve an agent name (display name or config key) to its lowercase config key.
- * "Atlas - Plan Executor" -> "atlas", "Atlas (Plan Executor)" -> "atlas", "atlas" -> "atlas"
+ * "Lead - Plan Executor" -> "lead", "Lead (Plan Executor)" -> "lead", "lead" -> "lead"
  */
 export function getAgentConfigKey(agentName: string): string {
   const lower = stripAgentListSortPrefix(agentName).trim().toLowerCase()

@@ -7,7 +7,7 @@ import type { BackgroundManager } from "../../features/background-agent"
 import { clearPendingStore, consumeToolMetadata } from "../../features/tool-metadata-store"
 import { createBackgroundTask } from "./create-background-task"
 
-const projectDir = "/Users/yeongyu/local-workspaces/oh-my-opencode"
+const projectDir = "/Users/yeongyu/local-workspaces/oh-my-cortex"
 
 type ToolContextWithCallID = ToolContext & {
   callID: string

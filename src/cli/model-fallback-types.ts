@@ -27,7 +27,7 @@ export interface CategoryConfig {
 	fallback_models?: FallbackModelObject[]
 }
 
-export interface GeneratedOmoConfig {
+export interface GeneratedOmxConfig {
 	$schema: string
 	agents?: Record<string, AgentConfig>
 	categories?: Record<string, CategoryConfig>

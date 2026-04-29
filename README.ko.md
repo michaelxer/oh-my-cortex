@@ -7,7 +7,7 @@
 > [!TIP]
 > **Building in Public**
 >
-> 메인테이너가 Jobdori를 통해 oh-my-opencode를 실시간으로 개발하고 있습니다. Jobdori는 OpenClaw를 기반으로 대폭 커스터마이징된 AI 어시스턴트입니다.
+> 메인테이너가 Jobdori를 통해 oh-my-cortex를 실시간으로 개발하고 있습니다. Jobdori는 OpenClaw를 기반으로 대폭 커스터마이징된 AI 어시스턴트입니다.
 > 모든 기능 개발, 버그 수정, 이슈 트리아지를 Discord에서 실시간으로 확인하세요.
 >
 > [![Building in Public](./.github/assets/building-in-public.png)](https://discord.gg/PUwSMR9XNk)
@@ -18,18 +18,18 @@
 > [!TIP]
 > 저희와 함께 하세요!
 >
-> | [<img alt="Discord link" src="https://img.shields.io/discord/1452487457085063218?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width="156px" />](https://discord.gg/PUwSMR9XNk) | [Discord 커뮤니티](https://discord.gg/PUwSMR9XNk)에 가입하여 기여자 및 다른 `oh-my-opencode` 사용자들과 소통하세요. |
+> | [<img alt="Discord link" src="https://img.shields.io/discord/1452487457085063218?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width="156px" />](https://discord.gg/PUwSMR9XNk) | [Discord 커뮤니티](https://discord.gg/PUwSMR9XNk)에 가입하여 기여자 및 다른 `oh-my-cortex` 사용자들과 소통하세요. |
 > | :-----| :----- |
-> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%40justsisyphus-00CED1?style=flat-square&logo=x&labelColor=black" width="156px" />](https://x.com/justsisyphus) | `oh-my-opencode`에 대한 소식과 업데이트는 제 X 계정에 올라왔었지만, <br /> 실수로 정지된 이후에는 [@justsisyphus](https://x.com/justsisyphus)가 대신 업데이트를 게시하고 있습니다. |
-> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/code-yeongyu?style=flat-square&logo=github&labelColor=black&color=24292f" width="156px" />](https://github.com/code-yeongyu) | 더 많은 프로젝트를 보려면 GitHub에서 [@code-yeongyu](https://github.com/code-yeongyu)를 팔로우하세요. |
+> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%40justchief-00CED1?style=flat-square&logo=x&labelColor=black" width="156px" />](https://x.com/justchief) | `oh-my-cortex`에 대한 소식과 업데이트는 제 X 계정에 올라왔었지만, <br /> 실수로 정지된 이후에는 [@justchief](https://x.com/justchief)가 대신 업데이트를 게시하고 있습니다. |
+> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/michaelxer?style=flat-square&logo=github&labelColor=black&color=24292f" width="156px" />](https://github.com/michaelxer) | 더 많은 프로젝트를 보려면 GitHub에서 [@michaelxer](https://github.com/michaelxer)를 팔로우하세요. |
 
 <!-- <CENTERED SECTION FOR GITHUB DISPLAY> -->
 
 <div align="center">
 
-[![Oh My OpenCode](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-openagent#oh-my-opencode)
+[![Oh My Cortex](./.github/assets/hero.jpg)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
 
-[![Preview](./.github/assets/omo.png)](https://github.com/code-yeongyu/oh-my-openagent#oh-my-opencode)
+[![Preview](./.github/assets/omx.png)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
 
 </div>
 
@@ -39,14 +39,14 @@
 
 <div align="center">
 
-[![GitHub Release](https://img.shields.io/github/v/release/code-yeongyu/oh-my-openagent?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/releases)
-[![npm downloads](https://img.shields.io/npm/dt/oh-my-opencode?color=ff6b35&labelColor=black&style=flat-square)](https://www.npmjs.com/package/oh-my-opencode)
-[![GitHub Contributors](https://img.shields.io/github/contributors/code-yeongyu/oh-my-openagent?color=c4f042&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/graphs/contributors)
-[![GitHub Forks](https://img.shields.io/github/forks/code-yeongyu/oh-my-openagent?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/network/members)
-[![GitHub Stars](https://img.shields.io/github/stars/code-yeongyu/oh-my-openagent?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/code-yeongyu/oh-my-openagent?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/issues)
-[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/LICENSE.md)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/code-yeongyu/oh-my-openagent)
+[![GitHub Release](https://img.shields.io/github/v/release/michaelxer/oh-my-cortex?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/releases)
+[![npm downloads](https://img.shields.io/npm/dt/oh-my-cortex?color=ff6b35&labelColor=black&style=flat-square)](https://www.npmjs.com/package/oh-my-cortex)
+[![GitHub Contributors](https://img.shields.io/github/contributors/michaelxer/oh-my-cortex?color=c4f042&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/graphs/contributors)
+[![GitHub Forks](https://img.shields.io/github/forks/michaelxer/oh-my-cortex?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/network/members)
+[![GitHub Stars](https://img.shields.io/github/stars/michaelxer/oh-my-cortex?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/michaelxer/oh-my-cortex?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/issues)
+[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/blob/dev/LICENSE.md)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/michaelxer/oh-my-cortex)
 
 [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-cn.md)
 
@@ -58,13 +58,13 @@
 
 > "이것 덕분에 Cursor 구독을 취소했습니다. 오픈소스 커뮤니티에서 믿을 수 없는 일들이 일어나고 있네요." - [Arthur Guiot](https://x.com/arthur_guiot/status/2008736347092382053?s=20)
 
-> "Claude Code가 인간이 3개월 걸릴 일을 7일 만에 한다면, Sisyphus는 1시간 만에 해냅니다. 작업이 끝날 때까지 그냥 계속 알아서 작동합니다. 이건 정말 규율이 잡힌 에이전트예요." <br/>- B, Quant Researcher
+> "Claude Code가 인간이 3개월 걸릴 일을 7일 만에 한다면, Chief는 1시간 만에 해냅니다. 작업이 끝날 때까지 그냥 계속 알아서 작동합니다. 이건 정말 규율이 잡힌 에이전트예요." <br/>- B, Quant Researcher
 
 > "Oh My Opencode로 하루 만에 eslint 경고 8000개를 해결했습니다." <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> "Ohmyopencode와 ralph loop를 써서 45k 라인짜리 tauri 앱을 하룻밤 만에 SaaS 웹앱으로 변환했어요. 인터뷰 모드로 시작해서, 제가 쓴 프롬프트에 대해 질문하고 추천을 부탁했죠. 일하는 걸 지켜보는 것도 재밌었고, 아침에 일어났더니 웹사이트가 대부분 돌아가고 있는 걸 보고 경악했습니다!" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+> "Ohmyopencode와 cortex loop를 써서 45k 라인짜리 tauri 앱을 하룻밤 만에 SaaS 웹앱으로 변환했어요. 인터뷰 모드로 시작해서, 제가 쓴 프롬프트에 대해 질문하고 추천을 부탁했죠. 일하는 걸 지켜보는 것도 재밌었고, 아침에 일어났더니 웹사이트가 대부분 돌아가고 있는 걸 보고 경악했습니다!" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
-> "oh-my-opencode 쓰세요, 다시는 예전으로 못 돌아갑니다." <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
+> "oh-my-cortex 쓰세요, 다시는 예전으로 못 돌아갑니다." <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
 > "뭐가 이렇게 대단한 건지 아직 정확하게 말로 표현하긴 어려운데, 개발 경험 자체가 완전히 다른 차원에 도달해버렸어요." - [苔硯:こけすずり](https://x.com/kokesuzuri/status/2008532913961529372?s=20)
 
@@ -74,17 +74,17 @@
 
 > "설득할 수만 있다면 @yeon_gyu_kim 채용하세요, 이 사람이 opencode를 혁명적으로 바꿨습니다." <br/>- [mysticaltech](https://x.com/mysticaltech/status/2001858758608376079)
 
-> "Oh My OpenCode는 진짜 미쳤다" - [YouTube - Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
+> "Oh My Cortex는 진짜 미쳤다" - [YouTube - Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
 
 ---
 
-# Oh My OpenCode
+# Oh My Cortex
 
 Claude Code, Codex, 온갖 OSS 모델들 사이에서 헤매고 있나요. 워크플로우 설정하랴, 에이전트 디버깅하랴 피곤할 겁니다.
 
 우리가 그 삽질 다 해놨습니다. 모든 걸 테스트했고, 실제로 되는 것만 남겼습니다.
 
-OmO 설치하고. `ultrawork` 치세요. 끝.
+OMX 설치하고. `deepwork` 치세요. 끝.
 
 
 
@@ -92,11 +92,11 @@ OmO 설치하고. `ultrawork` 치세요. 끝.
 
 ### 사람용
 
-다음 프롬프트를 복사해서 여러분의 LLM 에이전트(Claude Code, AmpCode, Cursor 등)에 붙여넣으세요:
+다음 프롬프트를 복사해서 여러분의 LLM 에이전트(Claude Code, deep-work systems, Cursor 등)에 붙여넣으세요:
 
 ```
-Install and configure oh-my-opencode by following the instructions here:
-https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
+Install and configure oh-my-cortex by following the instructions here:
+https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
 아니면 [설치 가이드](docs/guide/installation.md)를 직접 읽으셔도 되지만, 진심으로 그냥 에이전트한테 시키세요. 사람은 설정하다 꼭 오타 냅니다.
@@ -106,12 +106,12 @@ https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/do
 설치 가이드를 가져와서 따라 하세요:
 
 ```bash
-curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
+curl -s https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
-**참고**: 배포된 패키지와 바이너리 이름은 `oh-my-opencode`를 사용하세요. `opencode.json` 내부에서는 호환성 레이어가 이제 플러그인 엔트리 `oh-my-openagent`를 우선시하며, 레거시 `oh-my-opencode` 엔트리는 경고와 함께 여전히 로드됩니다. 플러그인 설정 파일은 여전히 일반적으로 `oh-my-opencode.json` 또는 `oh-my-opencode.jsonc`를 사용하며, 전환 기간 동안 레거시와 변경된 basename 모두 인식됩니다.
+**참고**: 배포된 패키지와 바이너리 이름은 `oh-my-cortex`를 사용하세요. `opencode.json` 내부에서는 호환성 레이어가 이제 플러그인 엔트리 `oh-my-cortex`를 우선시하며, 레거시 `oh-my-cortex` 엔트리는 경고와 함께 여전히 로드됩니다. 플러그인 설정 파일은 여전히 일반적으로 `oh-my-cortex.json` 또는 `oh-my-cortex.jsonc`를 사용하며, 전환 기간 동안 레거시와 변경된 basename 모두 인식됩니다.
 
-익명 텔레메트리는 설치 및 런타임 안정성 개선을 위해 기본적으로 활성화되어 있습니다. PostHog를 사용하며 해시된 설치 식별자를 사용하고 원시 호스트명은 절대 사용하지 않습니다. `OMO_SEND_ANONYMOUS_TELEMETRY=0` 또는 `OMO_DISABLE_POSTHOG=1`로 비활성화할 수 있습니다. [개인정보처리방침](docs/legal/privacy-policy.md)과 [서비스 이용약관](docs/legal/terms-of-service.md)을 참조하세요.
+익명 텔레메트리는 설치 및 런타임 안정성 개선을 위해 기본적으로 활성화되어 있습니다. PostHog를 사용하며 해시된 설치 식별자를 사용하고 원시 호스트명은 절대 사용하지 않습니다. `OMX_SEND_ANONYMOUS_TELEMETRY=0` 또는 `OMX_DISABLE_POSTHOG=1`로 비활성화할 수 있습니다. [개인정보처리방침](docs/legal/privacy-policy.md)과 [서비스 이용약관](docs/legal/terms-of-service.md)을 참조하세요.
 
 ---
 
@@ -120,20 +120,20 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/head
 문서 읽는 시대는 지났습니다. 그냥 이 텍스트를 에이전트한테 붙여넣으세요:
 
 ```
-Read this and tell me why it's not just another boilerplate: https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/README.md
+Read this and tell me why it's not just another boilerplate: https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/README.md
 ```
 
 ## 핵심 기능
 
-### 🪄 `ultrawork`
+### 🪄 `deepwork`
 
 진짜 이걸 다 읽고 계시나요? 대단하네요.
 
-설치하세요. `ultrawork` (또는 `ulw`) 치세요. 끝.
+설치하세요. `deepwork` (또는 `dw`) 치세요. 끝.
 
 아래 내용들, 모든 기능, 모든 최적화, 전혀 알 필요 없습니다. 그냥 알아서 다 됩니다.
 
-다음 구독만 있어도 ultrawork는 충분히 잘 돌아갑니다 (본 프로젝트와 무관하며, 개인적인 추천일 뿐입니다):
+다음 구독만 있어도 deepwork는 충분히 잘 돌아갑니다 (본 프로젝트와 무관하며, 개인적인 추천일 뿐입니다):
 - [ChatGPT 구독 ($20)](https://chatgpt.com/)
 - [Kimi Code 구독 ($19)](https://www.kimi.com/code)
 - [GLM Coding 요금제 ($10)](https://z.ai/subscribe)
@@ -141,44 +141,44 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 
 |       | 기능                                                     | 역할                                                                                                                                                                                                                     |
 | :---: | :------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|   🤖   | **기강 잡힌 에이전트 (Discipline Agents)**               | Sisyphus가 Hephaestus, Oracle, Librarian, Explore를 오케스트레이션합니다. 완전한 AI 개발팀이 병렬로 돌아갑니다.                                                                                                          |
-|   ⚡   | **`ultrawork` / `ulw`**                                  | 단어 하나면 됩니다. 모든 에이전트가 활성화되고 다 끝날 때까지 멈추지 않습니다.                                                                                                                                           |
+|   🤖   | **기강 잡힌 에이전트 (Discipline Agents)**               | Chief가 Founder, Thinker, Researcher, Explore를 오케스트레이션합니다. 완전한 AI 개발팀이 병렬로 돌아갑니다.                                                                                                          |
+|   ⚡   | **`deepwork` / `dw`**                                  | 단어 하나면 됩니다. 모든 에이전트가 활성화되고 다 끝날 때까지 멈추지 않습니다.                                                                                                                                           |
 |   🚪   | **[IntentGate](https://factory.ai/news/terminal-bench)** | 사용자의 진짜 의도를 분석한 뒤 분류하거나 행동합니다. 더 이상 문자 그대로 오해해서 헛짓거리하는 일이 없습니다.                                                                                                           |
 |   🔗   | **해시 기반 편집 툴**                                    | `LINE#ID` 콘텐츠 해시로 모든 변경 사항을 검증합니다. stale-line 에러 0%. [oh-my-pi](https://github.com/can1357/oh-my-pi)에서 영감을 받았습니다. [하니스 프로블러 →](https://blog.can.ac/2026/02/12/the-harness-problem/) |
 |   🛠️   | **LSP + AST-Grep**                                       | 워크스페이스 단위 이름 변경, 빌드 전 진단, AST 기반 재작성. 에이전트에게 IDE급 정밀도를 제공합니다.                                                                                                                      |
 |   🧠   | **백그라운드 에이전트**                                  | 5명 이상의 전문가를 병렬로 투입합니다. 컨텍스트는 가볍게 유지하고 결과는 준비될 때 받습니다.                                                                                                                             |
 |   📚   | **기본 내장 MCP**                                        | Exa(웹 검색), Context7(공식 문서), Grep.app(GitHub 검색). 항상 켜져 있습니다.                                                                                                                                            |
-|   🔁   | **Ralph Loop / `/ulw-loop`**                             | 자기 참조 루프. 100% 완료될 때까지 절대 멈추지 않습니다.                                                                                                                                                                 |
+|   🔁   | **Cortex Loop / `/dw-loop`**                             | 자기 참조 루프. 100% 완료될 때까지 절대 멈추지 않습니다.                                                                                                                                                                 |
 |   ✅   | **Todo 강제 집행**                                       | 에이전트가 딴짓한다고요? 시스템이 멱살 잡고 끌고 옵니다. 당신의 작업은 무조건 끝납니다.                                                                                                                                  |
 |   💬   | **주석 검사기**                                          | 주석에 AI 냄새나는 헛소리를 빼버립니다. 시니어 개발자가 짠 것 같은 코드가 됩니다.                                                                                                                                        |
 |   🖥️   | **Tmux 연동**                                            | 완전한 인터랙티브 터미널. REPL, 디버거, TUI 앱들 모두 실시간으로 돌아갑니다.                                                                                                                                             |
 |   🔌   | **Claude Code 호환성**                                   | 기존 훅, 명령어, 스킬, MCP, 플러그인? 전부 여기서 그대로 돌아갑니다.                                                                                                                                                     |
 |   🎯   | **스킬 내장 MCP**                                        | 스킬이 자기만의 MCP 서버를 들고 다닙니다. 컨텍스트가 부풀어 오르지 않습니다.                                                                                                                                             |
-|   📋   | **Prometheus 플래너**                                    | 인터뷰 모드로 코드 한 줄 만지기 전에 전략적인 계획부터 세웁니다.                                                                                                                                                         |
+|   📋   | **Planner 플래너**                                    | 인터뷰 모드로 코드 한 줄 만지기 전에 전략적인 계획부터 세웁니다.                                                                                                                                                         |
 |   🔍   | **`/init-deep`**                                         | 프로젝트 전체에 걸쳐 계층적인 `AGENTS.md` 파일을 자동 생성합니다. 토큰 효율과 에이전트 성능 둘 다 잡습니다.                                                                                                              |
 
 ### 기강 잡힌 에이전트 (Discipline Agents)
 
 <table><tr>
-<td align="center"><img src=".github/assets/sisyphus.png" height="300" /></td>
-<td align="center"><img src=".github/assets/hephaestus.png" height="300" /></td>
+<td align="center"><img src=".github/assets/chief.png" height="300" /></td>
+<td align="center"><img src=".github/assets/founder.png" height="300" /></td>
 </tr></table>
 
-**Sisyphus** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**)는 당신의 메인 오케스트레이터입니다. 공격적인 병렬 실행으로 계획을 세우고, 전문가들에게 위임하며, 완료될 때까지 밀어붙입니다. 중간에 포기하는 법이 없습니다.
+**Chief** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**)는 당신의 메인 오케스트레이터입니다. 공격적인 병렬 실행으로 계획을 세우고, 전문가들에게 위임하며, 완료될 때까지 밀어붙입니다. 중간에 포기하는 법이 없습니다.
 
-**Hephaestus** (`gpt-5.4`)는 당신의 자율 딥 워커입니다. 레시피가 아니라 목표를 주세요. 베이비시터 없이 알아서 코드베이스를 탐색하고, 패턴을 연구하며, 끝에서 끝까지 전부 해냅니다. *진정한 장인(The Legitimate Craftsman).*
+**Founder** (`gpt-5.4`)는 당신의 자율 딥 워커입니다. 레시피가 아니라 목표를 주세요. 베이비시터 없이 알아서 코드베이스를 탐색하고, 패턴을 연구하며, 끝에서 끝까지 전부 해냅니다. *진정한 장인(The Autonomous Builder).*
 
-**Prometheus** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**)는 당신의 전략 플래너입니다. 인터뷰 모드로 작동합니다. 코드 한 줄 만지기 전에 질문을 던져 스코프를 파악하고 상세한 계획부터 세웁니다.
+**Planner** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**)는 당신의 전략 플래너입니다. 인터뷰 모드로 작동합니다. 코드 한 줄 만지기 전에 질문을 던져 스코프를 파악하고 상세한 계획부터 세웁니다.
 
 모든 에이전트는 해당 모델의 특장점에 맞춰 튜닝되어 있습니다. 수동으로 모델 바꿔가며 뻘짓하지 마세요. [더 알아보기 →](docs/guide/overview.md)
 
-> Anthropic이 [우리 때문에 OpenCode를 막아버렸습니다.](https://x.com/thdxr/status/2010149530486911014) 그래서 Hephaestus의 별명이 "진정한 장인(The Legitimate Craftsman)"인 겁니다. (어디서 많이 들어본 이름이죠?) 아이러니를 노렸습니다.
+> Anthropic이 [우리 때문에 OpenCode를 막아버렸습니다.](https://x.com/thdxr/status/2010149530486911014) 그래서 Founder의 별명이 "진정한 장인(The Autonomous Builder)"인 겁니다. (어디서 많이 들어본 이름이죠?) 아이러니를 노렸습니다.
 >
 > Opus에서 제일 잘 돌아가긴 하지만, Kimi K2.5 + GPT-5.4 조합만으로도 바닐라 Claude Code는 가볍게 바릅니다. 설정도 필요 없습니다.
 
 ### 에이전트 오케스트레이션
 
-Sisyphus가 하위 에이전트에게 일을 맡길 때, 모델을 직접 고르지 않습니다. **카테고리**를 고릅니다. 카테고리는 자동으로 올바른 모델에 매핑됩니다:
+Chief가 하위 에이전트에게 일을 맡길 때, 모델을 직접 고르지 않습니다. **카테고리**를 고릅니다. 카테고리는 자동으로 올바른 모델에 매핑됩니다:
 
 | 카테고리             | 용도                      |
 | :------------------- | :------------------------ |
@@ -245,11 +245,11 @@ project/
 
 에이전트가 알아서 관련된 컨텍스트만 쏙쏙 읽어갑니다. 수동으로 관리할 필요가 없습니다.
 
-### 플래닝. Prometheus
+### 플래닝. Planner
 
 복잡한 작업인가요? 대충 프롬프트 던지고 기도하지 마세요.
 
-`/start-work`를 치면 Prometheus가 호출됩니다. **진짜 엔지니어처럼 당신을 인터뷰하고**, 스코프와 모호한 점을 식별한 뒤, 코드 한 줄 만지기 전에 검증된 계획부터 세웁니다. 에이전트는 시작하기도 전에 자기가 뭘 만들어야 하는지 정확히 알게 됩니다.
+`/start-work`를 치면 Planner가 호출됩니다. **진짜 엔지니어처럼 당신을 인터뷰하고**, 스코프와 모호한 점을 식별한 뒤, 코드 한 줄 만지기 전에 검증된 계획부터 세웁니다. 에이전트는 시작하기도 전에 자기가 뭘 만들어야 하는지 정확히 알게 됩니다.
 
 ### 스킬 (Skills)
 
@@ -267,21 +267,21 @@ project/
 
 ---
 
-> **비하인드 스토리가 궁금하신가요?** 왜 Sisyphus가 돌을 굴리는지, 왜 Hephaestus가 "진정한 장인"인지, 그리고 [오케스트레이션 가이드](docs/guide/orchestration.md)를 읽어보세요.
+> **비하인드 스토리가 궁금하신가요?** 왜 Chief가 돌을 굴리는지, 왜 Founder가 "진정한 장인"인지, 그리고 [오케스트레이션 가이드](docs/guide/orchestration.md)를 읽어보세요.
 >
-> oh-my-opencode가 처음이신가요? 어떤 모델을 써야 할지 **[설치 가이드](docs/guide/installation.md#step-5-understand-your-model-setup)** 에서 추천 조합을 확인하세요.
+> oh-my-cortex가 처음이신가요? 어떤 모델을 써야 할지 **[설치 가이드](docs/guide/installation.md#step-5-understand-your-model-setup)** 에서 추천 조합을 확인하세요.
 
 ## 제거 (Uninstallation)
 
-oh-my-opencode를 지우려면:
+oh-my-cortex를 지우려면:
 
 1. **OpenCode 설정에서 플러그인 제거**
 
-   `~/.config/opencode/opencode.json` (또는 `opencode.jsonc`)를 열고 `plugin` 배열에서 `"oh-my-opencode"`를 지우세요.
+   `~/.config/opencode/opencode.json` (또는 `opencode.jsonc`)를 열고 `plugin` 배열에서 `"oh-my-cortex"`를 지우세요.
 
    ```bash
    # jq 사용 시
-   jq '.plugin = [.plugin[] | select(. != "oh-my-opencode")]' \
+   jq '.plugin = [.plugin[] | select(. != "oh-my-cortex")]' \
        ~/.config/opencode/opencode.json > /tmp/oc.json && \
        mv /tmp/oc.json ~/.config/opencode/opencode.json
    ```
@@ -290,10 +290,10 @@ oh-my-opencode를 지우려면:
 
    ```bash
    # 사용자 설정 제거
-   rm -f ~/.config/opencode/oh-my-opencode.json ~/.config/opencode/oh-my-opencode.jsonc
+   rm -f ~/.config/opencode/oh-my-cortex.json ~/.config/opencode/oh-my-cortex.jsonc
 
    # 프로젝트 설정 제거 (있는 경우)
-   rm -f .opencode/oh-my-opencode.json .opencode/oh-my-opencode.jsonc
+   rm -f .opencode/oh-my-cortex.json .opencode/oh-my-cortex.jsonc
    ```
 
 3. **제거 확인**
@@ -305,7 +305,7 @@ oh-my-opencode를 지우려면:
 
 ## 작가의 말
 
-**우리의 철학이 궁금하다면?** [Ultrawork 선언문](docs/manifesto.md)을 읽어보세요.
+**우리의 철학이 궁금하다면?** [Deepwork 선언문](docs/manifesto.md)을 읽어보세요.
 
 ---
 
@@ -313,9 +313,9 @@ oh-my-opencode를 지우려면:
 
 제가 부딪혔던 모든 문제와 그 해결책이 이 플러그인에 구워져 있습니다. 설치하고 그냥 쓰세요.
 
-OpenCode가 Debian/Arch라면, OmO는 Ubuntu/[Omarchy](https://omarchy.org/)입니다.
+OpenCode가 Debian/Arch라면, OMX는 Ubuntu/[Omarchy](https://omarchy.org/)입니다.
 
-[AmpCode](https://ampcode.com)와 [Claude Code](https://code.claude.com/docs/overview)의 영향을 아주 짙게 받았습니다. 기능들을 포팅했고, 대다수는 개선했습니다. 아직도 짓고 있는 중입니다. 이건 **Open**Code니까요.
+[deep-work systems](https://ampcode.com)와 [Claude Code](https://code.claude.com/docs/overview)의 영향을 아주 짙게 받았습니다. 기능들을 포팅했고, 대다수는 개선했습니다. 아직도 짓고 있는 중입니다. 이건 **Open**Code니까요.
 
 다른 하네스들도 멀티 모델 오케스트레이션을 약속합니다. 하지만 우리는 그걸 "진짜로" 내놨습니다. 안정성도 챙겼고요. 말로만이 아니라 실제로 돌아가는 기능들입니다.
 

@@ -1,5 +1,5 @@
 import type { AvailableSkill } from "../agents/dynamic-agent-prompt-builder"
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import type { BrowserAutomationProvider } from "../config/schema/browser-automation"
 import type {
   LoadedSkill,
@@ -49,7 +49,7 @@ function filterProviderGatedSkills(
 
 export async function createSkillContext(args: {
   directory: string
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
 }): Promise<SkillContext> {
   const { directory, pluginConfig } = args
 

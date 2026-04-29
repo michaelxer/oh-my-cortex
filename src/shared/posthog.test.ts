@@ -11,14 +11,14 @@ async function importPostHogModule(): Promise<typeof import("./posthog")> {
 }
 
 function enableTelemetryEnv(): void {
-  process.env.OMO_DISABLE_POSTHOG = "0"
-  process.env.OMO_SEND_ANONYMOUS_TELEMETRY = "1"
+  process.env.OMX_DISABLE_POSTHOG = "0"
+  process.env.OMX_SEND_ANONYMOUS_TELEMETRY = "1"
   process.env.POSTHOG_API_KEY = "test-api-key"
 }
 
 function clearTelemetryEnv(): void {
-  delete process.env.OMO_DISABLE_POSTHOG
-  delete process.env.OMO_SEND_ANONYMOUS_TELEMETRY
+  delete process.env.OMX_DISABLE_POSTHOG
+  delete process.env.OMX_SEND_ANONYMOUS_TELEMETRY
   delete process.env.POSTHOG_API_KEY
   delete process.env.POSTHOG_HOST
 }
@@ -88,8 +88,8 @@ describe("posthog client creation", () => {
 
   it("creates a plugin client when os.cpus throws", async () => {
     // given
-    process.env.OMO_DISABLE_POSTHOG = "0"
-    process.env.OMO_SEND_ANONYMOUS_TELEMETRY = "1"
+    process.env.OMX_DISABLE_POSTHOG = "0"
+    process.env.OMX_SEND_ANONYMOUS_TELEMETRY = "1"
     process.env.POSTHOG_API_KEY = "test-api-key"
 
     mock.module("os", () => ({
@@ -147,7 +147,7 @@ describe("posthog trackActive emission contract", () => {
     clearTelemetryEnv()
   })
 
-  it("emits exactly one omo_daily_active and never omo_hourly_active when captureDaily is true", async () => {
+  it("emits exactly one omx_daily_active and never omx_hourly_active when captureDaily is true", async () => {
     // given
     enableTelemetryEnv()
     const captured: CapturedPostHogMessage[] = []
@@ -166,9 +166,9 @@ describe("posthog trackActive emission contract", () => {
     // then
     expect(captured).toHaveLength(1)
     const emittedEvents = captured.map((message) => message.event)
-    expect(emittedEvents).not.toContain("omo_hourly_active")
+    expect(emittedEvents).not.toContain("omx_hourly_active")
     const [dailyEvent] = captured
-    expect(dailyEvent?.event).toBe("omo_daily_active")
+    expect(dailyEvent?.event).toBe("omx_daily_active")
     expect(dailyEvent?.distinctId).toBe("distinct-cli")
     expect(dailyEvent?.properties).toMatchObject({
       day_utc: "2026-04-18",
@@ -178,7 +178,7 @@ describe("posthog trackActive emission contract", () => {
     expect(dailyEvent?.properties).not.toHaveProperty("hour_utc")
   })
 
-  it("emits nothing and never omo_hourly_active when captureDaily is false", async () => {
+  it("emits nothing and never omx_hourly_active when captureDaily is false", async () => {
     // given
     enableTelemetryEnv()
     const captured: CapturedPostHogMessage[] = []
@@ -197,7 +197,7 @@ describe("posthog trackActive emission contract", () => {
     // then
     expect(captured).toHaveLength(0)
     const emittedEvents = captured.map((message) => message.event)
-    expect(emittedEvents).not.toContain("omo_daily_active")
-    expect(emittedEvents).not.toContain("omo_hourly_active")
+    expect(emittedEvents).not.toContain("omx_daily_active")
+    expect(emittedEvents).not.toContain("omx_hourly_active")
   })
 })

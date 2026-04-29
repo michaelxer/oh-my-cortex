@@ -20,7 +20,7 @@ describe("buildTaskMetadataBlock", () => {
       sessionId: "ses_bg_123",
       taskId: "ses_bg_123",
       backgroundTaskId: "bg_123",
-      agent: "explore",
+      agent: "tracker",
       category: "quick",
     }
 
@@ -29,7 +29,7 @@ describe("buildTaskMetadataBlock", () => {
 
     // then
     expect(block).toBe(
-      "<task_metadata>\nsession_id: ses_bg_123\ntask_id: ses_bg_123\nbackground_task_id: bg_123\nsubagent: explore\ncategory: quick\n</task_metadata>"
+      "<task_metadata>\nsession_id: ses_bg_123\ntask_id: ses_bg_123\nbackground_task_id: bg_123\nsubagent: tracker\ncategory: quick\n</task_metadata>"
     )
   })
 })
@@ -37,7 +37,7 @@ describe("buildTaskMetadataBlock", () => {
 describe("parseTaskMetadataBlock", () => {
   test("#given a task metadata block #when parsing #then it extracts the structured link", () => {
     // given
-    const text = "<task_metadata>\nsession_id: ses_sync_123\ntask_id: task_123\nbackground_task_id: bg_123\nsubagent: oracle\ncategory: deep\n</task_metadata>"
+    const text = "<task_metadata>\nsession_id: ses_sync_123\ntask_id: task_123\nbackground_task_id: bg_123\nsubagent: thinker\ncategory: deep\n</task_metadata>"
 
     // when
     const parsed = parseTaskMetadataBlock(text)
@@ -47,7 +47,7 @@ describe("parseTaskMetadataBlock", () => {
       sessionId: "ses_sync_123",
       taskId: "task_123",
       backgroundTaskId: "bg_123",
-      agent: "oracle",
+      agent: "thinker",
       category: "deep",
     })
   })
@@ -71,7 +71,7 @@ describe("extractTaskLink", () => {
       sessionID: "ses_meta_123",
       task_id: "task_meta_123",
       background_task_id: "bg_meta_123",
-      subagent: "atlas",
+      subagent: "lead",
       category: "unspecified-high",
     }
     const output = "<task_metadata>\nsession_id: ses_text_456\n</task_metadata>"
@@ -84,14 +84,14 @@ describe("extractTaskLink", () => {
       sessionId: "ses_meta_123",
       taskId: "task_meta_123",
       backgroundTaskId: "bg_meta_123",
-      agent: "atlas",
+      agent: "lead",
       category: "unspecified-high",
     })
   })
 
   test("#given missing metadata #when extracting #then it falls back to task metadata text", () => {
     // given
-    const output = "Task completed.\n\n<task_metadata>\nsession_id: ses_text_456\nsubagent: oracle\n</task_metadata>"
+    const output = "Task completed.\n\n<task_metadata>\nsession_id: ses_text_456\nsubagent: thinker\n</task_metadata>"
 
     // when
     const extracted = extractTaskLink(undefined, output)
@@ -99,7 +99,7 @@ describe("extractTaskLink", () => {
     // then
     expect(extracted).toEqual({
       sessionId: "ses_text_456",
-      agent: "oracle",
+      agent: "thinker",
     })
   })
 

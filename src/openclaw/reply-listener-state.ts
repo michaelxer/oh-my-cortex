@@ -7,7 +7,7 @@ import {
   getReplyListenerStateFilePath,
 } from "./reply-listener-paths"
 
-export const REPLY_LISTENER_STARTUP_TOKEN_ENV = "OMO_OPENCLAW_REPLY_LISTENER_STARTUP_TOKEN"
+export const REPLY_LISTENER_STARTUP_TOKEN_ENV = "OMX_OPENCLAW_REPLY_LISTENER_STARTUP_TOKEN"
 
 export interface ReplyListenerDaemonState {
   isRunning: boolean

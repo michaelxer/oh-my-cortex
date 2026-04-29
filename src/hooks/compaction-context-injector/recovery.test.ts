@@ -102,7 +102,7 @@ describe("createCompactionContextInjector recovery", () => {
           {
             info: {
               role: "user",
-              agent: "atlas",
+              agent: "lead",
               model: { providerID: "openai", modelID: "gpt-5" },
               tools: { bash: true },
             },
@@ -112,7 +112,7 @@ describe("createCompactionContextInjector recovery", () => {
           {
             info: {
               role: "user",
-              agent: "atlas",
+              agent: "lead",
               model: { providerID: "openai", modelID: "gpt-5" },
             },
           },
@@ -121,7 +121,7 @@ describe("createCompactionContextInjector recovery", () => {
           {
             info: {
               role: "user",
-              agent: "atlas",
+              agent: "lead",
               model: { providerID: "openai", modelID: "gpt-5" },
             },
           },
@@ -130,7 +130,7 @@ describe("createCompactionContextInjector recovery", () => {
           {
             info: {
               role: "user",
-              agent: "atlas",
+              agent: "lead",
               model: { providerID: "openai", modelID: "gpt-5" },
               tools: { bash: true },
             },
@@ -149,7 +149,7 @@ describe("createCompactionContextInjector recovery", () => {
 
     //#then
     expect(promptAsyncRecorder.calls.length).toBe(1)
-    expect(promptAsyncRecorder.calls[0]?.body.agent).toBe("atlas")
+    expect(promptAsyncRecorder.calls[0]?.body.agent).toBe("lead")
     expect(promptAsyncRecorder.calls[0]?.body.model).toEqual({
       providerID: "openai",
       modelID: "gpt-5",
@@ -164,7 +164,7 @@ describe("createCompactionContextInjector recovery", () => {
       {
         info: {
           role: "user",
-          agent: "atlas",
+          agent: "lead",
           model: { providerID: "openai", modelID: "gpt-4.1" },
         },
       },
@@ -175,7 +175,7 @@ describe("createCompactionContextInjector recovery", () => {
           {
             info: {
               role: "user",
-              agent: "atlas",
+              agent: "lead",
               model: { providerID: "openai", modelID: "gpt-5" },
               tools: { bash: true },
             },
@@ -218,7 +218,7 @@ describe("createCompactionContextInjector recovery", () => {
       {
         info: {
           role: "user",
-          agent: "atlas",
+          agent: "lead",
           model: { providerID: "openai", modelID: "gpt-5" },
           tools: { bash: true },
         },
@@ -259,7 +259,7 @@ describe("createCompactionContextInjector recovery", () => {
       {
         info: {
           role: "user",
-          agent: "atlas",
+          agent: "lead",
           model: { providerID: "openai", modelID: "gpt-5" },
           tools: { bash: true },
         },
@@ -298,7 +298,7 @@ describe("createCompactionContextInjector recovery", () => {
     const sessionID = "ses_poisoned_checkpoint_model"
     const promptAsyncRecorder = createPromptAsyncRecorder()
     setCompactionAgentConfigCheckpoint(sessionID, {
-      agent: "atlas",
+      agent: "lead",
       model: { providerID: "anthropic", modelID: "claude-opus-4-1" },
       tools: { bash: true },
     })
@@ -308,7 +308,7 @@ describe("createCompactionContextInjector recovery", () => {
           {
             info: {
               role: "user",
-              agent: "atlas",
+              agent: "lead",
               model: { providerID: "openai", modelID: "gpt-5" },
               tools: { bash: true },
             },
@@ -334,7 +334,7 @@ describe("createCompactionContextInjector recovery", () => {
           {
             info: {
               role: "user",
-              agent: "atlas",
+              agent: "lead",
               model: { providerID: "openai", modelID: "gpt-5" },
               tools: { bash: true },
             },

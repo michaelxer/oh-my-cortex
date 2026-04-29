@@ -2,8 +2,8 @@ import type { AgentConfig } from "@opencode-ai/sdk"
 import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
 import * as agents from "../agents"
 import * as shared from "../shared"
-import * as sisyphusJunior from "../agents/sisyphus-junior"
-import type { OhMyOpenCodeConfig } from "../config"
+import * as worker from "../agents/worker"
+import type { OhMyCortexConfig } from "../config"
 import * as skillLoader from "../features/opencode-skill-loader"
 import { applyAgentConfig } from "./agent-config-handler"
 import type { PluginComponents } from "./plugin-components-loader"
@@ -20,9 +20,9 @@ function createPluginComponents(): PluginComponents {
   }
 }
 
-function createPluginConfig(): OhMyOpenCodeConfig {
+function createPluginConfig(): OhMyCortexConfig {
   return {
-    sisyphus_agent: {
+    chief_agent: {
       planner_enabled: false,
     },
   }
@@ -30,7 +30,7 @@ function createPluginConfig(): OhMyOpenCodeConfig {
 
 describe("applyAgentConfig .agents skills", () => {
   let createBuiltinAgentsSpy: ReturnType<typeof spyOn>
-  let createSisyphusJuniorAgentSpy: ReturnType<typeof spyOn>
+  let createWorkerAgentSpy: ReturnType<typeof spyOn>
   let discoverConfigSourceSkillsSpy: ReturnType<typeof spyOn>
   let discoverUserClaudeSkillsSpy: ReturnType<typeof spyOn>
   let discoverProjectClaudeSkillsSpy: ReturnType<typeof spyOn>
@@ -42,13 +42,13 @@ describe("applyAgentConfig .agents skills", () => {
 
   beforeEach(() => {
     createBuiltinAgentsSpy = spyOn(agents, "createBuiltinAgents").mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "builtin", mode: "primary" } satisfies AgentConfig,
+      chief: { name: "chief", prompt: "builtin", mode: "primary" } satisfies AgentConfig,
     })
-    createSisyphusJuniorAgentSpy = spyOn(
-      sisyphusJunior,
-      "createSisyphusJuniorAgentWithOverrides",
+    createWorkerAgentSpy = spyOn(
+      worker,
+      "createWorkerAgentWithOverrides",
     ).mockReturnValue({
-      name: "sisyphus-junior",
+      name: "worker",
       prompt: "junior",
       mode: "all",
     } satisfies AgentConfig)
@@ -64,7 +64,7 @@ describe("applyAgentConfig .agents skills", () => {
 
   afterEach(() => {
     createBuiltinAgentsSpy.mockRestore()
-    createSisyphusJuniorAgentSpy.mockRestore()
+    createWorkerAgentSpy.mockRestore()
     discoverConfigSourceSkillsSpy.mockRestore()
     discoverUserClaudeSkillsSpy.mockRestore()
     discoverProjectClaudeSkillsSpy.mockRestore()

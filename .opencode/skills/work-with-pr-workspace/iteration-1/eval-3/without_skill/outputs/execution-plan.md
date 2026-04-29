@@ -36,7 +36,7 @@
 **External consumers (import from `"../../tools/delegate-task/constants"`):**
 | File | Imports |
 |------|---------|
-| `agents/atlas/prompt-section-builder.ts` | `CATEGORY_DESCRIPTIONS` |
+| `agents/lead/prompt-section-builder.ts` | `CATEGORY_DESCRIPTIONS` |
 | `agents/builtin-agents.ts` | `CATEGORY_DESCRIPTIONS` |
 | `plugin/available-categories.ts` | `CATEGORY_DESCRIPTIONS` |
 | `plugin-handlers/category-config-resolver.ts` | `DEFAULT_CATEGORIES` |

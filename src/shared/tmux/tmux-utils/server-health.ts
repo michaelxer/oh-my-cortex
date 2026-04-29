@@ -1,7 +1,7 @@
 let serverAvailable: boolean | null = null
 let serverCheckUrl: string | null = null
 
-const SERVER_RUNNING_KEY = Symbol.for("oh-my-opencode:server-running-in-process")
+const SERVER_RUNNING_KEY = Symbol.for("oh-my-cortex:server-running-in-process")
 
 function delay(milliseconds: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, milliseconds))

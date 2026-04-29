@@ -89,7 +89,7 @@ let readProviderModelsCacheSpy: { mockRestore: () => void } | undefined
 function createPluginConfig(mode: HarnessMode) {
   return {
     agents: {
-      sisyphus: {
+      chief: {
         fallback_models: CLIPROXYAPI_FALLBACKS,
       },
     },
@@ -170,7 +170,7 @@ function createHarness(args: {
     claudeCodeHooks: null,
     autoSlashCommand: null,
     startWork: null,
-    ralphLoop: null,
+    cortexLoop: null,
   }
 
   if (args.mode === "model" || args.mode === "both") {
@@ -254,7 +254,7 @@ async function primeMainSession(
           content: [],
           modelID: PRIMARY_MODEL.modelID,
           providerID: PRIMARY_MODEL.providerID,
-          agent: "Sisyphus - Ultraworker",
+          agent: "Chief - Deepworker",
           path: { cwd: "/tmp", root: "/tmp" },
         },
       },
@@ -284,7 +284,7 @@ async function triggerSessionError(
       type: "session.error",
       properties: {
         sessionID,
-        agent: "sisyphus",
+        agent: "chief",
         providerID: PRIMARY_MODEL.providerID,
         modelID: PRIMARY_MODEL.modelID,
         model: PRIMARY_MODEL_STRING,
@@ -306,7 +306,7 @@ async function triggerSessionStatusRetry(
       type: "session.status",
       properties: {
         sessionID,
-        agent: "sisyphus",
+        agent: "chief",
         model: PRIMARY_MODEL_STRING,
         status: {
           type: "retry",
@@ -336,7 +336,7 @@ async function triggerAssistantMessageError(
           model: PRIMARY_MODEL_STRING,
           modelID: PRIMARY_MODEL.modelID,
           providerID: PRIMARY_MODEL.providerID,
-          agent: "Sisyphus - Ultraworker",
+          agent: "Chief - Deepworker",
           path: { cwd: "/tmp", root: "/tmp" },
           error: {
             statusCode: 529,
@@ -381,7 +381,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
       model: PRIMARY_MODEL,
     })
 
@@ -400,7 +400,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
       model: PRIMARY_MODEL,
     })
 
@@ -419,7 +419,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
       model: PRIMARY_MODEL,
     })
 
@@ -438,7 +438,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
       model: PRIMARY_MODEL,
     })
 
@@ -457,7 +457,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
     })
 
     expect(harness.abortCalls).toEqual([])
@@ -476,7 +476,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
     })
 
     expect(harness.abortCalls).toEqual([sessionID])
@@ -495,7 +495,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
     })
 
     expect(harness.abortCalls).toEqual([])
@@ -514,7 +514,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
     })
 
     expect(harness.abortCalls).toEqual([])
@@ -533,7 +533,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
     })
 
     expect(harness.abortCalls).toEqual([sessionID])
@@ -552,7 +552,7 @@ describe("CLIProxyAPI-only fallback matrix", () => {
 
     const output = await sendNextMessage(harness.chatMessageHandler, {
       sessionID,
-      agent: "sisyphus",
+      agent: "chief",
     })
 
     expect(harness.abortCalls).toEqual([])

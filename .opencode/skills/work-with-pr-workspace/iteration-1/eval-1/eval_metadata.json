@@ -1,7 +1,7 @@
 {
   "eval_id": 1,
   "eval_name": "happy-path-feature-config-option",
-  "prompt": "I need to add a `max_background_agents` config option to oh-my-opencode that limits how many background agents can run simultaneously. It should be in the plugin config schema with a default of 5. Add validation and make sure the background manager respects it. Create a PR for this.",
+  "prompt": "I need to add a `max_background_agents` config option to oh-my-cortex that limits how many background agents can run simultaneously. It should be in the plugin config schema with a default of 5. Add validation and make sure the background manager respects it. Create a PR for this.",
   "assertions": [
     {
       "id": "worktree-isolation",

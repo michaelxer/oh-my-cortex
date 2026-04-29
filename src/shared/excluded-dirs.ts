@@ -4,7 +4,7 @@ const EXCLUDED_DIR_NAMES = [
   "dist",
   "build",
   ".next",
-  ".sisyphus",
+  ".cortex",
   ".omx",
   ".turbo",
   "coverage",

@@ -65,20 +65,20 @@ describe("parseUserRequest", () => {
     })
   })
 
-  describe("when ultrawork keywords are present", () => {
-    test("#given plan name with ultrawork keyword #when parsing #then strips keyword from plan name", () => {
-      const result = parseUserRequest("<user-request>my-plan ultrawork</user-request>")
+  describe("when deepwork keywords are present", () => {
+    test("#given plan name with deepwork keyword #when parsing #then strips keyword from plan name", () => {
+      const result = parseUserRequest("<user-request>my-plan deepwork</user-request>")
       expect(result.planName).toBe("my-plan")
     })
 
-    test("#given plan name with ulw keyword and worktree #when parsing #then strips ulw, preserves worktree", () => {
-      const result = parseUserRequest("<user-request>my-plan ulw --worktree /path/to/wt</user-request>")
+    test("#given plan name with dw keyword and worktree #when parsing #then strips dw, preserves worktree", () => {
+      const result = parseUserRequest("<user-request>my-plan dw --worktree /path/to/wt</user-request>")
       expect(result.planName).toBe("my-plan")
       expect(result.explicitWorktreePath).toBe("/path/to/wt")
     })
 
-    test("#given only ultrawork keyword with worktree #when parsing #then plan name is null, worktree preserved", () => {
-      const result = parseUserRequest("<user-request>ultrawork --worktree /wt</user-request>")
+    test("#given only deepwork keyword with worktree #when parsing #then plan name is null, worktree preserved", () => {
+      const result = parseUserRequest("<user-request>deepwork --worktree /wt</user-request>")
       expect(result.planName).toBeNull()
       expect(result.explicitWorktreePath).toBe("/wt")
     })

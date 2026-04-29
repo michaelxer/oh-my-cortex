@@ -23,7 +23,7 @@ export function shellEscapeArg(value: string): string {
 export function resolveCommandTimeoutMs(
   gatewayTimeout?: number,
   envTimeoutRaw =
-    process.env.OMO_OPENCLAW_COMMAND_TIMEOUT_MS
+    process.env.OMX_OPENCLAW_COMMAND_TIMEOUT_MS
     ?? process.env.OMX_OPENCLAW_COMMAND_TIMEOUT_MS,
 ): number {
   const parseFinite = (value: unknown): number | undefined => {

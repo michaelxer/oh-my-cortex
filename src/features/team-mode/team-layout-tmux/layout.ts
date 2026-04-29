@@ -87,7 +87,7 @@ export async function createTeamLayout(
       return null
     }
 
-    const sessionName = `omo-team-${teamRunId}`
+    const sessionName = `omx-team-${teamRunId}`
     const created = await runTmux(tmuxPath, ["new-session", "-d", "-s", sessionName, "-P", "-F", "#{window_id}"])
     if (!created.success || !created.output) return null
 
@@ -113,7 +113,7 @@ export async function removeTeamLayout(teamRunId: string, tmuxMgr: TmuxSessionMa
   try {
     const tmuxPath = await getTmuxPath()
     if (!tmuxPath) return
-    await runTmux(tmuxPath, ["kill-session", "-t", `omo-team-${teamRunId}`])
+    await runTmux(tmuxPath, ["kill-session", "-t", `omx-team-${teamRunId}`])
   } catch {
     return
   }

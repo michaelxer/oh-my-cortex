@@ -3,8 +3,8 @@
 ## Phase 0: Setup
 
 1. `git fetch origin dev`
-2. `git worktree add ../omo-wt/feat/arxiv-mcp origin/dev`
-3. `cd ../omo-wt/feat/arxiv-mcp`
+2. `git worktree add ../omx-wt/feat/arxiv-mcp origin/dev`
+3. `cd ../omx-wt/feat/arxiv-mcp`
 4. `git checkout -b feat/arxiv-mcp`
 
 ## Phase 1: Implement
@@ -62,7 +62,7 @@
 
 ### Gate B: review-work
 - Run `/review-work` skill (5-agent parallel review)
-- All 5 agents must pass: Oracle (goal), Oracle (code quality), Oracle (security), QA execution, context mining
+- All 5 agents must pass: Thinker (goal), Thinker (code quality), Thinker (security), QA execution, context mining
 
 ### Gate C: Cubic
 - Wait for cubic-dev-ai[bot] automated review
@@ -78,5 +78,5 @@
 ## Phase 4: Merge
 
 1. `gh pr merge --squash --delete-branch`
-2. `git worktree remove ../omo-wt/feat/arxiv-mcp`
+2. `git worktree remove ../omx-wt/feat/arxiv-mcp`
 3. `git branch -D feat/arxiv-mcp` (if not auto-deleted)

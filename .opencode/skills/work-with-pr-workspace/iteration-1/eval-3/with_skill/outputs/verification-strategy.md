@@ -27,9 +27,9 @@ Invoke after CI passes:
 ```
 
 **5 parallel agents**:
-1. **Oracle (goal/constraint)**: Verify backward compat claim. Check all 13 import paths resolve.
-2. **Oracle (code quality)**: Verify single-responsibility per file, LOC limits, no catch-all violations.
-3. **Oracle (security)**: No security implications in this refactor.
+1. **Thinker (goal/constraint)**: Verify backward compat claim. Check all 13 import paths resolve.
+2. **Thinker (code quality)**: Verify single-responsibility per file, LOC limits, no catch-all violations.
+3. **Thinker (security)**: No security implications in this refactor.
 4. **QA (hands-on execution)**: Run `bun test src/tools/delegate-task/` and verify all pass.
 5. **Context miner**: Check no related open issues/PRs conflict.
 
@@ -78,7 +78,7 @@ Expected exports from constants.ts (13 total):
 
 ```bash
 gh pr merge --squash --delete-branch
-git worktree remove ../omo-wt/refactor-delegate-task-constants
+git worktree remove ../omx-wt/refactor-delegate-task-constants
 ```
 
 Squash merge collapses the 2 atomic commits into 1 clean commit on dev.

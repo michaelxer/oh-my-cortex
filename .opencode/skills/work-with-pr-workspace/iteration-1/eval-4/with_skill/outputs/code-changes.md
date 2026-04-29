@@ -36,7 +36,7 @@ import { createWebsearchConfig } from "./websearch"
 import { context7 } from "./context7"
 import { grep_app } from "./grep-app"
 import { arxiv } from "./arxiv"
-import type { OhMyOpenCodeConfig } from "../config/schema"
+import type { OhMyCortexConfig } from "../config/schema"
 
 export { McpNameSchema, type McpName } from "./types"
 
@@ -48,7 +48,7 @@ type RemoteMcpConfig = {
   oauth?: false
 }
 
-export function createBuiltinMcps(disabledMcps: string[] = [], config?: OhMyOpenCodeConfig) {
+export function createBuiltinMcps(disabledMcps: string[] = [], config?: OhMyCortexConfig) {
   const mcps: Record<string, RemoteMcpConfig> = {}
 
   if (!disabledMcps.includes("websearch")) {

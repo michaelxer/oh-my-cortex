@@ -26,7 +26,7 @@ function createTask(overrides: Partial<BackgroundTask> & { id: string; sessionID
     parentMessageID: "parent-message",
     description: "test task",
     prompt: "test prompt",
-    agent: "explore",
+    agent: "tracker",
     status: "running",
     startedAt: new Date(),
     ...overrides,

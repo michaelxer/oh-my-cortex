@@ -41,7 +41,7 @@ tool.execute.after (write | edit | hashline edit)
 ## CONFIG
 
 ```jsonc
-// oh-my-opencode.jsonc
+// oh-my-cortex.jsonc
 {
   "comment_checker": {
     "enabled": true,      // default: true

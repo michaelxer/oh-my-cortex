@@ -113,7 +113,7 @@ describe("slashcommand command discovery plugin integration", () => {
   let envSnapshot: EnvSnapshot
 
   beforeEach(() => {
-    tempDir = mkdtempSync(join(tmpdir(), "omo-command-discovery-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omx-command-discovery-test-"))
     envSnapshot = {
       CLAUDE_CONFIG_DIR: process.env.CLAUDE_CONFIG_DIR,
       CLAUDE_PLUGINS_HOME: process.env.CLAUDE_PLUGINS_HOME,
@@ -267,7 +267,7 @@ Use nested command.
     expect(nestedCommand?.scope).toBe("opencode-project")
   })
 
-  it("keeps builtin start-work routed to Atlas during static discovery", () => {
+  it("keeps builtin start-work routed to Lead during static discovery", () => {
     // given
 
     // when
@@ -275,7 +275,7 @@ Use nested command.
     const startWorkCommand = commands.find((command) => command.name === "start-work")
 
     // then
-    expect(startWorkCommand?.metadata.agent).toBe("atlas")
+    expect(startWorkCommand?.metadata.agent).toBe("lead")
   })
 })
 
@@ -284,7 +284,7 @@ describe("non-directory commands path", () => {
   let savedEnv: Record<string, string | undefined>
 
   beforeEach(() => {
-    testDir = mkdtempSync(join(tmpdir(), "omo-cmd-file-"))
+    testDir = mkdtempSync(join(tmpdir(), "omx-cmd-file-"))
     savedEnv = {
       CLAUDE_CONFIG_DIR: process.env.CLAUDE_CONFIG_DIR,
       OPENCODE_CONFIG_DIR: process.env.OPENCODE_CONFIG_DIR,

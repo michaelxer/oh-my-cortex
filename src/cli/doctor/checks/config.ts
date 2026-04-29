@@ -1,13 +1,13 @@
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
 
-import { OhMyOpenCodeConfigSchema } from "../../../config"
+import { OhMyCortexConfigSchema } from "../../../config"
 import { detectPluginConfigFile, getOpenCodeConfigDir, parseJsonc } from "../../../shared"
 import { CHECK_IDS, CHECK_NAMES, PACKAGE_NAME } from "../constants"
 import type { CheckResult, DoctorIssue } from "../types"
 import { loadAvailableModelsFromCache } from "./model-resolution-cache"
 import { getModelResolutionInfoWithOverrides } from "./model-resolution"
-import type { OmoConfig } from "./model-resolution-types"
+import type { OmxConfig } from "./model-resolution-types"
 
 const PROJECT_CONFIG_DIR = join(process.cwd(), ".opencode")
 
@@ -15,7 +15,7 @@ interface ConfigValidationResult {
   exists: boolean
   path: string | null
   valid: boolean
-  config: OmoConfig | null
+  config: OmxConfig | null
   errors: string[]
 }
 
@@ -38,8 +38,8 @@ function validateConfig(): ConfigValidationResult {
 
   try {
     const content = readFileSync(configPath, "utf-8")
-    const rawConfig = parseJsonc<OmoConfig>(content)
-    const schemaResult = OhMyOpenCodeConfigSchema.safeParse(rawConfig)
+    const rawConfig = parseJsonc<OmxConfig>(content)
+    const schemaResult = OhMyCortexConfigSchema.safeParse(rawConfig)
 
     if (!schemaResult.success) {
       return {
@@ -63,7 +63,7 @@ function validateConfig(): ConfigValidationResult {
   }
 }
 
-function collectModelResolutionIssues(config: OmoConfig): DoctorIssue[] {
+function collectModelResolutionIssues(config: OmxConfig): DoctorIssue[] {
   const issues: DoctorIssue[] = []
   const availableModels = loadAvailableModelsFromCache()
   const resolution = getModelResolutionInfoWithOverrides(config)

@@ -11,19 +11,19 @@ describe("agent-sort-shim", () => {
 
   describe("#given an array of all 4 core agent objects in random order", () => {
     describe("#when toSorted with alphabetical compareFn", () => {
-      test("#then returns canonical sisyphus->hephaestus->prometheus->atlas order", () => {
+      test("#then returns canonical chief->founder->planner->lead order", () => {
         // given
-        const sisyphus = { name: "Sisyphus - Ultraworker" }
-        const hephaestus = { name: "Hephaestus - Deep Agent" }
-        const prometheus = { name: "Prometheus - Plan Builder" }
-        const atlas = { name: "Atlas - Plan Executor" }
-        const input = [atlas, prometheus, hephaestus, sisyphus]
+        const chief = { name: "Chief - Deepworker" }
+        const founder = { name: "Founder - Deep Agent" }
+        const planner = { name: "Planner - Plan Builder" }
+        const lead = { name: "Lead - Plan Executor" }
+        const input = [lead, planner, founder, chief]
 
         // when
         const result = input.toSorted((a, b) => a.name.localeCompare(b.name))
 
         // then
-        expect(result).toEqual([sisyphus, hephaestus, prometheus, atlas])
+        expect(result).toEqual([chief, founder, planner, lead])
       })
     })
   })
@@ -32,19 +32,19 @@ describe("agent-sort-shim", () => {
     describe("#when toSorted with alphabetical compareFn", () => {
       test("#then core agents come first in canonical order followed by non-core agents alphabetically", () => {
         // given
-        const sisyphus = { name: "Sisyphus - Ultraworker" }
-        const hephaestus = { name: "Hephaestus - Deep Agent" }
-        const prometheus = { name: "Prometheus - Plan Builder" }
-        const atlas = { name: "Atlas - Plan Executor" }
+        const chief = { name: "Chief - Deepworker" }
+        const founder = { name: "Founder - Deep Agent" }
+        const planner = { name: "Planner - Plan Builder" }
+        const lead = { name: "Lead - Plan Executor" }
         const build = { name: "build" }
         const plan = { name: "plan" }
-        const input = [atlas, build, prometheus, plan, hephaestus, sisyphus]
+        const input = [lead, build, planner, plan, founder, chief]
 
         // when
         const result = input.toSorted((a, b) => a.name.localeCompare(b.name))
 
         // then
-        expect(result).toEqual([sisyphus, hephaestus, prometheus, atlas, build, plan])
+        expect(result).toEqual([chief, founder, planner, lead, build, plan])
       })
     })
   })
@@ -53,11 +53,11 @@ describe("agent-sort-shim", () => {
     describe("#when toSorted with case-sensitive string-comparison compareFn", () => {
       test("#then activation predicate fails and result is ASCII-sensitive order with capital S before lowercase letters", () => {
         // given
-        const oracle = { name: "oracle" }
-        const librarian = { name: "librarian" }
-        const sisyphus = { name: "Sisyphus - Ultraworker" }
-        const explore = { name: "explore" }
-        const input = [oracle, librarian, sisyphus, explore]
+        const thinker = { name: "thinker" }
+        const researcher = { name: "researcher" }
+        const chief = { name: "Chief - Deepworker" }
+        const tracker = { name: "tracker" }
+        const input = [thinker, researcher, chief, tracker]
 
         // when
         const result = input.toSorted((a, b) =>
@@ -65,7 +65,7 @@ describe("agent-sort-shim", () => {
         )
 
         // then
-        expect(result).toEqual([sisyphus, explore, librarian, oracle])
+        expect(result).toEqual([chief, tracker, researcher, thinker])
       })
     })
   })
@@ -74,9 +74,9 @@ describe("agent-sort-shim", () => {
     describe("#when toSorted with a string-coercing compareFn", () => {
       test("#then activation predicate fails, shim does not throw, and result matches native semantics", () => {
         // given
-        const sisyphusObj = { name: "Sisyphus - Ultraworker" }
-        const hephaestusObj = { name: "Hephaestus - Deep Agent" }
-        const input: unknown[] = [null, sisyphusObj, "string", 42, hephaestusObj]
+        const chiefObj = { name: "Chief - Deepworker" }
+        const founderObj = { name: "Founder - Deep Agent" }
+        const input: unknown[] = [null, chiefObj, "string", 42, founderObj]
         const compare = (a: unknown, b: unknown): number => {
           const sa = String(a)
           const sb = String(b)
@@ -89,7 +89,7 @@ describe("agent-sort-shim", () => {
         const result = input.toSorted(compare)
 
         // then
-        expect(result).toEqual([42, sisyphusObj, hephaestusObj, null, "string"])
+        expect(result).toEqual([42, chiefObj, founderObj, null, "string"])
       })
     })
   })
@@ -129,18 +129,18 @@ describe("agent-sort-shim", () => {
     describe("#when sort with alphabetical compareFn (in-place)", () => {
       test("#then mutates the original array to canonical order", () => {
         // given
-        const sisyphus = { name: "Sisyphus - Ultraworker" }
-        const hephaestus = { name: "Hephaestus - Deep Agent" }
-        const prometheus = { name: "Prometheus - Plan Builder" }
-        const atlas = { name: "Atlas - Plan Executor" }
-        const input = [atlas, prometheus, hephaestus, sisyphus]
+        const chief = { name: "Chief - Deepworker" }
+        const founder = { name: "Founder - Deep Agent" }
+        const planner = { name: "Planner - Plan Builder" }
+        const lead = { name: "Lead - Plan Executor" }
+        const input = [lead, planner, founder, chief]
 
         // when
         const result = input.sort((a, b) => a.name.localeCompare(b.name))
 
         // then
         expect(result).toBe(input)
-        expect(input).toEqual([sisyphus, hephaestus, prometheus, atlas])
+        expect(input).toEqual([chief, founder, planner, lead])
       })
     })
   })
@@ -151,17 +151,17 @@ describe("agent-sort-shim", () => {
         // given
         installAgentSortShim()
         installAgentSortShim()
-        const sisyphus = { name: "Sisyphus - Ultraworker" }
-        const hephaestus = { name: "Hephaestus - Deep Agent" }
-        const prometheus = { name: "Prometheus - Plan Builder" }
-        const atlas = { name: "Atlas - Plan Executor" }
-        const input = [atlas, prometheus, hephaestus, sisyphus]
+        const chief = { name: "Chief - Deepworker" }
+        const founder = { name: "Founder - Deep Agent" }
+        const planner = { name: "Planner - Plan Builder" }
+        const lead = { name: "Lead - Plan Executor" }
+        const input = [lead, planner, founder, chief]
 
         // when
         const result = input.toSorted((a, b) => a.name.localeCompare(b.name))
 
         // then
-        expect(result).toEqual([sisyphus, hephaestus, prometheus, atlas])
+        expect(result).toEqual([chief, founder, planner, lead])
       })
     })
   })

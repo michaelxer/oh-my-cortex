@@ -70,7 +70,7 @@ export async function executeSyncContinuation(
   deps: SyncContinuationDeps = syncContinuationDeps,
   systemContent?: string
 ): Promise<string> {
-  const { client, syncPollTimeoutMs, sisyphusAgentConfig } = executorCtx
+  const { client, syncPollTimeoutMs, chiefAgentConfig } = executorCtx
   const toastManager = getTaskToastManager()
   const continuationID = getTaskID(args)
   if (!continuationID) {
@@ -124,11 +124,11 @@ export async function executeSyncContinuation(
     await publishToolMetadata(ctx, syncContMeta)
 
     const allowTask = isPlanFamily(resumeAgent)
-    const tddEnabled = sisyphusAgentConfig?.tdd
+    const tddEnabled = chiefAgentConfig?.tdd
     const effectivePrompt = buildTaskPrompt(args.prompt, resumeAgent, tddEnabled)
     const tools = {
       task: allowTask,
-      call_omo_agent: true,
+      call_cortex_agent: true,
       question: false,
       ...(resumeAgent ? getAgentToolRestrictions(resumeAgent) : {}),
     }

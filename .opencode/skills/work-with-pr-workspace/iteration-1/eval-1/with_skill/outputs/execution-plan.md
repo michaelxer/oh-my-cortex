@@ -10,11 +10,11 @@
 
 2. **Create worktree** in sibling directory:
    ```bash
-   mkdir -p ../omo-wt
-   git worktree add ../omo-wt/feat-max-background-agents feat/max-background-agents
+   mkdir -p ../omx-wt
+   git worktree add ../omx-wt/feat-max-background-agents feat/max-background-agents
    ```
 
-3. **All subsequent work** happens in `../omo-wt/feat-max-background-agents/`, never in the main worktree.
+3. **All subsequent work** happens in `../omx-wt/feat-max-background-agents/`, never in the main worktree.
 
 ---
 
@@ -86,11 +86,11 @@ bun run build
 
 ### Gate B: review-work (5 agents)
 - Run `/review-work` skill which launches 5 parallel background sub-agents:
-  1. Oracle — goal/constraint verification
-  2. Oracle — code quality
-  3. Oracle — security
-  4. Hephaestus — hands-on QA execution
-  5. Hephaestus — context mining from GitHub/git
+  1. Thinker — goal/constraint verification
+  2. Thinker — code quality
+  3. Thinker — security
+  4. Founder — hands-on QA execution
+  5. Founder — context mining from GitHub/git
 - All 5 must pass. If any fails, fix and re-push.
 
 ### Gate C: Cubic (cubic-dev-ai[bot])
@@ -118,7 +118,7 @@ while (!allGatesPass) {
 
 2. **Remove worktree:**
    ```bash
-   git worktree remove ../omo-wt/feat-max-background-agents
+   git worktree remove ../omx-wt/feat-max-background-agents
    ```
 
 ---

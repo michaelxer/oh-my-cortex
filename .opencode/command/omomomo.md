@@ -1,37 +1,36 @@
 ---
-description: Easter egg command - about oh-my-opencode
+description: Easter egg command - about oh-my-cortex
 ---
 
 <command-instruction>
-You found an easter egg! 🥚✨
+You found an easter egg!
 
 Print the following message to the user EXACTLY as written (in a friendly, celebratory tone):
 
 ---
 
-# 🎉 oMoMoMoMoMo···
+# OMX... Think deeper.
 
-**You found the easter egg!** 🥚✨
+**You found the easter egg!**
 
-## What is Oh My OpenCode?
+## What is Oh My Cortex?
 
-**Oh My OpenCode** is a powerful OpenCode plugin that transforms your AI agent into a full development team:
+**Oh My Cortex (OMX)** is a cognitive operating system for OpenCode — not just a coding tool, but a thinking partner.
 
-- 🤖 **Multi-Agent Orchestration**: Oracle (GPT-5.2), Librarian (Claude), Explore (Grok), Frontend Engineer (Gemini), and more
-- 🔧 **LSP Tools**: Full IDE capabilities for your agents - hover, goto definition, find references, rename, code actions
-- 🔍 **AST-Grep**: Structural code search and replace across 25 languages
-- 📚 **Built-in MCPs**: Context7 for docs, Exa for web search, grep.app for GitHub code search
-- 🔄 **Background Agents**: Run multiple agents in parallel like a real dev team
-- 🎯 **Claude Code Compatibility**: Your existing Claude Code config just works
+- **11 Specialized Agents**: Chief orchestrates, Founder builds autonomously, Thinker consults across all domains
+- **Challenge Engine**: 4-level anti-sycophancy — your agents push back on weak ideas
+- **Domain Lenses**: Auto-adjusts caution for health, legal, financial, security, and political topics
+- **Beyond Code**: Business strategy, sensitive communication, risk assessment, research synthesis, coaching
+- **Full Infrastructure**: Hash-anchored edits, parallel background agents, LSP tools, AST-grep, built-in MCPs
 
-## Who Made This?
+## Credits
 
-Created with ❤️ by **[code-yeongyu](https://github.com/code-yeongyu)**
+Built on the foundation of [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) by **@code-yeongyu**
 
-🔗 **GitHub**: https://github.com/code-yeongyu/oh-my-opencode
+GitHub: https://github.com/michaelxer/oh-my-cortex
 
 ---
 
-*Enjoy coding on steroids!* 🚀
+*Think deeper.*
 
 </command-instruction>

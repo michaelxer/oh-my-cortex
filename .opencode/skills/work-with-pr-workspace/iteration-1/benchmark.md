@@ -13,7 +13,7 @@
 | Eval | With Skill | Without Skill | Delta |
 |------|-----------|---------------|-------|
 | happy-path-feature-config-option | 100% (10/10) | 40% (4/10) | +60% |
-| bugfix-atlas-null-check | 100% (6/6) | 67% (4/6) | +33% |
+| bugfix-lead-null-check | 100% (6/6) | 67% (4/6) | +33% |
 | refactor-split-constants | 100% (5/5) | 40% (2/5) | +60% |
 | new-mcp-arxiv-casual | 100% (5/5) | 60% (3/5) | +40% |
 | regex-fix-false-positive | 80% (4/5) | 60% (3/5) | +20% |

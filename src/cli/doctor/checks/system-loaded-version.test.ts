@@ -49,8 +49,8 @@ describe("system loaded version", () => {
   describe("getLoadedPluginVersion", () => {
     it("prefers the config directory when both installs exist", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omx-config-")
+      const cacheHome = createTemporaryDirectory("omx-cache-")
       const cacheDir = join(cacheHome, "opencode")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
@@ -82,8 +82,8 @@ describe("system loaded version", () => {
 
     it("falls back to the cache directory for legacy installs", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omx-config-")
+      const cacheHome = createTemporaryDirectory("omx-cache-")
       const cacheDir = join(cacheHome, "opencode")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
@@ -109,7 +109,7 @@ describe("system loaded version", () => {
 
     it("detects installs published under the canonical plugin name", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
+      const configDir = createTemporaryDirectory("omx-config-")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
 
@@ -131,8 +131,8 @@ describe("system loaded version", () => {
 
     it("resolves symlinked config directories before selecting install path", () => {
       //#given
-      const realConfigDir = createTemporaryDirectory("omo-real-config-")
-      const symlinkBaseDir = createTemporaryDirectory("omo-symlink-base-")
+      const realConfigDir = createTemporaryDirectory("omx-real-config-")
+      const symlinkBaseDir = createTemporaryDirectory("omx-symlink-base-")
       const symlinkConfigDir = join(symlinkBaseDir, "config-link")
 
       symlinkSync(realConfigDir, symlinkConfigDir, process.platform === "win32" ? "junction" : "dir")

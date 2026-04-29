@@ -1,0 +1,1 @@
+export { createNoChiefGptHook } from "./hook"

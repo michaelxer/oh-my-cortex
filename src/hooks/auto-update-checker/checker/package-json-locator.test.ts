@@ -8,29 +8,29 @@ describe("findPackageJsonUp", () => {
   let workdir: string
 
   beforeEach(() => {
-    workdir = mkdtempSync(join(tmpdir(), "omo-pkg-locator-"))
+    workdir = mkdtempSync(join(tmpdir(), "omx-pkg-locator-"))
   })
 
   afterEach(() => {
     rmSync(workdir, { recursive: true, force: true })
   })
 
-  it("finds a package.json whose name is the canonical oh-my-opencode", () => {
+  it("finds a package.json whose name is the canonical oh-my-cortex", () => {
     const pkgPath = join(workdir, "package.json")
-    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-opencode", version: "3.16.0" }))
+    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-cortex", version: "3.16.0" }))
 
     const found = findPackageJsonUp(workdir)
 
     expect(found).toBe(pkgPath)
   })
 
-  it("finds a package.json whose name is the aliased oh-my-openagent (GH-3257)", () => {
-    // A user who installed `oh-my-openagent` from npm gets a node_modules entry
-    // whose package.json has `name: "oh-my-openagent"`. The auto-update-checker
+  it("finds a package.json whose name is the aliased oh-my-cortex (GH-3257)", () => {
+    // A user who installed `oh-my-cortex` from npm gets a node_modules entry
+    // whose package.json has `name: "oh-my-cortex"`. The auto-update-checker
     // must still resolve it so the startup toast shows a real version instead
     // of "unknown".
     const pkgPath = join(workdir, "package.json")
-    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-openagent", version: "3.16.0" }))
+    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-cortex", version: "3.16.0" }))
 
     const found = findPackageJsonUp(workdir)
 
@@ -41,7 +41,7 @@ describe("findPackageJsonUp", () => {
     const nested = join(workdir, "dist", "checker")
     mkdirSync(nested, { recursive: true })
     const pkgPath = join(workdir, "package.json")
-    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-openagent", version: "3.16.0" }))
+    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-cortex", version: "3.16.0" }))
 
     const found = findPackageJsonUp(nested)
 

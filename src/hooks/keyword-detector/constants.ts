@@ -1,11 +1,11 @@
 export const CODE_BLOCK_PATTERN = /```[\s\S]*?```/g
 export const INLINE_CODE_PATTERN = /`[^`]+`/g
 
-export { isPlannerAgent, isNonOmoAgent, getUltraworkMessage } from "./ultrawork"
+export { isPlannerAgent, isNonCortexAgent, getDeepworkMessage } from "./deepwork"
 export { SEARCH_PATTERN, SEARCH_MESSAGE } from "./search"
 export { ANALYZE_PATTERN, ANALYZE_MESSAGE } from "./analyze"
 
-import { getUltraworkMessage } from "./ultrawork"
+import { getDeepworkMessage } from "./deepwork"
 import { SEARCH_PATTERN, SEARCH_MESSAGE } from "./search"
 
 export type KeywordDetector = {
@@ -15,8 +15,8 @@ export type KeywordDetector = {
 
 export const KEYWORD_DETECTORS: KeywordDetector[] = [
   {
-    pattern: /\b(ultrawork|ulw)\b/i,
-    message: getUltraworkMessage,
+    pattern: /\b(deepwork|dw)\b/i,
+    message: getDeepworkMessage,
   },
   {
     pattern: SEARCH_PATTERN,
@@ -28,17 +28,17 @@ export const KEYWORD_DETECTORS: KeywordDetector[] = [
     message: `[analyze-mode]
 ANALYSIS MODE. Gather context before diving deep:
 CONTEXT GATHERING (parallel):
-- 1-2 explore agents (codebase patterns, implementations)
-- 1-2 librarian agents (if external library involved)
+- 1-2 tracker agents (codebase patterns, implementations)
+- 1-2 researcher agents (if external library involved)
 - Direct tools: Grep, AST-grep, LSP for targeted searches
 
 IF COMPLEX - DO NOT STRUGGLE ALONE. Consult specialists:
-- **Oracle**: Conventional problems (architecture, debugging, complex logic)
+- **Thinker**: Conventional problems (architecture, debugging, complex logic)
 - **Artistry**: Non-conventional problems (different approach needed)
 
 SYNTHESIZE findings before proceeding.
 ---
 MANDATORY delegate_task params: ALWAYS include load_skills=[] and run_in_background when calling delegate_task.
-Example: delegate_task(subagent_type="explore", prompt="...", run_in_background=true, load_skills=[])`,
+Example: delegate_task(subagent_type="tracker", prompt="...", run_in_background=true, load_skills=[])`,
   },
 ]

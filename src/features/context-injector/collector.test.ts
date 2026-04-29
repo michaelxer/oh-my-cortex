@@ -14,9 +14,9 @@ describe("ContextCollector", () => {
       // given
       const sessionID = "ses_test1"
       const options = {
-        id: "ulw-context",
+        id: "dw-context",
         source: "keyword-detector" as ContextSourceType,
-        content: "Ultrawork mode activated",
+        content: "Deepwork mode activated",
       }
 
       // when
@@ -26,7 +26,7 @@ describe("ContextCollector", () => {
       const pending = collector.getPending(sessionID)
       expect(pending.hasContent).toBe(true)
       expect(pending.entries).toHaveLength(1)
-      expect(pending.entries[0].content).toBe("Ultrawork mode activated")
+      expect(pending.entries[0].content).toBe("Deepwork mode activated")
     })
 
     it("assigns default priority of 'normal' when not specified", () => {
@@ -66,7 +66,7 @@ describe("ContextCollector", () => {
       // given
       const sessionID = "ses_test4"
       const options = {
-        id: "ulw-context",
+        id: "dw-context",
         source: "keyword-detector" as ContextSourceType,
         content: "First content",
       }

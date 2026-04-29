@@ -6,13 +6,18 @@ import {
   detectCurrentConfig,
   getOpenCodeVersion,
   isOpenCodeInstalled,
-  writeOmoConfig,
+  writeOmxConfig,
 } from "./config-manager"
+import { generateOmxConfig } from "./config-manager/generate-omx-config"
 import {
   SYMBOLS,
   argsToConfig,
   detectedToInitialValues,
+  formatAgentModelTable,
+  formatCoexistenceNote,
+  formatCommands,
   formatConfigSummary,
+  formatGettingStarted,
   printBox,
   printError,
   printHeader,
@@ -107,11 +112,11 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   )
 
   printStep(step++, totalSteps, `Writing ${PLUGIN_NAME} configuration...`)
-  const omoResult = writeOmoConfig(config)
-  if (!omoResult.success) {
-    printError(`Failed: ${omoResult.error}`)
+  const omxResult = writeOmxConfig(config)
+  if (!omxResult.success) {
+    printError(`Failed: ${omxResult.error}`)
     try {
-      posthog.capture({ distinctId, event: "install_failed", properties: { command: "install", reason: "omo_config_write_failed", is_update: isUpdate } })
+      posthog.capture({ distinctId, event: "install_failed", properties: { command: "install", reason: "omx_config_write_failed", is_update: isUpdate } })
     } catch {
       // telemetry failure is non-fatal, silently ignore
     }
@@ -122,13 +127,22 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
     }
     return 1
   }
-  printSuccess(`Config written ${SYMBOLS.arrow} ${color.dim(omoResult.configPath)}`)
+  printSuccess(`Config written ${SYMBOLS.arrow} ${color.dim(omxResult.configPath)}`)
 
+  // Generate the model config to show actual agent-model assignments
+  const generatedConfig = generateOmxConfig(config) as import("./model-fallback-types").GeneratedOmxConfig
+
+  console.log()
+  console.log(`${SYMBOLS.star} ${color.bold(color.green(isUpdate ? "Configuration updated!" : "Installation complete!"))}`)
+  console.log(`  Restart ${color.cyan("opencode")} to activate OMX.`)
+  console.log()
+
+  // Provider summary
   printBox(formatConfigSummary(config), isUpdate ? "Updated Configuration" : "Installation Complete")
 
   if (!config.hasClaude) {
     printInfo(
-      "Note: Sisyphus agent performs best with Claude Opus 4.5+. " +
+      "Note: Chief agent performs best with Claude Opus 4.5+. " +
         "Other models work but may have reduced orchestration quality.",
     )
   }
@@ -144,29 +158,37 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
     printWarning("No model providers configured. Using opencode/big-pickle as fallback.")
   }
 
-  console.log(`${SYMBOLS.star} ${color.bold(color.green(isUpdate ? "Configuration updated!" : "Installation complete!"))}`)
-  console.log(`  Run ${color.cyan("opencode")} to start!`)
+  // Agent-model assignment table — shows actual models matched to each agent
+  printBox(formatAgentModelTable(generatedConfig), "Agent Setup")
+
+  // Getting started guide
+  printBox(formatGettingStarted(), "Getting Started")
+
+  // Useful commands
+  printBox(formatCommands(), "Commands")
+
+  // Coexistence note
+  printBox(formatCoexistenceNote(), "Coexistence")
+
+  // Important notes
+  console.log(`  ${SYMBOLS.info} ${color.bold("Important Notes")}`)
+  console.log(`    ${SYMBOLS.bullet} OMX matches the ${color.bold("strongest available model")} to each agent automatically`)
+  console.log(`    ${SYMBOLS.bullet} Any AI model works — OMX adapts to what you have`)
+  console.log(`    ${SYMBOLS.bullet} Add more providers later by re-running ${color.cyan(`bunx ${PUBLISHED_PACKAGE_NAME} install`)}`)
+  console.log(`    ${SYMBOLS.bullet} Run ${color.cyan(`bunx ${PUBLISHED_PACKAGE_NAME} doctor`)} to verify your setup`)
   console.log()
 
   printInfo(
-    "Anonymous telemetry is enabled by default. Disable it with OMO_SEND_ANONYMOUS_TELEMETRY=0 or OMO_DISABLE_POSTHOG=1.",
+    "Anonymous telemetry is enabled by default. Disable with OMX_SEND_ANONYMOUS_TELEMETRY=0 or OMX_DISABLE_POSTHOG=1.",
   )
-  printInfo("Docs: docs/legal/privacy-policy.md and docs/legal/terms-of-service.md")
   console.log()
-
-  printBox(
-    `${color.bold("Pro Tip:")} Include ${color.cyan("ultrawork")} (or ${color.cyan("ulw")}) in your prompt.\n` +
-      `All features work like magic-parallel agents, background tasks,\n` +
-      `deep exploration, and relentless execution until completion.`,
-    "The Magic Word",
-  )
 
   console.log(`${SYMBOLS.star} ${color.yellow("If you found this helpful, consider starring the repo!")}`)
   console.log(
-    `  ${color.dim("gh api --silent --method PUT /user/starred/code-yeongyu/oh-my-openagent >/dev/null 2>&1 || true")}`,
+    `  ${color.dim("gh api --silent --method PUT /user/starred/michaelxer/oh-my-cortex >/dev/null 2>&1 || true")}`,
   )
   console.log()
-  console.log(color.dim("oMoMoMoMo... Enjoy!"))
+  console.log(color.dim("OMX... Think deeper."))
   console.log()
 
   try {

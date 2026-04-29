@@ -22,7 +22,7 @@ function getNestedRecord(record: Record<string, unknown>, key: string): Record<s
 async function loadSeparateHostZodModule(): Promise<typeof import("zod")> {
   const pluginPackageDirectory = dirname(Bun.resolveSync("@opencode-ai/plugin/package.json", import.meta.dir))
   const sourceZodDirectory = join(pluginPackageDirectory, "node_modules", "zod")
-  const tempDirectory = mkdtempSync(join(tmpdir(), "omo-host-zod-"))
+  const tempDirectory = mkdtempSync(join(tmpdir(), "omx-host-zod-"))
   const copiedZodDirectory = join(tempDirectory, "zod")
 
   cpSync(sourceZodDirectory, copiedZodDirectory, { recursive: true })

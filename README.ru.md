@@ -7,7 +7,7 @@
 > [!TIP]
 > **Building in Public**
 >
-> Мейнтейнер разрабатывает и поддерживает oh-my-opencode в режиме реального времени с помощью Jobdori — ИИ-ассистента на базе глубоко кастомизированной версии OpenClaw.
+> Мейнтейнер разрабатывает и поддерживает oh-my-cortex в режиме реального времени с помощью Jobdori — ИИ-ассистента на базе глубоко кастомизированной версии OpenClaw.
 > Каждая фича, каждый фикс, каждый триаж issue — в прямом эфире в нашем Discord.
 >
 > [![Building in Public](./.github/assets/building-in-public.png)](https://discord.gg/PUwSMR9XNk)
@@ -17,22 +17,22 @@
 
 > [!NOTE]
 >
-> [![Sisyphus Labs - Sisyphus is the agent that codes like your team.](./.github/assets/sisyphuslabs.png?v=2)](https://sisyphuslabs.ai)
+> [![Chief Labs - Chief is the agent that codes like your team.](./.github/assets/chieflabs.png?v=2)](https://chieflabs.ai)
 >
-> > **Мы создаём полноценную продуктовую версию Sisyphus, чтобы задать стандарты для frontier-агентов. <br />Присоединяйтесь к листу ожидания [здесь](https://sisyphuslabs.ai).**
+> > **Мы создаём полноценную продуктовую версию Chief, чтобы задать стандарты для frontier-агентов. <br />Присоединяйтесь к листу ожидания [здесь](https://chieflabs.ai).**
 
 > [!TIP] Будьте с нами!
 >
-> | [](https://discord.gg/PUwSMR9XNk)   | Вступайте в наш [Discord](https://discord.gg/PUwSMR9XNk), чтобы общаться с контрибьюторами и пользователями `oh-my-opencode`. |
+> | [](https://discord.gg/PUwSMR9XNk)   | Вступайте в наш [Discord](https://discord.gg/PUwSMR9XNk), чтобы общаться с контрибьюторами и пользователями `oh-my-cortex`. |
 > | ----------------------------------- | ------------------------------------------------------------ |
-> | [](https://x.com/justsisyphus)      | Новости и обновления `oh-my-opencode` раньше публиковались на моём аккаунте X. <br /> После ошибочной блокировки, [@justsisyphus](https://x.com/justsisyphus) публикует обновления вместо меня. |
-> | [](https://github.com/code-yeongyu) | Подпишитесь на [@code-yeongyu](https://github.com/code-yeongyu) на GitHub, чтобы следить за другими проектами. |
+> | [](https://x.com/justchief)      | Новости и обновления `oh-my-cortex` раньше публиковались на моём аккаунте X. <br /> После ошибочной блокировки, [@justchief](https://x.com/justchief) публикует обновления вместо меня. |
+> | [](https://github.com/michaelxer) | Подпишитесь на [@michaelxer](https://github.com/michaelxer) на GitHub, чтобы следить за другими проектами. |
 
 <!-- <CENTERED SECTION FOR GITHUB DISPLAY> --> <div align="center">
 
-[![Oh My OpenCode](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-openagent#oh-my-opencode)
+[![Oh My Cortex](./.github/assets/hero.jpg)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
 
-[![Preview](./.github/assets/omo.png)](https://github.com/code-yeongyu/oh-my-openagent#oh-my-opencode)
+[![Preview](./.github/assets/omx.png)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
 
 </div>
 
@@ -42,7 +42,7 @@
 
 <div align="center">
 
-[![GitHub Release](https://img.shields.io/github/v/release/code-yeongyu/oh-my-openagent?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/releases) [![npm downloads](https://img.shields.io/npm/dt/oh-my-opencode?color=ff6b35&labelColor=black&style=flat-square)](https://www.npmjs.com/package/oh-my-opencode) [![GitHub Contributors](https://img.shields.io/github/contributors/code-yeongyu/oh-my-openagent?color=c4f042&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/graphs/contributors) [![GitHub Forks](https://img.shields.io/github/forks/code-yeongyu/oh-my-openagent?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/network/members) [![GitHub Stars](https://img.shields.io/github/stars/code-yeongyu/oh-my-openagent?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/code-yeongyu/oh-my-openagent?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/issues) [![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/blob/master/LICENSE.md) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/code-yeongyu/oh-my-openagent)
+[![GitHub Release](https://img.shields.io/github/v/release/michaelxer/oh-my-cortex?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/releases) [![npm downloads](https://img.shields.io/npm/dt/oh-my-cortex?color=ff6b35&labelColor=black&style=flat-square)](https://www.npmjs.com/package/oh-my-cortex) [![GitHub Contributors](https://img.shields.io/github/contributors/michaelxer/oh-my-cortex?color=c4f042&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/graphs/contributors) [![GitHub Forks](https://img.shields.io/github/forks/michaelxer/oh-my-cortex?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/network/members) [![GitHub Stars](https://img.shields.io/github/stars/michaelxer/oh-my-cortex?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/michaelxer/oh-my-cortex?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/issues) [![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/blob/master/LICENSE.md) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/michaelxer/oh-my-cortex)
 
 English | 한국어 | 日本語 | 简体中文 | Русский
 
@@ -52,13 +52,13 @@ English | 한국어 | 日本語 | 简体中文 | Русский
 
 > «Из-за него я отменил подписку на Cursor. В опенсорс-сообществе происходит что-то невероятное.» — [Arthur Guiot](https://x.com/arthur_guiot/status/2008736347092382053?s=20)
 
-> «Если Claude Code делает за 7 дней то, на что у человека уходит 3 месяца, Sisyphus справляется за 1 час. Он просто работает, пока задача не выполнена. Это дисциплинированный агент.» <br/>— B, исследователь в области квантовых финансов
+> «Если Claude Code делает за 7 дней то, на что у человека уходит 3 месяца, Chief справляется за 1 час. Он просто работает, пока задача не выполнена. Это дисциплинированный агент.» <br/>— B, исследователь в области квантовых финансов
 
 > «За один день устранил 8000 предупреждений eslint с помощью Oh My Opencode.» <br/>— [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> «За ночь конвертировал приложение на tauri в 45k строк в веб-SaaS с помощью Ohmyopencode и ralph loop. Начал с промпта «проинтервьюируй меня», попросил оценки и рекомендации по вопросам. Было удивительно наблюдать за работой и утром проснуться с почти рабочим сайтом!» — [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+> «За ночь конвертировал приложение на tauri в 45k строк в веб-SaaS с помощью Ohmyopencode и cortex loop. Начал с промпта «проинтервьюируй меня», попросил оценки и рекомендации по вопросам. Было удивительно наблюдать за работой и утром проснуться с почти рабочим сайтом!» — [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
-> «Используйте oh-my-opencode — вы не захотите возвращаться назад.» <br/>— [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
+> «Используйте oh-my-cortex — вы не захотите возвращаться назад.» <br/>— [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
 > «Пока не могу точно объяснить, почему это так круто, но опыт разработки вышел на совершенно другой уровень.» — [苔硯:こけすずり](https://x.com/kokesuzuri/status/2008532913961529372?s=20)
 
@@ -68,27 +68,27 @@ English | 한국어 | 日本語 | 简体中文 | Русский
 
 > «Наймите @yeon_gyu_kim, если сможете его уговорить, этот парень революционизировал opencode.» <br/>— [mysticaltech](https://x.com/mysticaltech/status/2001858758608376079)
 
-> «Oh My OpenCode — это что-то с чем-то» — [YouTube — Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
+> «Oh My Cortex — это что-то с чем-то» — [YouTube — Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
 
 ------
 
-# Oh My OpenCode
+# Oh My Cortex
 
 Вы жонглируете Claude Code, Codex, случайными OSS-моделями. Настраиваете рабочие процессы. Дебажите агентов.
 
 Мы уже проделали эту работу. Протестировали всё. Оставили только то, что реально работает.
 
-Установите OmO. Введите `ultrawork`. Готово.
+Установите OMX. Введите `deepwork`. Готово.
 
 ## Установка
 
 ### Для людей
 
-Скопируйте и вставьте этот промпт в ваш LLM-агент (Claude Code, AmpCode, Cursor и т.д.):
+Скопируйте и вставьте этот промпт в ваш LLM-агент (Claude Code, deep-work systems, Cursor и т.д.):
 
 ```
-Install and configure oh-my-opencode by following the instructions here:
-https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
+Install and configure oh-my-cortex by following the instructions here:
+https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
 Или прочитайте руководство по установке, но серьёзно — пусть агент сделает это за вас. Люди ошибаются в конфигах.
@@ -98,12 +98,12 @@ https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/do
 Загрузите руководство по установке и следуйте ему:
 
 ```bash
-curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
+curl -s https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
-**Примечание**: Используйте опубликованное имя пакета и бинарника `oh-my-opencode`. Внутри `opencode.json` слой совместимости теперь предпочитает точку входа плагина `oh-my-openagent`, в то время как устаревшие записи `oh-my-opencode` все еще загружаются с предупреждением. Файлы конфигурации плагина по-прежнему часто используют `oh-my-opencode.json` или `oh-my-opencode.jsonc`, и как устаревшие, так и переименованные базовые имена распознаются во время переходного периода.
+**Примечание**: Используйте опубликованное имя пакета и бинарника `oh-my-cortex`. Внутри `opencode.json` слой совместимости теперь предпочитает точку входа плагина `oh-my-cortex`, в то время как устаревшие записи `oh-my-cortex` все еще загружаются с предупреждением. Файлы конфигурации плагина по-прежнему часто используют `oh-my-cortex.json` или `oh-my-cortex.jsonc`, и как устаревшие, так и переименованные базовые имена распознаются во время переходного периода.
 
-Анонимная телеметрия включена по умолчанию для улучшения надежности установки и работы. Она использует PostHog с хешированным идентификатором установки, никогда не используя исходное имя хоста, и может быть отключена с помощью `OMO_SEND_ANONYMOUS_TELEMETRY=0` или `OMO_DISABLE_POSTHOG=1`. См. [Политику конфиденциальности](docs/legal/privacy-policy.md) и [Условия обслуживания](docs/legal/terms-of-service.md).
+Анонимная телеметрия включена по умолчанию для улучшения надежности установки и работы. Она использует PostHog с хешированным идентификатором установки, никогда не используя исходное имя хоста, и может быть отключена с помощью `OMX_SEND_ANONYMOUS_TELEMETRY=0` или `OMX_DISABLE_POSTHOG=1`. См. [Политику конфиденциальности](docs/legal/privacy-policy.md) и [Условия обслуживания](docs/legal/terms-of-service.md).
 
 ------
 
@@ -112,20 +112,20 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/head
 Мы вышли за пределы эпохи чтения документации. Просто вставьте это в своего агента:
 
 ```
-Read this and tell me why it's not just another boilerplate: https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/README.md
+Read this and tell me why it's not just another boilerplate: https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/README.md
 ```
 
 ## Ключевые возможности
 
-### 🪄 `ultrawork`
+### 🪄 `deepwork`
 
 Вы правда это читаете? Поразительно.
 
-Установите. Введите `ultrawork` (или `ulw`). Готово.
+Установите. Введите `deepwork` (или `dw`). Готово.
 
 Всё описанное ниже, каждая функция, каждая оптимизация — вам не нужно это знать. Оно просто работает.
 
-Даже при наличии только следующих подписок ultrawork будет работать отлично (проект не аффилирован с ними, это личная рекомендация):
+Даже при наличии только следующих подписок deepwork будет работать отлично (проект не аффилирован с ними, это личная рекомендация):
 
 - [Подписка ChatGPT ($20)](https://chatgpt.com/)
 - [Подписка Kimi Code ($19)](https://www.kimi.com/code)
@@ -134,41 +134,41 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 
 |     | Функция                                                  | Что делает                                                                                                                                                                                                                       |
 | --- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🤖   | **Дисциплинированные агенты**                            | Sisyphus оркестрирует Hephaestus, Oracle, Librarian, Explore. Полноценная AI-команда разработки в параллельном режиме.                                                                                                           |
-| ⚡   | **`ultrawork` / `ulw`**                                  | Одно слово. Все агенты активируются. Не останавливается, пока задача не выполнена.                                                                                                                                               |
+| 🤖   | **Дисциплинированные агенты**                            | Chief оркестрирует Founder, Thinker, Researcher, Tracker. Полноценная AI-команда разработки в параллельном режиме.                                                                                                           |
+| ⚡   | **`deepwork` / `dw`**                                  | Одно слово. Все агенты активируются. Не останавливается, пока задача не выполнена.                                                                                                                                               |
 | 🚪   | **[IntentGate](https://factory.ai/news/terminal-bench)** | Анализирует истинное намерение пользователя перед классификацией и действием. Никакого буквального неверного толкования.                                                                                                         |
 | 🔗   | **Инструмент правок на основе хэш-якорей**               | Хэш содержимого `LINE#ID` проверяет каждое изменение. Ноль ошибок с устаревшими строками. Вдохновлено [oh-my-pi](https://github.com/can1357/oh-my-pi). [Проблема обвязки →](https://blog.can.ac/2026/02/12/the-harness-problem/) |
 | 🛠️   | **LSP + AST-Grep**                                       | Переименование в рабочем пространстве, диагностика перед сборкой, переписывание с учётом AST. Точность IDE для агентов.                                                                                                          |
 | 🧠   | **Фоновые агенты**                                       | Запускайте 5+ специалистов параллельно. Контекст остаётся компактным. Результаты — когда готовы.                                                                                                                                 |
 | 📚   | **Встроенные MCP**                                       | Exa (веб-поиск), Context7 (официальная документация), Grep.app (поиск по GitHub). Всегда включены.                                                                                                                               |
-| 🔁   | **Ralph Loop / `/ulw-loop`**                             | Самореферентный цикл. Не останавливается, пока задача не выполнена на 100%.                                                                                                                                                      |
+| 🔁   | **Cortex Loop / `/dw-loop`**                             | Самореферентный цикл. Не останавливается, пока задача не выполнена на 100%.                                                                                                                                                      |
 | ✅   | **Todo Enforcer**                                        | Агент завис? Система немедленно возвращает его в работу. Ваша задача будет выполнена, точка.                                                                                                                                     |
 | 💬   | **Comment Checker**                                      | Никакого AI-мусора в комментариях. Код читается так, словно его писал опытный разработчик.                                                                                                                                       |
 | 🖥️   | **Интеграция с Tmux**                                    | Полноценный интерактивный терминал. REPL, дебаггеры, TUI. Всё живое.                                                                                                                                                             |
 | 🔌   | **Совместимость с Claude Code**                          | Ваши хуки, команды, навыки, MCP и плагины? Всё работает без изменений.                                                                                                                                                           |
 | 🎯   | **MCP, встроенные в навыки**                             | Навыки несут собственные MCP-серверы. Никакого раздувания контекста.                                                                                                                                                             |
-| 📋   | **Prometheus Planner**                                   | Стратегическое планирование в режиме интервью перед любым выполнением.                                                                                                                                                           |
+| 📋   | **Planner Planner**                                   | Стратегическое планирование в режиме интервью перед любым выполнением.                                                                                                                                                           |
 | 🔍   | **`/init-deep`**                                         | Автоматически генерирует иерархические файлы `AGENTS.md` по всему проекту. Отлично работает на эффективность токенов и производительность агента.                                                                                |
 
 ### Дисциплинированные агенты
 
-<table><tr> <td align="center"><img src=".github/assets/sisyphus.png" height="300" /></td> <td align="center"><img src=".github/assets/hephaestus.png" height="300" /></td> </tr></table>
+<table><tr> <td align="center"><img src=".github/assets/chief.png" height="300" /></td> <td align="center"><img src=".github/assets/founder.png" height="300" /></td> </tr></table>
 
-**Sisyphus** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) — главный оркестратор. Он планирует, делегирует задачи специалистам и доводит их до завершения с агрессивным параллельным выполнением. Он не останавливается на полпути.
+**Chief** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) — главный оркестратор. Он планирует, делегирует задачи специалистам и доводит их до завершения с агрессивным параллельным выполнением. Он не останавливается на полпути.
 
-**Hephaestus** (`gpt-5.4`) — автономный глубокий исполнитель. Дайте ему цель, а не рецепт. Он исследует кодовую базу, изучает паттерны и выполняет задачи сквозным образом без лишних подсказок. *Законный Мастер.*
+**Founder** (`gpt-5.4`) — автономный глубокий исполнитель. Дайте ему цель, а не рецепт. Он исследует кодовую базу, изучает паттерны и выполняет задачи сквозным образом без лишних подсказок. *Законный Мастер.*
 
-**Prometheus** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) — стратегический планировщик. Режим интервью: задаёт вопросы, определяет объём работ и формирует детальный план до того, как написана хотя бы одна строка кода.
+**Planner** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) — стратегический планировщик. Режим интервью: задаёт вопросы, определяет объём работ и формирует детальный план до того, как написана хотя бы одна строка кода.
 
 Каждый агент настроен под сильные стороны своей модели. Никакого ручного переключения между моделями. Подробнее →
 
-> Anthropic [заблокировал OpenCode из-за нас.](https://x.com/thdxr/status/2010149530486911014) Именно поэтому Hephaestus зовётся «Законным Мастером». Ирония намеренная.
+> Anthropic [заблокировал OpenCode из-за нас.](https://x.com/thdxr/status/2010149530486911014) Именно поэтому Founder зовётся «Законным Мастером». Ирония намеренная.
 >
 > Мы работаем лучше всего на Opus, но Kimi K2.5 + GPT-5.4 уже превосходят ванильный Claude Code. Никакой настройки не требуется.
 
 ### Оркестрация агентов
 
-Когда Sisyphus делегирует задачу субагенту, он выбирает не модель, а **категорию**. Категория автоматически сопоставляется с нужной моделью:
+Когда Chief делегирует задачу субагенту, он выбирает не модель, а **категорию**. Категория автоматически сопоставляется с нужной моделью:
 
 | Категория            | Для чего предназначена                |
 | -------------------- | ------------------------------------- |
@@ -235,11 +235,11 @@ project/
 
 Агенты автоматически читают нужный контекст. Никакого ручного управления.
 
-### Планирование. Prometheus
+### Планирование. Planner
 
 Сложная задача? Не нужно молиться и надеяться на промпт.
 
-`/start-work` вызывает Prometheus. **Интервьюирует вас как настоящий инженер**, определяет объём работ и неоднозначности, формирует проверенный план до прикосновения к коду. Агент знает, что строит, прежде чем начать.
+`/start-work` вызывает Planner. **Интервьюирует вас как настоящий инженер**, определяет объём работ и неоднозначности, формирует проверенный план до прикосновения к коду. Агент знает, что строит, прежде чем начать.
 
 ### Навыки
 
@@ -257,19 +257,19 @@ project/
 
 ------
 
-> **Впервые в oh-my-opencode?** Прочитайте **Обзор**, чтобы понять, что у вас есть, или ознакомьтесь с **руководством по оркестрации**, чтобы узнать, как агенты взаимодействуют.
+> **Впервые в oh-my-cortex?** Прочитайте **Обзор**, чтобы понять, что у вас есть, или ознакомьтесь с **руководством по оркестрации**, чтобы узнать, как агенты взаимодействуют.
 
 ## Удаление
 
-Чтобы удалить oh-my-opencode:
+Чтобы удалить oh-my-cortex:
 
 1. **Удалите плагин из конфига OpenCode**
 
-   Отредактируйте `~/.config/opencode/opencode.json` (или `opencode.jsonc`) и уберите `"oh-my-opencode"` из массива `plugin`:
+   Отредактируйте `~/.config/opencode/opencode.json` (или `opencode.jsonc`) и уберите `"oh-my-cortex"` из массива `plugin`:
 
    ```bash
    # С помощью jq
-   jq '.plugin = [.plugin[] | select(. != "oh-my-opencode")]' \
+   jq '.plugin = [.plugin[] | select(. != "oh-my-cortex")]' \
        ~/.config/opencode/opencode.json > /tmp/oc.json && \
        mv /tmp/oc.json ~/.config/opencode/opencode.json
    ```
@@ -278,10 +278,10 @@ project/
 
    ```bash
    # Удалить пользовательский конфиг
-   rm -f ~/.config/opencode/oh-my-opencode.json ~/.config/opencode/oh-my-opencode.jsonc
+   rm -f ~/.config/opencode/oh-my-cortex.json ~/.config/opencode/oh-my-cortex.jsonc
 
    # Удалить конфиг проекта (если существует)
-   rm -f .opencode/oh-my-opencode.json .opencode/oh-my-opencode.jsonc
+   rm -f .opencode/oh-my-cortex.json .opencode/oh-my-cortex.jsonc
    ```
 
 3. **Проверьте удаление**
@@ -299,7 +299,7 @@ project/
 
 **Краткий обзор:**
 
-- **Агенты**: Sisyphus (главный агент), Prometheus (планировщик), Oracle (архитектура/отладка), Librarian (документация/поиск по коду), Explore (быстрый grep по кодовой базе), Multimodal Looker
+- **Агенты**: Chief (главный агент), Planner (планировщик), Thinker (архитектура/отладка), Researcher (документация/поиск по коду), Tracker (быстрый grep по кодовой базе), Spotter
 - **Фоновые агенты**: Запускайте несколько агентов параллельно, как настоящая команда разработки
 - **Инструменты LSP и AST**: Рефакторинг, переименование, диагностика, поиск кода с учётом AST
 - **Инструмент правок на основе хэш-якорей**: Ссылки `LINE#ID` проверяют содержимое перед применением каждого изменения. Хирургические правки, ноль ошибок с устаревшими строками
@@ -307,7 +307,7 @@ project/
 - **Совместимость с Claude Code**: Полная система хуков, команды, навыки, агенты, MCP
 - **Встроенные MCP**: websearch (Exa), context7 (документация), grep_app (поиск по GitHub)
 - **Инструменты сессий**: Список, чтение, поиск и анализ истории сессий
-- **Инструменты продуктивности**: Ralph Loop, Todo Enforcer, Comment Checker, Think Mode и другое
+- **Инструменты продуктивности**: Cortex Loop, Todo Enforcer, Comment Checker, Think Mode и другое
 - **Настройка моделей**: Сопоставление агент–модель встроено в руководство по установке
 
 ## Конфигурация
@@ -318,11 +318,11 @@ project/
 
 **Краткий обзор:**
 
-- **Расположение конфигов**: `.opencode/oh-my-opencode.jsonc` или `.opencode/oh-my-opencode.json` (проект), `~/.config/opencode/oh-my-opencode.jsonc` или `~/.config/opencode/oh-my-opencode.json` (пользователь)
+- **Расположение конфигов**: `.opencode/oh-my-cortex.jsonc` или `.opencode/oh-my-cortex.json` (проект), `~/.config/opencode/oh-my-cortex.jsonc` или `~/.config/opencode/oh-my-cortex.json` (пользователь)
 - **Поддержка JSONC**: Комментарии и конечные запятые поддерживаются
 - **Агенты**: Переопределение моделей, температур, промптов и разрешений для любого агента
 - **Встроенные навыки**: `playwright` (автоматизация браузера), `git-master` (атомарные коммиты)
-- **Агент Sisyphus**: Главный оркестратор с Prometheus (Планировщик) и Metis (Консультант по плану)
+- **Агент Chief**: Главный оркестратор с Planner (Планировщик) и Reviewer (Консультант по плану)
 - **Фоновые задачи**: Настройка ограничений параллельности по провайдеру/модели
 - **Категории**: Делегирование задач по предметной области (`visual`, `business-logic`, пользовательские)
 - **Хуки**: 25+ встроенных хуков, все настраиваются через `disabled_hooks`
@@ -332,7 +332,7 @@ project/
 
 ## Слово автора
 
-**Хотите узнать философию?** Прочитайте Манифест Ultrawork.
+**Хотите узнать философию?** Прочитайте Манифест Deepwork.
 
 ------
 
@@ -340,9 +340,9 @@ project/
 
 Каждая проблема, с которой я столкнулся, — её решение уже встроено в этот плагин. Устанавливайте и работайте.
 
-Если OpenCode — это Debian/Arch, то OmO — это Ubuntu/[Omarchy](https://omarchy.org/).
+Если OpenCode — это Debian/Arch, то OMX — это Ubuntu/[Omarchy](https://omarchy.org/).
 
-Сильное влияние со стороны [AmpCode](https://ampcode.com) и [Claude Code](https://code.claude.com/docs/overview). Функции портированы, часто улучшены. Продолжаем строить. Это **Open**Code.
+Сильное влияние со стороны [deep-work systems](https://ampcode.com) и [Claude Code](https://code.claude.com/docs/overview). Функции портированы, часто улучшены. Продолжаем строить. Это **Open**Code.
 
 Другие обвязки обещают оркестрацию нескольких моделей. Мы её поставляем. Плюс стабильность. Плюс функции, которые реально работают.
 

@@ -71,11 +71,11 @@ Token efficiency matters. But not at the cost of work quality or human cognitive
 
 Two approaches achieve this:
 
-### Approach 1: Prometheus (Interview Mode)
+### Approach 1: Planner (Interview Mode)
 
 You say: "I want to add authentication."
 
-Prometheus:
+Planner:
 - Researches your codebase to understand existing patterns
 - Asks clarifying questions based on actual findings
 - Surfaces edge cases you hadn't considered
@@ -84,9 +84,9 @@ Prometheus:
 
 **You provide intent. The agent provides structure.**
 
-### Approach 2: Ultrawork (Just Do It Mode)
+### Approach 2: Deepwork (Just Do It Mode)
 
-You say: "ulw add authentication"
+You say: "dw add authentication"
 
 The agent:
 - Figures out the right approach
@@ -130,7 +130,7 @@ Just like you can assign a task to a capable team member and trust them to handl
 This means:
 - Clear acceptance criteria, verified independently
 - Self-correcting behavior when something goes wrong
-- Escalation (to Oracle, to user) only when truly needed
+- Escalation (to Thinker, to user) only when truly needed
 - Complete work, not "mostly done"
 
 ---
@@ -148,9 +148,9 @@ Everything in Oh My OpenAgent is designed to make this loop work:
 
 | Feature | Purpose |
 |---------|---------|
-| Prometheus | Extract intent through intelligent interview |
-| Metis | Catch ambiguities before they become bugs |
-| Momus | Verify plans are complete before execution |
+| Planner | Extract intent through intelligent interview |
+| Reviewer | Catch ambiguities before they become bugs |
+| Critic | Verify plans are complete before execution |
 | Orchestrator | Coordinate work without human micromanagement |
 | Todo Continuation | Force completion, prevent "I'm done" lies |
 | Category System | Route to optimal model without human decision |
@@ -165,7 +165,7 @@ Everything in Oh My OpenAgent is designed to make this loop work:
 
 1. Describe what you want (high-level or detailed, your choice)
 2. Let the agent interview you if needed
-3. Confirm the plan (or just let ultrawork handle it)
+3. Confirm the plan (or just let deepwork handle it)
 4. Walk away
 5. Come back to completed, verified, production-ready work
 

@@ -2,7 +2,7 @@ import { getAgentListDisplayName } from "../shared/agent-display-names"
 
 /**
  * CRITICAL: This is the ONLY source of truth for core agent ordering.
- * The order is: sisyphus → hephaestus → prometheus → atlas
+ * The order is: chief → founder → planner → lead
  *
  * DO NOT CHANGE THIS ORDER. Any PR attempting to modify this order
  * or introduce alternative ordering mechanisms (ZWSP prefixes, sort
@@ -11,10 +11,10 @@ import { getAgentListDisplayName } from "../shared/agent-display-names"
  * See: src/plugin-handlers/AGENTS.md for architectural context.
  */
 export const CANONICAL_CORE_AGENT_ORDER = [
-  "sisyphus",
-  "hephaestus",
-  "prometheus",
-  "atlas",
+  "chief",
+  "founder",
+  "planner",
+  "lead",
 ] as const
 
 type CoreAgentName = (typeof CANONICAL_CORE_AGENT_ORDER)[number]

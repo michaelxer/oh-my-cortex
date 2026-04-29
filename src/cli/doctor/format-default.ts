@@ -16,8 +16,8 @@ export function formatDefault(result: DoctorResult): string {
     const pluginVer = result.systemInfo.pluginVersion ?? "unknown"
     lines.push(
       ` ${color.green(SYMBOLS.check)} ${color.green(
-      `System OK (opencode ${opencodeVer} · oh-my-opencode ${pluginVer})`
-        .replace("oh-my-opencode", PLUGIN_NAME)
+      `System OK (opencode ${opencodeVer} · oh-my-cortex ${pluginVer})`
+        .replace("oh-my-cortex", PLUGIN_NAME)
       )}`
     )
   } else {

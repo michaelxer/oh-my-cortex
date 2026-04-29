@@ -76,7 +76,7 @@ describe("shouldLoadPluginForCwd", () => {
   describe("#given a project-scoped plugin with matching projectPath", () => {
     it("#when cwd exactly matches projectPath #then it loads", () => {
       //#given
-      const projectDirectory = createTemporaryDirectory("omo-scope-")
+      const projectDirectory = createTemporaryDirectory("omx-scope-")
       const installation = {
         scope: "project" as const,
         projectPath: projectDirectory,
@@ -91,7 +91,7 @@ describe("shouldLoadPluginForCwd", () => {
 
     it("#when cwd is a subdirectory of projectPath #then it loads", () => {
       //#given
-      const projectDirectory = createTemporaryDirectory("omo-scope-")
+      const projectDirectory = createTemporaryDirectory("omx-scope-")
       const installation = {
         scope: "project" as const,
         projectPath: projectDirectory,
@@ -108,8 +108,8 @@ describe("shouldLoadPluginForCwd", () => {
   describe("#given a project-scoped plugin with non-matching projectPath", () => {
     it("#when cwd is unrelated #then it is skipped", () => {
       //#given
-      const projectDirectory = createTemporaryDirectory("omo-scope-")
-      const otherDirectory = createTemporaryDirectory("omo-other-")
+      const projectDirectory = createTemporaryDirectory("omx-scope-")
+      const otherDirectory = createTemporaryDirectory("omx-other-")
       const installation = {
         scope: "project" as const,
         projectPath: projectDirectory,
@@ -124,7 +124,7 @@ describe("shouldLoadPluginForCwd", () => {
 
     it("#when cwd is the parent of projectPath #then it is skipped", () => {
       //#given
-      const projectDirectory = createTemporaryDirectory("omo-scope-")
+      const projectDirectory = createTemporaryDirectory("omx-scope-")
       const installation = {
         scope: "project" as const,
         projectPath: join(projectDirectory, "nested"),
@@ -141,7 +141,7 @@ describe("shouldLoadPluginForCwd", () => {
   describe("#given a local-scoped plugin with matching projectPath", () => {
     it("#when cwd matches projectPath #then it loads", () => {
       //#given
-      const projectDirectory = createTemporaryDirectory("omo-scope-")
+      const projectDirectory = createTemporaryDirectory("omx-scope-")
       const installation = {
         scope: "local" as const,
         projectPath: projectDirectory,
@@ -158,8 +158,8 @@ describe("shouldLoadPluginForCwd", () => {
   describe("#given a local-scoped plugin with non-matching projectPath", () => {
     it("#when cwd is unrelated #then it is skipped", () => {
       //#given
-      const projectDirectory = createTemporaryDirectory("omo-scope-")
-      const otherDirectory = createTemporaryDirectory("omo-other-")
+      const projectDirectory = createTemporaryDirectory("omx-scope-")
+      const otherDirectory = createTemporaryDirectory("omx-other-")
       const installation = {
         scope: "local" as const,
         projectPath: projectDirectory,
@@ -177,7 +177,7 @@ describe("shouldLoadPluginForCwd", () => {
     let fakeHome: string
 
     beforeEach(() => {
-      fakeHome = createTemporaryDirectory("omo-home-")
+      fakeHome = createTemporaryDirectory("omx-home-")
       mock.module("node:os", () => ({
         homedir: () => fakeHome,
         tmpdir,

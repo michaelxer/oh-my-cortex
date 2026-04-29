@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyCortexConfig } from "../config"
 import {
   resolveActualContextLimit,
   type ContextLimitModelCacheState,
@@ -38,7 +38,7 @@ async function withTimeout<TValue>(
 
 export async function runPreemptiveCompactionIfNeeded(args: {
   ctx: PreemptiveCompactionContext
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   modelCacheState?: ContextLimitModelCacheState
   sessionID: string
   tokenCache: Map<string, CachedCompactionState>

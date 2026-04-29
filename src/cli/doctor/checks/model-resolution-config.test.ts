@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 
-import { loadOmoConfig } from "./model-resolution-config"
+import { loadOmxConfig } from "./model-resolution-config"
 
 describe("model-resolution-config", () => {
   let originalConfigDir: string | undefined
@@ -23,21 +23,21 @@ describe("model-resolution-config", () => {
   it("respects OPENCODE_CONFIG_DIR even when the env var changes after module import", () => {
     const testConfigDir = join(
       tmpdir(),
-      `omo-model-resolution-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      `omx-model-resolution-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     )
 
     try {
       mkdirSync(testConfigDir, { recursive: true })
       process.env.OPENCODE_CONFIG_DIR = testConfigDir
       writeFileSync(
-        join(testConfigDir, "oh-my-openagent.json"),
-        JSON.stringify({ agents: { atlas: { model: "opencode-go/kimi-k2.5" } } }, null, 2) + "\n",
+        join(testConfigDir, "oh-my-cortex.json"),
+        JSON.stringify({ agents: { lead: { model: "opencode-go/kimi-k2.5" } } }, null, 2) + "\n",
         "utf-8",
       )
 
-      const config = loadOmoConfig()
+      const config = loadOmxConfig()
 
-      expect(config?.agents?.atlas?.model).toBe("opencode-go/kimi-k2.5")
+      expect(config?.agents?.lead?.model).toBe("opencode-go/kimi-k2.5")
     } finally {
       rmSync(testConfigDir, { recursive: true, force: true })
     }

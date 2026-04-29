@@ -118,7 +118,7 @@ describe("hashline-read-enhancer", () => {
     const output = {
       title: "README.md",
       output: [
-        "1: # Oh-My-OpenCode Features",
+        "1: # Oh-My-Cortex Features",
         "2:",
         "3: Hashline test",
         "",
@@ -132,7 +132,7 @@ describe("hashline-read-enhancer", () => {
 
     //#then
     const lines = output.output.split("\n")
-    expect(lines[0]).toMatch(/^1#[ZPMQVRWSNKTXJBYH]{2}\|# Oh-My-OpenCode Features$/)
+    expect(lines[0]).toMatch(/^1#[ZPMQVRWSNKTXJBYH]{2}\|# Oh-My-Cortex Features$/)
     expect(lines[1]).toMatch(/^2#[ZPMQVRWSNKTXJBYH]{2}\|$/)
     expect(lines[2]).toMatch(/^3#[ZPMQVRWSNKTXJBYH]{2}\|Hashline test$/)
     expect(lines[4]).toBe("(End of file - total 3 lines)")

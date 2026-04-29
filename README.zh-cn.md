@@ -7,7 +7,7 @@
 > [!TIP]
 > **Building in Public**
 >
-> 维护者正在使用 Jobdori 实时开发和维护 oh-my-opencode。Jobdori 是基于 OpenClaw 深度定制的 AI 助手。
+> 维护者正在使用 Jobdori 实时开发和维护 oh-my-cortex。Jobdori 是基于 OpenClaw 深度定制的 AI 助手。
 > 每个功能开发、每次修复、每次 Issue 分类，都在 Discord 上实时进行。
 >
 > [![Building in Public](./.github/assets/building-in-public.png)](https://discord.gg/PUwSMR9XNk)
@@ -17,24 +17,24 @@
 
 > [!NOTE]
 >
-> [![Sisyphus Labs - Sisyphus is the agent that codes like your team.](./.github/assets/sisyphuslabs.png?v=2)](https://sisyphuslabs.ai)
-> > **我们正在构建 Sisyphus 的完全产品化版本，以定义前沿智能体 (Frontier Agents) 的未来。<br />[在此处](https://sisyphuslabs.ai)加入候补名单。**
+> [![Chief Labs - Chief is the agent that codes like your team.](./.github/assets/chieflabs.png?v=2)](https://chieflabs.ai)
+> > **我们正在构建 Chief 的完全产品化版本，以定义前沿智能体 (Frontier Agents) 的未来。<br />[在此处](https://chieflabs.ai)加入候补名单。**
 
 > [!TIP]
 > 加入我们！
 >
-> | [<img alt="Discord link" src="https://img.shields.io/discord/1452487457085063218?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width="156px" />](https://discord.gg/PUwSMR9XNk) | 加入我们的 [Discord 社区](https://discord.gg/PUwSMR9XNk)，与贡献者及其他 `oh-my-opencode` 用户交流。 |
+> | [<img alt="Discord link" src="https://img.shields.io/discord/1452487457085063218?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width="156px" />](https://discord.gg/PUwSMR9XNk) | 加入我们的 [Discord 社区](https://discord.gg/PUwSMR9XNk)，与贡献者及其他 `oh-my-cortex` 用户交流。 |
 > | :-----| :----- |
-> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%40justsisyphus-00CED1?style=flat-square&logo=x&labelColor=black" width="156px" />](https://x.com/justsisyphus) | 关于 `oh-my-opencode` 的新闻和更新过去发布在我的 X 账号上。<br /> 因为账号被意外停用，现在由 [@justsisyphus](https://x.com/justsisyphus) 代为发布更新。 |
-> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/code-yeongyu?style=flat-square&logo=github&labelColor=black&color=24292f" width="156px" />](https://github.com/code-yeongyu) | 在 GitHub 上关注 [@code-yeongyu](https://github.com/code-yeongyu) 获取更多项目信息。 |
+> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%40justchief-00CED1?style=flat-square&logo=x&labelColor=black" width="156px" />](https://x.com/justchief) | 关于 `oh-my-cortex` 的新闻和更新过去发布在我的 X 账号上。<br /> 因为账号被意外停用，现在由 [@justchief](https://x.com/justchief) 代为发布更新。 |
+> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/michaelxer?style=flat-square&logo=github&labelColor=black&color=24292f" width="156px" />](https://github.com/michaelxer) | 在 GitHub 上关注 [@michaelxer](https://github.com/michaelxer) 获取更多项目信息。 |
 
 <!-- <CENTERED SECTION FOR GITHUB DISPLAY> -->
 
 <div align="center">
 
-[![Oh My OpenCode](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-openagent#oh-my-opencode)
+[![Oh My Cortex](./.github/assets/hero.jpg)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
 
-[![Preview](./.github/assets/omo.png)](https://github.com/code-yeongyu/oh-my-openagent#oh-my-opencode)
+[![Preview](./.github/assets/omx.png)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
 
 </div>
 
@@ -44,14 +44,14 @@
 
 <div align="center">
 
-[![GitHub Release](https://img.shields.io/github/v/release/code-yeongyu/oh-my-openagent?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/releases)
-[![npm downloads](https://img.shields.io/npm/dt/oh-my-opencode?color=ff6b35&labelColor=black&style=flat-square)](https://www.npmjs.com/package/oh-my-opencode)
-[![GitHub Contributors](https://img.shields.io/github/contributors/code-yeongyu/oh-my-openagent?color=c4f042&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/graphs/contributors)
-[![GitHub Forks](https://img.shields.io/github/forks/code-yeongyu/oh-my-openagent?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/network/members)
-[![GitHub Stars](https://img.shields.io/github/stars/code-yeongyu/oh-my-openagent?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/code-yeongyu/oh-my-openagent?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/issues)
-[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/LICENSE.md)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/code-yeongyu/oh-my-openagent)
+[![GitHub Release](https://img.shields.io/github/v/release/michaelxer/oh-my-cortex?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/releases)
+[![npm downloads](https://img.shields.io/npm/dt/oh-my-cortex?color=ff6b35&labelColor=black&style=flat-square)](https://www.npmjs.com/package/oh-my-cortex)
+[![GitHub Contributors](https://img.shields.io/github/contributors/michaelxer/oh-my-cortex?color=c4f042&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/graphs/contributors)
+[![GitHub Forks](https://img.shields.io/github/forks/michaelxer/oh-my-cortex?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/network/members)
+[![GitHub Stars](https://img.shields.io/github/stars/michaelxer/oh-my-cortex?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/michaelxer/oh-my-cortex?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/issues)
+[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/blob/dev/LICENSE.md)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/michaelxer/oh-my-cortex)
 
 [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-cn.md)
 
@@ -63,13 +63,13 @@
 
 > “因为它，我取消了 Cursor 的订阅。开源社区正在发生令人难以置信的事情。” - [Arthur Guiot](https://x.com/arthur_guiot/status/2008736347092382053?s=20)
 
-> “如果人类需要 3 个月完成的事情 Claude Code 需要 7 天，那么 Sisyphus 只需要 1 小时。它会一直工作直到任务完成。它是一个极度自律的智能体。” <br/>- B, 量化研究员
+> “如果人类需要 3 个月完成的事情 Claude Code 需要 7 天，那么 Chief 只需要 1 小时。它会一直工作直到任务完成。它是一个极度自律的智能体。” <br/>- B, 量化研究员
 
 > “用 Oh My Opencode 一天之内解决了 8000 个 eslint 警告。” <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> “我用 Ohmyopencode 和 ralph loop 花了一晚上的时间，把一个 45k 行代码的 tauri 应用转换成了 SaaS Web 应用。从面试模式开始，让它对我提供的提示词进行提问和提出建议。看着它工作很有趣，今早醒来看到网站基本已经跑起来了，太震撼了！” - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+> “我用 Ohmyopencode 和 cortex loop 花了一晚上的时间，把一个 45k 行代码的 tauri 应用转换成了 SaaS Web 应用。从面试模式开始，让它对我提供的提示词进行提问和提出建议。看着它工作很有趣，今早醒来看到网站基本已经跑起来了，太震撼了！” - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
-> “用 oh-my-opencode 吧，你绝对回不去了。” <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
+> “用 oh-my-cortex 吧，你绝对回不去了。” <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
 > “我很难准确描述它到底哪里牛逼，但开发体验已经达到完全不同的维度了。” - [苔硯:こけすずり](https://x.com/kokesuzuri/status/2008532913961529372?s=20)
 
@@ -79,11 +79,11 @@
 
 > “如果你们能说服 @yeon_gyu_kim，赶紧招募他。这个人彻底改变了 opencode。” <br/>- [mysticaltech](https://x.com/mysticaltech/status/2001858758608376079)
 
-> “Oh My OpenCode 简直疯了。” - [YouTube - Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
+> “Oh My Cortex 简直疯了。” - [YouTube - Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
 
 ---
 
-# Oh My OpenCode
+# Oh My Cortex
 
 我们最初把这叫做“给 Claude Code 打类固醇”。那是低估了它。
 
@@ -91,7 +91,7 @@
 
 脏活累活我们替你干了。我们测试了一切，只留下了真正有用的。
 
-安装 OmO。敲下 `ultrawork`。疯狂地写代码吧。
+安装 OMX。敲下 `deepwork`。疯狂地写代码吧。
 
 
 
@@ -99,11 +99,11 @@
 
 ### 给人类看的
 
-复制并粘贴以下提示词到你的 LLM Agent (Claude Code, AmpCode, Cursor 等):
+复制并粘贴以下提示词到你的 LLM Agent (Claude Code, deep-work systems, Cursor 等):
 
 ```
-Install and configure oh-my-opencode by following the instructions here:
-https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
+Install and configure oh-my-cortex by following the instructions here:
+https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
 或者你可以直接去读 [安装指南](docs/guide/installation.md)，但说真的，让 Agent 去干吧。人类配环境总是容易敲错字母。
@@ -113,12 +113,12 @@ https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/do
 获取安装指南并照做：
 
 ```bash
-curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
+curl -s https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
-**注意**：请使用已发布的包名和二进制名 `oh-my-opencode`。在 `opencode.json` 中，兼容性层现在优先使用插件入口 `oh-my-openagent`，而旧的 `oh-my-opencode` 条目仍会加载并显示警告。插件配置文件通常仍使用 `oh-my-opencode.json` 或 `oh-my-opencode.jsonc`，在过渡期间新旧两种文件名都会被识别。
+**注意**：请使用已发布的包名和二进制名 `oh-my-cortex`。在 `opencode.json` 中，兼容性层现在优先使用插件入口 `oh-my-cortex`，而旧的 `oh-my-cortex` 条目仍会加载并显示警告。插件配置文件通常仍使用 `oh-my-cortex.json` 或 `oh-my-cortex.jsonc`，在过渡期间新旧两种文件名都会被识别。
 
-匿名遥测默认开启，用于帮助提升安装和运行时的可靠性。它使用 PostHog，并采用哈希化的安装标识符，绝不会使用原始主机名，可通过 `OMO_SEND_ANONYMOUS_TELEMETRY=0` 或 `OMO_DISABLE_POSTHOG=1` 禁用。详见 [隐私政策](docs/legal/privacy-policy.md) 和 [服务条款](docs/legal/terms-of-service.md)。
+匿名遥测默认开启，用于帮助提升安装和运行时的可靠性。它使用 PostHog，并采用哈希化的安装标识符，绝不会使用原始主机名，可通过 `OMX_SEND_ANONYMOUS_TELEMETRY=0` 或 `OMX_DISABLE_POSTHOG=1` 禁用。详见 [隐私政策](docs/legal/privacy-policy.md) 和 [服务条款](docs/legal/terms-of-service.md)。
 
 ---
 
@@ -127,20 +127,20 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/head
 读文档的时代已经过去了。直接把下面这行发给你的 Agent：
 
 ```
-Read this and tell me why it's not just another boilerplate: https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/README.md
+Read this and tell me why it's not just another boilerplate: https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/README.md
 ```
 
 ## 核心亮点
 
-### 🪄 `ultrawork`
+### 🪄 `deepwork`
 
 你竟然还在往下读？真有耐心。
 
-安装。输入 `ultrawork` (或者 `ulw`)。搞定。
+安装。输入 `deepwork` (或者 `dw`)。搞定。
 
 下面的内容，包括所有特性、所有优化，你全都不需要知道，它自己就能完美运行。
 
-只需以下订阅之一，ultrawork 就能顺畅工作（本项目与它们没有任何关联，纯属个人推荐）：
+只需以下订阅之一，deepwork 就能顺畅工作（本项目与它们没有任何关联，纯属个人推荐）：
 - [ChatGPT 订阅 ($20)](https://chatgpt.com/)
 - [Kimi Code 订阅 ($19)](https://www.kimi.com/code)
 - [GLM Coding 套餐 ($10)](https://z.ai/subscribe)
@@ -148,44 +148,44 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 
 |       | 特性                                                            | 功能说明                                                                                                                                                                        |
 | :---: | :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-|   🤖   | **自律军团 (Discipline Agents)**                                | Sisyphus 负责调度 Hephaestus、Oracle、Librarian 和 Explore。一支完整的 AI 开发团队并行工作。                                                                                    |
-|   ⚡   | **`ultrawork` / `ulw`**                                         | 一键触发，所有智能体出动。任务完成前绝不罢休。                                                                                                                                  |
+|   🤖   | **自律军团 (Discipline Agents)**                                | Chief 负责调度 Founder、Thinker、Researcher 和 Explore。一支完整的 AI 开发团队并行工作。                                                                                    |
+|   ⚡   | **`deepwork` / `dw`**                                         | 一键触发，所有智能体出动。任务完成前绝不罢休。                                                                                                                                  |
 |   🚪   | **[IntentGate 意图门](https://factory.ai/news/terminal-bench)** | 真正行动前，先分析用户的真实意图。彻底告别被字面意思误导的 AI 废话。                                                                                                            |
 |   🔗   | **基于哈希的编辑工具**                                          | 每次修改都通过 `LINE#ID` 内容哈希验证、0% 错误修改。灵感来自 [oh-my-pi](https://github.com/can1357/oh-my-pi)。[马具问题 →](https://blog.can.ac/2026/02/12/the-harness-problem/) |
 |   🛠️   | **LSP + AST-Grep**                                              | 工作区级别的重命名、构建前诊断、基于 AST 的重写。为 Agent 提供 IDE 级别的精度。                                                                                                 |
 |   🧠   | **后台智能体**                                                  | 同时发射 5+ 个专家并行工作。保持上下文干净，随时获取成果。                                                                                                                      |
 |   📚   | **内置 MCP**                                                    | Exa (网络搜索)、Context7 (官方文档)、Grep.app (GitHub 源码搜索)。默认开启。                                                                                                     |
-|   🔁   | **Ralph Loop / `/ulw-loop`**                                    | 自我引用闭环。达不到 100% 完成度绝不停止。                                                                                                                                      |
+|   🔁   | **Cortex Loop / `/dw-loop`**                                    | 自我引用闭环。达不到 100% 完成度绝不停止。                                                                                                                                      |
 |   ✅   | **Todo 强制执行**                                               | Agent 想要摸鱼？系统直接揪着领子拽回来。你的任务，必须完成。                                                                                                                    |
 |   💬   | **注释审查员**                                                  | 剔除带有浓烈 AI 味的冗余注释。写出的代码就像老练的高级工程师写的。                                                                                                              |
 |   🖥️   | **Tmux 集成**                                                   | 完整的交互式终端支持。跑 REPL、用调试器、用 TUI 工具，全都在实时会话中完成。                                                                                                    |
 |   🔌   | **Claude Code 兼容**                                            | 你现有的 Hooks、命令、技能、MCP 和插件？全都能无缝迁移过来。                                                                                                                    |
 |   🎯   | **技能内嵌 MCP**                                                | 技能自带其所需的 MCP 服务器。按需开启，不会撑爆你的上下文窗口。                                                                                                                 |
-|   📋   | **Prometheus 规划师**                                           | 动手写代码前，先通过访谈模式做好战略规划。                                                                                                                                      |
+|   📋   | **Planner 规划师**                                           | 动手写代码前，先通过访谈模式做好战略规划。                                                                                                                                      |
 |   🔍   | **`/init-deep`**                                                | 在整个项目目录层级中自动生成 `AGENTS.md`。不仅省 Token，还能大幅提升 Agent 理解力。                                                                                             |
 
 ### 自律军团 (Discipline Agents)
 
 <table><tr>
-<td align="center"><img src=".github/assets/sisyphus.png" height="300" /></td>
-<td align="center"><img src=".github/assets/hephaestus.png" height="300" /></td>
+<td align="center"><img src=".github/assets/chief.png" height="300" /></td>
+<td align="center"><img src=".github/assets/founder.png" height="300" /></td>
 </tr></table>
 
-**Sisyphus** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) 是你的主指挥官。他负责制定计划、分配任务给专家团队，并以极其激进的并行策略推动任务直至完成。他从不半途而废。
+**Chief** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) 是你的主指挥官。他负责制定计划、分配任务给专家团队，并以极其激进的并行策略推动任务直至完成。他从不半途而废。
 
-**Hephaestus** (`gpt-5.4`) 是你的自主深度工作者。你只需要给他目标，不要给他具体做法。他会自动探索代码库模式，从头到尾独立执行任务，绝不会中途要你当保姆。*名副其实的正牌工匠。*
+**Founder** (`gpt-5.4`) 是你的自主深度工作者。你只需要给他目标，不要给他具体做法。他会自动探索代码库模式，从头到尾独立执行任务，绝不会中途要你当保姆。*名副其实的正牌工匠。*
 
-**Prometheus** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) 是你的战略规划师。他通过访谈模式，在动一行代码之前，先通过提问确定范围并构建详尽的执行计划。
+**Planner** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) 是你的战略规划师。他通过访谈模式，在动一行代码之前，先通过提问确定范围并构建详尽的执行计划。
 
 每一个 Agent 都针对其底层模型的特点进行了专门调优。你无需手动来回切换模型。[阅读背景设定了解更多 →](docs/guide/overview.md)
 
-> Anthropic [因为我们屏蔽了 OpenCode](https://x.com/thdxr/status/2010149530486911014)。这就是为什么我们将 Hephaestus 命名为“正牌工匠 (The Legitimate Craftsman)”。这是一个故意的讽刺。
+> Anthropic [因为我们屏蔽了 OpenCode](https://x.com/thdxr/status/2010149530486911014)。这就是为什么我们将 Founder 命名为“正牌工匠 (The Autonomous Builder)”。这是一个故意的讽刺。
 >
 > 我们在 Opus 上运行得最好，但仅仅使用 Kimi K2.5 + GPT-5.4 就足以碾压原版的 Claude Code。完全不需要配置。
 
 ### 智能体调度机制
 
-当 Sisyphus 把任务分配给子智能体时，他选择的不是具体的模型，而是 **类别 (Category)**。系统会自动将类别映射到最合适的模型：
+当 Chief 把任务分配给子智能体时，他选择的不是具体的模型，而是 **类别 (Category)**。系统会自动将类别映射到最合适的模型：
 
 | 类别                 | 作用领域               |
 | :------------------- | :--------------------- |
@@ -252,11 +252,11 @@ project/
 
 Agent 会自动顺藤摸瓜加载对应的 Context，免去了你所有的手动喂喂喂的麻烦。
 
-### 让 Agent 动手前先过脑子：Prometheus
+### 让 Agent 动手前先过脑子：Planner
 
 碰到了硬骨头？千万不要扔个 Prompt 就双手合十祈祷。
 
-输入 `/start-work`，召唤 Prometheus 出场。**他会像一个真实的主管那样去采访你**，主动深挖需求、指出模糊地带，并在改动哪怕一行代码之前产出经过严密论证的计划。你的 Agent 终于知道了自己在干嘛。
+输入 `/start-work`，召唤 Planner 出场。**他会像一个真实的主管那样去采访你**，主动深挖需求、指出模糊地带，并在改动哪怕一行代码之前产出经过严密论证的计划。你的 Agent 终于知道了自己在干嘛。
 
 ### 技能系统 (Skills)
 
@@ -274,19 +274,19 @@ Agent 会自动顺藤摸瓜加载对应的 Context，免去了你所有的手动
 
 ---
 
-> **第一次用 oh-my-opencode？** 阅读 **[概述](docs/guide/overview.md)** 了解你拥有哪些功能，或查看 **[编排指南](docs/guide/orchestration.md)** 了解 Agent 如何协作。
+> **第一次用 oh-my-cortex？** 阅读 **[概述](docs/guide/overview.md)** 了解你拥有哪些功能，或查看 **[编排指南](docs/guide/orchestration.md)** 了解 Agent 如何协作。
 
 ## 如何卸载 (Uninstallation)
 
-要移除 oh-my-opencode:
+要移除 oh-my-cortex:
 
 1. **从你的 OpenCode 配置文件中去掉插件**
 
-   编辑 `~/.config/opencode/opencode.json` (或 `opencode.jsonc`) ，并把 `"oh-my-opencode"` 从 `plugin` 数组中删掉：
+   编辑 `~/.config/opencode/opencode.json` (或 `opencode.jsonc`) ，并把 `"oh-my-cortex"` 从 `plugin` 数组中删掉：
 
    ```bash
    # 如果你有 jq 的话
-   jq '.plugin = [.plugin[] | select(. != "oh-my-opencode")]' \
+   jq '.plugin = [.plugin[] | select(. != "oh-my-cortex")]' \
        ~/.config/opencode/opencode.json > /tmp/oc.json && \
        mv /tmp/oc.json ~/.config/opencode/opencode.json
    ```
@@ -295,10 +295,10 @@ Agent 会自动顺藤摸瓜加载对应的 Context，免去了你所有的手动
 
    ```bash
    # 移除全局用户配置
-   rm -f ~/.config/opencode/oh-my-opencode.json ~/.config/opencode/oh-my-opencode.jsonc
+   rm -f ~/.config/opencode/oh-my-cortex.json ~/.config/opencode/oh-my-cortex.jsonc
 
    # 移除当前项目的配置
-   rm -f .opencode/oh-my-opencode.json .opencode/oh-my-opencode.jsonc
+   rm -f .opencode/oh-my-cortex.json .opencode/oh-my-cortex.jsonc
    ```
 
 3. **确认卸载成功**
@@ -310,7 +310,7 @@ Agent 会自动顺藤摸瓜加载对应的 Context，免去了你所有的手动
 
 ## 闲聊环节 (Author's Note)
 
-**想知道做这个插件的哲学理念吗？** 阅读 [Ultrawork 宣言](docs/manifesto.md)。
+**想知道做这个插件的哲学理念吗？** 阅读 [Deepwork 宣言](docs/manifesto.md)。
 
 ---
 
@@ -318,9 +318,9 @@ Agent 会自动顺藤摸瓜加载对应的 Context，免去了你所有的手动
 
 我踩过的坑、撞过的南墙，它们的终极解法现在全都被硬编码到了这个插件里。你只需要安装，然后直接用。
 
-如果把 OpenCode 喻为底层的 Debian/Arch，那么 OmO 毫无疑问就是开箱即用的 Ubuntu/[Omarchy](https://omarchy.org/)。
+如果把 OpenCode 喻为底层的 Debian/Arch，那么 OMX 毫无疑问就是开箱即用的 Ubuntu/[Omarchy](https://omarchy.org/)。
 
-本项目受到 [AmpCode](https://ampcode.com) 和 [Claude Code](https://code.claude.com/docs/overview) 的深刻启发。我把他们好用的特性全都搬了过来，且在很多地方做了底层强化。它仍在活跃开发中，因为毕竟，这是 **Open**Code。
+本项目受到 [deep-work systems](https://ampcode.com) 和 [Claude Code](https://code.claude.com/docs/overview) 的深刻启发。我把他们好用的特性全都搬了过来，且在很多地方做了底层强化。它仍在活跃开发中，因为毕竟，这是 **Open**Code。
 
 其他调度框架只会给你画饼画一张很酷的 Multi-Agent 大饼。我们把饼烙出来了。不仅能用，而且极其稳定。所有的功能都不是为了炫技，而是真的能把任务干完。
 

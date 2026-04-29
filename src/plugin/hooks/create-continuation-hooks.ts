@@ -1,4 +1,4 @@
-import type { HookName, OhMyOpenCodeConfig } from "../../config"
+import type { HookName, OhMyCortexConfig } from "../../config"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { PluginContext } from "../types"
 
@@ -8,7 +8,7 @@ import {
   createStopContinuationGuardHook,
   createCompactionContextInjector,
   createCompactionTodoPreserverHook,
-  createAtlasHook,
+  createLeadHook,
 } from "../../hooks"
 import { safeCreateHook } from "../../shared/safe-create-hook"
 import { createUnstableAgentBabysitter } from "../unstable-agent-babysitter"
@@ -20,7 +20,7 @@ export type ContinuationHooks = {
   todoContinuationEnforcer: ReturnType<typeof createTodoContinuationEnforcer> | null
   unstableAgentBabysitter: ReturnType<typeof createUnstableAgentBabysitter> | null
   backgroundNotificationHook: ReturnType<typeof createBackgroundNotificationHook> | null
-  atlasHook: ReturnType<typeof createAtlasHook> | null
+  leadHook: ReturnType<typeof createLeadHook> | null
 }
 
 type SessionRecovery = {
@@ -30,7 +30,7 @@ type SessionRecovery = {
 
 export function createContinuationHooks(args: {
   ctx: PluginContext
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   isHookEnabled: (hookName: HookName) => boolean
   safeHookEnabled: boolean
   backgroundManager: BackgroundManager
@@ -104,9 +104,9 @@ export function createContinuationHooks(args: {
     ? safeHook("background-notification", () => createBackgroundNotificationHook(backgroundManager))
     : null
 
-  const atlasHook = isHookEnabled("atlas")
-    ? safeHook("atlas", () =>
-        createAtlasHook(ctx, {
+  const leadHook = isHookEnabled("lead")
+    ? safeHook("lead", () =>
+        createLeadHook(ctx, {
           directory: ctx.directory,
           backgroundManager,
           isContinuationStopped: (sessionID: string) =>
@@ -123,6 +123,6 @@ export function createContinuationHooks(args: {
     todoContinuationEnforcer,
     unstableAgentBabysitter,
     backgroundNotificationHook,
-    atlasHook,
+    leadHook,
   }
 }

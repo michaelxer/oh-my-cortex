@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
-import type { OhMyOpenCodeConfig } from "../../config"
+import type { OhMyCortexConfig } from "../../config"
 import type { HookDeps, RuntimeFallbackInterval, RuntimeFallbackPluginInput } from "./types"
 
 type RuntimeFallbackModule = typeof import("./hook")
 
-const loadPluginConfigMock = mock(() => ({} satisfies OhMyOpenCodeConfig))
+const loadPluginConfigMock = mock(() => ({} satisfies OhMyCortexConfig))
 const createAutoRetryHelpersMock = mock((_deps: HookDeps) => {
   void _deps
 
@@ -99,7 +99,7 @@ describe("createRuntimeFallbackHook initialization", () => {
 
   test("#given injected pluginConfig #when the hook factory runs #then loadPluginConfig is not called", () => {
     // given
-    const pluginConfig = {} satisfies OhMyOpenCodeConfig
+    const pluginConfig = {} satisfies OhMyCortexConfig
 
     // when
     createRuntimeFallbackHook(createMockContext(), { pluginConfig })

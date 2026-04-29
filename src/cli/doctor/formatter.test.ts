@@ -61,7 +61,7 @@ function createDoctorResultWithDetails(): DoctorResult {
       name: "Models",
       status: "pass",
       message: "2 agents, 1 category, 0 overrides",
-      details: ["Available models: openai/gpt-5.4", "Agent sisyphus -> openai/gpt-5.4"],
+      details: ["Available models: openai/gpt-5.4", "Agent chief -> openai/gpt-5.4"],
       issues: [],
     },
   ]
@@ -81,7 +81,7 @@ describe("formatDoctorOutput", () => {
       const output = stripAnsi(formatDoctorOutput(result, "default"))
 
       //#then
-      expect(output).toContain("System OK (opencode 1.0.200 · oh-my-openagent 3.4.0)")
+      expect(output).toContain("System OK (opencode 1.0.200 · oh-my-cortex 3.4.0)")
     })
 
     it("shows issue count and details when issues exist", async () => {
@@ -168,7 +168,7 @@ describe("formatDoctorOutput", () => {
       //#then
       expect(output).toContain("Models")
       expect(output).toContain("Available models: openai/gpt-5.4")
-      expect(output).toContain("Agent sisyphus -> openai/gpt-5.4")
+      expect(output).toContain("Agent chief -> openai/gpt-5.4")
     })
   })
 

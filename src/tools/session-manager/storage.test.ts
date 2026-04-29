@@ -4,7 +4,7 @@ import { join } from "node:path"
 import { tmpdir } from "node:os"
 import { randomUUID } from "node:crypto"
 
-const TEST_DIR = join(tmpdir(), `omo-test-session-manager-${randomUUID()}`)
+const TEST_DIR = join(tmpdir(), `omx-test-session-manager-${randomUUID()}`)
 const TEST_MESSAGE_STORAGE = join(TEST_DIR, "message")
 const TEST_PART_STORAGE = join(TEST_DIR, "part")
 const TEST_SESSION_STORAGE = join(TEST_DIR, "session")
@@ -224,7 +224,7 @@ describe("session-manager storage", () => {
       JSON.stringify({
         id: "msg_002",
         role: "assistant",
-        agent: "oracle",
+        agent: "thinker",
         time: { created: now },
       })
     )
@@ -237,7 +237,7 @@ describe("session-manager storage", () => {
     expect(info?.id).toBe(sessionID)
     expect(info?.message_count).toBe(2)
     expect(info?.agents_used).toContain("build")
-    expect(info?.agents_used).toContain("oracle")
+    expect(info?.agents_used).toContain("thinker")
   })
 
   test("getSessionInfo uses SDK session messages on sqlite backend", async () => {
@@ -252,7 +252,7 @@ describe("session-manager storage", () => {
               info: {
                 id: "msg_sqlite_1",
                 role: "user",
-                agent: "atlas",
+                agent: "lead",
                 time: { created: now - 5000, updated: now - 5000 },
               },
               parts: [],
@@ -261,7 +261,7 @@ describe("session-manager storage", () => {
               info: {
                 id: "msg_sqlite_2",
                 role: "assistant",
-                agent: "prometheus",
+                agent: "planner",
                 time: { created: now, updated: now },
               },
               parts: [],
@@ -277,8 +277,8 @@ describe("session-manager storage", () => {
     expect(info).not.toBeNull()
     expect(info?.id).toBe("ses_sqlite")
     expect(info?.message_count).toBe(2)
-    expect(info?.agents_used).toContain("atlas")
-    expect(info?.agents_used).toContain("prometheus")
+    expect(info?.agents_used).toContain("lead")
+    expect(info?.agents_used).toContain("planner")
   })
 })
 
@@ -491,7 +491,7 @@ describe("session-manager storage - SDK path (beta mode)", () => {
         parts: [{ id: "part_1", type: "text", text: "Hello" }],
       },
       {
-        info: { id: "msg_2", role: "assistant", agent: "oracle", time: { created: 2000 } },
+        info: { id: "msg_2", role: "assistant", agent: "thinker", time: { created: 2000 } },
         parts: [{ id: "part_2", type: "text", text: "Hi there" }],
       },
     ]

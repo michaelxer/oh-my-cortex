@@ -29,17 +29,17 @@ export function logLegacyPluginStartupWarning(deps: LogLegacyPluginStartupWarnin
   })
 
   console.warn(
-    `[oh-my-openagent] WARNING: Your opencode.json uses the legacy package name "${LEGACY_PLUGIN_NAME}".`
+    `[oh-my-cortex] WARNING: Your opencode.json uses the legacy package name "${LEGACY_PLUGIN_NAME}".`
     + ` The package has been renamed to "${PLUGIN_NAME}".`
     + ` Attempting auto-migration...`,
   )
 
   const migrated = migrateLegacyPluginEntryFn(result.configPath!)
   if (migrated) {
-    console.warn(`[oh-my-openagent] Auto-migrated opencode.json: ${result.legacyEntries.join(", ")} -> ${suggestedEntries.join(", ")}`)
+    console.warn(`[oh-my-cortex] Auto-migrated opencode.json: ${result.legacyEntries.join(", ")} -> ${suggestedEntries.join(", ")}`)
   } else {
     console.warn(
-      `[oh-my-openagent] Could not auto-migrate. Please manually update your opencode.json:`
+      `[oh-my-cortex] Could not auto-migrate. Please manually update your opencode.json:`
       + ` ${result.legacyEntries.map((e, i) => `"${e}" -> "${suggestedEntries[i]}"`).join(", ")}`,
     )
   }

@@ -1,7 +1,7 @@
 import type { PluginInput } from "@opencode-ai/plugin"
 import type { Client } from "./client"
 import type { AutoCompactState, ParsedTokenLimitError } from "./types"
-import type { ExperimentalConfig, OhMyOpenCodeConfig } from "../../config"
+import type { ExperimentalConfig, OhMyCortexConfig } from "../../config"
 import { parseAnthropicTokenLimitError } from "./parser"
 import { executeCompact, getLastAssistant } from "./executor"
 import { attemptDeduplicationRecovery } from "./deduplication-recovery"
@@ -11,7 +11,7 @@ import { log } from "../../shared/logger"
 
 export interface AnthropicContextWindowLimitRecoveryOptions {
   experimental?: ExperimentalConfig
-  pluginConfig: OhMyOpenCodeConfig
+  pluginConfig: OhMyCortexConfig
   dependencies?: {
     executeCompact?: typeof executeCompact
     getLastAssistant?: typeof getLastAssistant
@@ -39,7 +39,7 @@ export function createAnthropicContextWindowLimitRecoveryHook(
 ) {
   const autoCompactState = createRecoveryState()
   const experimental = options?.experimental
-  const pluginConfig = options?.pluginConfig ?? {} as OhMyOpenCodeConfig
+  const pluginConfig = options?.pluginConfig ?? {} as OhMyCortexConfig
   const dependencies = {
     executeCompact,
     getLastAssistant,

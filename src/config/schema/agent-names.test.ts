@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
-import { OhMyOpenCodeConfigSchema } from "./oh-my-opencode-config"
+import { OhMyCortexConfigSchema } from "./oh-my-cortex-config"
 
-describe("OhMyOpenCodeConfigSchema disabled_skills", () => {
+describe("OhMyCortexConfigSchema disabled_skills", () => {
   test("accepts review-work and ai-slop-remover", () => {
     // given
     const config = {
@@ -9,7 +9,7 @@ describe("OhMyOpenCodeConfigSchema disabled_skills", () => {
     }
 
     // when
-    const result = OhMyOpenCodeConfigSchema.safeParse(config)
+    const result = OhMyCortexConfigSchema.safeParse(config)
 
     // then
     expect(result.success).toBe(true)

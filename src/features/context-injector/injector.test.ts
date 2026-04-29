@@ -21,7 +21,7 @@ describe("createContextInjectorMessagesTransformHook", () => {
       sessionID,
       role,
       time: { created: Date.now() },
-      agent: "sisyphus",
+      agent: "chief",
       model: { providerID: "test", modelID: "test" },
       path: { cwd: "/", root: "/" },
     },
@@ -41,9 +41,9 @@ describe("createContextInjectorMessagesTransformHook", () => {
     const hook = createContextInjectorMessagesTransformHook(collector)
     const sessionID = "ses_transform1"
     collector.register(sessionID, {
-      id: "ulw",
+      id: "dw",
       source: "keyword-detector",
-      content: "Ultrawork context",
+      content: "Deepwork context",
     })
     const messages = [
       createMockMessage("user", "First message", sessionID),
@@ -59,7 +59,7 @@ describe("createContextInjectorMessagesTransformHook", () => {
     // then - synthetic part inserted before original text part
     expect(output.messages.length).toBe(3)
     expect(output.messages[2].parts.length).toBe(2)
-    expect(output.messages[2].parts[0].text).toBe("Ultrawork context")
+    expect(output.messages[2].parts[0].text).toBe("Deepwork context")
     expect(output.messages[2].parts[0].synthetic).toBe(true)
     expect(output.messages[2].parts[1].text).toBe("Second message")
   })

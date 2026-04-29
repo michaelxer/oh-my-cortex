@@ -1,14 +1,14 @@
 import { statSync } from "node:fs"
 import {
   appendSessionId,
-  clearBoulderState,
-  createBoulderState,
-  findPrometheusPlans,
+  clearWorkStateState,
+  createWorkStateState,
+  findPlannerPlans,
   getPlanName,
   getPlanProgress,
-  readBoulderState,
-  writeBoulderState,
-} from "../../features/boulder-state"
+  readWorkStateState,
+  writeWorkStateState,
+} from "../../features/work-state"
 import { log } from "../../shared/logger"
 import { createWorktreeActiveBlock } from "./worktree-block"
 import type { PluginInput } from "@opencode-ai/plugin"
@@ -54,8 +54,8 @@ function buildAutoSelectedPlanContext(params: {
 }): string {
   const { planPath, sessionId, timestamp, activeAgent, worktreePath, worktreeBlock, directory } = params
   const progress = getPlanProgress(planPath)
-  const newState = createBoulderState(planPath, sessionId, activeAgent, worktreePath)
-  writeBoulderState(directory, newState)
+  const newState = createWorkStateState(planPath, sessionId, activeAgent, worktreePath)
+  writeWorkStateState(directory, newState)
 
   return `
 ## Auto-Selected Plan
@@ -67,7 +67,7 @@ function buildAutoSelectedPlanContext(params: {
 **Started**: ${timestamp}
 ${worktreeBlock}
 
-boulder.json has been created. Read the plan and begin execution.`
+workstate.json has been created. Read the plan and begin execution.`
 }
 
 function buildMissingPlanContext(explicitPlanName: string, allPlans: string[]): string {
@@ -95,12 +95,12 @@ Ask the user which plan to work on.`
 ## Plan Not Found
 
  Could not find a plan matching "${explicitPlanName}".
- No incomplete plans available. Create a new plan using the Prometheus agent.`
+ No incomplete plans available. Create a new plan using the Planner agent.`
 }
 
 function buildExplicitPlanContext(params: {
   explicitPlanName: string
-  existingState: ReturnType<typeof readBoulderState>
+  existingState: ReturnType<typeof readWorkStateState>
   sessionId: string
   timestamp: string
   activeAgent: string
@@ -111,7 +111,7 @@ function buildExplicitPlanContext(params: {
   const { explicitPlanName, existingState, sessionId, timestamp, activeAgent, worktreePath, worktreeBlock, directory } = params
   log(`[${HOOK_NAME}] Explicit plan name requested: ${explicitPlanName}`, { sessionID: sessionId })
 
-  const allPlans = findPrometheusPlans(directory)
+  const allPlans = findPlannerPlans(directory)
   const matchedPlan = findPlanByName(allPlans, explicitPlanName)
   if (!matchedPlan) {
     return buildMissingPlanContext(explicitPlanName, allPlans)
@@ -123,11 +123,11 @@ function buildExplicitPlanContext(params: {
 ## Plan Already Complete
 
  The requested plan "${getPlanName(matchedPlan)}" has been completed.
- All ${progress.total} tasks are done. Create a new plan using the Prometheus agent.`
+ All ${progress.total} tasks are done. Create a new plan using the Planner agent.`
   }
 
   if (existingState) {
-    clearBoulderState(directory)
+    clearWorkStateState(directory)
   }
 
   return buildAutoSelectedPlanContext({
@@ -142,7 +142,7 @@ function buildExplicitPlanContext(params: {
 }
 
 function buildExistingSessionContext(params: {
-  existingState: NonNullable<ReturnType<typeof readBoulderState>>
+  existingState: NonNullable<ReturnType<typeof readWorkStateState>>
   sessionId: string
   activeAgent: string
   worktreePath: string | undefined
@@ -167,7 +167,7 @@ Looking for new plans...`
   const shouldRewriteState = existingState.agent !== activeAgent || worktreePath !== undefined
 
   if (shouldRewriteState) {
-    writeBoulderState(directory, {
+    writeWorkStateState(directory, {
       ...existingState,
       agent: activeAgent,
       ...(worktreePath !== undefined ? { worktree_path: worktreePath } : {}),
@@ -197,7 +197,7 @@ Read the plan file and continue from the first unchecked task.`
 }
 
 function shouldDiscoverPlans(
-  existingState: ReturnType<typeof readBoulderState>,
+  existingState: ReturnType<typeof readWorkStateState>,
   explicitPlanName: string | null,
 ): boolean {
   return (!existingState && !explicitPlanName)
@@ -214,15 +214,15 @@ function buildPlanDiscoveryContext(params: {
   directory: string
 }): string {
   const { contextInfo, sessionId, timestamp, activeAgent, worktreePath, worktreeBlock, directory } = params
-  const plans = findPrometheusPlans(directory)
+  const plans = findPlannerPlans(directory)
   const incompletePlans = plans.filter((p) => !getPlanProgress(p).isComplete)
 
   if (plans.length === 0) {
     return contextInfo + `
 ## No Plans Found
 
- No Prometheus plan files found in the .sisyphus plans directory.
- Use the Prometheus agent to create a work plan first.`
+ No Planner plan files found in the .cortex plans directory.
+ Use the Planner agent to create a work plan first.`
   }
 
   if (incompletePlans.length === 0) {
@@ -230,7 +230,7 @@ function buildPlanDiscoveryContext(params: {
 
 ## All Plans Complete
 
- All ${plans.length} plan(s) are complete. Create a new plan using the Prometheus agent.`
+ All ${plans.length} plan(s) are complete. Create a new plan using the Planner agent.`
   }
 
   if (incompletePlans.length === 1) {
@@ -271,7 +271,7 @@ ${worktreeBlock}
 export function buildStartWorkContextInfo(params: {
   ctx: PluginInput
   explicitPlanName: string | null
-  existingState: ReturnType<typeof readBoulderState>
+  existingState: ReturnType<typeof readWorkStateState>
   sessionId: string
   timestamp: string
   activeAgent: string

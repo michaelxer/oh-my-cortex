@@ -18,7 +18,7 @@ describe("tool-metadata-store", () => {
       const callID = "call_001"
       const data = {
         title: "Test Task",
-        metadata: { sessionId: "ses_child", agent: "oracle" },
+        metadata: { sessionId: "ses_child", agent: "thinker" },
       }
 
       //#when

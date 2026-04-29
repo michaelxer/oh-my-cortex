@@ -2,17 +2,17 @@ import type { PluginContext } from "./types"
 import { randomUUID } from "node:crypto"
 
 import { getMainSessionID } from "../features/claude-code-session-state"
-import { clearBoulderState } from "../features/boulder-state"
+import { clearWorkStateState } from "../features/work-state"
 import { log } from "../shared"
 import { stripInvisibleAgentCharacters } from "../shared/agent-display-names"
 import { resolveSessionAgent } from "./session-agent-resolver"
-import { parseRalphLoopArguments } from "../hooks/ralph-loop/command-arguments"
-import { ULTRAWORK_VERIFICATION_PROMISE } from "../hooks/ralph-loop/constants"
-import { readState, writeState } from "../hooks/ralph-loop/storage"
+import { parseCortexLoopArguments } from "../hooks/cortex-loop/command-arguments"
+import { DEEPWORK_VERIFICATION_PROMISE } from "../hooks/cortex-loop/constants"
+import { readState, writeState } from "../hooks/cortex-loop/storage"
 
 import type { CreatedHooks } from "../create-hooks"
 
-function getLoopCommandArguments(args: Record<string, unknown>, command: "ralph-loop" | "ulw-loop"): string {
+function getLoopCommandArguments(args: Record<string, unknown>, command: "cortex-loop" | "dw-loop"): string {
   const rawUserMessage = typeof args.user_message === "string" ? args.user_message.trim() : ""
   if (rawUserMessage) {
     return rawUserMessage
@@ -31,9 +31,9 @@ export function createToolExecuteBeforeHandler(args: {
 ) => Promise<void> {
   const { ctx, hooks } = args
 
-  function buildUltraworkOracleVerificationPrompt(prompt: string, originalTask: string, verificationAttemptId: string): string {
+  function buildDeepworkThinkerVerificationPrompt(prompt: string, originalTask: string, verificationAttemptId: string): string {
     const verificationPrompt = [
-      "You are verifying the active ULTRAWORK loop result for this session.",
+      "You are verifying the active DEEPWORK loop result for this session.",
       "",
       "Original task:",
       originalTask,
@@ -42,7 +42,7 @@ export function createToolExecuteBeforeHandler(args: {
       "Assume it may be incomplete, misleading, or subtly broken until the evidence proves otherwise.",
       "Look for missing scope, weak verification, process violations, hidden regressions, and any reason the task should NOT be considered complete.",
       "",
-      `If the work is fully complete, end your response with <promise>${ULTRAWORK_VERIFICATION_PROMISE}</promise>.`,
+      `If the work is fully complete, end your response with <promise>${DEEPWORK_VERIFICATION_PROMISE}</promise>.`,
       "If the work is not complete, explain the blocking issues clearly and DO NOT emit that promise.",
       "",
       `<ulw_verification_attempt_id>${verificationAttemptId}</ulw_verification_attempt_id>`,
@@ -73,9 +73,9 @@ export function createToolExecuteBeforeHandler(args: {
     await hooks.rulesInjector?.["tool.execute.before"]?.(input, output)
     await hooks.tasksTodowriteDisabler?.["tool.execute.before"]?.(input, output)
     await hooks.webfetchRedirectGuard?.["tool.execute.before"]?.(input, output)
-    await hooks.prometheusMdOnly?.["tool.execute.before"]?.(input, output)
-    await hooks.sisyphusJuniorNotepad?.["tool.execute.before"]?.(input, output)
-    await hooks.atlasHook?.["tool.execute.before"]?.(input, output)
+    await hooks.plannerMdOnly?.["tool.execute.before"]?.(input, output)
+    await hooks.workerNotepad?.["tool.execute.before"]?.(input, output)
+    await hooks.leadHook?.["tool.execute.before"]?.(input, output)
 
     const normalizedToolName = input.tool.toLowerCase()
     if (
@@ -103,7 +103,7 @@ export function createToolExecuteBeforeHandler(args: {
       const taskId = typeof argsObject.task_id === "string" ? argsObject.task_id : undefined
 
       if (category) {
-        argsObject.subagent_type = "sisyphus-junior"
+        argsObject.subagent_type = "worker"
       } else if (!subagentType && taskId) {
         const resolvedAgent = await resolveSessionAgent(ctx.client, taskId)
         argsObject.subagent_type = resolvedAgent ?? "continue"
@@ -113,16 +113,16 @@ export function createToolExecuteBeforeHandler(args: {
         typeof argsObject.subagent_type === "string" ? stripInvisibleAgentCharacters(argsObject.subagent_type) : undefined
       const prompt = typeof argsObject.prompt === "string" ? argsObject.prompt : ""
       const loopState = typeof ctx.directory === "string" ? readState(ctx.directory) : null
-      const shouldInjectOracleVerification =
-        normalizedSubagentType === "oracle"
+      const shouldInjectThinkerVerification =
+        normalizedSubagentType === "thinker"
         && loopState?.active === true
-        && loopState.ultrawork === true
+        && loopState.deepwork === true
         && loopState.verification_pending === true
         && loopState.session_id === input.sessionID
 
-      if (shouldInjectOracleVerification) {
+      if (shouldInjectThinkerVerification) {
         const verificationAttemptId = randomUUID()
-        log("[tool-execute-before] Injecting ULW oracle verification attempt", {
+        log("[tool-execute-before] Injecting DW thinker verification attempt", {
           sessionID: input.sessionID,
           callID: input.callID,
           verificationAttemptId,
@@ -134,7 +134,7 @@ export function createToolExecuteBeforeHandler(args: {
           verification_session_id: undefined,
         })
         argsObject.run_in_background = false
-        argsObject.prompt = buildUltraworkOracleVerificationPrompt(
+        argsObject.prompt = buildDeepworkThinkerVerificationPrompt(
           prompt,
           loopState.prompt,
           verificationAttemptId,
@@ -142,28 +142,28 @@ export function createToolExecuteBeforeHandler(args: {
       }
     }
 
-    if (hooks.ralphLoop && input.tool === "skill") {
+    if (hooks.cortexLoop && input.tool === "skill") {
       const rawName = typeof output.args.name === "string" ? output.args.name : undefined
       const command = rawName?.replace(/^\//, "").toLowerCase()
       const sessionID = input.sessionID || getMainSessionID()
 
-      if (command === "ralph-loop" && sessionID) {
-        const rawArgs = getLoopCommandArguments(output.args, "ralph-loop")
-        const parsedArguments = parseRalphLoopArguments(rawArgs)
+      if (command === "cortex-loop" && sessionID) {
+        const rawArgs = getLoopCommandArguments(output.args, "cortex-loop")
+        const parsedArguments = parseCortexLoopArguments(rawArgs)
 
-        hooks.ralphLoop.startLoop(sessionID, parsedArguments.prompt, {
+        hooks.cortexLoop.startLoop(sessionID, parsedArguments.prompt, {
           maxIterations: parsedArguments.maxIterations,
           completionPromise: parsedArguments.completionPromise,
           strategy: parsedArguments.strategy,
         })
-      } else if (command === "cancel-ralph" && sessionID) {
-        hooks.ralphLoop.cancelLoop(sessionID)
-      } else if (command === "ulw-loop" && sessionID) {
-        const rawArgs = getLoopCommandArguments(output.args, "ulw-loop")
-        const parsedArguments = parseRalphLoopArguments(rawArgs)
+      } else if (command === "cancel-cortex" && sessionID) {
+        hooks.cortexLoop.cancelLoop(sessionID)
+      } else if (command === "dw-loop" && sessionID) {
+        const rawArgs = getLoopCommandArguments(output.args, "dw-loop")
+        const parsedArguments = parseCortexLoopArguments(rawArgs)
 
-        hooks.ralphLoop.startLoop(sessionID, parsedArguments.prompt, {
-          ultrawork: true,
+        hooks.cortexLoop.startLoop(sessionID, parsedArguments.prompt, {
+          deepwork: true,
           maxIterations: parsedArguments.maxIterations,
           completionPromise: parsedArguments.completionPromise,
           strategy: parsedArguments.strategy,
@@ -179,8 +179,8 @@ export function createToolExecuteBeforeHandler(args: {
       if (command === "stop-continuation" && sessionID) {
         hooks.stopContinuationGuard?.stop(sessionID)
         hooks.todoContinuationEnforcer?.cancelAllCountdowns()
-        hooks.ralphLoop?.cancelLoop(sessionID)
-        clearBoulderState(ctx.directory)
+        hooks.cortexLoop?.cancelLoop(sessionID)
+        clearWorkStateState(ctx.directory)
         log("[stop-continuation] All continuation mechanisms stopped", {
           sessionID,
         })
@@ -188,7 +188,7 @@ export function createToolExecuteBeforeHandler(args: {
 
       // Clear stop state when user explicitly resumes work via work-starting commands.
       // This ensures /stop-continuation persists until the user intentionally restarts.
-      const workStartingCommands = ["start-work", "ralph-loop", "ulw-loop"]
+      const workStartingCommands = ["start-work", "cortex-loop", "dw-loop"]
       if (workStartingCommands.includes(command ?? "") && sessionID) {
         if (hooks.stopContinuationGuard?.isStopped(sessionID)) {
           hooks.stopContinuationGuard.clear(sessionID)

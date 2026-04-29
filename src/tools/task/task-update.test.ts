@@ -7,7 +7,7 @@ import { createTaskUpdateTool } from "./task-update"
 const TEST_STORAGE = ".test-task-update-tool"
 const TEST_DIR = join(process.cwd(), TEST_STORAGE)
 const TEST_CONFIG = {
-  sisyphus: {
+  chief: {
     tasks: {
       storage_path: TEST_STORAGE,
     },
@@ -329,13 +329,13 @@ describe("task_update tool", () => {
       //#when
       const args = {
         id: taskId,
-        owner: "sisyphus",
+        owner: "chief",
       }
       const resultStr = await tool.execute(args, TEST_CONTEXT)
       const result = JSON.parse(resultStr)
 
       //#then
-      expect(result.task.owner).toBe("sisyphus")
+      expect(result.task.owner).toBe("chief")
     })
 
     test("returns error when task not found", async () => {

@@ -82,7 +82,7 @@ describe("session-manager utils", () => {
       message_count: 42,
       first_message: new Date("2025-12-20T10:00:00Z"),
       last_message: new Date("2025-12-24T15:00:00Z"),
-      agents_used: ["build", "oracle"],
+      agents_used: ["build", "thinker"],
       has_todos: true,
       has_transcript: true,
       todos: [{ id: "1", content: "Test", status: "pending" }],
@@ -95,7 +95,7 @@ describe("session-manager utils", () => {
     // then
     expect(result).toContain("ses_test123")
     expect(result).toContain("42")
-    expect(result).toContain("build, oracle")
+    expect(result).toContain("build, thinker")
     expect(result).toContain("Duration")
   })
 

@@ -2,7 +2,7 @@ declare const require: (name: string) => any
 const { describe, expect, test } = require("bun:test")
 
 import { injectContinuation } from "./continuation-injection"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+import { OMX_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 
 describe("injectContinuation", () => {
   test("preserves the registered built-in agent name before promptAsync", async () => {
@@ -33,14 +33,14 @@ describe("injectContinuation", () => {
       ctx: ctx as never,
       sessionID: "ses_display_name_agent",
       resolvedInfo: {
-        agent: "Sisyphus - Ultraworker",
+        agent: "Chief - Deepworker",
         model: { providerID: "anthropic", modelID: "claude-sonnet-4-20250514" },
       },
       sessionStateStore: sessionStateStore as never,
     })
 
     // then
-    expect(capturedAgent).toBe("Sisyphus - Ultraworker")
+    expect(capturedAgent).toBe("Chief - Deepworker")
   })
 
   test("inherits tools from resolved message info when reinjecting", async () => {
@@ -74,7 +74,7 @@ describe("injectContinuation", () => {
       ctx: ctx as never,
       sessionID: "ses_continuation_tools",
       resolvedInfo: {
-        agent: "Hephaestus",
+        agent: "Founder",
         model: { providerID: "openai", modelID: "gpt-5.3-codex" },
         tools: { question: "deny", bash: "allow" },
       },
@@ -83,7 +83,7 @@ describe("injectContinuation", () => {
 
     // then
     expect(capturedTools).toEqual({ question: false, bash: true })
-    expect(capturedText).toContain(OMO_INTERNAL_INITIATOR_MARKER)
+    expect(capturedText).toContain(OMX_INTERNAL_INITIATOR_MARKER)
   })
 
   test("skips injection when agent is plan (prevents Plan Mode infinite loop)", async () => {
@@ -159,7 +159,7 @@ describe("injectContinuation", () => {
       ctx: ctx as never,
       sessionID: "ses_continuation_variant",
       resolvedInfo: {
-        agent: "Hephaestus",
+        agent: "Founder",
         model,
       },
       sessionStateStore: sessionStateStore as never,
