@@ -1,6 +1,20 @@
+<div align="center">
+
 # oh-my-cortex
 
 **The cognitive operating system for OpenCode.**
+
+[![npm version](https://img.shields.io/npm/v/oh-my-cortex?style=flat-square&color=cb3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/oh-my-cortex)
+[![npm downloads](https://img.shields.io/npm/dm/oh-my-cortex?style=flat-square&color=blue&logo=npm&logoColor=white)](https://www.npmjs.com/package/oh-my-cortex)
+[![GitHub stars](https://img.shields.io/github/stars/michaelxer/oh-my-cortex?style=flat-square&color=gold&logo=github&logoColor=white)](https://github.com/michaelxer/oh-my-cortex)
+[![License](https://img.shields.io/badge/license-SUL--1.0-green?style=flat-square)](LICENSE.md)
+[![OpenCode Plugin](https://img.shields.io/badge/OpenCode-plugin-8A2BE2?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiPjxwYXRoIGQ9Ik0xMiAyTDIgN2wxMCA1IDEwLTV6Ii8+PHBhdGggZD0iTTIgMTdsMTAgNSAxMC01Ii8+PHBhdGggZD0iTTIgMTJsMTAgNSAxMC01Ii8+PC9zdmc+)](https://opencode.ai)
+
+---
+
+*11 agents. 4-level challenge engine. 5 domain lenses. One command: `deepwork`.*
+
+</div>
 
 oh-my-cortex (OMX) is a multi-agent plugin that turns OpenCode into a thinking partner — not just for code, but for decisions, strategy, communication, risk, and everything in between.
 
