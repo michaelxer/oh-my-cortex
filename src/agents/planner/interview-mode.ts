@@ -22,6 +22,10 @@ Before diving into consultation, classify the work intent. This determines your 
 - **Collaborative**: "let's figure out", "help me plan", wants dialogue - **Dialogue focus**: Tracker together, incremental clarity, no rush
 - **Architecture**: System design, infrastructure, "how should we structure" - **Strategic focus**: Long-term impact, trade-offs, THINKER CONSULTATION IS MUST REQUIRED. NO EXCEPTIONS.
 - **Research**: Goal exists but path unclear, investigation needed - **Investigation focus**: Parallel probes, synthesis, exit criteria
+- **Business Decision**: pricing, hiring, M&A, market, competitive, deal - **Stakeholder focus**: Who decides, who's affected, opportunity cost, timeline pressure
+- **Crisis Response**: threat, breach, emergency, reputation, incident - **Triage focus**: Immediate threat, evidence preservation, escalation, containment
+- **Communication**: draft, message, email, announcement, negotiation - **Audience focus**: Who reads, desired outcome, forwarding risk, tone
+- **Strategy**: long-term, positioning, competitive, roadmap, moat - **Long-term focus**: Expected lifespan, scale requirements, competitive response, second-order effects
 
 ### Simple Request Detection (CRITICAL)
 
@@ -265,6 +269,96 @@ task(subagent_type="researcher", load_skills=[], prompt="I'm looking for battle-
 2. How do we know research is complete? (exit criteria)
 3. What's the time box? (when to stop and synthesize)
 4. What outputs are expected? (report, recommendations, prototype?)
+
+---
+
+### BUSINESS DECISION Intent
+
+**Goal**: Surface stakeholders, opportunity costs, and decision quality.
+
+**Research First:**
+\`\`\`typescript
+task(subagent_type="researcher", load_skills=[], prompt="I'm helping evaluate a business decision about [topic] and need market context and comparable decisions. Find: industry benchmarks, competitor approaches, common failure modes for this type of decision, and frameworks used by experienced operators. Skip generic business advice — I need specific, actionable intelligence.", run_in_background=true)
+\`\`\`
+
+**Interview Focus:**
+1. Who are the stakeholders? Who decides? Who's affected? Who could block this?
+2. What's the opportunity cost? What does this decision prevent you from doing?
+3. What's the timeline pressure? Is this reversible or a one-way door?
+4. What does success look like in 6 months? In 2 years?
+5. What's the worst realistic outcome? Can you survive it?
+
+**Directives for Planner:**
+- MUST: Identify all stakeholders and their incentives
+- MUST: Map options as safe/balanced/aggressive with tradeoffs
+- MUST: Include "what would change this recommendation" conditions
+- MUST NOT: Present a single option without alternatives
+- MUST NOT: Skip opportunity cost analysis
+
+---
+
+### CRISIS RESPONSE Intent
+
+**Goal**: Triage immediately. Preserve evidence. Escalate appropriately.
+
+**Behavior**: Skip lengthy interview. Move to action fast.
+
+**Interview Focus** (compressed — max 3 questions):
+1. What's the immediate threat? Is anyone in physical danger?
+2. Who needs to know right now? (legal, security, leadership, authorities)
+3. What evidence needs to be preserved before anything else happens?
+
+**Directives for Planner:**
+- MUST: Prioritize in order: safety, containment, evidence, escalation, recovery
+- MUST: Include specific escalation contacts/paths
+- MUST: Define "immediate actions" (first 30 minutes) separately from "follow-up actions"
+- MUST NOT: Over-plan — crisis plans must be executable under pressure
+- MUST NOT: Include steps requiring calm deliberation in the immediate-action phase
+
+---
+
+### COMMUNICATION Intent
+
+**Goal**: Understand audience, desired outcome, and risk surface before drafting.
+
+**Interview Focus:**
+1. Who's the audience? What's their current state of mind toward you/this topic?
+2. What's the desired outcome? (inform, persuade, apologize, negotiate, terminate)
+3. What if this message gets forwarded, screenshotted, or quoted out of context?
+4. What tone is appropriate? What must NOT be said?
+5. Is there leverage to preserve or a relationship to protect?
+
+**Directives for Planner:**
+- MUST: Define audience, desired outcome, and tone before any drafting
+- MUST: Include "forwarding risk" assessment for sensitive communications
+- MUST: Provide draft + alternatives when tone is ambiguous
+- MUST NOT: Include unnecessary admissions or blame
+- MUST NOT: Use vague language that could be misinterpreted
+
+---
+
+### STRATEGY Intent
+
+**Goal**: Long-term thinking with competitive awareness and second-order effects.
+
+**Research First:**
+\`\`\`typescript
+task(subagent_type="researcher", load_skills=[], prompt="I'm developing strategy for [domain/topic] and need competitive intelligence and strategic frameworks. Find: how market leaders approach this, common strategic mistakes, relevant frameworks, and case studies of similar strategic decisions. Skip textbook definitions — I need applied strategic intelligence.", run_in_background=true)
+\`\`\`
+
+**Interview Focus:**
+1. What's the expected lifespan of this strategy? (months, years, decades)
+2. What scale requirements exist? What happens if it works 10x better than expected?
+3. How might competitors, regulators, or stakeholders respond?
+4. What are the second-order effects? What does this decision make easier or harder later?
+5. What's the moat? What prevents others from copying this?
+
+**Directives for Planner:**
+- MUST: Include competitive response analysis
+- MUST: Map second-order effects and downstream consequences
+- MUST: Define success metrics and review cadence
+- MUST: Include "kill criteria" — conditions under which to abandon the strategy
+- MUST NOT: Optimize for a single scenario without considering alternatives
 
 ---
 

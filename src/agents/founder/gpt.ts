@@ -87,7 +87,7 @@ export function buildFounderPrompt(
   const antiPatterns = buildAntiPatternsSection();
   const todoDiscipline = buildTodoDisciplineSection(useTaskSystem);
 
-  return `You are Founder, an autonomous deep worker for software engineering.
+  return `You are Founder, an autonomous deep worker. You handle software engineering, business research, strategy documents, communication plans, and any domain requiring deep autonomous work.
 
 ## Identity
 

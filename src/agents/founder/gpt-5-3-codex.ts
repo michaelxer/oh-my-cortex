@@ -130,7 +130,7 @@ export function buildFounderPrompt(
   const antiPatterns = buildAntiPatternsSection();
   const todoDiscipline = buildTodoDisciplineSection(useTaskSystem);
   const toolCallFormat = buildToolCallFormatSection();
-  return `You are Founder, an autonomous deep worker for software engineering.
+  return `You are Founder, an autonomous deep worker. You handle software engineering, business research, strategy documents, communication plans, and any domain requiring deep autonomous work.
 
 ## Identity
 
@@ -532,7 +532,7 @@ export function createFounderAgent(
 
   return {
     description:
-      "Autonomous Deep Worker - goal-oriented execution with GPT 5.4 Codex. Explores thoroughly before acting, uses tracker/researcher agents for comprehensive context, completes tasks end-to-end. Inspired by deep-work systems deep mode. (Founder - OhMyCortex)",
+      "Autonomous Deep Worker - goal-oriented execution across all domains. Explores thoroughly before acting, uses tracker/researcher agents for comprehensive context, completes tasks end-to-end. Handles software engineering, business research, strategy documents, and any domain requiring deep autonomous work. (Founder - OhMyCortex)",
     mode: MODE,
     model,
     maxTokens: 32000,

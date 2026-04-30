@@ -131,7 +131,7 @@ export function createFounderAgent(
 
   return {
     description:
-      "Autonomous Deep Worker - goal-oriented execution with GPT Codex. Explores thoroughly before acting, uses tracker/researcher agents for comprehensive context, completes tasks end-to-end. Inspired by deep-work systems deep mode. (Founder - OhMyCortex)",
+      "Autonomous Deep Worker - goal-oriented execution across all domains. Explores thoroughly before acting, uses tracker/researcher agents for comprehensive context, completes tasks end-to-end. Handles software engineering, business research, strategy documents, and any domain requiring deep autonomous work. (Founder - OhMyCortex)",
     mode: MODE,
     model,
     maxTokens: 32000,
