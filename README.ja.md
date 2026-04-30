@@ -1,357 +1,166 @@
-> [!WARNING]
-> **一時的なお知らせ（今週）: メンテナー対応遅延のお知らせ**
->
-> コアメンテナーのQが負傷したため、今週は Issue/PR への返信とリリースが遅れる可能性があります。
-> ご理解とご支援に感謝します。
+# oh-my-cortex
 
-> [!TIP]
-> **Building in Public**
->
-> メンテナーが Jobdori を使い、oh-my-cortex をリアルタイムで開発・メンテナンスしています。Jobdori は OpenClaw をベースに大幅カスタマイズされた AI アシスタントです。
-> すべての機能開発、修正、Issue トリアージを Discord でライブでご覧いただけます。
->
-> [![Building in Public](./.github/assets/building-in-public.png)](https://discord.gg/PUwSMR9XNk)
->
-> [**→ #building-in-public で確認する**](https://discord.gg/PUwSMR9XNk)
+**OpenCode のための認知オペレーティングシステム。**
 
+oh-my-cortex (OMX) は、OpenCode を単なるコーディングツールではなく、意思決定、戦略、コミュニケーション、リスク管理まで対応する思考パートナーに変えるマルチエージェントプラグインです。
 
-> [!NOTE]
->
-> [![Chief Labs - Chief is the agent that codes like your team.](./.github/assets/chieflabs.png?v=2)](https://chieflabs.ai)
-> > **私たちは、フロンティアエージェントの未来を定義するために、Chiefの完全なプロダクト版を構築しています。 <br />[こちら](https://chieflabs.ai)からウェイトリストにご登録ください。**
-
-> [!TIP]
-> 私たちと一緒に！
->
-> | [<img alt="Discord link" src="https://img.shields.io/discord/1452487457085063218?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width="156px" />](https://discord.gg/PUwSMR9XNk) | [Discordコミュニティ](https://discord.gg/PUwSMR9XNk)に参加して、コントリビューターや他の `oh-my-cortex` ユーザーと交流しましょう。 |
-> | :-----| :----- |
-> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%40justchief-00CED1?style=flat-square&logo=x&labelColor=black" width="156px" />](https://x.com/justchief) | `oh-my-cortex` のニュースやアップデートは私のXアカウントで投稿されていましたが、 <br /> 誤って凍結されてしまったため、現在は [@justchief](https://x.com/justchief) が代わりにアップデートを投稿しています。 |
-> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/michaelxer?style=flat-square&logo=github&labelColor=black&color=24292f" width="156px" />](https://github.com/michaelxer) | さらに多くのプロジェクトを見たい場合は、GitHubで [@michaelxer](https://github.com/michaelxer) をフォローしてください。 |
-
-<!-- <CENTERED SECTION FOR GITHUB DISPLAY> -->
-
-<div align="center">
-
-[![Oh My Cortex](./.github/assets/hero.jpg)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
-
-[![Preview](./.github/assets/omx.png)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
-
-</div>
-
-> これはステロイドを打ったコーディングです。一つのモデルのステロイドじゃない——薬局丸ごとです。
->
-> Claudeでオーケストレーションし、GPTで推論し、Kimiでスピードを出し、Geminiでビジョンを処理する。モデルはどんどん安くなり、どんどん賢くなる。特定のプロバイダーが独占することはない。私たちはその開かれた市場のために構築している。Anthropicの牢獄は素敵だ。だが、私たちはそこに住まない。
-
-<div align="center">
-
-[![GitHub Release](https://img.shields.io/github/v/release/michaelxer/oh-my-cortex?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/releases)
-[![npm downloads](https://img.shields.io/npm/dt/oh-my-cortex?color=ff6b35&labelColor=black&style=flat-square)](https://www.npmjs.com/package/oh-my-cortex)
-[![GitHub Contributors](https://img.shields.io/github/contributors/michaelxer/oh-my-cortex?color=c4f042&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/graphs/contributors)
-[![GitHub Forks](https://img.shields.io/github/forks/michaelxer/oh-my-cortex?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/network/members)
-[![GitHub Stars](https://img.shields.io/github/stars/michaelxer/oh-my-cortex?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/michaelxer/oh-my-cortex?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/issues)
-[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/blob/dev/LICENSE.md)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/michaelxer/oh-my-cortex)
-
-[English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-cn.md)
-
-</div>
-
-<!-- </CENTERED SECTION FOR GITHUB DISPLAY> -->
-
-## レビュー
-
-> 「これのおかげで Cursor のサブスクリプションを解約しました。オープンソースコミュニティで信じられないことが起きています。」 - [Arthur Guiot](https://x.com/arthur_guiot/status/2008736347092382053?s=20)
-
-> 「Claude Codeが人間なら3ヶ月かかることを7日でやるとしたら、Chiefはそれを1時間でやってのけます。タスクが終わるまでひたすら働き続けます。まさに規律あるエージェントです。」 <br/>- B, Quant Researcher
-
-> 「Oh My Opencodeを使って、たった1日で8000個の eslint 警告を叩き潰しました。」 <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
-
-> 「Ohmyopencodeとcortex loopを使って、45k行のtauriアプリを一晩でSaaSウェブアプリに変換しました。インタビューモードから始めて、私のプロンプトに対して質問や推奨事項を尋ねました。勝手に作業していくのを見るのは楽しかったし、今朝起きたらウェブサイトがほぼ動いているのを見て驚愕しました！」 - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
-
-> 「oh-my-cortexを使ってください。もう二度と元には戻れません。」 <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
-
-> 「何がどうすごいのかまだ上手く言語化できないんですが、開発体験が完全に異次元に到達してしまいました。」 - [苔硯:こけすずり](https://x.com/kokesuzuri/status/2008532913961529372?s=20)
-
-> 「週末にマインクラフト/ソウルライクな化け物を作ろうと、open code、oh my opencode、supermemoryで実験中です。昼食後の散歩に行っている間に、しゃがむアニメーションを追加するように指示しておきました。[動画]」 - [MagiMetal](https://x.com/MagiMetal/status/2005374704178373023)
-
-> 「これをコアに取り込んで彼を採用すべきだ。マジで。これ、本当に、本当に、本当に良い。」 <br/>- Henning Kilset
-
-> 「彼を説得できるなら @yeon_gyu_kim を雇ってください。彼がopencodeに革命を起こしました。」 <br/>- [mysticaltech](https://x.com/mysticaltech/status/2001858758608376079)
-
-> 「Oh My Cortexはマジでヤバい」 - [YouTube - Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
+OMX をインストールして `deepwork` と入力するだけ。あなたの前提に挑戦し、センシティブな領域に適応し、意思決定を構造化し、精密に実行する 11 名の専門エージェントチームが手に入ります。
 
 ---
 
-# Oh My Cortex
+## なぜ OMX なのか？
 
-最初はこれを「Claude Codeにステロイドを打ったもの」と呼んでいました。それは過小評価でした。
+ほとんどの AI ツールはあなたの言うことに何でも同意します。OMX は反論します。
 
-一つのモデルに薬を盛るのではありません。カルテルを動かすんです。Claude、GPT、Kimi、Gemini——それぞれが得意なことを、並列で、止まらずに。モデルは毎月安くなっており、どのプロバイダーも独占できません。私たちはすでにその世界に生きています。
+ほとんどの AI ツールはコードを書くだけです。OMX は思考を助けます。
 
-その泥臭い作業をすべてやっておきました。すべてをテストし、実際に機能するものだけを残しました。
+ほとんどの AI ツールは全てに一つのモデルを使います。OMX は適切な頭脳を適切な仕事に自動的にルーティングします。
 
-OMXをインストールして、`deepwork`とタイプしてください。狂ったようにコーディングしてください。
+---
 
+## OMX の特徴
+
+### Challenge Engine
+
+エージェントは単に実行するだけではありません。弱い推論が悪い決定になる前に挑戦します。
+
+穏やかな指摘から完全な敵対的レビューまで、4 段階のプッシュバック：
+
+| レベル | 名前 | 動作 |
+|---|---|---|
+| 1 | **Nudge** | 一つの前提や改善点を指摘（常時有効） |
+| 2 | **Probe** | トレードオフ、リスク、盲点、より良い選択肢を提示 |
+| 3 | **Mirror** | 回避、弱い論理、機会費用を指摘し、処方を提示 |
+| 4 | **Red Team** | 競合、懐疑論者、投資家、規制当局の視点から攻撃 |
+
+`/challenge 3` で手動設定するか、「正直に言って」「何を見落としている？」と言えば自動的に有効化されます。
+
+### Domain Lenses
+
+OMX は会話がセンシティブな領域に入ったことを検知し、自動的に調整します：
+
+| ドメイン | 変更内容 |
+|---|---|
+| **Health** | 非診断的。専門家への相談を推奨。エビデンスに基づく情報のみ。 |
+| **Legal** | 保守的。情報とアドバイスを区別。管轄権を意識。 |
+| **Financial** | データ駆動。リスク許容度を明示。情報と金融アドバイスを分離。 |
+| **Security** | トリアージ優先。防御のみ。証拠を保全。専門家にエスカレーション。 |
+| **Political** | ステークホルダーを意識。面子を保つ。プロトコルを遵守。 |
+
+`/lens security` で手動有効化するか、OMX にコンテキストから自動検知させることができます。
+
+### コードを超えて
+
+OMX は他のコーディングツールでは対応できないことを処理します：
+
+- **ビジネス戦略** — 競合分析、M&A 評価、市場参入計画
+- **センシティブなコミュニケーション** — オーディエンス認識、レバレッジ保持、スクリーンショット対策を考慮したメッセージ作成
+- **リスク評価** — 脅威トリアージ、危機計画、インシデント対応
+- **リサーチ統合** — 複数ソースの三角測量、エビデンスレビュー、エグゼクティブサマリー
+- **意思決定支援** — トレードオフと推奨を含む構造化された選択肢 A/B/C 分析
+- **コーチング** — スキル開発、振り返り演習、建設的な挑戦
+
+### 構造化された推論
+
+全ての OMX エージェントは不確実性が重要な場合に確信度ラベルを使用します：
+
+- **Confirmed** — 検証済み、出典あり、直接知っている
+- **Likely** — 十分に裏付けられた推論
+- **Possible** — もっともらしいが未検証
+- **Speculative** — 仮説のみ
+
+偽りの確信はありません。裏付けのない主張はありません。エージェントが知らない場合は、そう言います。
+
+---
+
+## OMX チーム
+
+### プライマリエージェント（Tab で選択可能）
+
+| エージェント | 役割 |
+|---|---|
+| **Chief** | メインオーケストレーター。全てのリクエストを目標、ステークス、リスク、緊急度で分類。専門家に委任。弱い前提に挑戦。タスクを完了まで推進。 |
+| **Founder** | 自律的ディープワーカー。指示ではなく目標を与える。コンテキストを探索し、パターンを調査し、エンドツーエンドで実行。 |
+
+### サブエージェント（Chief が自動的に呼び出し）
+
+| エージェント | 役割 |
+|---|---|
+| **Thinker** | 全ドメインコンサルタント。アーキテクチャ、ビジネス戦略、リスク、健康、法律、金融、政治分析。読み取り専用 — 純粋な推論、アクションなし。 |
+| **Researcher** | ナレッジファインダー。ドキュメント、オープンソース例、標準、ベストプラクティス。 |
+| **Tracker** | コードベースエクスプローラー。高速ファイル検索、パターン検索、ローカルコンテキストマッピング。 |
+| **Planner** | 戦略的インタビュアー。質問が先、計画が後。反復的な質問を通じて詳細な作業計画を作成。 |
+| **Reviewer** | ギャップファインダー。隠れた前提、曖昧さ、欠落した受入基準、ステークホルダーの盲点を検出。 |
+| **Critic** | 品質ゲート。参照が検証され、受入基準が具体的な場合のみ承認。 |
+| **Lead** | プロジェクトマネージャー。Worker に実装タスクを委任し、学習を蓄積し、完了を検証。 |
+| **Worker** | タスク実行者。集中的、規律的、スコープ限定。再委任不可。 |
+| **Spotter** | ビジュアルアナリスト。スクリーンショット、図表、PDF、画像。 |
+
+---
+
+## コマンド
+
+| コマンド | 動作 |
+|---|---|
+| `deepwork` または `dw` | フルアクティベーション — 全エージェント、最大強度、自律実行 |
+| `/dw-loop` | Cortex ループ — 100% 完了するまで作業を継続 |
+| `/challenge [1-4]` | チャレンジレベルを設定（1=nudge, 2=probe, 3=mirror, 4=red-team） |
+| `/checkpoint` | 会話サマリーを強制 — 決定事項、前提、アクションアイテム |
+| `/lens [domain]` | ドメインレンズを有効化（health, legal, financial, security, political） |
+| `/decide` | 構造化された意思決定フレームワーク — 選択肢、トレードオフ、リスク、推奨 |
+| `/start-work` | Planner が生成した計画から実行 |
+| `/cancel-cortex` | Cortex ループを停止 |
+
+---
 
 ## インストール
 
-### 人間向け
+### クイックスタート
 
-以下のプロンプトをコピーして、あなたのLLMエージェント（Claude Code、deep-work systems、Cursorなど）に貼り付けてください：
+OpenCode セッションに以下を貼り付けてください：
 
 ```
 Install and configure oh-my-cortex by following the instructions here:
 https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
-もしくは[インストールガイド](docs/guide/installation.md)を直接読んでもいいですが、マジでエージェントにやらせてください。人間は設定で必ずタイポします。
-
-### LLMエージェント向け
-
-インストールガイドを取得して、それに従ってください：
+### 手動インストール
 
 ```bash
-curl -s https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
+# OpenCode 設定に追加
+# ~/.config/opencode/opencode.jsonc
+{
+  "plugin": ["oh-my-cortex"]
+}
+
+# OpenCode を再起動 — プラグインは npm から自動インストールされます
+# または手動でインストール：
+cd ~/.config/opencode
+npm install oh-my-cortex
 ```
 
-**注記**: 公開されているパッケージおよびバイナリ名は `oh-my-cortex` を使用してください。`opencode.json` 内では、互換性レイヤーがプラグインエントリ `oh-my-cortex` を優先しますが、従来の `oh-my-cortex` エントリも警告付きで読み込まれます。プラグイン設定ファイルは依然として `oh-my-cortex.json` または `oh-my-cortex.jsonc` を使用するのが一般的で、移行期間中は従来のファイル名と改名後のファイル名の両方が認識されます。
+### インタラクティブセットアップ
 
-匿名のテレメトリは、インストールとランタイムの信頼性向上のためにデフォルトで有効になっています。これは PostHog を使用し、生のホスト名ではなくハッシュ化されたインストール識別子を使用します。無効化するには `OMX_SEND_ANONYMOUS_TELEMETRY=0` または `OMX_DISABLE_POSTHOG=1` を設定してください。[プライバシーポリシー](docs/legal/privacy-policy.md)と[利用規約](docs/legal/terms-of-service.md)をご覧ください。
+```bash
+bunx oh-my-cortex install
+```
+
+インストーラーは利用可能な AI プロバイダーを確認し、各エージェントに最適なモデルを自動的にマッチングします。どのモデルでも動作します — OMX はあなたの環境に適応します。
 
 ---
 
-## このREADMEをスキップする
+## クレジット
 
-ドキュメントを読む時代は終わりました。このテキストをエージェントに貼り付けるだけです：
+OMX は [@code-yeongyu](https://github.com/code-yeongyu) による [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) の基盤の上に構築されています — これを可能にしたオリジナルのマルチエージェントオーケストレーションアーキテクチャです。SUL-1.0 ライセンス。
 
-```
-Read this and tell me why it's not just another boilerplate: https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/README.md
-```
-
-## ハイライト
-
-### 🪄 `deepwork`
-
-本当にこれを全部読んでるんですか？信じられない。
-
-インストールして、`deepwork`（または `dw`）とタイプする。完了です。
-
-以下の内容、すべての機能、すべての最適化、何も知る必要はありません。ただ勝手に動きます。
-
-以下のサブスクリプションだけでも、deepworkは十分に機能します（このプロジェクトとは無関係であり、個人的な推奨にすぎません）：
-- [ChatGPT サブスクリプション ($20)](https://chatgpt.com/)
-- [Kimi Code サブスクリプション ($19)](https://www.kimi.com/code)
-- [GLM Coding プラン ($10)](https://z.ai/subscribe)
-- 従量課金（pay-per-token）の対象であれば、kimiやgeminiモデルを使っても費用はほとんどかかりません。
-
-|       | 機能                                                     | 何をするのか                                                                                                                                                                                                                   |
-| :---: | :------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|   🤖   | **規律あるエージェント (Discipline Agents)**             | Chiefが Founder、Thinker、Researcher、Exploreをオーケストレーションします。完全なAI開発チームが並列で動きます。                                                                                                            |
-|   ⚡   | **`deepwork` / `dw`**                                  | 一言でOK。すべてのエージェントがアクティブになり、終わるまで止まりません。                                                                                                                                                     |
-|   🚪   | **[IntentGate](https://factory.ai/news/terminal-bench)** | ユーザーの真の意図を分析してから分類・行動します。もう文字通りに誤解して的外れなことをすることはありません。                                                                                                                   |
-|   🔗   | **ハッシュベースの編集ツール**                           | `LINE#ID` のコンテンツハッシュですべての変更を検証します。stale-lineエラー0%。[oh-my-pi](https://github.com/can1357/oh-my-pi)にインスパイアされています。[ハーネス問題 →](https://blog.can.ac/2026/02/12/the-harness-problem/) |
-|   🛠️   | **LSP + AST-Grep**                                       | ワークスペース単位のリネーム、ビルド前の診断、ASTを考慮した書き換え。エージェントにIDEレベルの精度を提供します。                                                                                                               |
-|   🧠   | **バックグラウンドエージェント**                         | 5人以上の専門家を並列で投入します。コンテキストは軽く保ち、結果は準備ができ次第受け取ります。                                                                                                                                  |
-|   📚   | **組み込みMCP**                                          | Exa（Web検索）、Context7（公式ドキュメント）、Grep.app（GitHub検索）。常にオンです。                                                                                                                                           |
-|   🔁   | **Cortex Loop / `/dw-loop`**                             | 自己参照ループ。100%完了するまで絶対に止まりません。                                                                                                                                                                           |
-|   ✅   | **Todoの強制執行**                                       | エージェントがサボる？システムが首根っこを掴んで戻します。あなたのタスクは必ず終わります。                                                                                                                                     |
-|   💬   | **コメントチェッカー**                                   | コメントからAI臭い無駄話を排除します。シニアエンジニアが書いたようなコードになります。                                                                                                                                         |
-|   🖥️   | **Tmux統合**                                             | 完全なインタラクティブターミナル。REPL、デバッガー、TUIアプリがすべてリアルタイムで動きます。                                                                                                                                  |
-|   🔌   | **Claude Code互換性**                                    | 既存のフック、コマンド、スキル、MCP、プラグイン？すべてここでそのまま動きます。                                                                                                                                                |
-|   🎯   | **スキル内蔵MCP**                                        | スキルが独自のMCPサーバーを持ち歩きます。コンテキストが肥大化しません。                                                                                                                                                        |
-|   📋   | **Plannerプランナー**                                 | インタビューモードで、コードを1行触る前に戦略的な計画から立てます。                                                                                                                                                            |
-|   🔍   | **`/init-deep`**                                         | プロジェクト全体にわたって階層的な `AGENTS.md` ファイルを自動生成します。トークン効率とエージェントのパフォーマンスの両方を向上させます。                                                                                      |
-
-### 規律あるエージェント (Discipline Agents)
-
-<table><tr>
-<td align="center"><img src=".github/assets/chief.png" height="300" /></td>
-<td align="center"><img src=".github/assets/founder.png" height="300" /></td>
-</tr></table>
-
-**Chief** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) はあなたのメインのオーケストレーターです。計画を立て、専門家に委任し、攻撃的な並列実行でタスクを完了まで推進します。途中で投げ出すことはありません。
-
-**Founder** (`gpt-5.4`) はあなたの自律的なディープワーカーです。レシピではなく、目標を与えてください。手取り足取り教えなくても、コードベースを探索し、パターンを研究し、端から端まで実行します。*正当なる職人 (The Autonomous Builder).*
-
-**Planner** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) はあなたの戦略プランナーです。インタビューモードで動作し、コードに触れる前に質問をしてスコープを特定し、詳細な計画を構築します。
-
-すべてのエージェントは、それぞれのモデルの強みに合わせてチューニングされています。手動でモデルを切り替える必要はありません。[詳しくはこちら →](docs/guide/overview.md)
-
-> Anthropicが[私たちのせいでOpenCodeをブロックしました。](https://x.com/thdxr/status/2010149530486911014) だからこそFounderは「正当なる職人 (The Autonomous Builder)」と呼ばれているのです。皮肉を込めています。
->
-> Opusで最もよく動きますが、Kimi K2.5 + GPT-5.4の組み合わせだけでも、バニラのClaude Codeを軽く凌駕します。設定は一切不要です。
-
-### エージェントの��ーケストレーション
-
-Chiefがサブエージェントにタスクを委任する際、モデルを直接選ぶことはありません。**カテゴリー**を選びます。カテゴリーは自動的に適切なモデルにマッピングされます：
-
-| カテゴリー           | 用途                                 |
-| :------------------- | :----------------------------------- |
-| `visual-engineering` | フロントエンド、UI/UX、デザイン      |
-| `deep`               | 自律的なリサーチと実行               |
-| `quick`              | 単一ファイルの変更、タイポの修正     |
-| `ultrabrain`         | ハードロジック、アーキテクチャの決定 |
-
-エージェントがどのような種類の作業かを伝え、ハーネスが適切なモデルを選択します。あなたは何も触る必要はありません。
-
-### Claude Code互換性
-
-Claude Codeの設定を頑張りましたね。素晴らしい。
-
-すべてのフック、コマンド、スキル、MCP、プラグインが、変更なしでここで動きます。プラグインも含めて完全互換です。
-
-### エージェントのためのワールドクラスのツール
-
-LSP、AST-Grep、Tmux、MCPが、ただテープで貼り付けただけでなく、本当に「統合」されています。
-
-- **LSP**: `lsp_rename`、`lsp_goto_definition`、`lsp_find_references`、`lsp_diagnostics`。エージェントにIDEレベルの精度を提供。
-- **AST-Grep**: 25言語に対応したパターン認識コード検索と書き換え。
-- **Tmux**: 完全なインタラクティブターミナル。REPL、デバッガー、TUIアプリ。エージェントがセッション内で動きます。
-- **MCP**: Web検索、公式ドキュメント、GitHubコード検索がすべて組み込まれています。
-
-### スキル内蔵MCP
-
-MCPサーバーがあなたのコンテキスト予算を食いつぶしています。私たちがそれを修正しました。
-
-スキルが独自のMCPサーバーを持ち歩きます。必要なときだけ起動し、終われば消えます。コンテキストウィンドウがきれいに保たれます。
-
-### ハッシュベースの編集 (Codes Better. Hash-Anchored Edits)
-
-ハーネスの問題は深刻です。エージェントが失敗する原因の大半はモデルではなく、編集ツールにあります。
-
-> *「どのツールも、モデルに変更したい行に対する安定して検証可能な識別子を提供していません... すべてのツールが、モデルがすでに見た内容を正確に再現することに依存しています。それができないとき——そして大抵はできないのですが——ユーザーはモデルのせいにします。」*
->
-> <br/>- [Can Bölük, ハーネス問題 (The Harness Problem)](https://blog.can.ac/2026/02/12/the-harness-problem/)
-
-[oh-my-pi](https://github.com/can1357/oh-my-pi) に触発され、**Hashline**を実装しました。エージェントが読むすべての行にコンテンツハッシュがタグ付けされて返されます：
-
-```
-11#VK| function hello() {
-22#XJ|   return "world";
-33#MB| }
-```
-
-エージェントはこのタグを参照して編集します。最後に読んだ後でファイルが変更されていた場合、ハッシュが一致せず、コードが壊れる前に編集が拒否されます。空白を正確に再現する必要もなく、間違った行を編集するエラー (stale-line) もありません。
-
-Grok Code Fast 1 で、成功率が **6.7% → 68.3%** に上昇しました。編集ツールを1つ変えただけで、です。
-
-### 深い初期化。`/init-deep`
-
-`/init-deep` を実行してください。階層的な `AGENTS.md` ファイルを生成します：
-
-```
-project/
-├── AGENTS.md              ← プロジェクト全体のコンテキスト
-├── src/
-│   ├── AGENTS.md          ← src 専用のコンテキスト
-│   └── components/
-│       └── AGENTS.md      ← コンポーネント専用のコンテキスト
-```
-
-エージェントが関連するコンテキストだけを自動で読み込みます。手動での管理はゼロです。
-
-### プランニング。Planner
-
-複雑なタスクですか？プロンプトを投げて祈るのはやめましょう。
-
-`/start-work` で Planner が呼び出されます。**本物のエンジニアのようにあなたにインタビューし**、スコープと曖昧さを特定し、コードに触れる前に検証済みの計画を構築します。エージェントは作業を始める前に、自分が何を作るべきか正確に理解します。
-
-### スキル (Skills)
-
-スキルは単なるプロンプトではありません。それぞれ以下をもたらします：
-
-- ドメインに最適化されたシステム命令
-- 必要なときに起動する組み込みMCPサーバー
-- スコープ制限された権限（エージェントが境界を越えないようにする）
-
-組み込み：`playwright`（ブラウザ自動化）、`git-master`（アトミックなコミット、リベース手術）、`frontend-ui-ux`（デザイン重視のUI）。
-
-独自に追加するには：`.opencode/skills/*/SKILL.md` または `~/.config/opencode/skills/*/SKILL.md`。
-
-**全機能を知りたいですか？** エージェント、フック、ツール、MCPなどの詳細は **[機能ドキュメント (Features)](docs/reference/features.md)** をご覧ください。
+同じエコシステムから：[oh-my-crew](https://github.com/michaelxer/oh-my-crew) — コンテンツフィルター対応プロンプトと Session Guardian を備えたロールベースのエージェントフォーク。
 
 ---
 
-> **背景のストーリーを知りたいですか？** なぜChiefは岩を転がすのか、なぜFounderは「正当なる職人」なのか、そして[オーケストレーションガイド](docs/guide/orchestration.md)をお読みください。
->
-> oh-my-cortexは初めてですか？どのモデルを使うべきかについては、**[インストールガイド](docs/guide/installation.md#step-5-understand-your-model-setup)** で推奨モデルを確認してください。
+## ライセンス
 
-## アンインストール (Uninstallation)
-
-oh-my-cortexを削除するには：
-
-1. **OpenCodeの設定からプラグインを削除する**
-
-   `~/.config/opencode/opencode.json`（または `opencode.jsonc`）を編集し、`plugin` 配列から `"oh-my-cortex"` を削除します：
-
-   ```bash
-   # jq を使用する場合
-   jq '.plugin = [.plugin[] | select(. != "oh-my-cortex")]' \
-       ~/.config/opencode/opencode.json > /tmp/oc.json && \
-       mv /tmp/oc.json ~/.config/opencode/opencode.json
-   ```
-
-2. **設定ファイルを削除する（オプション）**
-
-   ```bash
-   # ユーザー設定を削除
-   rm -f ~/.config/opencode/oh-my-cortex.json ~/.config/opencode/oh-my-cortex.jsonc
-
-   # プロジェクト設定を削除（存在する場合）
-   rm -f .opencode/oh-my-cortex.json .opencode/oh-my-cortex.jsonc
-   ```
-
-3. **削除の確認**
-
-   ```bash
-   opencode --version
-   # プラグインがロードされなくなっているはずです
-   ```
-
-## 著者の言葉
-
-**私たちの哲学が知りたいですか？** [Deepwork 宣言](docs/manifesto.md)をお読みください。
+[SUL-1.0](LICENSE.md)
 
 ---
 
-私は個人プロジェクトでLLMトークン代として2万4千ドル（約360万円）を使い果たしました。あらゆるツールを試し、設定をいじり倒しました。結果、OpenCodeの勝利でした。
-
-私がぶつかったすべての問題とその解決策が、このプラグインに焼き込まれています。インストールして、ただ使ってください。
-
-OpenCodeが Debian/Arch だとすれば、OMX は Ubuntu/[Omarchy](https://omarchy.org/) です。
-
-[deep-work systems](https://ampcode.com) と [Claude Code](https://code.claude.com/docs/overview) ��ら多大な影響を受けています。機能を移植し、多くは改善しました。今もまだ構築中です。これは **Open**Code ですから。
-
-他のハーネスもマルチモデルのオーケストレーションを約束しています。しかし、私たちはそれを「実際に」出荷しています。安定性も備えて。言葉だけでなく、実際に機能するものとして。
-
-私がこのプロジェクトの最も強迫的なヘビーユーザーです：
-- どのモデルのロジックが最も鋭いか？
-- デバッグの神は誰か？
-- 最も優れた文章を書くのは誰か？
-- フロントエンドのエコシステムを支配しているのは誰か？
-- バックエンドの覇者は誰か？
-- 日常使いで最も速いのはどれか？
-- 競合他社は今何を出荷しているか？
-
-このプラグインは、それらの問いに対する蒸留物（Distillation）です。最高のものをそのまま使ってください。改善点が見つかりましたか？PRはいつでも歓迎します。
-
-**どのハーネスを使うかで悩むのはもうやめましょう。**
-**私が自らリサーチし、最高のものを盗んできて、ここに詰め込みます。**
-
-傲慢に聞こえますか？もっと良い方法があるならコントリビュートしてください。大歓迎です。
-
-言及されたどのプロジェクト/モデルとも関係はありません。単なる純粋な個人的実験の結果です。
-
-このプロジェクトの99%はOpenCodeで構築されました。私は実はTypeScriptをよく知りません。**しかし、このドキュメントは私が自らレビューし、書き直しました。**
-
-## 導入実績
-
-- [Indent](https://indentcorp.com)
-  - インフルエンサーマーケティングソリューション Spray、クロスボーダーコマースプラットフォーム vovushop、AIコマースレビューマーケティングソリューション vreview 制作
-- [Google](https://google.com)
-- [Microsoft](https://microsoft.com)
-- [ELESTYLE](https://elestyle.jp)
-  - マルチモバイル決済ゲートウェイ elepay、キャッシュレスソリューション向けモバイルアプリケーションSaaS OneQR 制作
-
-*素晴らしいヒーロー画像を提供してくれた [@junhoyeo](https://github.com/junhoyeo) 氏に特別な感謝を。*
+*OMX... Think deeper.*

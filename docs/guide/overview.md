@@ -1,10 +1,10 @@
-# What Is Oh My OpenAgent?
+# What Is oh-my-cortex?
 
-Oh My OpenAgent is a multi-model agent orchestration harness for OpenCode. It transforms a single AI agent into a coordinated development team that actually ships code.
+oh-my-cortex (OMX) is a cognitive operating system for OpenCode. It transforms a single AI agent into a coordinated team of specialists — not just for coding, but for thinking, deciding, communicating, and executing across every domain.
 
 Not locked to Claude. Not locked to OpenAI. Not locked to anyone.
 
-Just better results, cheaper models, real orchestration.
+Better results, multi-model routing, real orchestration — plus challenge protocols, domain lenses, and structured reasoning that no other plugin has.
 
 ---
 

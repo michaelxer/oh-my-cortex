@@ -1,378 +1,166 @@
-> [!WARNING]
-> **Временное уведомление (на этой неделе): сниженная доступность мейнтейнера**
->
-> Ключевой мейнтейнер Q получил травму, поэтому на этой неделе ответы по issue/PR и релизы могут задерживаться.
-> Спасибо за терпение и поддержку.
+# oh-my-cortex
 
-> [!TIP]
-> **Building in Public**
->
-> Мейнтейнер разрабатывает и поддерживает oh-my-cortex в режиме реального времени с помощью Jobdori — ИИ-ассистента на базе глубоко кастомизированной версии OpenClaw.
-> Каждая фича, каждый фикс, каждый триаж issue — в прямом эфире в нашем Discord.
->
-> [![Building in Public](./.github/assets/building-in-public.png)](https://discord.gg/PUwSMR9XNk)
->
-> [**→ Смотрите в #building-in-public**](https://discord.gg/PUwSMR9XNk)
+**Cognitive operating system for OpenCode.**
 
+oh-my-cortex (OMX) -- multi-agent plugin, which transforms OpenCode into a thinking partner -- not just for code, but for decisions, strategy, communication, risk management and everything in between.
 
-> [!NOTE]
->
-> [![Chief Labs - Chief is the agent that codes like your team.](./.github/assets/chieflabs.png?v=2)](https://chieflabs.ai)
->
-> > **Мы создаём полноценную продуктовую версию Chief, чтобы задать стандарты для frontier-агентов. <br />Присоединяйтесь к листу ожидания [здесь](https://chieflabs.ai).**
+Install OMX. Type `deepwork`. Get a team of 11 specialized agents that challenge your assumptions, adapt to sensitive domains, structure your decisions, and execute with precision.
 
-> [!TIP] Будьте с нами!
->
-> | [](https://discord.gg/PUwSMR9XNk)   | Вступайте в наш [Discord](https://discord.gg/PUwSMR9XNk), чтобы общаться с контрибьюторами и пользователями `oh-my-cortex`. |
-> | ----------------------------------- | ------------------------------------------------------------ |
-> | [](https://x.com/justchief)      | Новости и обновления `oh-my-cortex` раньше публиковались на моём аккаунте X. <br /> После ошибочной блокировки, [@justchief](https://x.com/justchief) публикует обновления вместо меня. |
-> | [](https://github.com/michaelxer) | Подпишитесь на [@michaelxer](https://github.com/michaelxer) на GitHub, чтобы следить за другими проектами. |
+---
 
-<!-- <CENTERED SECTION FOR GITHUB DISPLAY> --> <div align="center">
+## Why OMX?
 
-[![Oh My Cortex](./.github/assets/hero.jpg)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
+Most AI tools agree with everything you say. OMX pushes back.
 
-[![Preview](./.github/assets/omx.png)](https://github.com/michaelxer/oh-my-cortex#oh-my-cortex)
+Most AI tools only write code. OMX helps you think.
 
-</div>
+Most AI tools use one model for everything. OMX routes the right brain to the right job -- automatically.
 
-> Anthropic [**заблокировал OpenCode из-за нас.**](https://x.com/thdxr/status/2010149530486911014) **Да, это правда.** Они хотят держать вас в замкнутой системе. Claude Code — красивая тюрьма, но всё равно тюрьма.
->
-> Мы не делаем привязки. Мы работаем с любыми моделями. Claude / Kimi / GLM для оркестрации. GPT для рассуждений. Minimax для скорости. Gemini для творческих задач. Будущее — не в выборе одного победителя, а в оркестровке всех. Модели дешевеют каждый месяц. Умнеют каждый месяц. Ни один провайдер не будет доминировать. Мы строим под открытый рынок, а не под чьи-то огороженные сады.
+---
 
-<div align="center">
+## What Makes OMX Different
 
-[![GitHub Release](https://img.shields.io/github/v/release/michaelxer/oh-my-cortex?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/releases) [![npm downloads](https://img.shields.io/npm/dt/oh-my-cortex?color=ff6b35&labelColor=black&style=flat-square)](https://www.npmjs.com/package/oh-my-cortex) [![GitHub Contributors](https://img.shields.io/github/contributors/michaelxer/oh-my-cortex?color=c4f042&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/graphs/contributors) [![GitHub Forks](https://img.shields.io/github/forks/michaelxer/oh-my-cortex?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/network/members) [![GitHub Stars](https://img.shields.io/github/stars/michaelxer/oh-my-cortex?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/michaelxer/oh-my-cortex?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/issues) [![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/michaelxer/oh-my-cortex/blob/master/LICENSE.md) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/michaelxer/oh-my-cortex)
+### Challenge Engine
 
-English | 한국어 | 日本語 | 简体中文 | Русский
+Agents don't just execute -- they challenge weak reasoning before it becomes a bad decision.
 
-</div> <!-- </CENTERED SECTION FOR GITHUB DISPLAY> -->
+4 levels of pushback, from gentle nudge to full adversarial review:
 
-## Отзывы
+| Level | Name | What Happens |
+|---|---|---|
+| 1 | **Nudge** | Points out one assumption or improvement (always active) |
+| 2 | **Probe** | Shows tradeoffs, risks, blind spots, better options |
+| 3 | **Mirror** | Names avoidance, weak logic, opportunity cost -- then prescribes |
+| 4 | **Red Team** | Attacks from competitor, skeptic, investor, regulator perspectives |
 
-> «Из-за него я отменил подписку на Cursor. В опенсорс-сообществе происходит что-то невероятное.» — [Arthur Guiot](https://x.com/arthur_guiot/status/2008736347092382053?s=20)
+Set manually with `/challenge 3` or let it activate automatically when you say "be honest" or "what am I missing."
 
-> «Если Claude Code делает за 7 дней то, на что у человека уходит 3 месяца, Chief справляется за 1 час. Он просто работает, пока задача не выполнена. Это дисциплинированный агент.» <br/>— B, исследователь в области квантовых финансов
+### Domain Lenses
 
-> «За один день устранил 8000 предупреждений eslint с помощью Oh My Opencode.» <br/>— [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
+OMX detects when your conversation enters sensitive territory and adjusts automatically:
 
-> «За ночь конвертировал приложение на tauri в 45k строк в веб-SaaS с помощью Ohmyopencode и cortex loop. Начал с промпта «проинтервьюируй меня», попросил оценки и рекомендации по вопросам. Было удивительно наблюдать за работой и утром проснуться с почти рабочим сайтом!» — [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+| Domain | What Changes |
+|---|---|
+| **Health** | Non-diagnostic. Recommends professional care. Evidence-informed only. |
+| **Legal** | Conservative. Distinguishes information from advice. Jurisdiction-aware. |
+| **Financial** | Data-driven. Flags risk tolerance. Separates info from financial advice. |
+| **Security** | Triage first. Defensive only. Preserve evidence. Escalate to professionals. |
+| **Political** | Stakeholder-aware. Face-saving. Protocol-conscious. |
 
-> «Используйте oh-my-cortex — вы не захотите возвращаться назад.» <br/>— [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
+Activate manually with `/lens security` or let OMX detect it from context.
 
-> «Пока не могу точно объяснить, почему это так круто, но опыт разработки вышел на совершенно другой уровень.» — [苔硯:こけすずり](https://x.com/kokesuzuri/status/2008532913961529372?s=20)
+### Beyond Code
 
-> «Экспериментирую с open code, oh my opencode и supermemory этим выходным, чтобы собрать нечто среднее между Minecraft и souls-like.» «Попросил добавить анимации приседания, пока хожу на обеденную прогулку. [Видео]» — [MagiMetal](https://x.com/MagiMetal/status/2005374704178373023)
+OMX handles what other coding tools can't:
 
-> «Ребята, вам нужно включить это в ядро и нанять его. Серьёзно. Это очень, очень, очень хорошо.» <br/>— Henning Kilset
+- **Business strategy** -- competitive analysis, M&A evaluation, go-to-market planning
+- **Sensitive communication** -- draft messages with audience awareness, leverage preservation, screenshot-proofing
+- **Risk assessment** -- threat triage, crisis planning, incident response
+- **Research synthesis** -- multi-source triangulation, evidence review, executive summaries
+- **Decision support** -- structured Option A/B/C analysis with tradeoffs and recommendations
+- **Coaching** -- skill development, reflection exercises, constructive challenge
 
-> «Наймите @yeon_gyu_kim, если сможете его уговорить, этот парень революционизировал opencode.» <br/>— [mysticaltech](https://x.com/mysticaltech/status/2001858758608376079)
+### Structured Reasoning
 
-> «Oh My Cortex — это что-то с чем-то» — [YouTube — Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
+Every OMX agent uses confidence labels when uncertainty matters:
 
-------
+- **Confirmed** -- verified, sourced, directly known
+- **Likely** -- well-supported inference
+- **Possible** -- plausible but unverified
+- **Speculative** -- hypothesis only
 
-# Oh My Cortex
+No fake certainty. No unsupported claims. When the agent doesn't know, it says so.
 
-Вы жонглируете Claude Code, Codex, случайными OSS-моделями. Настраиваете рабочие процессы. Дебажите агентов.
+---
 
-Мы уже проделали эту работу. Протестировали всё. Оставили только то, что реально работает.
+## The OMX Team
 
-Установите OMX. Введите `deepwork`. Готово.
+### Primary Agents (selectable via Tab)
 
-## Установка
+| Agent | What It Does |
+|---|---|
+| **Chief** | Main orchestrator. Classifies every request by goal, stakes, risk, and urgency. Delegates to specialists. Challenges weak assumptions. Drives tasks to completion. |
+| **Founder** | Autonomous deep worker. Give a goal, not instructions. Explores context, researches patterns, executes end-to-end without hand-holding. |
 
-### Для людей
+### Subagents (called automatically by Chief)
 
-Скопируйте и вставьте этот промпт в ваш LLM-агент (Claude Code, deep-work systems, Cursor и т.д.):
+| Agent | What It Does |
+|---|---|
+| **Thinker** | All-domain consultant. Architecture, business strategy, risk, health, legal, financial, political analysis. Read-only -- pure reasoning, zero action. |
+| **Researcher** | Knowledge finder. Documentation, open-source examples, standards, best practices. |
+| **Tracker** | Codebase explorer. Fast file discovery, pattern search, local context mapping. |
+| **Planner** | Strategic interviewer. Questions first, plan second. Creates detailed work plans through iterative questioning. |
+| **Reviewer** | Gap finder. Catches hidden assumptions, ambiguity, missing acceptance criteria, stakeholder blind spots. |
+| **Critic** | Quality gate. Only approves plans when references are verified and acceptance criteria are concrete. |
+| **Lead** | Project manager. Delegates implementation tasks to Workers, accumulates learnings, verifies completion. |
+| **Worker** | Task executor. Focused, disciplined, scoped. Cannot re-delegate. |
+| **Spotter** | Visual analyst. Screenshots, diagrams, PDFs, images. |
+
+---
+
+## Commands
+
+| Command | What It Does |
+|---|---|
+| `deepwork` or `dw` | Full activation -- all agents, maximum intensity, autonomous execution |
+| `/dw-loop` | Cortex loop -- keeps working until 100% done |
+| `/challenge [1-4]` | Set challenge level (1=nudge, 2=probe, 3=mirror, 4=red-team) |
+| `/checkpoint` | Force a conversation summary -- decisions, assumptions, action items |
+| `/lens [domain]` | Activate domain lens (health, legal, financial, security, political) |
+| `/decide` | Structured decision framework -- options, tradeoffs, risks, recommendation |
+| `/start-work` | Execute from a Planner-generated plan |
+| `/cancel-cortex` | Stop the cortex loop |
+
+---
+
+## Installation
+
+### Quick Start
+
+Paste this into your OpenCode session:
 
 ```
 Install and configure oh-my-cortex by following the instructions here:
 https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
-Или прочитайте руководство по установке, но серьёзно — пусть агент сделает это за вас. Люди ошибаются в конфигах.
-
-### Для LLM-агентов
-
-Загрузите руководство по установке и следуйте ему:
+### Manual Install
 
 ```bash
-curl -s https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
+# Add to your OpenCode config
+# ~/.config/opencode/opencode.jsonc
+{
+  "plugin": ["oh-my-cortex"]
+}
+
+# Restart OpenCode -- the plugin auto-installs from npm
+# Or install manually:
+cd ~/.config/opencode
+npm install oh-my-cortex
 ```
 
-**Примечание**: Используйте опубликованное имя пакета и бинарника `oh-my-cortex`. Внутри `opencode.json` слой совместимости теперь предпочитает точку входа плагина `oh-my-cortex`, в то время как устаревшие записи `oh-my-cortex` все еще загружаются с предупреждением. Файлы конфигурации плагина по-прежнему часто используют `oh-my-cortex.json` или `oh-my-cortex.jsonc`, и как устаревшие, так и переименованные базовые имена распознаются во время переходного периода.
+### Interactive Setup
 
-Анонимная телеметрия включена по умолчанию для улучшения надежности установки и работы. Она использует PostHog с хешированным идентификатором установки, никогда не используя исходное имя хоста, и может быть отключена с помощью `OMX_SEND_ANONYMOUS_TELEMETRY=0` или `OMX_DISABLE_POSTHOG=1`. См. [Политику конфиденциальности](docs/legal/privacy-policy.md) и [Условия обслуживания](docs/legal/terms-of-service.md).
-
-------
-
-## Пропустите этот README
-
-Мы вышли за пределы эпохи чтения документации. Просто вставьте это в своего агента:
-
-```
-Read this and tell me why it's not just another boilerplate: https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/README.md
+```bash
+bunx oh-my-cortex install
 ```
 
-## Ключевые возможности
+The installer asks what AI providers you have and automatically matches the strongest available model to each agent. Any model works -- OMX adapts to what you have.
 
-### 🪄 `deepwork`
+---
 
-Вы правда это читаете? Поразительно.
+## Credits
 
-Установите. Введите `deepwork` (или `dw`). Готово.
+OMX is built on the foundation of [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) by [@code-yeongyu](https://github.com/code-yeongyu) -- the original multi-agent orchestration architecture that makes this possible. Licensed under SUL-1.0.
 
-Всё описанное ниже, каждая функция, каждая оптимизация — вам не нужно это знать. Оно просто работает.
+Also from the same ecosystem: [oh-my-crew](https://github.com/michaelxer/oh-my-crew) -- a role-based agent fork with content-filter-safe prompts and Session Guardian.
 
-Даже при наличии только следующих подписок deepwork будет работать отлично (проект не аффилирован с ними, это личная рекомендация):
+---
 
-- [Подписка ChatGPT ($20)](https://chatgpt.com/)
-- [Подписка Kimi Code ($19)](https://www.kimi.com/code)
-- [Тариф GLM Coding ($10)](https://z.ai/subscribe)
-- При доступе к оплате за токены использование моделей Kimi и Gemini обойдётся недорого.
+## License
 
-|     | Функция                                                  | Что делает                                                                                                                                                                                                                       |
-| --- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🤖   | **Дисциплинированные агенты**                            | Chief оркестрирует Founder, Thinker, Researcher, Tracker. Полноценная AI-команда разработки в параллельном режиме.                                                                                                           |
-| ⚡   | **`deepwork` / `dw`**                                  | Одно слово. Все агенты активируются. Не останавливается, пока задача не выполнена.                                                                                                                                               |
-| 🚪   | **[IntentGate](https://factory.ai/news/terminal-bench)** | Анализирует истинное намерение пользователя перед классификацией и действием. Никакого буквального неверного толкования.                                                                                                         |
-| 🔗   | **Инструмент правок на основе хэш-якорей**               | Хэш содержимого `LINE#ID` проверяет каждое изменение. Ноль ошибок с устаревшими строками. Вдохновлено [oh-my-pi](https://github.com/can1357/oh-my-pi). [Проблема обвязки →](https://blog.can.ac/2026/02/12/the-harness-problem/) |
-| 🛠️   | **LSP + AST-Grep**                                       | Переименование в рабочем пространстве, диагностика перед сборкой, переписывание с учётом AST. Точность IDE для агентов.                                                                                                          |
-| 🧠   | **Фоновые агенты**                                       | Запускайте 5+ специалистов параллельно. Контекст остаётся компактным. Результаты — когда готовы.                                                                                                                                 |
-| 📚   | **Встроенные MCP**                                       | Exa (веб-поиск), Context7 (официальная документация), Grep.app (поиск по GitHub). Всегда включены.                                                                                                                               |
-| 🔁   | **Cortex Loop / `/dw-loop`**                             | Самореферентный цикл. Не останавливается, пока задача не выполнена на 100%.                                                                                                                                                      |
-| ✅   | **Todo Enforcer**                                        | Агент завис? Система немедленно возвращает его в работу. Ваша задача будет выполнена, точка.                                                                                                                                     |
-| 💬   | **Comment Checker**                                      | Никакого AI-мусора в комментариях. Код читается так, словно его писал опытный разработчик.                                                                                                                                       |
-| 🖥️   | **Интеграция с Tmux**                                    | Полноценный интерактивный терминал. REPL, дебаггеры, TUI. Всё живое.                                                                                                                                                             |
-| 🔌   | **Совместимость с Claude Code**                          | Ваши хуки, команды, навыки, MCP и плагины? Всё работает без изменений.                                                                                                                                                           |
-| 🎯   | **MCP, встроенные в навыки**                             | Навыки несут собственные MCP-серверы. Никакого раздувания контекста.                                                                                                                                                             |
-| 📋   | **Planner Planner**                                   | Стратегическое планирование в режиме интервью перед любым выполнением.                                                                                                                                                           |
-| 🔍   | **`/init-deep`**                                         | Автоматически генерирует иерархические файлы `AGENTS.md` по всему проекту. Отлично работает на эффективность токенов и производительность агента.                                                                                |
+[SUL-1.0](LICENSE.md)
 
-### Дисциплинированные агенты
+---
 
-<table><tr> <td align="center"><img src=".github/assets/chief.png" height="300" /></td> <td align="center"><img src=".github/assets/founder.png" height="300" /></td> </tr></table>
-
-**Chief** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) — главный оркестратор. Он планирует, делегирует задачи специалистам и доводит их до завершения с агрессивным параллельным выполнением. Он не останавливается на полпути.
-
-**Founder** (`gpt-5.4`) — автономный глубокий исполнитель. Дайте ему цель, а не рецепт. Он исследует кодовую базу, изучает паттерны и выполняет задачи сквозным образом без лишних подсказок. *Законный Мастер.*
-
-**Planner** (`claude-opus-4-7` / **`kimi-k2.5`** / **`glm-5`**) — стратегический планировщик. Режим интервью: задаёт вопросы, определяет объём работ и формирует детальный план до того, как написана хотя бы одна строка кода.
-
-Каждый агент настроен под сильные стороны своей модели. Никакого ручного переключения между моделями. Подробнее →
-
-> Anthropic [заблокировал OpenCode из-за нас.](https://x.com/thdxr/status/2010149530486911014) Именно поэтому Founder зовётся «Законным Мастером». Ирония намеренная.
->
-> Мы работаем лучше всего на Opus, но Kimi K2.5 + GPT-5.4 уже превосходят ванильный Claude Code. Никакой настройки не требуется.
-
-### Оркестрация агентов
-
-Когда Chief делегирует задачу субагенту, он выбирает не модель, а **категорию**. Категория автоматически сопоставляется с нужной моделью:
-
-| Категория            | Для чего предназначена                |
-| -------------------- | ------------------------------------- |
-| `visual-engineering` | Фронтенд, UI/UX, дизайн               |
-| `deep`               | Автономные исследования + выполнение  |
-| `quick`              | Изменения в одном файле, опечатки     |
-| `ultrabrain`         | Сложная логика, архитектурные решения |
-
-Агент сообщает тип задачи. Обвязка подбирает нужную модель. Вы ни к чему не прикасаетесь.
-
-### Совместимость с Claude Code
-
-Вы тщательно настроили Claude Code. Хорошо.
-
-Каждый хук, команда, навык, MCP и плагин работают здесь без изменений. Полная совместимость, включая плагины.
-
-### Инструменты мирового класса для ваших агентов
-
-LSP, AST-Grep, Tmux, MCP — реально интегрированы, а не склеены скотчем.
-
-- **LSP**: `lsp_rename`, `lsp_goto_definition`, `lsp_find_references`, `lsp_diagnostics`. Точность IDE для каждого агента
-- **AST-Grep**: Поиск и переписывание кода с учётом синтаксических паттернов для 25 языков
-- **Tmux**: Полноценный интерактивный терминал. REPL, дебаггеры, TUI-приложения. Агент остаётся в сессии
-- **MCP**: Веб-поиск, официальная документация, поиск по коду на GitHub. Всё встроено
-
-### MCP, встроенные в навыки
-
-MCP-серверы съедают бюджет контекста. Мы это исправили.
-
-Навыки приносят собственные MCP-серверы. Запускаются по необходимости, ограничены задачей, исчезают по завершении. Контекстное окно остаётся чистым.
-
-### Лучше пишет код. Правки на основе хэш-якорей
-
-Проблема обвязки реальна. Большинство сбоев агентов — не вина модели. Это вина инструмента правок.
-
-> *«Ни один из этих инструментов не даёт модели стабильный, проверяемый идентификатор строк, которые она хочет изменить... Все они полагаются на то, что модель воспроизведёт контент, который уже видела. Когда это не получается — а так бывает нередко — пользователь обвиняет модель.»*
->
-> <br/>— [Can Bölük, «Проблема обвязки»](https://blog.can.ac/2026/02/12/the-harness-problem/)
-
-Вдохновлённые [oh-my-pi](https://github.com/can1357/oh-my-pi), мы реализовали **Hashline**. Каждая строка, которую читает агент, возвращается с тегом хэша содержимого:
-
-```
-11#VK| function hello() {
-22#XJ|   return "world";
-33#MB| }
-```
-
-Агент редактирует, ссылаясь на эти теги. Если файл изменился с момента последнего чтения, хэш не совпадёт, и правка будет отклонена до любого повреждения. Никакого воспроизведения пробелов. Никаких ошибок с устаревшими строками.
-
-Grok Code Fast 1: успешность **6.7% → 68.3%**. Просто за счёт замены инструмента правок.
-
-### Глубокая инициализация. `/init-deep`
-
-Запустите `/init-deep`. Будут сгенерированы иерархические файлы `AGENTS.md`:
-
-```
-project/
-├── AGENTS.md              ← контекст всего проекта
-├── src/
-│   ├── AGENTS.md          ← контекст для src
-│   └── components/
-│       └── AGENTS.md      ← контекст для компонентов
-```
-
-Агенты автоматически читают нужный контекст. Никакого ручного управления.
-
-### Планирование. Planner
-
-Сложная задача? Не нужно молиться и надеяться на промпт.
-
-`/start-work` вызывает Planner. **Интервьюирует вас как настоящий инженер**, определяет объём работ и неоднозначности, формирует проверенный план до прикосновения к коду. Агент знает, что строит, прежде чем начать.
-
-### Навыки
-
-Навыки — это не просто промпты. Каждый привносит:
-
-- Системные инструкции, настроенные под предметную область
-- Встроенные MCP-серверы, запускаемые по необходимости
-- Ограниченные разрешения. Агенты остаются в рамках
-
-Встроенные: `playwright` (автоматизация браузера), `git-master` (атомарные коммиты, хирургия rebase), `frontend-ui-ux` (UI с упором на дизайн).
-
-Добавьте свои: `.opencode/skills/*/SKILL.md` или `~/.config/opencode/skills/*/SKILL.md`.
-
-**Хотите полное описание возможностей?** Смотрите **документацию по функциям** — агенты, хуки, инструменты, MCP и всё остальное подробно.
-
-------
-
-> **Впервые в oh-my-cortex?** Прочитайте **Обзор**, чтобы понять, что у вас есть, или ознакомьтесь с **руководством по оркестрации**, чтобы узнать, как агенты взаимодействуют.
-
-## Удаление
-
-Чтобы удалить oh-my-cortex:
-
-1. **Удалите плагин из конфига OpenCode**
-
-   Отредактируйте `~/.config/opencode/opencode.json` (или `opencode.jsonc`) и уберите `"oh-my-cortex"` из массива `plugin`:
-
-   ```bash
-   # С помощью jq
-   jq '.plugin = [.plugin[] | select(. != "oh-my-cortex")]' \
-       ~/.config/opencode/opencode.json > /tmp/oc.json && \
-       mv /tmp/oc.json ~/.config/opencode/opencode.json
-   ```
-
-2. **Удалите файлы конфигурации (опционально)**
-
-   ```bash
-   # Удалить пользовательский конфиг
-   rm -f ~/.config/opencode/oh-my-cortex.json ~/.config/opencode/oh-my-cortex.jsonc
-
-   # Удалить конфиг проекта (если существует)
-   rm -f .opencode/oh-my-cortex.json .opencode/oh-my-cortex.jsonc
-   ```
-
-3. **Проверьте удаление**
-
-   ```bash
-   opencode --version
-   # Плагин больше не должен загружаться
-   ```
-
-## Функции
-
-Функции, которые, как вы будете думать, должны были существовать всегда. Попробовав раз, вы не сможете вернуться назад.
-
-Смотрите полную документацию по функциям.
-
-**Краткий обзор:**
-
-- **Агенты**: Chief (главный агент), Planner (планировщик), Thinker (архитектура/отладка), Researcher (документация/поиск по коду), Tracker (быстрый grep по кодовой базе), Spotter
-- **Фоновые агенты**: Запускайте несколько агентов параллельно, как настоящая команда разработки
-- **Инструменты LSP и AST**: Рефакторинг, переименование, диагностика, поиск кода с учётом AST
-- **Инструмент правок на основе хэш-якорей**: Ссылки `LINE#ID` проверяют содержимое перед применением каждого изменения. Хирургические правки, ноль ошибок с устаревшими строками
-- **Инъекция контекста**: Автоматическое добавление AGENTS.md, README.md, условных правил
-- **Совместимость с Claude Code**: Полная система хуков, команды, навыки, агенты, MCP
-- **Встроенные MCP**: websearch (Exa), context7 (документация), grep_app (поиск по GitHub)
-- **Инструменты сессий**: Список, чтение, поиск и анализ истории сессий
-- **Инструменты продуктивности**: Cortex Loop, Todo Enforcer, Comment Checker, Think Mode и другое
-- **Настройка моделей**: Сопоставление агент–модель встроено в руководство по установке
-
-## Конфигурация
-
-Продуманные настройки по умолчанию, которые можно изменить при необходимости.
-
-Смотрите документацию по конфигурации.
-
-**Краткий обзор:**
-
-- **Расположение конфигов**: `.opencode/oh-my-cortex.jsonc` или `.opencode/oh-my-cortex.json` (проект), `~/.config/opencode/oh-my-cortex.jsonc` или `~/.config/opencode/oh-my-cortex.json` (пользователь)
-- **Поддержка JSONC**: Комментарии и конечные запятые поддерживаются
-- **Агенты**: Переопределение моделей, температур, промптов и разрешений для любого агента
-- **Встроенные навыки**: `playwright` (автоматизация браузера), `git-master` (атомарные коммиты)
-- **Агент Chief**: Главный оркестратор с Planner (Планировщик) и Reviewer (Консультант по плану)
-- **Фоновые задачи**: Настройка ограничений параллельности по провайдеру/модели
-- **Категории**: Делегирование задач по предметной области (`visual`, `business-logic`, пользовательские)
-- **Хуки**: 25+ встроенных хуков, все настраиваются через `disabled_hooks`
-- **MCP**: Встроенные websearch (Exa), context7 (документация), grep_app (поиск по GitHub)
-- **LSP**: Полная поддержка LSP с инструментами рефакторинга
-- **Экспериментальное**: Агрессивное усечение, автовозобновление и другое
-
-## Слово автора
-
-**Хотите узнать философию?** Прочитайте Манифест Deepwork.
-
-------
-
-Я потратил $24K на токены LLM в личных проектах. Попробовал все инструменты. Настраивал всё до смерти. OpenCode победил.
-
-Каждая проблема, с которой я столкнулся, — её решение уже встроено в этот плагин. Устанавливайте и работайте.
-
-Если OpenCode — это Debian/Arch, то OMX — это Ubuntu/[Omarchy](https://omarchy.org/).
-
-Сильное влияние со стороны [deep-work systems](https://ampcode.com) и [Claude Code](https://code.claude.com/docs/overview). Функции портированы, часто улучшены. Продолжаем строить. Это **Open**Code.
-
-Другие обвязки обещают оркестрацию нескольких моделей. Мы её поставляем. Плюс стабильность. Плюс функции, которые реально работают.
-
-Я самый одержимый пользователь этого проекта:
-
-- Какая модель думает острее всего?
-- Кто бог отладки?
-- Кто пишет лучший код?
-- Кто рулит фронтендом?
-- Кто владеет бэкендом?
-- Что быстрее всего в ежедневной работе?
-- Что запускают конкуренты?
-
-Этот плагин — дистилляция. Берём лучшее. Есть улучшения? PR приветствуются.
-
-**Хватит мучиться с выбором обвязки.** **Я буду исследовать, воровать лучшее и поставлять это сюда.**
-
-Звучит высокомерно? Знаете, как сделать лучше? Контрибьютьте. Добро пожаловать.
-
-Никакой аффилиации с упомянутыми проектами/моделями. Только личные эксперименты.
-
-99% этого проекта было создано с помощью OpenCode. Я почти не знаю TypeScript. **Но эту документацию я лично просматривал и во многом переписывал.**
-
-## Любимый профессионалами из
-
-- Indent
-  - Spray — решение для influencer-маркетинга, vovushop — платформа кросс-граничной торговли, vreview — AI-решение для маркетинга отзывов в commerce
-- [Google](https://google.com)
-- [Microsoft](https://microsoft.com)
-- ELESTYLE
-  - elepay — мультимобильный платёжный шлюз, OneQR — мобильное SaaS-приложение для безналичных расчётов
-
-*Особая благодарность [@junhoyeo](https://github.com/junhoyeo) за это потрясающее hero-изображение.*
+*OMX... Think deeper.*
