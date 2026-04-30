@@ -7,6 +7,9 @@ import {
   createKeywordDetectorHook,
   createThinkingBlockValidatorHook,
   createToolPairValidatorHook,
+  createChallengeEngineHook,
+  createDomainLensHook,
+  createCheckpointCounterHook,
 } from "../../hooks"
 import {
   contextCollector,
@@ -20,6 +23,9 @@ export type TransformHooks = {
   contextInjectorMessagesTransform: ReturnType<typeof createContextInjectorMessagesTransformHook>
   thinkingBlockValidator: ReturnType<typeof createThinkingBlockValidatorHook> | null
   toolPairValidator: ReturnType<typeof createToolPairValidatorHook> | null
+  challengeEngine: ReturnType<typeof createChallengeEngineHook> | null
+  domainLens: ReturnType<typeof createDomainLensHook> | null
+  checkpointCounter: ReturnType<typeof createCheckpointCounterHook> | null
 }
 
 export function createTransformHooks(args: {
@@ -75,11 +81,38 @@ export function createTransformHooks(args: {
       )
     : null
 
+  const challengeEngine = isHookEnabled("challenge-engine")
+    ? safeCreateHook(
+        "challenge-engine",
+        () => createChallengeEngineHook(),
+        { enabled: safeHookEnabled },
+      )
+    : null
+
+  const domainLens = isHookEnabled("domain-lens")
+    ? safeCreateHook(
+        "domain-lens",
+        () => createDomainLensHook(),
+        { enabled: safeHookEnabled },
+      )
+    : null
+
+  const checkpointCounter = isHookEnabled("checkpoint-counter")
+    ? safeCreateHook(
+        "checkpoint-counter",
+        () => createCheckpointCounterHook(),
+        { enabled: safeHookEnabled },
+      )
+    : null
+
   return {
     claudeCodeHooks,
     keywordDetector,
     contextInjectorMessagesTransform,
     thinkingBlockValidator,
     toolPairValidator,
+    challengeEngine,
+    domainLens,
+    checkpointCounter,
   }
 }

@@ -337,4 +337,39 @@ export const CATEGORY_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
       { providers: ["opencode-go", "vercel"], model: "minimax-m2.7" },
     ],
   },
+  communication: {
+    fallbackChain: [
+      { providers: ["anthropic", "github-copilot", "opencode", "vercel"], model: "claude-opus-4-7", variant: "max" },
+      { providers: ["openai", "github-copilot", "opencode", "vercel"], model: "gpt-5.5", variant: "high" },
+      { providers: ["opencode-go", "vercel"], model: "kimi-k2.5" },
+    ],
+  },
+  "strategic-analysis": {
+    fallbackChain: [
+      { providers: ["openai", "opencode", "vercel"], model: "gpt-5.5", variant: "xhigh" },
+      { providers: ["anthropic", "github-copilot", "opencode", "vercel"], model: "claude-opus-4-7", variant: "max" },
+      { providers: ["google", "github-copilot", "opencode", "vercel"], model: "gemini-3.1-pro", variant: "high" },
+    ],
+  },
+  coaching: {
+    fallbackChain: [
+      { providers: ["anthropic", "github-copilot", "opencode", "vercel"], model: "claude-opus-4-7", variant: "max" },
+      { providers: ["openai", "github-copilot", "opencode", "vercel"], model: "gpt-5.5", variant: "high" },
+      { providers: ["opencode-go", "vercel"], model: "kimi-k2.5" },
+    ],
+  },
+  crisis: {
+    fallbackChain: [
+      { providers: ["openai", "github-copilot", "opencode", "vercel"], model: "gpt-5.5", variant: "medium" },
+      { providers: ["anthropic", "github-copilot", "opencode", "vercel"], model: "claude-opus-4-7", variant: "max" },
+      { providers: ["opencode-go", "vercel"], model: "kimi-k2.5" },
+    ],
+  },
+  "research-synthesis": {
+    fallbackChain: [
+      { providers: ["openai", "github-copilot", "opencode", "vercel"], model: "gpt-5.5", variant: "medium" },
+      { providers: ["anthropic", "github-copilot", "opencode", "vercel"], model: "claude-opus-4-7", variant: "max" },
+      { providers: ["google", "github-copilot", "opencode", "vercel"], model: "gemini-3.1-pro" },
+    ],
+  },
 };

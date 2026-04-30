@@ -55,6 +55,9 @@ export const HookNameSchema = z.enum([
   "todo-description-override",
   "webfetch-redirect-guard",
   "legacy-plugin-toast",
+  "challenge-engine",
+  "domain-lens",
+  "checkpoint-counter",
 ])
 
 export type HookName = z.infer<typeof HookNameSchema>

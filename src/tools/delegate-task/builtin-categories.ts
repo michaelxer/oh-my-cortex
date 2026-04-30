@@ -4,12 +4,14 @@ import type { BuiltinCategoryDefinition } from "./builtin-category-definition"
 import { GOOGLE_CATEGORIES } from "./google-categories"
 import { KIMI_CATEGORIES } from "./kimi-categories"
 import { OPENAI_CATEGORIES } from "./openai-categories"
+import { OMX_CATEGORIES } from "./omx-categories"
 
 const BUILTIN_CATEGORIES: BuiltinCategoryDefinition[] = [
   ...GOOGLE_CATEGORIES,
   ...OPENAI_CATEGORIES,
   ...ANTHROPIC_CATEGORIES,
   ...KIMI_CATEGORIES,
+  ...OMX_CATEGORIES,
 ]
 
 function buildCategoryRecord<TValue>(

@@ -1,0 +1,5 @@
+export { createChallengeEngineHook } from "./hook"
+export type { ChallengeLevel, ChallengeState } from "./types"
+export { parseChallengeCommand } from "./detector"
+export { getLevelPrompt } from "./levels"
+export { CHALLENGE_COMMAND_MARKER, LEVEL_NAMES, DEFAULT_CHALLENGE_LEVEL } from "./constants"

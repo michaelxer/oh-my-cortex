@@ -8,6 +8,10 @@ import { REFACTOR_TEMPLATE } from "./templates/refactor"
 import { START_WORK_TEMPLATE } from "./templates/start-work"
 import { HANDOFF_TEMPLATE } from "./templates/handoff"
 import { REMOVE_AI_SLOPS_TEMPLATE } from "./templates/remove-ai-slops"
+import { CHALLENGE_TEMPLATE } from "./templates/challenge"
+import { CHECKPOINT_TEMPLATE } from "./templates/checkpoint"
+import { LENS_TEMPLATE } from "./templates/lens"
+import { DECIDE_TEMPLATE } from "./templates/decide"
 
 interface LoadBuiltinCommandsOptions {
   useRegisteredAgents?: boolean
@@ -120,6 +124,45 @@ Timestamp: $TIMESTAMP
 $ARGUMENTS
 </user-request>`,
       argumentHint: "[goal]",
+    },
+    challenge: {
+      description: "(builtin) Set challenge level (1=nudge, 2=probe, 3=mirror, 4=red-team)",
+      template: `<command-instruction>
+${CHALLENGE_TEMPLATE}
+</command-instruction>
+
+<user-request>
+$ARGUMENTS
+</user-request>`,
+      argumentHint: "[1-4]",
+    },
+    checkpoint: {
+      description: "(builtin) Force a conversation checkpoint summary",
+      template: `<command-instruction>
+${CHECKPOINT_TEMPLATE}
+</command-instruction>`,
+    },
+    lens: {
+      description: "(builtin) Activate a domain lens (health, legal, financial, security, political)",
+      template: `<command-instruction>
+${LENS_TEMPLATE}
+</command-instruction>
+
+<user-request>
+$ARGUMENTS
+</user-request>`,
+      argumentHint: "[health|legal|financial|security|political]",
+    },
+    decide: {
+      description: "(builtin) Activate the Decision Framework for structured decision-making",
+      template: `<command-instruction>
+${DECIDE_TEMPLATE}
+</command-instruction>
+
+<user-request>
+$ARGUMENTS
+</user-request>`,
+      argumentHint: "[topic]",
     },
   }
 }

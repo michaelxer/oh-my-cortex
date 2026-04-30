@@ -44,6 +44,7 @@ export {
   createTaskUpdateTool,
 } from "./task"
 export { createHashlineEditTool } from "./hashline-edit"
+export { createDecisionFrameworkTool } from "./decision-framework"
 
 export function createBackgroundTools(manager: BackgroundManager, client: OpencodeClient): Record<string, ToolDefinition> {
   const outputManager: BackgroundOutputManager = manager

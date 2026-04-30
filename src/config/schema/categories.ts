@@ -36,6 +36,11 @@ export const BuiltinCategoryNameSchema = z.enum([
   "unspecified-low",
   "unspecified-high",
   "writing",
+  "communication",
+  "strategic-analysis",
+  "coaching",
+  "crisis",
+  "research-synthesis",
 ])
 
 export const CategoriesConfigSchema = z.record(z.string(), CategoryConfigSchema)

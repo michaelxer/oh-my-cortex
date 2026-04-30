@@ -11,6 +11,13 @@ import {
   reviewWorkSkill,
   aiSlopRemoverSkill,
   sessionGuardianSkill,
+  reasoningToolkitSkill,
+  sensitiveDraftingSkill,
+  domainHealthSkill,
+  domainLegalSkill,
+  domainFinancialSkill,
+  domainSecuritySkill,
+  domainPoliticalSkill,
 } from "./skills/index"
 
 export interface CreateBuiltinSkillsOptions {
@@ -39,6 +46,13 @@ export function createBuiltinSkills(options: CreateBuiltinSkillsOptions = {}): B
 		reviewWorkSkill,
 		aiSlopRemoverSkill,
 		sessionGuardianSkill,
+		reasoningToolkitSkill,
+		sensitiveDraftingSkill,
+		domainHealthSkill,
+		domainLegalSkill,
+		domainFinancialSkill,
+		domainSecuritySkill,
+		domainPoliticalSkill,
 	]
 
   if (!disabledSkills) {

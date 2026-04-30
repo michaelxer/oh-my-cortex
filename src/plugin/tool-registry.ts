@@ -28,6 +28,7 @@ import {
   createTaskList,
   createTaskUpdateTool,
   createHashlineEditTool,
+  createDecisionFrameworkTool,
 } from "../tools"
 import { getMainSessionID } from "../features/claude-code-session-state"
 import { filterDisabledTools } from "../shared/disabled-tools"
@@ -56,6 +57,7 @@ type ToolRegistryFactories = {
   createTaskList: typeof createTaskList
   createTaskUpdateTool: typeof createTaskUpdateTool
   createHashlineEditTool: typeof createHashlineEditTool
+  createDecisionFrameworkTool: typeof createDecisionFrameworkTool
 }
 
 const defaultToolRegistryFactories: ToolRegistryFactories = {
@@ -77,6 +79,7 @@ const defaultToolRegistryFactories: ToolRegistryFactories = {
   createTaskList,
   createTaskUpdateTool,
   createHashlineEditTool,
+  createDecisionFrameworkTool,
 }
 
 export type ToolRegistryResult = {
@@ -276,6 +279,7 @@ export function createToolRegistry(args: {
     ...(interactiveBashEnabled ? { interactive_bash: factories.interactive_bash } : {}),
     ...taskToolsRecord,
     ...hashlineToolsRecord,
+    decision_framework: factories.createDecisionFrameworkTool(),
   }
 
   for (const toolDefinition of Object.values(allTools)) {
