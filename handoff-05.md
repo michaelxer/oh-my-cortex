@@ -1,4 +1,4 @@
-# OMX Final Handoff — Project Complete
+# OMX Final Handoff — Project Complete + Upstream Sync Guide
 
 ## Project
 
@@ -10,6 +10,7 @@ Repo: https://github.com/michaelxer/oh-my-cortex
 Branch: dev
 npm: https://www.npmjs.com/package/oh-my-cortex
 Version: 0.1.0 (published)
+Upstream: https://github.com/code-yeongyu/oh-my-openagent (NOT a GitHub fork)
 ```
 
 ## Owner
@@ -22,17 +23,108 @@ Version: 0.1.0 (published)
 
 | Project | Owner | Relationship to OMX |
 |---------|-------|---------------------|
-| [oh-my-openagent (OmO)](https://github.com/code-yeongyu/oh-my-openagent) | code-yeongyu | **Upstream source.** OMX is built on OmO's codebase. Credited in README. Not a GitHub fork — standalone repo with OmO's git history preserved (hence 200+ contributors showing). |
-| [oh-my-crew (OMC)](https://github.com/michaelxer/oh-my-crew) | michaelxer | **Sibling project.** Another fork of OmO with nautical/crew theming. Mentioned in OMX README for marketing. Separate repo, separate npm package. |
+| [oh-my-openagent (OmO)](https://github.com/code-yeongyu/oh-my-openagent) | code-yeongyu | **Upstream source.** OMX is built on OmO's codebase. Credited in README. Not a GitHub fork — standalone repo with OmO's git history preserved. |
+| [oh-my-crew (OMC)](https://github.com/michaelxer/oh-my-crew) | michaelxer | **Sibling project.** Another fork of OmO with nautical/crew theming. Mentioned in OMX README for marketing only. |
 | [OpenCode](https://opencode.ai) | OpenCode team | **Platform.** OMX is a plugin for OpenCode. Uses `@opencode-ai/plugin` SDK. |
 
-### Key Distinctions
+---
 
-- OMX is NOT a GitHub fork of OmO — it's a standalone repo that contains OmO's git history
-- OMX credits `code-yeongyu/oh-my-openagent` in README and LICENSE (SUL-1.0)
-- No references to `enowdev` anywhere
-- OMC is mentioned for marketing only (same owner)
-- The 200+ contributors on GitHub are from the inherited git history — this is intentional and left as-is
+## CRITICAL: Upstream Sync Protocol
+
+OMX is a standalone repo (NOT a GitHub fork). It does NOT automatically receive bug fixes, new model support, or feature updates from OmO. Syncing must be done manually.
+
+### Setup (one-time)
+
+```bash
+cd "D:\CODING PROJECT\Cortex\oh-my-cortex"
+git remote add upstream https://github.com/code-yeongyu/oh-my-openagent.git
+```
+
+### Check What's New
+
+```bash
+git fetch upstream
+git log upstream/master --oneline -30
+```
+
+### Sync Procedure
+
+```bash
+# 1. Fetch upstream changes
+git fetch upstream
+
+# 2. Review what changed (DO NOT blindly merge)
+git log upstream/master --oneline -30
+git diff dev..upstream/master --stat
+
+# 3. Cherry-pick SPECIFIC commits you want (never merge entire branch)
+git cherry-pick <commit-hash>
+
+# 4. If conflicts arise, resolve them maintaining OMX naming/branding
+# 5. Run verification after every sync
+bun run typecheck
+bun run build
+bun test src/hooks/challenge-engine/ src/hooks/domain-lens/ src/hooks/checkpoint-counter/ src/tools/decision-framework/
+```
+
+### WHAT TO SYNC (safe to port)
+
+| Category | Examples | Why Safe |
+|----------|----------|----------|
+| Bug fixes in core hooks | hashline-edit, session-recovery, runtime-fallback, model-fallback | Infrastructure code, no branding |
+| New model/provider support | New model IDs, provider configs, fallback chains | Additive, no conflicts |
+| OpenCode SDK compatibility | Plugin API updates, new hook events | Required to stay compatible |
+| Tool improvements | LSP tools, AST-grep, grep, glob | Pure utility, no branding |
+| Build/CI fixes | Build scripts, test infrastructure | Infrastructure |
+| Security fixes | Any vulnerability patches | Critical |
+
+### WHAT TO NEVER SYNC (will break OMX)
+
+| Category | Why Dangerous |
+|----------|---------------|
+| Agent prompts (`src/agents/`) | OMX has completely rewritten prompts with cognitive framework. OmO uses Greek mythology names (Sisyphus, Hephaestus, etc.) |
+| Agent names/display names | OMX uses Chief/Founder/Thinker/etc. OmO uses Sisyphus/Hephaestus/Oracle/etc. |
+| Keyword detector (`deepwork` vs `ultrawork`) | OMX activation is `deepwork`/`dw`. OmO uses `ultrawork`/`ulw`. |
+| Loop hooks (`cortex-loop` vs `ralph-loop`) | Completely renamed in OMX |
+| README / docs / branding | OMX has its own identity |
+| Package name / config file names | `oh-my-cortex` not `oh-my-opencode` |
+| Any file that references "Sisyphus", "Hephaestus", "Atlas", "Prometheus", "Momus", "Metis" | These are OmO agent names, not OMX |
+
+### WHAT NEEDS ADAPTATION (sync but modify)
+
+| Category | What To Change |
+|----------|----------------|
+| New hooks that reference agent names | Replace OmO names with OMX names (Sisyphus→Chief, etc.) |
+| New categories with model requirements | Add to OMX's model requirements with OMX agent names |
+| CLI installer changes | Keep OMX branding, port functionality |
+| New skills | Port the skill, ensure it references OMX agents/commands |
+| Schema changes | Port but ensure `oh-my-cortex` naming |
+
+### Agent Name Mapping (for adaptation)
+
+| OmO Name | OMX Name |
+|----------|----------|
+| Sisyphus | Chief |
+| Hephaestus | Founder |
+| Oracle | Thinker |
+| Librarian | Researcher |
+| Explore | Tracker |
+| Prometheus | Planner |
+| Metis | Reviewer |
+| Momus | Critic |
+| Atlas | Lead |
+| Sisyphus-Junior | Worker |
+| Multimodal-Looker | Spotter |
+
+### Command Mapping
+
+| OmO | OMX |
+|-----|-----|
+| `ultrawork` / `ulw` | `deepwork` / `dw` |
+| `ralph-loop` / `/ulw-loop` | `cortex-loop` / `/dw-loop` |
+| `/cancel-ralph` | `/cancel-cortex` |
+
+---
 
 ## Completed Phases
 
@@ -62,11 +154,12 @@ Version: 0.1.0 (published)
 
 ### Phase 4: Polish (commits 9964a9f6, 6635f75d)
 - **96 unit tests** across 6 test files for all Phase 3 hooks/tools
-- **README.md** — full rewrite with OMX positioning, badges (npm version, downloads, stars, license, OpenCode plugin)
-- **Translated READMEs** — ja, ko, ru, zh-cn all rewritten with OMX content
-- **docs/guide/overview.md** — title and intro updated for OMX
-- **CLI installer** — already OMX-branded (verified, no changes needed)
-- **npm published** — `oh-my-cortex@0.1.0` live on npmjs.com
+- **README.md** — full rewrite with OMX positioning, badges
+- **Translated READMEs** — ja, ko, ru, zh-cn all rewritten
+- **docs/guide/overview.md** — updated for OMX
+- **npm published** — `oh-my-cortex@0.1.0` live
+
+---
 
 ## Architecture Summary
 
@@ -74,7 +167,7 @@ Version: 0.1.0 (published)
 - **9 subagents**: Thinker, Researcher, Tracker, Planner, Reviewer, Critic, Lead, Worker, Spotter
 - **Model config**: Installer-based — asks user's subscriptions, auto-matches strongest model per agent via fallback chains
 - **Activation**: `deepwork` / `dw`
-- **No persona names**: Adaptive tone, no J.A.R.V.I.S./Architect identity
+- **No persona names**: Adaptive tone
 - **Cross-plugin safe**: Runs alongside OmO and OMC without conflicts
 - **Cognitive framework**: Task classification, challenge behavior, domain lenses, confidence labels, checkpoint tracking
 
@@ -91,7 +184,7 @@ npm view oh-my-cortex version
                            # Expected: 0.1.0
 ```
 
-## Constraints for Future Work
+## Constraints
 
 - Work only inside `D:\CODING PROJECT\Cortex\oh-my-cortex`
 - Do not run `bun install` unless user explicitly allows
@@ -113,39 +206,47 @@ npm view oh-my-cortex version
 | `src/hooks/checkpoint-counter/` | Exchange counter with auto-summary |
 | `src/tools/decision-framework/` | Structured decision analysis tool |
 | `OMX-ARCHITECTURE.md` (in D:\CODING PROJECT\Cortex\) | Full architecture spec v3.0 |
-| `handoff-04.md` | Previous handoff (Phase 4 start) |
-| `handoff-05.md` | This file (final state) |
+| `handoff-05.md` | This file (final state + sync guide) |
 
-## Resume Prompt
+---
+
+## Resume Prompt (copy-paste for next agent)
 
 ```
-You are continuing work on oh-my-cortex (OMX), located at:
+You are working on oh-my-cortex (OMX), located at:
 D:\CODING PROJECT\Cortex\oh-my-cortex
 
 Repo: https://github.com/michaelxer/oh-my-cortex (branch: dev)
+Upstream: https://github.com/code-yeongyu/oh-my-openagent (NOT a GitHub fork)
 npm: oh-my-cortex@0.1.0 (published)
 Owner: michaelxer (NOT enowdev)
 
-Read handoff-05.md in the project root for full context.
+Read handoff-05.md in the project root for FULL context including:
+- Project relationships and history
+- Upstream sync protocol (CRITICAL — read the sync rules)
+- Agent name mapping (OmO → OMX)
+- What to sync vs what to NEVER sync vs what needs adaptation
 
-All 4 phases are COMPLETE:
-- Phase 1: Fork/rename
-- Phase 2: Prompt rewriting
-- Phase 3: OMX-exclusive features
-- Phase 4: Polish, tests, READMEs, npm publish
+YOUR ASSIGNMENT: Sync upstream updates from oh-my-openagent into oh-my-cortex.
 
-Key relationships:
-- Built on code-yeongyu/oh-my-openagent (credited in README, not a GitHub fork)
-- Sibling project: michaelxer/oh-my-crew (marketing mention only)
-- Plugin for OpenCode (opencode.ai)
+RULES:
+1. NEVER blindly merge upstream. Cherry-pick specific commits only.
+2. NEVER sync agent prompts, agent names, or branding — OMX has its own identity.
+3. SAFE to sync: bug fixes, new model support, SDK compatibility, tool improvements, security fixes.
+4. ADAPT when syncing: anything that references OmO agent names must be renamed to OMX names (see mapping in handoff-05.md).
+5. After every sync: run typecheck, build, and tests. All must pass.
+6. OMX agents: Chief, Founder, Thinker, Researcher, Tracker, Planner, Reviewer, Critic, Lead, Worker, Spotter
+7. OMX activation: deepwork/dw (NOT ultrawork/ulw)
+8. OMX loop: cortex-loop/dw-loop (NOT ralph-loop/ulw-loop)
+9. Do not run bun install unless explicitly allowed.
+10. Do not commit/push unless explicitly asked.
 
-Key rules:
-- Credit code-yeongyu/oh-my-openagent in README only
-- No enowdev references anywhere
-- michaelxer/oh-my-crew mentioned for marketing only
-- 2 primary agents (Chief, Founder) + 9 subagents
-- Activation: deepwork/dw, cortex-loop/dw-loop
-- No persona names — adaptive tone
-- All changes in oh-my-cortex folder only
-- Do not run bun install unless explicitly allowed
+WORKFLOW:
+1. git remote add upstream https://github.com/code-yeongyu/oh-my-openagent.git (if not already added)
+2. git fetch upstream
+3. git log upstream/master --oneline -30 (show user what's new)
+4. Discuss with user which commits to port
+5. Cherry-pick and adapt (rename OmO references to OMX)
+6. Verify: typecheck + build + tests
+7. Commit only when user approves
 ```
