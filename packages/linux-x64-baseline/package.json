@@ -1,6 +1,6 @@
 {
   "name": "oh-my-cortex-linux-x64-baseline",
-  "version": "3.17.6",
+  "version": "0.1.0",
   "description": "Platform-specific binary for oh-my-cortex (linux-x64-baseline, no AVX2)",
   "license": "MIT",
   "repository": {

@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to publish (e.g., 3.0.0-beta.12)"
+        description: "Version to publish (e.g., 0.1.1-beta.1)"
         required: true
         type: string
       dist_tag:
@@ -28,12 +28,6 @@ permissions:
   id-token: write
 
 jobs:
-  # =============================================================================
-  # Job 1: Build binaries for all platforms
-  # - Windows builds on windows-latest (avoid bun cross-compile segfault)
-  # - All other platforms build on ubuntu-latest
-  # - Uploads compressed artifacts for the publish job
-  # =============================================================================
   build:
     runs-on: ${{ startsWith(matrix.platform, 'windows-') && 'windows-latest' || startsWith(matrix.platform, 'darwin-') && 'macos-latest' || 'ubuntu-latest' }}
     defaults:
@@ -83,38 +77,14 @@ jobs:
         env:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
-          PLATFORM_KEY="${{ matrix.platform }}"
-          PLATFORM_KEY="${PLATFORM_KEY//-/_}"
-          
-          # Check oh-my-cortex
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-cortex-${{ matrix.platform }}/${VERSION}")
-          # Check oh-my-cortex
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-cortex-${{ matrix.platform }}/${VERSION}")
-          
-          echo "oh-my-cortex-${{ matrix.platform }}@${VERSION}: ${OC_STATUS}"
-          echo "oh-my-cortex-${{ matrix.platform }}@${VERSION}: ${OA_STATUS}"
-          
-          if [ "$OC_STATUS" = "200" ]; then
-            echo "skip_opencode=true" >> $GITHUB_OUTPUT
-            echo "✓ oh-my-cortex-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_opencode=false" >> $GITHUB_OUTPUT
-            echo "→ oh-my-cortex-${{ matrix.platform }}@${VERSION} needs publishing"
-          fi
-          
-          if [ "$OA_STATUS" = "200" ]; then
-            echo "skip_openagent=true" >> $GITHUB_OUTPUT
-            echo "✓ oh-my-cortex-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_openagent=false" >> $GITHUB_OUTPUT
-            echo "→ oh-my-cortex-${{ matrix.platform }}@${VERSION} needs publishing"
-          fi
-          
-          # Skip build only if BOTH are already published
-          if [ "$OC_STATUS" = "200" ] && [ "$OA_STATUS" = "200" ]; then
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-cortex-${{ matrix.platform }}/${VERSION}")
+
+          if [ "$STATUS" = "200" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
+            echo "oh-my-cortex-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip=false" >> $GITHUB_OUTPUT
+            echo "oh-my-cortex-${{ matrix.platform }}@${VERSION} needs publishing"
           fi
 
       - name: Update version in package.json
@@ -123,47 +93,45 @@ jobs:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
           cd packages/${{ matrix.platform }}
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
+          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json
+          mv tmp.json package.json
 
       - name: Set root package version
         if: steps.check.outputs.skip != 'true'
         env:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
+          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json
+          mv tmp.json package.json
 
       - name: Pre-download baseline compile target
         if: steps.check.outputs.skip != 'true' && endsWith(matrix.platform, '-baseline')
-        shell: bash
         run: |
           BUN_VERSION=$(bun --version)
           PLATFORM="${{ matrix.platform }}"
           PKG_NAME="bun-${PLATFORM}"
           CACHE_DIR=$(bun pm cache)
           CACHE_DEST="${CACHE_DIR}/${PKG_NAME}-v${BUN_VERSION}"
-          
+
           if [[ -f "$CACHE_DEST" ]]; then
-            echo "✓ Compile target already cached at ${CACHE_DEST}"
+            echo "Compile target already cached at ${CACHE_DEST}"
             exit 0
           fi
-          
+
           echo "Pre-downloading ${PKG_NAME} v${BUN_VERSION} to ${CACHE_DEST}"
           TARBALL_URL="https://registry.npmjs.org/@oven/bun-${PLATFORM}/-/bun-${PLATFORM}-${BUN_VERSION}.tgz"
-          echo "URL: ${TARBALL_URL}"
-          
+
           mkdir -p "$(dirname "$CACHE_DEST")"
           TMP_DIR=$(mktemp -d)
-          
-          # Download and extract the bun binary from npm tarball
+
           curl -fsSL --retry 5 --retry-delay 5 "${TARBALL_URL}" | tar -xzf - -C "${TMP_DIR}"
-          
+
           if [[ "$PLATFORM" == windows-* ]]; then
             BIN_NAME="bun.exe"
           else
             BIN_NAME="bun"
           fi
-          
-          # npm tarball has package/bin/bun structure
+
           if [[ -f "${TMP_DIR}/package/bin/${BIN_NAME}" ]]; then
             cp "${TMP_DIR}/package/bin/${BIN_NAME}" "${CACHE_DEST}"
           elif [[ -f "${TMP_DIR}/package/${BIN_NAME}" ]]; then
@@ -173,9 +141,9 @@ jobs:
             find "${TMP_DIR}" -type f
             exit 1
           fi
-          
+
           chmod +x "${CACHE_DEST}" 2>/dev/null || true
-          echo "✓ Pre-downloaded to ${CACHE_DEST}"
+          echo "Pre-downloaded to ${CACHE_DEST}"
           ls -lh "${CACHE_DEST}"
 
       - name: Build binary
@@ -201,15 +169,15 @@ jobs:
               windows-x64) TARGET="bun-windows-x64" ;;
               windows-x64-baseline) TARGET="bun-windows-x64-baseline" ;;
             esac
-            
+
             if [[ "$PLATFORM" == windows-* ]]; then
               OUTPUT="packages/${PLATFORM}/bin/oh-my-cortex.exe"
             else
               OUTPUT="packages/${PLATFORM}/bin/oh-my-cortex"
             fi
-            
+
             bun build src/cli/index.ts --compile --minify --target=$TARGET --outfile=$OUTPUT
-            
+
             echo "Built binary:"
             ls -lh "$OUTPUT"
 
@@ -232,15 +200,13 @@ jobs:
         run: |
           PLATFORM="${{ matrix.platform }}"
           cd packages/${PLATFORM}
-          
+
           if [[ "$PLATFORM" == windows-* ]]; then
-            # Windows: use 7z (pre-installed on windows-latest)
             7z a -tzip ../../binary-${PLATFORM}.zip bin/ package.json
           else
-            # Unix: use tar.gz
             tar -czvf ../../binary-${PLATFORM}.tar.gz bin/ package.json
           fi
-          
+
           cd ../..
           echo "Compressed artifact:"
           ls -lh binary-${PLATFORM}.*
@@ -293,33 +259,18 @@ jobs:
         env:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-cortex-${{ matrix.platform }}/${VERSION}")
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-cortex-${{ matrix.platform }}/${VERSION}")
-          
-          if [ "$OC_STATUS" = "200" ]; then
-            echo "skip_opencode=true" >> $GITHUB_OUTPUT
-            echo "✓ oh-my-cortex-${{ matrix.platform }}@${VERSION} already published"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-cortex-${{ matrix.platform }}/${VERSION}")
+
+          if [ "$STATUS" = "200" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "oh-my-cortex-${{ matrix.platform }}@${VERSION} already published"
           else
-            echo "skip_opencode=false" >> $GITHUB_OUTPUT
-          fi
-          
-          if [ "$OA_STATUS" = "200" ]; then
-            echo "skip_openagent=true" >> $GITHUB_OUTPUT
-            echo "✓ oh-my-cortex-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_openagent=false" >> $GITHUB_OUTPUT
-          fi
-          
-          # Need artifact if either package needs publishing
-          if [ "$OC_STATUS" = "200" ] && [ "$OA_STATUS" = "200" ]; then
-            echo "skip_all=true" >> $GITHUB_OUTPUT
-          else
-            echo "skip_all=false" >> $GITHUB_OUTPUT
+            echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Download artifact
         id: download
-        if: steps.check.outputs.skip_all != 'true'
+        if: steps.check.outputs.skip != 'true'
         continue-on-error: true
         uses: actions/download-artifact@v4
         with:
@@ -327,57 +278,35 @@ jobs:
           path: .
 
       - name: Extract artifact
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
+        if: steps.check.outputs.skip != 'true' && steps.download.outcome == 'success'
         run: |
           PLATFORM="${{ matrix.platform }}"
           mkdir -p packages/${PLATFORM}
-          
+
           if [[ "$PLATFORM" == windows-* ]]; then
             unzip binary-${PLATFORM}.zip -d packages/${PLATFORM}/
           else
             tar -xzvf binary-${PLATFORM}.tar.gz -C packages/${PLATFORM}/
           fi
-          
+
           echo "Extracted contents:"
           ls -la packages/${PLATFORM}/
           ls -la packages/${PLATFORM}/bin/
 
       - uses: actions/setup-node@v4
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
+        if: steps.check.outputs.skip != 'true' && steps.download.outcome == 'success'
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
 
       - name: Publish oh-my-cortex-${{ matrix.platform }}
-        if: steps.check.outputs.skip_opencode != 'true' && steps.download.outcome == 'success'
+        if: steps.check.outputs.skip != 'true' && steps.download.outcome == 'success'
         env:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
         run: |
           cd packages/${{ matrix.platform }}
-
-          if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG"
-          else
-            npm publish --access public --provenance
-          fi
-        timeout-minutes: 15
-
-      - name: Publish oh-my-cortex-${{ matrix.platform }}
-        if: steps.check.outputs.skip_openagent != 'true' && steps.download.outcome == 'success'
-        env:
-          DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
-        run: |
-          cd packages/${{ matrix.platform }}
-
-          # Rename package for oh-my-cortex
-          jq --arg name "oh-my-cortex-${{ matrix.platform }}" \
-             --arg desc "Platform-specific binary for oh-my-cortex (${{ matrix.platform }})" \
-             '.name = $name | .description = $desc | .bin = {"oh-my-cortex": (.bin | to_entries | .[0].value)}' \
-             package.json > tmp.json && mv tmp.json package.json
 
           if [ -n "$DIST_TAG" ]; then
             npm publish --access public --provenance --tag "$DIST_TAG"

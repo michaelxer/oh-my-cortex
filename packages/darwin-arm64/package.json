@@ -1,6 +1,6 @@
 {
   "name": "oh-my-cortex-darwin-arm64",
-  "version": "3.17.6",
+  "version": "0.1.0",
   "description": "Platform-specific binary for oh-my-cortex (darwin-arm64)",
   "license": "MIT",
   "repository": {
