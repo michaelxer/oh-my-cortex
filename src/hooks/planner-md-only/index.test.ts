@@ -738,7 +738,7 @@ describe("planner-md-only", () => {
        ).rejects.toThrow("File operations restricted to .cortex/*.md plan files only")
      })
 
-     test("should allow case-insensitive .CHIEF directory", async () => {
+     test("should allow case-insensitive .CORTEX directory", async () => {
        // given
        setupMessageStorage(TEST_SESSION_ID, "planner")
        const hook = createPlannerMdOnlyHook(createMockPluginInput())
@@ -748,7 +748,7 @@ describe("planner-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: ".CHIEF/plans/work-plan.md" },
+         args: { filePath: ".CORTEX/plans/work-plan.md" },
        }
 
        // when / #then
