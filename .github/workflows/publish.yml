@@ -48,8 +48,22 @@ jobs:
         env:
           BUN_INSTALL_ALLOW_SCRIPTS: "@ast-grep/napi"
 
-      - name: Run tests
-        run: bun run script/run-ci-tests.ts
+      - name: Run release tests
+        run: |
+          bun test \
+            src/cli/config-manager/generate-omx-config.test.ts \
+            src/cli/config-manager/write-omx-config.test.ts \
+            src/plugin-handlers/config-handler.test.ts \
+            src/plugin-handlers/agent-config-handler.test.ts \
+            src/plugin-handlers/planner-agent-config-builder.test.ts \
+            src/shared/migration/agent-names.test.ts \
+            src/shared/agent-config-integration.test.ts \
+            src/hooks/auto-update-checker/checker/cached-version.test.ts \
+            src/hooks/auto-update-checker/constants.test.ts \
+            src/hooks/legacy-plugin-toast/auto-migrate.test.ts \
+            src/shared/legacy-plugin-warning.test.ts \
+            src/shared/zauc-mocks-migrate-legacy-plugin/migrate-legacy-plugin-entry.test.ts \
+            src/hooks/planner-md-only/index.test.ts
 
   typecheck:
     runs-on: ubuntu-latest

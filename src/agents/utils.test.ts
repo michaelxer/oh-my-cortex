@@ -312,7 +312,7 @@ describe("createBuiltinAgents with model overrides", () => {
 
     const customAgentSummaries = [
       {
-        name: "researcher",
+        name: "project-researcher",
         description: "Research agent for deep analysis",
         hidden: false,
       },
@@ -332,9 +332,9 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.chief.prompt).not.toContain("researcher")
-      expect(agents.founder.prompt).not.toContain("researcher")
-      expect(agents.lead.prompt).not.toContain("researcher")
+      expect(agents.chief.prompt).not.toContain("project-researcher")
+      expect(agents.founder.prompt).not.toContain("project-researcher")
+      expect(agents.lead.prompt).not.toContain("project-researcher")
     } finally {
       fetchSpy.mockRestore()
     }
@@ -418,10 +418,10 @@ describe("createBuiltinAgents with model overrides", () => {
       new Set(["anthropic/claude-opus-4-7", "openai/gpt-5.4"])
     )
 
-    const disabledAgents = ["ReSeArChEr"]
+    const disabledAgents = ["PrOjEcT-ReSeArChEr"]
     const customAgentSummaries = [
       {
-        name: "researcher",
+        name: "project-researcher",
         description: "Should never show",
       },
     ]
@@ -440,9 +440,9 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.chief.prompt).not.toContain("researcher")
-      expect(agents.founder.prompt).not.toContain("researcher")
-      expect(agents.lead.prompt).not.toContain("researcher")
+      expect(agents.chief.prompt).not.toContain("project-researcher")
+      expect(agents.founder.prompt).not.toContain("project-researcher")
+      expect(agents.lead.prompt).not.toContain("project-researcher")
     } finally {
       fetchSpy.mockRestore()
     }

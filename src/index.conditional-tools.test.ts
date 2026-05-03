@@ -17,7 +17,7 @@ describe("look_at tool conditional registration", () => {
     // when checking if agent is enabled
     // then should return false (case-insensitive match)
     it("returns false when spotter is disabled (case-insensitive)", () => {
-      const disabledAgents: string[] = ["Multimodal-Looker"]
+      const disabledAgents: string[] = ["SPOTTER"]
       const isEnabled = !disabledAgents.some(
         (agent) => agent.toLowerCase() === "spotter",
       )

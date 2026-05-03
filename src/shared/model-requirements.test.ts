@@ -470,8 +470,8 @@ describe("CATEGORY_MODEL_REQUIREMENTS", () => {
     expect(fourth.providers[0]).toBe("opencode-go")
   })
 
-  test("all 8 categories have valid fallbackChain arrays", () => {
-    // given - list of 8 category names
+  test("all categories have valid fallbackChain arrays", () => {
+    // given - default and OMX-exclusive category names
     const expectedCategories = [
       "visual-engineering",
       "ultrabrain",
@@ -481,13 +481,18 @@ describe("CATEGORY_MODEL_REQUIREMENTS", () => {
       "unspecified-low",
       "unspecified-high",
       "writing",
+      "communication",
+      "strategic-analysis",
+      "coaching",
+      "crisis",
+      "research-synthesis",
     ]
 
     // when - checking CATEGORY_MODEL_REQUIREMENTS
     const definedCategories = Object.keys(CATEGORY_MODEL_REQUIREMENTS)
 
     // then - all categories present with valid fallbackChain
-    expect(definedCategories).toHaveLength(8)
+    expect(definedCategories).toHaveLength(expectedCategories.length)
     for (const category of expectedCategories) {
       const requirement = CATEGORY_MODEL_REQUIREMENTS[category]
       expect(requirement).toBeDefined()
