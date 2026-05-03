@@ -23,7 +23,7 @@ export function resolveModelFromChain(
 }
 
 export function getChiefFallbackChain(): FallbackEntry[] {
-	return CLI_AGENT_MODEL_REQUIREMENTS.cortex.fallbackChain
+	return CLI_AGENT_MODEL_REQUIREMENTS.chief.fallbackChain
 }
 
 export function isAnyFallbackEntryAvailable(

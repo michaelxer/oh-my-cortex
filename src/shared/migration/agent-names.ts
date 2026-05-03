@@ -1,13 +1,17 @@
 export const AGENT_NAME_MAP: Record<string, string> = {
   // Chief variants → "chief"
   omx: "chief",
+  cortex: "chief",
   OMX: "chief",
   Chief: "chief",
+  "Chief - Deepworker": "chief",
   "Chief (Deepworker)": "chief",
   chief: "chief",
 
   // Founder variants → "founder"
   "Founder (Deep Agent)": "founder",
+  "Founder - Deep Agent": "founder",
+  founder: "founder",
 
   // Planner variants → "planner"
   "OMX-Plan": "planner",
@@ -49,6 +53,7 @@ export const AGENT_NAME_MAP: Record<string, string> = {
 
 export const BUILTIN_AGENT_NAMES = new Set([
   "chief", // was "Chief"
+  "founder",
   "thinker",
   "researcher",
   "tracker",
@@ -57,6 +62,7 @@ export const BUILTIN_AGENT_NAMES = new Set([
   "critic", // was "Critic - Plan Critic"
   "planner", // was "Planner - Plan Builder"
   "lead", // was "Lead"
+  "worker",
   "build",
 ])
 

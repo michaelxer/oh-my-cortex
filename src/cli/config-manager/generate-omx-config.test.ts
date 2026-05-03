@@ -28,7 +28,7 @@ describe("generateOmxConfig - model fallback system", () => {
     expect([
       "github-copilot/claude-opus-4.7",
       "github-copilot/claude-opus-4-7",
-    ]).toContain((result.agents as Record<string, { model: string }>).cortex.model)
+    ]).toContain((result.agents as Record<string, { model: string }>).chief.model)
   })
 
   test("uses ultimate fallback when no providers configured", () => {
@@ -51,7 +51,7 @@ describe("generateOmxConfig - model fallback system", () => {
 
     //#then
     expect(result.$schema).toBe("https://raw.githubusercontent.com/michaelxer/oh-my-cortex/dev/assets/oh-my-cortex.schema.json")
-    expect((result.agents as Record<string, { model: string }>).cortex).toBeUndefined()
+    expect((result.agents as Record<string, { model: string }>).chief).toBeUndefined()
   })
 
   test("uses ZAI model for researcher when Z.ai is available", () => {
@@ -74,7 +74,7 @@ describe("generateOmxConfig - model fallback system", () => {
 
     //#then
     expect((result.agents as Record<string, { model: string }>).researcher.model).toBe("zai-coding-plan/glm-4.7")
-    expect((result.agents as Record<string, { model: string }>).cortex.model).toBe("anthropic/claude-opus-4-7")
+    expect((result.agents as Record<string, { model: string }>).chief.model).toBe("anthropic/claude-opus-4-7")
   })
 
   test("uses native OpenAI models when only ChatGPT available", () => {
@@ -96,8 +96,8 @@ describe("generateOmxConfig - model fallback system", () => {
     const result = generateOmxConfig(config)
 
     //#then
-    expect((result.agents as Record<string, { model: string; variant?: string }>).cortex.model).toBe("openai/gpt-5.5")
-    expect((result.agents as Record<string, { model: string; variant?: string }>).cortex.variant).toBe("medium")
+    expect((result.agents as Record<string, { model: string; variant?: string }>).chief.model).toBe("openai/gpt-5.5")
+    expect((result.agents as Record<string, { model: string; variant?: string }>).chief.variant).toBe("medium")
     expect((result.agents as Record<string, { model: string }>).thinker.model).toBe("openai/gpt-5.5")
     expect((result.agents as Record<string, { model: string }>)['spotter'].model).toBe("openai/gpt-5.5")
   })

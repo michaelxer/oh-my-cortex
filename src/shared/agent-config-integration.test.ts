@@ -33,7 +33,7 @@ describe("Agent Config Integration", () => {
       expect(result.migrated).not.toHaveProperty("Critic - Plan Critic")
 
       // then - values are preserved
-      expect(result.migrated.cortex).toEqual({ model: "anthropic/claude-opus-4-7" })
+      expect(result.migrated.chief).toEqual({ model: "anthropic/claude-opus-4-7" })
       expect(result.migrated.lead).toEqual({ model: "anthropic/claude-opus-4-7" })
       expect(result.migrated.planner).toEqual({ model: "anthropic/claude-opus-4-7" })
       
@@ -193,7 +193,7 @@ describe("Agent Config Integration", () => {
       expect(plannerDisplay).toBe("Planner - Plan Builder")
 
       // then - config values are preserved
-      expect(result.migrated.cortex).toEqual({ model: "anthropic/claude-opus-4-7", temperature: 0.1 })
+      expect(result.migrated.chief).toEqual({ model: "anthropic/claude-opus-4-7", temperature: 0.1 })
       expect(result.migrated.planner).toEqual({ model: "anthropic/claude-opus-4-7" })
     })
 

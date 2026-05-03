@@ -183,7 +183,7 @@ export async function applyAgentConfig(params: {
       Object.entries(agents).filter(([name]) => !disabledAgentNames.has(name.toLowerCase()))
     );
 
-  const chiefAgentConfig = params.pluginConfig.chief_agent ?? params.pluginConfig.chief_agent;
+  const chiefAgentConfig = params.pluginConfig.chief_agent;
   const isChiefEnabled = chiefAgentConfig?.disabled !== true;
   const builderEnabled =
     chiefAgentConfig?.default_builder_enabled ?? false;
@@ -192,7 +192,7 @@ export async function applyAgentConfig(params: {
   const shouldDemotePlan = plannerEnabled && replacePlan;
   const configuredDefaultAgent = getConfiguredDefaultAgent(params.config);
 
-  if (isChiefEnabled && builtinAgents.cortex) {
+  if (isChiefEnabled && builtinAgents.chief) {
     if (configuredDefaultAgent) {
       const configKey = getAgentConfigKey(configuredDefaultAgent);
       const runtimeConfigKey = normalizeAgentForPromptKey(configuredDefaultAgent) ?? configKey;
@@ -205,7 +205,7 @@ export async function applyAgentConfig(params: {
 
     // Assembly order: Chief -> Founder -> Planner -> Lead
     const agentConfig: Record<string, unknown> = {
-      chief: builtinAgents.cortex,
+      chief: builtinAgents.chief,
     };
 
     if (builtinAgents.founder) {

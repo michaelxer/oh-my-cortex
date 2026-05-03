@@ -88,7 +88,7 @@ describe("migrateAgentNames with parenthesized aliases", () => {
 
     // then
     expect(changed).toBe(true)
-    expect(migrated.cortex).toEqual({ model: "claude-opus-4" })
+    expect(migrated.chief).toEqual({ model: "claude-opus-4" })
     expect(migrated.founder).toEqual({ model: "gpt-5.4" })
     expect(migrated.planner).toEqual({ model: "claude-opus-4" })
     expect(migrated.lead).toEqual({ model: "kimi-k2.5" })
@@ -96,5 +96,20 @@ describe("migrateAgentNames with parenthesized aliases", () => {
     expect(migrated.critic).toEqual({ model: "claude-opus-4" })
     expect(migrated["Chief (Deepworker)"]).toBeUndefined()
     expect(migrated["Founder (Deep Agent)"]).toBeUndefined()
+  })
+
+  test("migrates legacy cortex key to chief", () => {
+    // given
+    const legacyAgents = {
+      cortex: { model: "claude-opus-4" },
+    }
+
+    // when
+    const { migrated, changed } = migrateAgentNames(legacyAgents)
+
+    // then
+    expect(changed).toBe(true)
+    expect(migrated.chief).toEqual({ model: "claude-opus-4" })
+    expect(migrated.cortex).toBeUndefined()
   })
 })

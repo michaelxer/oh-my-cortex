@@ -1,9 +1,13 @@
 const PARENTHETICAL_SUFFIX_PATTERN = /\s*(\([^)]*\)\s*)+$/u
 const DASH_SUFFIX_PATTERN = /\s+-\s+.+$/u
 const ZERO_WIDTH_CHARACTERS_PATTERN = /[\u200B\u200C\u200D\uFEFF]/g
+const LEGACY_AGENT_ALIAS_NORMALIZED: Record<string, string> = {
+  multimodallooker: "spotter",
+  chiefjunior: "worker",
+}
 
 export function normalizeProtectedAgentName(agentName: string): string {
-  return agentName
+  const normalized = agentName
     .replace(ZERO_WIDTH_CHARACTERS_PATTERN, "")
     .trim()
     .toLowerCase()
@@ -11,6 +15,8 @@ export function normalizeProtectedAgentName(agentName: string): string {
     .replace(DASH_SUFFIX_PATTERN, "")
     .replace(/[-_]/g, "")
     .trim()
+
+  return LEGACY_AGENT_ALIAS_NORMALIZED[normalized] ?? normalized
 }
 
 export function createProtectedAgentNameSet(agentNames: Iterable<string>): Set<string> {

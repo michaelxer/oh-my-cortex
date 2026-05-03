@@ -1213,7 +1213,7 @@ describe("migrateModelVersions with applied migrations", () => {
     // then: Migration should be skipped (user reverted)
     expect(changed).toBe(false)
     expect(newMigrations).toEqual([])
-    expect((migrated.cortex as Record<string, unknown>).model).toBe("openai/gpt-5.4-codex")
+    expect((migrated.chief as Record<string, unknown>).model).toBe("openai/gpt-5.4-codex")
   })
 
   test("applies new migrations not in history", () => {
@@ -1229,7 +1229,7 @@ describe("migrateModelVersions with applied migrations", () => {
     // then: gpt-5.4-codex should not be migrated
     expect(changed).toBe(false)
     expect(newMigrations).toEqual([])
-    expect((migrated.cortex as Record<string, unknown>).model).toBe("openai/gpt-5.4-codex")
+    expect((migrated.chief as Record<string, unknown>).model).toBe("openai/gpt-5.4-codex")
   })
 
   test("handles mixed: skip applied, apply new", () => {
@@ -1246,7 +1246,7 @@ describe("migrateModelVersions with applied migrations", () => {
     // then: Skip chief (already applied), apply thinker
     expect(changed).toBe(true)
     expect(newMigrations).toEqual(["model-version:anthropic/claude-opus-4-5->anthropic/claude-opus-4-7"])
-    expect((migrated.cortex as Record<string, unknown>).model).toBe("openai/gpt-5.4-codex")
+    expect((migrated.chief as Record<string, unknown>).model).toBe("openai/gpt-5.4-codex")
     expect((migrated.thinker as Record<string, unknown>).model).toBe("anthropic/claude-opus-4-7")
   })
 
@@ -1262,7 +1262,7 @@ describe("migrateModelVersions with applied migrations", () => {
     // then: gpt-5.4-codex remains unchanged
     expect(changed).toBe(false)
     expect(newMigrations).toEqual([])
-    expect((migrated.cortex as Record<string, unknown>).model).toBe("openai/gpt-5.4-codex")
+    expect((migrated.chief as Record<string, unknown>).model).toBe("openai/gpt-5.4-codex")
   })
 
   test("returns empty newMigrations when no migrations applied", () => {
@@ -1317,7 +1317,7 @@ describe("migrateConfigFile with migration tracking via sidecar (#3263)", () => 
 
     expect(needsWrite).toBe(false)
     expect(rawConfig._migrations).toBeUndefined()
-    expect((rawConfig.agents as Record<string, Record<string, unknown>>).cortex.model).toBe("openai/gpt-5.4-codex")
+    expect((rawConfig.agents as Record<string, Record<string, unknown>>).chief.model).toBe("openai/gpt-5.4-codex")
     expect(fs.existsSync(sidecarPath(testConfigPath))).toBe(false)
   })
 

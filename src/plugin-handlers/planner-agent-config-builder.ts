@@ -97,7 +97,7 @@ export async function buildPlannerAgentConfig(params: {
   const base: Record<string, unknown> = {
     ...(resolvedModel ? { model: resolvedModel } : {}),
     ...(variantToUse ? { variant: variantToUse } : {}),
-    mode: "primary",
+    mode: "subagent",
     prompt: getPlannerPrompt(resolvedModel, params.disabledTools),
     permission: PLANNER_PERMISSION,
     description: `${(params.configAgentPlan?.description as string) ?? "Plan agent"} (Planner - OhMyCortex)`,

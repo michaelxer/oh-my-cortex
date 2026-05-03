@@ -268,7 +268,7 @@ describe("buildPlannerAgentConfig", () => {
       });
   });
 
-  test("returns Planner as a primary agent", async () => {
+  test("returns Planner as a subagent", async () => {
     // given
 
     // when
@@ -280,6 +280,6 @@ describe("buildPlannerAgentConfig", () => {
     });
 
     // then
-    expect(result.mode).toBe("primary");
+    expect(result.mode).toBe("subagent");
   });
 });

@@ -238,7 +238,7 @@ describe("Plan agent demote behavior", () => {
       chief: { name: "chief", prompt: "test", mode: "primary" },
       founder: { name: "founder", prompt: "test", mode: "primary" },
       thinker: { name: "thinker", prompt: "test", mode: "subagent" },
-      lead: { name: "lead", prompt: "test", mode: "primary" },
+      lead: { name: "lead", prompt: "test", mode: "subagent" },
     })
     const pluginConfig = createPluginConfig({
       chief_agent: {
@@ -283,7 +283,7 @@ describe("Plan agent demote behavior", () => {
       chief: { name: "chief", prompt: "test", mode: "primary" },
       founder: { name: "founder", prompt: "test", mode: "primary" },
       thinker: { name: "thinker", prompt: "test", mode: "subagent" },
-      lead: { name: "lead", prompt: "test", mode: "primary" },
+      lead: { name: "lead", prompt: "test", mode: "subagent" },
     })
     const reorderSpy = spyOn(agentPriorityOrder, "reorderAgentsByPriority") as any
     const pluginConfig = createPluginConfig({
@@ -328,7 +328,7 @@ describe("Plan agent demote behavior", () => {
       chief: { prompt: "test", mode: "primary" },
       founder: { prompt: "test", mode: "primary" },
       thinker: { prompt: "test", mode: "subagent" },
-      lead: { prompt: "test", mode: "primary" },
+      lead: { prompt: "test", mode: "subagent" },
     })
     const pluginConfig = createPluginConfig({
       chief_agent: {
@@ -451,8 +451,16 @@ describe("Plan agent demote behavior", () => {
     expect(agents.plan.prompt).toBe("original plan prompt")
   })
 
-  test("planner should have mode 'primary' like the other core agents", async () => {
+  test("planner should be a subagent so only Chief and Founder are selectable", async () => {
     // given
+    const createBuiltinAgentsMock = agents.createBuiltinAgents as unknown as {
+      mockResolvedValue: (value: Record<string, unknown>) => void
+    }
+    createBuiltinAgentsMock.mockResolvedValue({
+      chief: { name: "chief", prompt: "test", mode: "primary" },
+      founder: { name: "founder", prompt: "test", mode: "primary" },
+      thinker: { name: "thinker", prompt: "test", mode: "subagent" },
+    })
     const pluginConfig = createPluginConfig({
       chief_agent: {
         planner_enabled: true,
@@ -475,10 +483,17 @@ describe("Plan agent demote behavior", () => {
     await handler(config)
 
     // then
-    const agents = config.agent as Record<string, { mode?: string }>
+    const agentConfig = config.agent as Record<string, { mode?: string }>
     const plannerKey = getAgentListDisplayName("planner")
-    expect(agents[plannerKey]).toBeDefined()
-    expect(agents[plannerKey].mode).toBe("primary")
+    const primaryAgents = Object.entries(agentConfig)
+      .filter(([, config]) => config.mode === "primary")
+      .map(([name]) => name)
+    expect(agentConfig[plannerKey]).toBeDefined()
+    expect(agentConfig[plannerKey].mode).toBe("subagent")
+    expect(primaryAgents).toEqual([
+      getAgentListDisplayName("chief"),
+      getAgentListDisplayName("founder"),
+    ])
   })
 })
 
@@ -1356,7 +1371,7 @@ describe("command agent routing coherence", () => {
     }
     createBuiltinAgentsMock.mockResolvedValue({
       chief: { name: "chief", prompt: "test", mode: "primary" },
-      lead: { name: "lead", prompt: "test", mode: "primary" },
+      lead: { name: "lead", prompt: "test", mode: "subagent" },
     })
     ;(builtinCommands.loadBuiltinCommands as unknown as {
       mockReturnValue: (value: Record<string, unknown>) => void
@@ -1410,8 +1425,8 @@ describe("per-agent todowrite/todoread deny when task_system enabled", () => {
     createBuiltinAgentsMock.mockResolvedValue({
       chief: { name: "chief", prompt: "test", mode: "primary" },
       founder: { name: "founder", prompt: "test", mode: "primary" },
-      planner: { name: "planner", prompt: "test", mode: "primary" },
-      lead: { name: "lead", prompt: "test", mode: "primary" },
+      planner: { name: "planner", prompt: "test", mode: "subagent" },
+      lead: { name: "lead", prompt: "test", mode: "subagent" },
       "worker": { name: "worker", prompt: "test", mode: "subagent" },
       thinker: { name: "thinker", prompt: "test", mode: "subagent" },
     })
