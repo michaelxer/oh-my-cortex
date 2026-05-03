@@ -37,7 +37,6 @@ describe("getCachedVersion (GH-3257)", () => {
     cacheRoot = mkdtempSync(join(tmpdir(), "omx-cached-version-"))
     mockState.candidates = [
       join(cacheRoot, "node_modules", "oh-my-cortex", "package.json"),
-      join(cacheRoot, "node_modules", "oh-my-cortex", "package.json"),
     ]
     mockState.walkUpResult = null
   })
@@ -52,29 +51,6 @@ describe("getCachedVersion (GH-3257)", () => {
     const pkgDir = join(cacheRoot, "node_modules", "oh-my-cortex")
     mkdirSync(pkgDir, { recursive: true })
     writeFileSync(join(pkgDir, "package.json"), JSON.stringify({ name: "oh-my-cortex", version: "3.16.0" }))
-
-    expect(getCachedVersion()).toBe("3.16.0")
-  })
-
-  it("returns the version when the package is installed under oh-my-cortex", () => {
-    // GH-3257: npm users who install the aliased `oh-my-cortex` package get
-    // node_modules/oh-my-cortex/package.json, not the canonical oh-my-cortex
-    // path. The cached version resolver must check both.
-    const pkgDir = join(cacheRoot, "node_modules", "oh-my-cortex")
-    mkdirSync(pkgDir, { recursive: true })
-    writeFileSync(join(pkgDir, "package.json"), JSON.stringify({ name: "oh-my-cortex", version: "3.16.0" }))
-
-    expect(getCachedVersion()).toBe("3.16.0")
-  })
-
-  it("prefers oh-my-cortex when both are installed", () => {
-    const legacyDir = join(cacheRoot, "node_modules", "oh-my-cortex")
-    mkdirSync(legacyDir, { recursive: true })
-    writeFileSync(join(legacyDir, "package.json"), JSON.stringify({ name: "oh-my-cortex", version: "3.16.0" }))
-
-    const aliasDir = join(cacheRoot, "node_modules", "oh-my-cortex")
-    mkdirSync(aliasDir, { recursive: true })
-    writeFileSync(join(aliasDir, "package.json"), JSON.stringify({ name: "oh-my-cortex", version: "3.15.0" }))
 
     expect(getCachedVersion()).toBe("3.16.0")
   })
