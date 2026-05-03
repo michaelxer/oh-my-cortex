@@ -16,77 +16,34 @@ function cleanupTestConfigDir(testConfigDir: string): void {
 }
 
 describe("checkForLegacyPluginEntry", () => {
-  it("detects a bare legacy plugin entry", () => {
+  it("does not flag the standalone OMX package as legacy", () => {
     const testConfigDir = createTestConfigDir()
 
     try {
-      // given
       writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2))
 
-      // when
       const result = checkForLegacyPluginEntry(testConfigDir)
 
-      // then
-      expect(result.hasLegacyEntry).toBe(true)
-      expect(result.hasCanonicalEntry).toBe(false)
-      expect(result.legacyEntries).toEqual(["oh-my-cortex"])
+      expect(result.hasLegacyEntry).toBe(false)
+      expect(result.hasCanonicalEntry).toBe(true)
+      expect(result.legacyEntries).toEqual([])
       expect(result.configPath).toBe(join(testConfigDir, "opencode.json"))
     } finally {
       cleanupTestConfigDir(testConfigDir)
     }
   })
 
-  it("detects a version-pinned legacy plugin entry", () => {
+  it("does not flag pinned standalone OMX entries as legacy", () => {
     const testConfigDir = createTestConfigDir()
 
     try {
-      // given
-      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-cortex@3.10.0"] }, null, 2))
+      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-cortex@0.1.0"] }, null, 2))
 
-      // when
       const result = checkForLegacyPluginEntry(testConfigDir)
 
-      // then
-      expect(result.hasLegacyEntry).toBe(true)
-      expect(result.hasCanonicalEntry).toBe(false)
-      expect(result.legacyEntries).toEqual(["oh-my-cortex@3.10.0"])
-    } finally {
-      cleanupTestConfigDir(testConfigDir)
-    }
-  })
-
-  it("does not flag a canonical plugin entry", () => {
-    const testConfigDir = createTestConfigDir()
-
-    try {
-      // given
-      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2))
-
-      // when
-      const result = checkForLegacyPluginEntry(testConfigDir)
-
-      // then
       expect(result.hasLegacyEntry).toBe(false)
       expect(result.hasCanonicalEntry).toBe(true)
       expect(result.legacyEntries).toEqual([])
-    } finally {
-      cleanupTestConfigDir(testConfigDir)
-    }
-  })
-
-  it("detects legacy entries in quoted jsonc config", () => {
-    const testConfigDir = createTestConfigDir()
-
-    try {
-      // given
-      writeFileSync(join(testConfigDir, "opencode.jsonc"), '{\n  "plugin": ["oh-my-cortex"]\n}\n')
-
-      // when
-      const result = checkForLegacyPluginEntry(testConfigDir)
-
-      // then
-      expect(result.hasLegacyEntry).toBe(true)
-      expect(result.legacyEntries).toEqual(["oh-my-cortex"])
     } finally {
       cleanupTestConfigDir(testConfigDir)
     }
@@ -96,10 +53,8 @@ describe("checkForLegacyPluginEntry", () => {
     const testConfigDir = createTestConfigDir()
 
     try {
-      // when
       const result = checkForLegacyPluginEntry(testConfigDir)
 
-      // then
       expect(result.hasLegacyEntry).toBe(false)
       expect(result.hasCanonicalEntry).toBe(false)
       expect(result.legacyEntries).toEqual([])

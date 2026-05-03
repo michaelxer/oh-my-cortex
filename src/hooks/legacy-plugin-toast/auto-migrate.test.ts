@@ -28,144 +28,43 @@ describe("autoMigrateLegacyPluginEntry", () => {
     rmSync(testConfigDir, { recursive: true, force: true })
   })
 
-  describe("#given opencode.json has a bare legacy plugin entry", () => {
-    it("#then replaces oh-my-cortex with oh-my-cortex", async () => {
-      // given
-      writeFileSync(
-        join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2) + "\n",
-      )
+  it("#given no config file exists #then returns migrated false", async () => {
+    const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
 
-      const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
+    const result = autoMigrateLegacyPluginEntry(testConfigDir)
 
-      // when
-      const result = autoMigrateLegacyPluginEntry(testConfigDir)
-
-      // then
-      expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-cortex")
-      expect(result.to).toBe("oh-my-cortex")
-      expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.json"))
-    })
+    expect(result.migrated).toBe(false)
+    expect(result.from).toBeNull()
+    expect(result.to).toBeNull()
+    expect(mockMigrateLegacyPluginEntry).not.toHaveBeenCalled()
   })
 
-  describe("#given opencode.json has a version-pinned legacy entry", () => {
-    it("#then preserves the version suffix", async () => {
-      // given
-      writeFileSync(
-        join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-cortex@3.10.0"] }, null, 2) + "\n",
-      )
+  it("#given only standalone OMX entry exists #then leaves it untouched", async () => {
+    writeFileSync(
+      join(testConfigDir, "opencode.json"),
+      JSON.stringify({ plugin: ["oh-my-cortex@latest"] }, null, 2) + "\n",
+    )
+    const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
 
-      const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
+    const result = autoMigrateLegacyPluginEntry(testConfigDir)
 
-      // when
-      const result = autoMigrateLegacyPluginEntry(testConfigDir)
-
-      // then
-      expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-cortex@3.10.0")
-      expect(result.to).toBe("oh-my-cortex@3.10.0")
-      expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.json"))
-    })
+    expect(result.migrated).toBe(false)
+    expect(result.from).toBeNull()
+    expect(result.to).toBeNull()
+    expect(mockMigrateLegacyPluginEntry).not.toHaveBeenCalled()
   })
 
-  describe("#given both canonical and legacy entries exist", () => {
-    it("#then removes legacy entry and keeps canonical", async () => {
-      // given
-      writeFileSync(
-        join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-cortex", "oh-my-cortex"] }, null, 2) + "\n",
-      )
+  it("#given comments and standalone OMX entry exist #then leaves jsonc untouched", async () => {
+    writeFileSync(
+      join(testConfigDir, "opencode.jsonc"),
+      '{\n  // my config\n  "plugin": ["oh-my-cortex"]\n}\n',
+    )
+    const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
 
-      const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
+    const result = autoMigrateLegacyPluginEntry(testConfigDir)
 
-      // when
-      const result = autoMigrateLegacyPluginEntry(testConfigDir)
-
-      // then
-      expect(result.migrated).toBe(true)
-      expect(result.to).toBe("oh-my-cortex")
-      expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.json"))
-    })
-  })
-
-  describe("#given no config file exists", () => {
-    it("#then returns migrated false", async () => {
-      // given - empty dir
-      const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
-
-      // when
-      const result = autoMigrateLegacyPluginEntry(testConfigDir)
-
-      // then
-      expect(result.migrated).toBe(false)
-      expect(result.from).toBeNull()
-      expect(mockMigrateLegacyPluginEntry).not.toHaveBeenCalled()
-    })
-  })
-
-  describe("#given opencode.jsonc has comments and a legacy entry", () => {
-    it("#then preserves comments and replaces entry", async () => {
-      // given
-      writeFileSync(
-        join(testConfigDir, "opencode.jsonc"),
-        '{\n  // my config\n  "plugin": ["oh-my-cortex"]\n}\n',
-      )
-
-      const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
-
-      // when
-      const result = autoMigrateLegacyPluginEntry(testConfigDir)
-
-      // then
-      expect(result.migrated).toBe(true)
-      expect(result.to).toBe("oh-my-cortex")
-      expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.jsonc"))
-    })
-  })
-
-  describe("#given opencode.jsonc has a nested plugin key before the root plugin array", () => {
-    it("#then migrates only the root plugin entry", async () => {
-      // given
-      writeFileSync(
-        join(testConfigDir, "opencode.jsonc"),
-        `{
-  "nested": {
-    "plugin": ["oh-my-cortex"]
-  },
-  "plugin": ["oh-my-cortex@latest"]
-}
-`,
-      )
-
-      const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
-
-      // when
-      const result = autoMigrateLegacyPluginEntry(testConfigDir)
-
-      // then
-      expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-cortex@latest")
-      expect(result.to).toBe("oh-my-cortex@latest")
-      expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.jsonc"))
-    })
-  })
-
-  describe("#given only canonical entry exists", () => {
-    it("#then returns migrated false and leaves file untouched", async () => {
-      // given
-      const original = JSON.stringify({ plugin: ["oh-my-cortex"] }, null, 2) + "\n"
-      writeFileSync(join(testConfigDir, "opencode.json"), original)
-
-      const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
-
-      // when
-      const result = autoMigrateLegacyPluginEntry(testConfigDir)
-
-      // then
-      expect(result.migrated).toBe(false)
-      expect(mockMigrateLegacyPluginEntry).not.toHaveBeenCalled()
-    })
+    expect(result.migrated).toBe(false)
+    expect(result.configPath).toBe(join(testConfigDir, "opencode.jsonc"))
+    expect(mockMigrateLegacyPluginEntry).not.toHaveBeenCalled()
   })
 })
