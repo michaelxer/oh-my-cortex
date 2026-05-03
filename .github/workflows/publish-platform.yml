@@ -228,7 +228,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 1
       matrix:
         platform: [darwin-arm64, darwin-x64, darwin-x64-baseline, linux-x64, linux-x64-baseline, linux-arm64, linux-x64-musl, linux-x64-musl-baseline, linux-arm64-musl, windows-x64, windows-x64-baseline]
     steps:
@@ -308,9 +308,23 @@ jobs:
         run: |
           cd packages/${{ matrix.platform }}
 
+          publish_args=(--access public --provenance)
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG"
-          else
-            npm publish --access public --provenance
+            publish_args+=(--tag "$DIST_TAG")
           fi
-        timeout-minutes: 15
+
+          for attempt in 1 2 3 4 5; do
+            if npm publish "${publish_args[@]}"; then
+              exit 0
+            fi
+
+            status=$?
+            if [ "$attempt" -eq 5 ]; then
+              exit "$status"
+            fi
+
+            sleep_seconds=$((attempt * 60))
+            echo "npm publish failed for oh-my-cortex-${{ matrix.platform }} (attempt ${attempt}/5); retrying in ${sleep_seconds}s"
+            sleep "$sleep_seconds"
+          done
+        timeout-minutes: 30
