@@ -1,6 +1,6 @@
 {
   "name": "oh-my-cortex",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A cognitive operating system for OpenCode with multi-agent orchestration, challenge protocols, domain lenses, and structured reasoning.",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
