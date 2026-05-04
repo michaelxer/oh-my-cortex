@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
-import { parse, ParseError, printParseErrorCode } from "jsonc-parser"
+import { parse, type ParseError, printParseErrorCode } from "jsonc-parser/lib/esm/main.js"
 
 import { CONFIG_BASENAME, LEGACY_CONFIG_BASENAME } from "./plugin-identity"
 

@@ -109,6 +109,7 @@ describe("runTuiInstaller", () => {
         hasOpencodeGo: false,
         hasVercelAiGateway: false,
       }),
+      spyOn(tuiInstallPrompts, "promptModelCustomization").mockImplementation(async (config) => config),
       spyOn(configManager, "addPluginToOpenCodeConfig").mockResolvedValue({
         success: true,
         configPath: "/tmp/opencode.jsonc",

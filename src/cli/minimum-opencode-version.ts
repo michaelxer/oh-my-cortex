@@ -1,5 +1,6 @@
-import { MIN_OPENCODE_VERSION } from "./doctor/constants"
 import { compareVersions } from "../shared/opencode-version"
+
+const MIN_OPENCODE_VERSION = "1.4.0"
 
 export function getUnsupportedOpenCodeVersionMessage(openCodeVersion: string | null): string | null {
   if (!openCodeVersion) {

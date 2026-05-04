@@ -178,10 +178,10 @@ npm install oh-my-cortex
 ### Interactive Setup
 
 ```bash
-bunx oh-my-cortex install
+npx oh-my-cortex install
 ```
 
-The installer asks what AI providers you have and automatically matches the strongest available model to each agent. Any model works — OMX adapts to what you have.
+The installer asks what AI providers you have and automatically matches the strongest available model to each agent. Any model works — OMX adapts to what you have. Bun users can also run `bunx oh-my-cortex install`.
 
 ### Works Alongside Other Plugins
 
@@ -244,17 +244,13 @@ OMX is opinionated by default, configurable when you need it.
 }
 ```
 
-Run `bunx oh-my-cortex doctor` to verify your setup.
+Restart OpenCode after install and confirm **Chief** and **Founder** are the only selectable OMX agents. The rest of the OMX team should be called automatically as subagents.
 
 ---
 
 ## Diagnostics
 
-```bash
-bunx oh-my-cortex doctor           # Full health check
-bunx oh-my-cortex doctor --status  # Compact dashboard
-bunx oh-my-cortex doctor --verbose # Deep model resolution traces
-```
+The npm CLI is installer-focused. Runtime behavior is handled inside OpenCode after `oh-my-cortex` is registered in your OpenCode config.
 
 ---
 

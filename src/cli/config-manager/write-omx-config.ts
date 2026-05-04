@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs"
 import { basename, dirname, extname, join } from "node:path"
 
-import { parseJsonc } from "../../shared"
+import { parseJsonc } from "../../shared/jsonc-parser"
 import { migrateLegacyConfigFile } from "../../shared/migrate-legacy-config-file"
 import { CONFIG_BASENAME, LEGACY_CONFIG_BASENAME } from "../../shared/plugin-identity"
 import type { ConfigMergeResult, InstallConfig } from "../types"

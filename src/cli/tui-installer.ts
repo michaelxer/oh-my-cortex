@@ -1,6 +1,6 @@
 import * as p from "@clack/prompts"
 import color from "picocolors"
-import { PLUGIN_NAME, PUBLISHED_PACKAGE_NAME } from "../shared"
+import { PLUGIN_NAME, PUBLISHED_PACKAGE_NAME } from "../shared/plugin-identity"
 import type { InstallArgs } from "./types"
 import {
   addPluginToOpenCodeConfig,
@@ -8,7 +8,7 @@ import {
   getOpenCodeVersion,
   isOpenCodeInstalled,
   writeOmxConfig,
-} from "./config-manager"
+} from "./config-manager/install-operations"
 import { generateOmxConfig } from "./config-manager/generate-omx-config"
 import {
   detectedToInitialValues,
@@ -24,7 +24,7 @@ import { promptInstallConfig, promptModelCustomization } from "./tui-install-pro
 
 export async function runTuiInstaller(args: InstallArgs, version: string): Promise<number> {
   if (!process.stdin.isTTY || !process.stdout.isTTY) {
-    console.error("Error: Interactive installer requires a TTY. Use --non-interactive or set environment variables directly.")
+    console.error("Error: Interactive installer requires a TTY. Use --no-tui or set environment variables directly.")
     return 1
   }
 
@@ -109,7 +109,7 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
   if (customizedResult.success && generatedConfig.agents) {
     // Merge customized agent models back into the config file
     const { writeFileSync } = await import("node:fs")
-    const { parseJsonc } = await import("../shared")
+    const { parseJsonc } = await import("../shared/jsonc-parser")
     const { readFileSync } = await import("node:fs")
     try {
       const existingContent = readFileSync(customizedResult.configPath, "utf-8")
@@ -132,8 +132,8 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
 
   // Important notes
   p.log.info(`OMX matches the ${color.bold("strongest available model")} to each agent automatically`)
-  p.log.info(`Add more providers later by re-running ${color.cyan(`bunx ${PUBLISHED_PACKAGE_NAME} install`)}`)
-  p.log.info(`Run ${color.cyan(`bunx ${PUBLISHED_PACKAGE_NAME} doctor`)} to verify your setup`)
+  p.log.info(`Add more providers later by re-running ${color.cyan(`npx ${PUBLISHED_PACKAGE_NAME} install`)}`)
+  p.log.info("Restart opencode and confirm Chief and Founder are the selectable OMX agents")
   p.log.info("Anonymous telemetry is enabled by default. Disable with OMX_SEND_ANONYMOUS_TELEMETRY=0 or OMX_DISABLE_POSTHOG=1.")
 
   p.log.message(`${color.yellow("★")} If you found this helpful, consider starring the repo!`)

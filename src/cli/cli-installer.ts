@@ -1,5 +1,5 @@
 import color from "picocolors"
-import { PLUGIN_NAME, PUBLISHED_PACKAGE_NAME } from "../shared"
+import { PLUGIN_NAME, PUBLISHED_PACKAGE_NAME } from "../shared/plugin-identity"
 import type { InstallArgs } from "./types"
 import {
   addPluginToOpenCodeConfig,
@@ -7,7 +7,7 @@ import {
   getOpenCodeVersion,
   isOpenCodeInstalled,
   writeOmxConfig,
-} from "./config-manager"
+} from "./config-manager/install-operations"
 import { generateOmxConfig } from "./config-manager/generate-omx-config"
 import {
   SYMBOLS,
@@ -174,8 +174,8 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   console.log(`  ${SYMBOLS.info} ${color.bold("Important Notes")}`)
   console.log(`    ${SYMBOLS.bullet} OMX matches the ${color.bold("strongest available model")} to each agent automatically`)
   console.log(`    ${SYMBOLS.bullet} Any AI model works — OMX adapts to what you have`)
-  console.log(`    ${SYMBOLS.bullet} Add more providers later by re-running ${color.cyan(`bunx ${PUBLISHED_PACKAGE_NAME} install`)}`)
-  console.log(`    ${SYMBOLS.bullet} Run ${color.cyan(`bunx ${PUBLISHED_PACKAGE_NAME} doctor`)} to verify your setup`)
+  console.log(`    ${SYMBOLS.bullet} Add more providers later by re-running ${color.cyan(`npx ${PUBLISHED_PACKAGE_NAME} install`)}`)
+  console.log(`    ${SYMBOLS.bullet} Restart opencode and confirm Chief and Founder are selectable`)
   console.log()
 
   printInfo(

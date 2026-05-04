@@ -1,5 +1,5 @@
+import { spawnSync } from "node:child_process"
 import type { OpenCodeBinaryType } from "../../shared/opencode-config-dir-types"
-import { spawnWithWindowsHide } from "../../shared/spawn-with-windows-hide"
 import { initConfigContext } from "./config-context"
 
 const OPENCODE_BINARIES = ["opencode", "opencode-desktop"] as const
@@ -12,14 +12,12 @@ interface OpenCodeBinaryResult {
 async function findOpenCodeBinaryWithVersion(): Promise<OpenCodeBinaryResult | null> {
   for (const binary of OPENCODE_BINARIES) {
     try {
-      const proc = spawnWithWindowsHide([binary, "--version"], {
-        stdout: "pipe",
-        stderr: "pipe",
+      const proc = spawnSync(binary, ["--version"], {
+        encoding: "utf8",
+        windowsHide: true,
       })
-      const output = await new Response(proc.stdout).text()
-      await proc.exited
-      if (proc.exitCode === 0) {
-        const version = output.trim()
+      if (proc.status === 0) {
+        const version = proc.stdout.trim()
         initConfigContext(binary, version)
         return { binary, version }
       }

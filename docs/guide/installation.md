@@ -14,12 +14,10 @@ https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/gu
 Run the interactive installer:
 
 ```bash
-bunx oh-my-cortex install
+npx oh-my-cortex install
 ```
 
-> **Note**: The CLI ships with standalone binaries for all major platforms. No runtime (Bun/Node.js) is required for CLI execution after installation.
->
-> **Supported platforms**: macOS (ARM64, x64), Linux (x64, ARM64, Alpine/musl), Windows (x64)
+> **Note**: The published npm package uses a JavaScript installer CLI. Use `npx oh-my-cortex install` with Node.js, or `bunx oh-my-cortex install` if you prefer Bun.
 
 Follow the prompts to configure your Claude, ChatGPT, and Gemini subscriptions. After installation, authenticate your providers as instructed.
 
@@ -27,7 +25,7 @@ Anonymous telemetry is enabled by default to help improve install and runtime re
 
 After you install it, you can read this [overview guide](./overview.md) to understand more.
 
-The published package and local binary are still `oh-my-cortex`. Inside `opencode.json`, the compatibility layer now prefers the plugin entry `oh-my-cortex`, while legacy `oh-my-cortex` entries still load with a warning. Plugin config loading recognizes both `oh-my-cortex.json[c]` and `oh-my-cortex.json[c]` during the transition. If you see a "Using legacy package name" warning from `bunx oh-my-cortex doctor`, update your `opencode.json` plugin entry from `"oh-my-cortex"` to `"oh-my-cortex"`.
+The published package and local binary are `oh-my-cortex`. Inside `opencode.json`, the plugin entry should be `"oh-my-cortex"`.
 
 ## For LLM Agents
 
@@ -107,19 +105,19 @@ Spawn a subagent to handle installation and report back - to save context.
 Based on user's answers, run the CLI installer with appropriate flags:
 
 ```bash
-bunx oh-my-cortex install --no-tui --claude=<yes|no|max20> --gemini=<yes|no> --copilot=<yes|no> [--openai=<yes|no>] [--opencode-go=<yes|no>] [--opencode-zen=<yes|no>] [--zai-coding-plan=<yes|no>] [--kimi-for-coding=<yes|no>] [--vercel-ai-gateway=<yes|no>] [--skip-auth]
+npx oh-my-cortex install --no-tui --claude=<yes|no|max20> --gemini=<yes|no> --copilot=<yes|no> [--openai=<yes|no>] [--opencode-go=<yes|no>] [--opencode-zen=<yes|no>] [--zai-coding-plan=<yes|no>] [--kimi-for-coding=<yes|no>] [--vercel-ai-gateway=<yes|no>] [--skip-auth]
 ```
 
 **Examples:**
 
-- User has all native subscriptions: `bunx oh-my-cortex install --no-tui --claude=max20 --openai=yes --gemini=yes --copilot=no`
-- User has only Claude: `bunx oh-my-cortex install --no-tui --claude=yes --gemini=no --copilot=no`
-- User has Claude + OpenAI: `bunx oh-my-cortex install --no-tui --claude=yes --openai=yes --gemini=no --copilot=no`
-- User has only GitHub Copilot: `bunx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=yes`
-- User has Z.ai for Researcher: `bunx oh-my-cortex install --no-tui --claude=yes --gemini=no --copilot=no --zai-coding-plan=yes`
-- User has only OpenCode Zen: `bunx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=no --opencode-zen=yes`
-- User has OpenCode Go only: `bunx oh-my-cortex install --no-tui --claude=no --openai=no --gemini=no --copilot=no --opencode-go=yes`
-- User has no subscriptions: `bunx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=no`
+- User has all native subscriptions: `npx oh-my-cortex install --no-tui --claude=max20 --openai=yes --gemini=yes --copilot=no`
+- User has only Claude: `npx oh-my-cortex install --no-tui --claude=yes --gemini=no --copilot=no`
+- User has Claude + OpenAI: `npx oh-my-cortex install --no-tui --claude=yes --openai=yes --gemini=no --copilot=no`
+- User has only GitHub Copilot: `npx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=yes`
+- User has Z.ai for Researcher: `npx oh-my-cortex install --no-tui --claude=yes --gemini=no --copilot=no --zai-coding-plan=yes`
+- User has only OpenCode Zen: `npx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=no --opencode-zen=yes`
+- User has OpenCode Go only: `npx oh-my-cortex install --no-tui --claude=no --openai=no --gemini=no --copilot=no --opencode-go=yes`
+- User has no subscriptions: `npx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=no`
 
 The CLI will:
 
@@ -130,18 +128,12 @@ The CLI will:
 ### Step 3: Verify Setup
 
 ```bash
-opencode --version  # Should be 1.0.150 or higher
+opencode --version  # Should be 1.4.0 or higher
 cat ~/.config/opencode/opencode.json  # Should contain "oh-my-cortex" in plugin array, or the legacy "oh-my-cortex" entry while you are still migrating
 ```
-#### Run Doctor Verification
+#### Verify Agent Availability
 
-After installation, verify everything is working correctly:
-
-```bash
-bunx oh-my-cortex doctor
-```
-
-This checks system, config, tools, and model resolution, including legacy package name warnings and compatibility-fallback diagnostics.
+After installation, restart OpenCode and check that only **Chief** and **Founder** appear as selectable agents. The other OMX roles should be available as subagents called by Chief.
 
 ### Step 4: Configure Authentication
 
@@ -262,7 +254,7 @@ When OpenCode Zen is the best available provider, these are the most relevant so
 Run the installer and select "Yes" for OpenCode Zen:
 
 ```bash
-bunx oh-my-cortex install
+npx oh-my-cortex install
 # Select your subscriptions (Claude, ChatGPT, Gemini, OpenCode Zen, etc.)
 # When prompted: "Do you have access to OpenCode Zen (opencode/ models)?" → Select "Yes"
 ```
@@ -270,7 +262,7 @@ bunx oh-my-cortex install
 Or use non-interactive mode:
 
 ```bash
-bunx oh-my-cortex install --no-tui --claude=no --openai=no --gemini=no --opencode-zen=yes
+npx oh-my-cortex install --no-tui --claude=no --openai=no --gemini=no --opencode-zen=yes
 ```
 
 This provider uses the `opencode/` model catalog. If your OpenCode environment prompts for provider authentication, follow the OpenCode provider flow for `opencode/` models instead of reusing the fallback-provider auth steps above.

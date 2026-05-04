@@ -1,5 +1,5 @@
 import { readFileSync, statSync } from "node:fs"
-import { parseJsonc } from "../../shared"
+import { parseJsonc } from "../../shared/jsonc-parser"
 import { formatErrorWithSuggestion } from "./format-error-with-suggestion"
 
 interface ParseConfigResult {

@@ -268,9 +268,9 @@ Your explicit configuration always wins. If you set a specific model for an agen
 
 Variant and `reasoningEffort` overrides are normalized to model-supported values, so cross-provider overrides degrade gracefully instead of failing hard.
 
-Model capabilities are models.dev-backed, with a refreshable cache and capability diagnostics. Use `bunx oh-my-cortex refresh-model-capabilities` to update the cache, or configure `model_capabilities.auto_refresh_on_start` to refresh at startup.
+Model capabilities are models.dev-backed, with a refreshable cache and capability diagnostics. Configure `model_capabilities.auto_refresh_on_start` to refresh at startup.
 
-To see which models your agents will actually use, run `bunx oh-my-cortex doctor`. This shows effective model resolution based on your current authentication and config.
+The installer preview shows which models your agents will use based on your selected providers. Explicit config still wins at runtime.
 
 ```
 Agent Request → User Override (if configured) → Fallback Chain → System Default

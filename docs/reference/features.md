@@ -194,7 +194,7 @@ When you use a Category, a special agent called **Worker** performs the work.
 
 ### Rename Compatibility
 
-The published package and binary remain `oh-my-cortex`. Inside `opencode.json`, the compatibility layer now prefers the plugin entry `oh-my-cortex`, while legacy `oh-my-cortex` entries still load with a warning. Plugin config files (`oh-my-cortex.json[c]` or legacy `oh-my-cortex.json[c]`) are recognized during the transition. Run `bunx oh-my-cortex doctor` to check for legacy package name warnings.
+The published package and binary are `oh-my-cortex`. Inside `opencode.json`, use the plugin entry `"oh-my-cortex"`. Plugin config files use the `oh-my-cortex.json` or `oh-my-cortex.jsonc` basename.
 
 ### Fallback Models
 
@@ -925,12 +925,6 @@ Model capabilities are models.dev-backed, with a refreshable cache and compatibi
 
 ### Refreshing Capabilities
 
-Update the local cache with the latest model information:
-
-```bash
-bunx oh-my-cortex refresh-model-capabilities
-```
-
 Configure automatic refresh at startup:
 
 ```jsonc
@@ -946,7 +940,7 @@ Configure automatic refresh at startup:
 
 ### Capability Diagnostics
 
-Run `bunx oh-my-cortex doctor` to see capability diagnostics including:
+OMX capability diagnostics include:
 - effective model resolution for agents and categories
 - warnings when configured models rely on compatibility fallback
 - override compatibility details alongside model resolution output
