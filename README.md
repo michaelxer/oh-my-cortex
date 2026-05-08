@@ -22,6 +22,16 @@ Install OMX. Type `deepwork`. Get a team of 11 specialized agents that challenge
 
 ---
 
+## User Documentation
+
+- **Start here:** [Beginner-friendly OMX User Guide](docs/guide/user-guide.md)
+- **Install:** [Installation Guide](docs/guide/installation.md)
+- **Model matching:** [OMX Agent-Model Matching Guide](docs/guide/agent-model-matching.md)
+- **Orchestration:** [Orchestration Guide](docs/guide/orchestration.md)
+- **Advanced reference:** [Complete Features Reference](docs/reference/features.md)
+
+---
+
 ## Why OMX?
 
 Most AI tools agree with everything you say. OMX pushes back.
@@ -151,7 +161,7 @@ No fake certainty. No unsupported claims. When the agent doesn't know, it says s
 
 ## Installation
 
-### Quick Start
+### Agent-Guided Install
 
 Paste this into your OpenCode session:
 
@@ -160,7 +170,35 @@ Install and configure oh-my-cortex by following the instructions here:
 https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
-### Manual Install
+The agent should read the guide, ask your provider questions in chat, then run the non-interactive installer with your answers.
+
+### Terminal Wizard
+
+If you are installing yourself in a real terminal:
+
+```bash
+npx oh-my-cortex@latest install
+```
+
+or:
+
+```bash
+bunx oh-my-cortex@latest install
+```
+
+The installer asks what AI providers you have and automatically matches the strongest available model to each agent. It also writes the OpenCode plugin entry, visible OMX agent/MCP entries, and `oh-my-cortex.json`.
+
+### Updating Existing Installs
+
+Run the installer again, then fully restart OpenCode:
+
+```bash
+npx oh-my-cortex@latest install
+```
+
+The npm package runs the JavaScript installer directly. OMX does **not** use separate Windows, Linux, or macOS platform packages.
+
+### Manual Config
 
 ```bash
 # Add to your OpenCode config
@@ -174,14 +212,6 @@ https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/gu
 cd ~/.config/opencode
 npm install oh-my-cortex
 ```
-
-### Interactive Setup
-
-```bash
-npx oh-my-cortex install
-```
-
-The installer asks what AI providers you have and automatically matches the strongest available model to each agent. Any model works — OMX adapts to what you have. Bun users can also run `bunx oh-my-cortex install`.
 
 ### Works Alongside Other Plugins
 
@@ -213,6 +243,36 @@ The installer configures this based on your subscriptions. No manual model juggl
 ### Parallel Execution
 
 Chief fires multiple agents simultaneously. While Thinker analyzes architecture, Researcher looks up documentation, and Tracker greps the codebase — all in parallel. Like a real team, not a single brain doing everything sequentially.
+
+### Team Mode And Hyperplan
+
+OMX includes the newer teamwork layer:
+
+- **Team Mode** - creates a temporary coordinated team with shared status, tasks, and messages.
+- **Hyperplan** - adversarial planning where agents challenge assumptions before the final plan.
+- **Hyperplan Deepwork** - combine `hpp dw` or `deepwork hyperplan` for planning pressure plus execution intensity.
+
+Enable Team Mode in `oh-my-cortex.jsonc`:
+
+```jsonc
+{
+  "team_mode": {
+    "enabled": true
+  }
+}
+```
+
+Then restart OpenCode and try:
+
+```text
+team mode
+Use a small team to research, plan, review, and implement this change.
+```
+
+```text
+hyperplan
+Challenge this product plan from multiple angles before recommending the best path.
+```
 
 ### Session Continuity
 
@@ -251,6 +311,15 @@ Restart OpenCode after install and confirm **Chief** and **Founder** are the onl
 ## Diagnostics
 
 The npm CLI is installer-focused. Runtime behavior is handled inside OpenCode after `oh-my-cortex` is registered in your OpenCode config.
+
+Useful checks:
+
+```bash
+npx oh-my-cortex@latest install
+opencode agent list
+```
+
+After restart, **Chief** and **Founder** should be the selectable OMX primary agents. Other OMX roles are subagents called by Chief, Founder, Lead, Team Mode, or runtime delegation.
 
 ---
 

@@ -2,28 +2,54 @@
 
 ## For Humans
 
-Paste this into your llm agent session:
+### Agent-guided install
+
+Paste this into your LLM agent session. The agent will ask setup questions in chat, then run the installer with `--no-tui` so the terminal command itself does not open a menu:
 
 ```
 Install and configure oh-my-cortex by following the instructions here:
 https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
-**Alternative, Not recommended, do this by yourself**
-
-Run the interactive installer:
+This URL is instructions for the agent, not the installer itself. LLM agents should fetch/read the guide with `curl.exe` on Windows PowerShell or `curl` in POSIX shells:
 
 ```bash
-npx oh-my-cortex install
+curl -fsSL https://raw.githubusercontent.com/michaelxer/oh-my-cortex/refs/heads/dev/docs/guide/installation.md
 ```
 
-> **Note**: The published npm package uses a JavaScript installer CLI. Use `npx oh-my-cortex install` with Node.js, or `bunx oh-my-cortex install` if you prefer Bun.
+If you are installing directly as a human, skip the `curl` step and run the terminal wizard below.
 
-Follow the prompts to configure your Claude, ChatGPT, and Gemini subscriptions. After installation, authenticate your providers as instructed.
+### Terminal wizard
+
+Run this in a real terminal such as PowerShell, Windows Terminal, Terminal, iTerm, or your Linux shell. Do not run the interactive wizard inside an OpenCode agent/chat message, because agents usually cannot display terminal menus.
+
+```bash
+npx oh-my-cortex@latest install
+```
+
+or:
+
+```bash
+bunx oh-my-cortex@latest install
+```
+
+### Updating existing installs
+
+Already installed? Run the same command again, then fully restart OpenCode:
+
+```bash
+npx oh-my-cortex@latest install
+```
+
+The installer preserves provider settings, normalizes plugin entries, rewrites visible OMX agent/MCP entries, and refreshes `oh-my-cortex.json`.
+
+The npm package runs the JavaScript installer directly. OMX does **not** require or publish separate Windows, Linux, macOS, ARM, or x64 platform packages.
+
+Follow the prompts to configure your Claude, ChatGPT, Gemini, Copilot, OpenCode Zen, Z.ai, Kimi, OpenCode Go, and Vercel AI Gateway access. After installation, authenticate providers as instructed.
 
 Anonymous telemetry is enabled by default to help improve install and runtime reliability. It uses PostHog with a hashed installation identifier and can be disabled with `OMX_SEND_ANONYMOUS_TELEMETRY=0` or `OMX_DISABLE_POSTHOG=1`. See [Privacy Policy](../legal/privacy-policy.md) and [Terms of Service](../legal/terms-of-service.md).
 
-After you install it, you can read this [overview guide](./overview.md) to understand more.
+After you install it, read the [OMX User Guide](./user-guide.md) and [overview guide](./overview.md) to understand more.
 
 The published package and local binary are `oh-my-cortex`. Inside `opencode.json`, the plugin entry should be `"oh-my-cortex"`.
 
@@ -105,19 +131,19 @@ Spawn a subagent to handle installation and report back - to save context.
 Based on user's answers, run the CLI installer with appropriate flags:
 
 ```bash
-npx oh-my-cortex install --no-tui --claude=<yes|no|max20> --gemini=<yes|no> --copilot=<yes|no> [--openai=<yes|no>] [--opencode-go=<yes|no>] [--opencode-zen=<yes|no>] [--zai-coding-plan=<yes|no>] [--kimi-for-coding=<yes|no>] [--vercel-ai-gateway=<yes|no>] [--skip-auth]
+npx oh-my-cortex@latest install --no-tui --claude=<yes|no|max20> --gemini=<yes|no> --copilot=<yes|no> [--openai=<yes|no>] [--opencode-go=<yes|no>] [--opencode-zen=<yes|no>] [--zai-coding-plan=<yes|no>] [--kimi-for-coding=<yes|no>] [--vercel-ai-gateway=<yes|no>] [--skip-auth]
 ```
 
 **Examples:**
 
-- User has all native subscriptions: `npx oh-my-cortex install --no-tui --claude=max20 --openai=yes --gemini=yes --copilot=no`
-- User has only Claude: `npx oh-my-cortex install --no-tui --claude=yes --gemini=no --copilot=no`
-- User has Claude + OpenAI: `npx oh-my-cortex install --no-tui --claude=yes --openai=yes --gemini=no --copilot=no`
-- User has only GitHub Copilot: `npx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=yes`
-- User has Z.ai for Researcher: `npx oh-my-cortex install --no-tui --claude=yes --gemini=no --copilot=no --zai-coding-plan=yes`
-- User has only OpenCode Zen: `npx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=no --opencode-zen=yes`
-- User has OpenCode Go only: `npx oh-my-cortex install --no-tui --claude=no --openai=no --gemini=no --copilot=no --opencode-go=yes`
-- User has no subscriptions: `npx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=no`
+- User has all native subscriptions: `npx oh-my-cortex@latest install --no-tui --claude=max20 --openai=yes --gemini=yes --copilot=no`
+- User has only Claude: `npx oh-my-cortex@latest install --no-tui --claude=yes --gemini=no --copilot=no`
+- User has Claude + OpenAI: `npx oh-my-cortex@latest install --no-tui --claude=yes --openai=yes --gemini=no --copilot=no`
+- User has only GitHub Copilot: `npx oh-my-cortex@latest install --no-tui --claude=no --gemini=no --copilot=yes`
+- User has Z.ai for Researcher: `npx oh-my-cortex@latest install --no-tui --claude=yes --gemini=no --copilot=no --zai-coding-plan=yes`
+- User has only OpenCode Zen: `npx oh-my-cortex@latest install --no-tui --claude=no --gemini=no --copilot=no --opencode-zen=yes`
+- User has OpenCode Go only: `npx oh-my-cortex@latest install --no-tui --claude=no --openai=no --gemini=no --copilot=no --opencode-go=yes`
+- User has no subscriptions: `npx oh-my-cortex@latest install --no-tui --claude=no --gemini=no --copilot=no`
 
 The CLI will:
 
@@ -254,15 +280,15 @@ When OpenCode Zen is the best available provider, these are the most relevant so
 Run the installer and select "Yes" for OpenCode Zen:
 
 ```bash
-npx oh-my-cortex install
+npx oh-my-cortex@latest install
 # Select your subscriptions (Claude, ChatGPT, Gemini, OpenCode Zen, etc.)
-# When prompted: "Do you have access to OpenCode Zen (opencode/ models)?" → Select "Yes"
+# When prompted: "Do you have access to OpenCode Zen (opencode/ models)?" -> Select "Yes"
 ```
 
 Or use non-interactive mode:
 
 ```bash
-npx oh-my-cortex install --no-tui --claude=no --openai=no --gemini=no --opencode-zen=yes
+npx oh-my-cortex@latest install --no-tui --claude=no --openai=no --gemini=no --opencode-zen=yes
 ```
 
 This provider uses the `opencode/` model catalog. If your OpenCode environment prompts for provider authentication, follow the OpenCode provider flow for `opencode/` models instead of reusing the fallback-provider auth steps above.
@@ -425,9 +451,9 @@ The plugin works perfectly by default. Do not change settings or turn off featur
 
 Read this document again, think about you have done everything correctly.
 
-#### Say 'Congratulations! 🎉' to the user
+#### Say 'Congratulations!' to the user
 
-Say to user: Congratulations! 🎉 You have successfully set up OhMyOpenAgent! Type `opencode` in your terminal to start using it.
+Say to user: Congratulations! You have successfully set up Oh My Cortex! Type `opencode` in your terminal to start using it.
 
 #### Free advertising
 
