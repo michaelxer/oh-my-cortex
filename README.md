@@ -16,7 +16,7 @@
 
 </div>
 
-oh-my-cortex (OMX) is a multi-agent plugin that turns OpenCode into a thinking partner — not just for code, but for decisions, strategy, communication, risk, and everything in between.
+oh-my-cortex (OMX) is a multi-agent plugin that turns OpenCode into a thinking partner: not just for code, but for discussion, critical thinking, analysis, planning, business strategy, communication, risk, and everything in between.
 
 Install OMX. Type `deepwork`. Get a team of 11 specialized agents that challenge your assumptions, adapt to sensitive domains, structure your decisions, and execute with precision.
 
@@ -29,6 +29,34 @@ Install OMX. Type `deepwork`. Get a team of 11 specialized agents that challenge
 - **Model matching:** [OMX Agent-Model Matching Guide](docs/guide/agent-model-matching.md)
 - **Orchestration:** [Orchestration Guide](docs/guide/orchestration.md)
 - **Advanced reference:** [Complete Features Reference](docs/reference/features.md)
+
+---
+
+## Feature Snapshot
+
+OMX is built for people who want an AI assistant that can think, discuss, analyze, plan, remember, and finish work instead of only answering one prompt at a time. Coding is supported, but it is not the whole point: OMX is meant for business decisions, strategy, research, writing, risk review, personal planning, operations, and other fields where ordinary coding agents usually feel too narrow.
+
+| Feature | Short Explanation |
+|---|---|
+| **Chief and Founder** | Two primary agents: Chief leads and delegates, Founder handles autonomous deep work. |
+| **Specialist subagents** | Thinker, Researcher, Tracker, Planner, Reviewer, Critic, Lead, Worker, and Spotter support the main agents. |
+| **Deepwork** | Type `deepwork` or `dw` when you want OMX to understand the task, reason deeply, act, and verify. |
+| **Cortex Loop** | `/cortex-loop` and `/dw-loop` keep a task moving until it is done or cancelled. |
+| **Team Mode** | Creates a temporary team of agents for research, planning, review, and execution. |
+| **Hyperplan** | Uses adversarial planning so weak assumptions get challenged before you trust the plan. |
+| **Challenge Engine** | Four levels of pushback, from gentle nudge to red-team review. |
+| **Domain Lenses** | Health, legal, financial, security, and political caution modes. |
+| **Decision Framework** | `/decide` compares options, tradeoffs, risks, and recommendations. |
+| **Cortex Memory** | `/ledger`, file-operation traces, and `cortex_search` help future sessions resume safely. |
+| **Project Memory Init** | `/cortex-init` creates beginner-friendly project memory docs when they are missing. |
+| **Workflow Commands** | `/brainstorm`, `/cortex-plan`, `/cortex-workflow`, and `/mindmodel` turn vague ideas into durable plans and project rules. |
+| **Background Agents** | Lets research, implementation, and review happen in parallel. |
+| **Code Navigation Tools** | LSP, AST-Grep, grep, glob, and visual inspection help the agent avoid guessing. |
+| **Skills and MCPs** | Reusable workflows and extra tools for docs, browser work, git, review, frontend, and more. |
+| **Model Fallbacks** | Agents can move through configured backup models if a provider fails. |
+| **Installer** | `npx oh-my-cortex@latest install` sets up OpenCode, providers, agents, and config backups. |
+
+For a plain-language walkthrough with examples, read the [User Guide](docs/guide/user-guide.md).
 
 ---
 
@@ -77,6 +105,7 @@ Activate manually with `/lens security` or let OMX detect it from context.
 
 OMX handles what other coding tools can't:
 
+- **Discussion and critical thinking** - slow down, question assumptions, find better angles, and pressure-test ideas
 - **Business strategy** — competitive analysis, M&A evaluation, go-to-market planning
 - **Sensitive communication** — draft messages with audience awareness, leverage preservation, screenshot-proofing
 - **Risk assessment** — threat triage, crisis planning, incident response
@@ -330,6 +359,8 @@ After restart, **Chief** and **Founder** should be the selectable OMX primary ag
 OMX is built on the foundation of [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) by [@code-yeongyu](https://github.com/code-yeongyu) — the original multi-agent orchestration architecture that makes this possible. Licensed under SUL-1.0.
 
 Also from the same ecosystem: [oh-my-crew](https://github.com/michaelxer/oh-my-crew) — a role-based agent fork with content-filter-safe prompts and Session Guardian.
+
+OMX's recent continuity-memory and workflow ideas were also inspired by [micode](https://github.com/vtemian/micode) by [@vtemian](https://github.com/vtemian), especially the ideas of ledgers, artifact search, project memory, brainstorm/plan/implement flow, and mindmodel-style project guidance. OMX adapts those ideas into its own priority: broad discussion, critical thinking, analysis, planning, business/general-domain reasoning, and coding as one supported use case rather than the whole identity.
 
 ---
 
