@@ -81,6 +81,13 @@
           "handoff",
           "challenge",
           "checkpoint",
+          "ledger",
+          "cortex-search",
+          "cortex-init",
+          "brainstorm",
+          "cortex-plan",
+          "cortex-workflow",
+          "mindmodel",
           "lens",
           "decide",
           "hyperplan"
