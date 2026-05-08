@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, mock } from "bun:test";
+import { join } from "node:path";
 
 describe("findProjectRoot", () => {
   afterEach(async () => {
@@ -9,9 +10,9 @@ describe("findProjectRoot", () => {
   it("memoizes repeated lookups for the same start path and resets on cache clear", async () => {
     // given
     const actualFileSystem = await import("node:fs");
-    const projectRoot = "/workspace/project";
-    const startPath = `${projectRoot}/src/file.ts`;
-    const packageJsonPath = `${projectRoot}/package.json`;
+    const projectRoot = join(process.cwd(), "workspace", "project");
+    const startPath = join(projectRoot, "src", "file.ts");
+    const packageJsonPath = join(projectRoot, "package.json");
 
     const existsSyncSpy = mock((path: string) => path === packageJsonPath);
     const statSyncSpy = mock(() => ({ isDirectory: () => false }));

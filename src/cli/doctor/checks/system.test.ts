@@ -115,8 +115,8 @@ describe("system check", () => {
     })
   })
 
-  describe("#given OpenCode plugin entry uses legacy package name", () => {
-    it("adds a warning for a bare legacy entry", async () => {
+  describe("#given legacy and canonical package names are identical", () => {
+    it("does not warn for the bare canonical entry", async () => {
       //#given
       mockGetPluginInfo.mockReturnValue({
         registered: true,
@@ -131,14 +131,10 @@ describe("system check", () => {
       const result = await checkSystem(createSystemDeps())
 
       //#then
-      const legacyEntryIssue = result.issues.find((issue) => issue.title === "Using legacy package name")
-      expect(legacyEntryIssue?.severity).toBe("warning")
-      expect(legacyEntryIssue?.fix).toBe(
-        'Update your opencode.json plugin entry: "oh-my-cortex" → "oh-my-cortex"'
-      )
+      expect(result.issues.some((issue) => issue.title === "Using legacy package name")).toBe(false)
     })
 
-    it("adds a warning for a version-pinned legacy entry", async () => {
+    it("does not warn for a version-pinned canonical entry", async () => {
       //#given
       mockGetPluginInfo.mockReturnValue({
         registered: true,
@@ -153,11 +149,7 @@ describe("system check", () => {
       const result = await checkSystem(createSystemDeps())
 
       //#then
-      const legacyEntryIssue = result.issues.find((issue) => issue.title === "Using legacy package name")
-      expect(legacyEntryIssue?.severity).toBe("warning")
-      expect(legacyEntryIssue?.fix).toBe(
-        'Update your opencode.json plugin entry: "oh-my-cortex@3.0.0" → "oh-my-cortex@3.0.0"'
-      )
+      expect(result.issues.some((issue) => issue.title === "Using legacy package name")).toBe(false)
     })
 
     it("does not warn for a canonical plugin entry", async () => {

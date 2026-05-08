@@ -4,7 +4,7 @@ import { afterEach, describe, expect, test } from "bun:test"
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
-import { createCiTestPlan } from "./run-ci-tests.ts"
+import { createBunTestCommandBatches, createCiTestPlan } from "./run-ci-tests.ts"
 
 const tempRoots: string[] = []
 
@@ -21,6 +21,32 @@ afterEach(() => {
       rmSync(tempRoot, { force: true, recursive: true })
     }
   }
+})
+
+describe("createBunTestCommandBatches", () => {
+  test("splits long shared test commands into multiple batches", () => {
+    const batches = createBunTestCommandBatches(
+      ["src/alpha.test.ts", "src/beta.test.ts", "src/gamma.test.ts"],
+      35,
+    )
+
+    expect(batches).toEqual([
+      ["bun", "test", "src/alpha.test.ts"],
+      ["bun", "test", "src/beta.test.ts"],
+      ["bun", "test", "src/gamma.test.ts"],
+    ])
+  })
+
+  test("keeps short shared test commands in one batch", () => {
+    const batches = createBunTestCommandBatches(
+      ["src/alpha.test.ts", "src/beta.test.ts"],
+      100,
+    )
+
+    expect(batches).toEqual([
+      ["bun", "test", "src/alpha.test.ts", "src/beta.test.ts"],
+    ])
+  })
 })
 
 describe("createCiTestPlan", () => {

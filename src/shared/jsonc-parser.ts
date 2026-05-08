@@ -95,7 +95,9 @@ export function detectPluginConfigFile(dir: string): DetectPluginConfigResult {
   }
 
   const canonicalResult = detectConfigFile(join(dir, CONFIG_BASENAME))
-  const legacyResult = detectConfigFile(join(dir, LEGACY_CONFIG_BASENAME))
+  const legacyResult = LEGACY_CONFIG_BASENAME === CONFIG_BASENAME
+    ? ({ format: "none", path: join(dir, `${LEGACY_CONFIG_BASENAME}.json`) } as const)
+    : detectConfigFile(join(dir, LEGACY_CONFIG_BASENAME))
 
   let detectionResult: DetectPluginConfigResult
 

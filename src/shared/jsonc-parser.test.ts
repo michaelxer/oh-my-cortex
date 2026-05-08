@@ -331,6 +331,7 @@ describe("detectPluginConfigFile", () => {
   const testDir = join(__dirname, ".test-detect-plugin")
 
   beforeEach(() => {
+    rmSync(testDir, { recursive: true, force: true })
     clearPluginConfigFileDetectionCache()
   })
 
@@ -350,7 +351,7 @@ describe("detectPluginConfigFile", () => {
     // then
     expect(result.format).toBe("jsonc")
     expect(result.path).toBe(join(testDir, "oh-my-cortex.jsonc"))
-    expect(result.legacyPath).toBe(join(testDir, "oh-my-cortex.jsonc"))
+    expect(result.legacyPath).toBeUndefined()
 
     rmSync(testDir, { recursive: true, force: true })
   })
@@ -383,7 +384,7 @@ describe("detectPluginConfigFile", () => {
     // then
     expect(result.format).toBe("json")
     expect(result.path).toBe(join(testDir, "oh-my-cortex.json"))
-    expect(result.legacyPath).toBe(join(testDir, "oh-my-cortex.json"))
+    expect(result.legacyPath).toBeUndefined()
 
     rmSync(testDir, { recursive: true, force: true })
   })
@@ -415,7 +416,7 @@ describe("detectPluginConfigFile", () => {
     // then
     expect(result.format).toBe("jsonc")
     expect(result.path).toBe(join(testDir, "oh-my-cortex.jsonc"))
-    expect(result.legacyPath).toBe(join(testDir, "oh-my-cortex.json"))
+    expect(result.legacyPath).toBeUndefined()
 
     rmSync(testDir, { recursive: true, force: true })
   })

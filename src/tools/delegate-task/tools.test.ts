@@ -755,8 +755,8 @@ describe("chief-task", () => {
       expect(result).toBeNull()
     })
 
-    test("blocks requiresModel when availability is known and missing the required model", () => {
-      // given - artistry has requiresModel: gemini-3.1-pro
+    test("uses artistry category even when Gemini is missing", () => {
+      // given - artistry no longer has a hard requiresModel gate
       const categoryName = "artistry"
       const availableModels = new Set<string>(["anthropic/claude-opus-4-7"])
 
@@ -767,11 +767,12 @@ describe("chief-task", () => {
       })
 
       // then
-      expect(result).toBeNull()
+      expect(result).not.toBeNull()
+      expect(result!.model).toBe("google/gemini-3.1-pro")
     })
 
-    test("blocks requiresModel when availability is empty", () => {
-      // given - artistry has requiresModel: gemini-3.1-pro
+    test("uses artistry category when availability is empty", () => {
+      // given - empty availability should allow normal fallback resolution
       const categoryName = "artistry"
       const availableModels = new Set<string>()
 
@@ -782,7 +783,8 @@ describe("chief-task", () => {
       })
 
       // then
-      expect(result).toBeNull()
+      expect(result).not.toBeNull()
+      expect(result!.model).toBe("google/gemini-3.1-pro")
     })
 
     test("bypasses requiresModel when explicit user config provided", () => {

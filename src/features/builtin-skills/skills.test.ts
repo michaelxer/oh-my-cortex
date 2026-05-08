@@ -100,7 +100,7 @@ describe("createBuiltinSkills", () => {
 		}
 	})
 
-	test("returns exactly 5 skills regardless of provider", () => {
+	test("returns exactly 13 skills regardless of provider", () => {
 		// given
 
 		// when
@@ -109,9 +109,9 @@ describe("createBuiltinSkills", () => {
 		const devBrowserSkills = createBuiltinSkills({ browserProvider: "dev-browser" })
 
 		// then
-		expect(defaultSkills).toHaveLength(5)
-		expect(agentBrowserSkills).toHaveLength(5)
-		expect(devBrowserSkills).toHaveLength(5)
+		expect(defaultSkills).toHaveLength(13)
+		expect(agentBrowserSkills).toHaveLength(13)
+		expect(devBrowserSkills).toHaveLength(13)
 	})
 
 	test("should exclude playwright when it is in disabledSkills", () => {
@@ -128,7 +128,7 @@ describe("createBuiltinSkills", () => {
 		expect(skills.map((s) => s.name)).not.toContain("dev-browser")
 		expect(skills.map((s) => s.name)).toContain("review-work")
 		expect(skills.map((s) => s.name)).toContain("ai-slop-remover")
-		expect(skills.length).toBe(4)
+		expect(skills.length).toBe(12)
 	})
 
 	test("should exclude multiple skills when they are in disabledSkills", () => {
@@ -145,12 +145,28 @@ describe("createBuiltinSkills", () => {
 		expect(skills.map((s) => s.name)).not.toContain("dev-browser")
 		expect(skills.map((s) => s.name)).toContain("review-work")
 		expect(skills.map((s) => s.name)).toContain("ai-slop-remover")
-		expect(skills.length).toBe(3)
+		expect(skills.length).toBe(11)
 	})
 
 	test("should return an empty array when all skills are disabled", () => {
 		// #given
-		const options = { disabledSkills: new Set(["playwright", "frontend-ui-ux", "git-master", "review-work", "ai-slop-remover"]) }
+		const options = {
+			disabledSkills: new Set([
+				"playwright",
+				"frontend-ui-ux",
+				"git-master",
+				"review-work",
+				"ai-slop-remover",
+				"session-guardian",
+				"reasoning-toolkit",
+				"sensitive-drafting",
+				"domain-health",
+				"domain-legal",
+				"domain-financial",
+				"domain-security",
+				"domain-political",
+			]),
+		}
 
 		// #when
 		const skills = createBuiltinSkills(options)
@@ -167,7 +183,7 @@ describe("createBuiltinSkills", () => {
 		const skills = createBuiltinSkills(options)
 
 		// #then
-		expect(skills.length).toBe(5)
+		expect(skills.length).toBe(13)
 	})
 
 	test("review-work skill has correct structure", () => {

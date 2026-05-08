@@ -11,6 +11,7 @@ type CiTestPlan = {
 const TEST_ROOTS = ["bin", "script", "src"] as const
 const MODULE_MOCK_PATTERN = "mock.module("
 const ALWAYS_ISOLATED_TEST_FILES = ["src/openclaw/__tests__/reply-listener-discord.test.ts"] as const
+const DEFAULT_MAX_COMMAND_LENGTH = process.platform === "win32" ? 7_000 : 100_000
 
 async function collectTestFiles(rootDirectory: string): Promise<string[]> {
   const testFiles: string[] = []
@@ -86,30 +87,64 @@ async function runBunTest(testFiles: string[], label: string): Promise<void> {
     return
   }
 
-  console.log(`::group::${label}`)
-  
-  // For directory paths, exclude _auc* directories which are separate isolated targets
-  const args = testFiles.map(tf => {
+  const commandBatches = createBunTestCommandBatches(testFiles)
+
+  for (let index = 0; index < commandBatches.length; index += 1) {
+    const command = commandBatches[index]!
+    const batchLabel = commandBatches.length === 1 ? label : `${label} (${index + 1}/${commandBatches.length})`
+    console.log(`::group::${batchLabel}`)
+
+    const spawnedProcess = Bun.spawn(command, {
+      cwd: process.cwd(),
+      stdin: "inherit",
+      stdout: "inherit",
+      stderr: "inherit",
+    })
+    const exitCode = await spawnedProcess.exited
+    console.log("::endgroup::")
+
+    if (exitCode !== 0) {
+      throw new Error(`Command failed: ${command.join(" ")}`)
+    }
+  }
+}
+
+function expandBunTestArgs(testFiles: string[]): string[] {
+  // For directory paths, exclude _auc* directories which are separate isolated targets.
+  return testFiles.map(tf => {
     if (tf.includes('/') && !tf.endsWith('.test.ts')) {
-      // It's a directory path, add negation glob
       return [tf, '!_auc-*/**/*.test.ts']
     }
     return tf
   }).flat()
-  
-  const command = ["bun", "test", ...args]
-  const spawnedProcess = Bun.spawn(command, {
-    cwd: process.cwd(),
-    stdin: "inherit",
-    stdout: "inherit",
-    stderr: "inherit",
-  })
-  const exitCode = await spawnedProcess.exited
-  console.log("::endgroup::")
+}
 
-  if (exitCode !== 0) {
-    throw new Error(`Command failed: ${command.join(" ")}`)
+function estimateCommandLength(command: string[]): number {
+  return command.reduce((total, arg) => total + arg.length + 1, 0)
+}
+
+export function createBunTestCommandBatches(
+  testFiles: string[],
+  maxCommandLength: number = Number(process.env.OMX_CI_TEST_MAX_COMMAND_LENGTH ?? DEFAULT_MAX_COMMAND_LENGTH),
+): string[][] {
+  const batches: string[][] = []
+  let currentArgs: string[] = []
+
+  for (const arg of expandBunTestArgs(testFiles)) {
+    const candidateCommand = ["bun", "test", ...currentArgs, arg]
+    if (currentArgs.length > 0 && estimateCommandLength(candidateCommand) > maxCommandLength) {
+      batches.push(["bun", "test", ...currentArgs])
+      currentArgs = [arg]
+    } else {
+      currentArgs.push(arg)
+    }
   }
+
+  if (currentArgs.length > 0) {
+    batches.push(["bun", "test", ...currentArgs])
+  }
+
+  return batches
 }
 
 async function main(): Promise<void> {

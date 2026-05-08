@@ -529,6 +529,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     expect(promptAsyncCalls[0]?.body.tools).toEqual({
       task: false,
       call_cortex_agent: false,
+      call_omo_agent: false,
       question: false,
       write: false,
       edit: false,
@@ -599,6 +600,7 @@ describe("executeSyncContinuation - toast cleanup error paths", () => {
     expect(promptAsyncCalls[0]?.body.tools).toEqual({
       task: false,
       call_cortex_agent: false,
+      call_omo_agent: false,
       question: false,
       write: false,
       edit: false,

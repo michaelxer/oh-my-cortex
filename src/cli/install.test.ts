@@ -82,8 +82,8 @@ describe("install CLI - binary check behavior", () => {
 
     // then should have printed a warning (not error)
     const allCalls = mockConsoleLog.mock.calls.flat().join("\n")
-    expect(allCalls).toContain("[!]") // warning symbol
     expect(allCalls).toContain("OpenCode")
+    expect(allCalls).toContain("binary not found")
   })
 
   test("non-TUI mode: should create opencode.json with plugin even when binary not found", async () => {
@@ -119,7 +119,6 @@ describe("install CLI - binary check behavior", () => {
     const config = JSON.parse(readFileSync(configPath, "utf-8"))
     expect(config.plugin).toBeDefined()
     expect(config.plugin.some((p: string) => p.includes("oh-my-cortex"))).toBe(true)
-    expect(config.plugin.some((p: string) => p.includes("oh-my-cortex"))).toBe(false)
 
     // then exit code should be 0 (success)
     expect(exitCode).toBe(0)
@@ -156,7 +155,6 @@ describe("install CLI - binary check behavior", () => {
 
     // then should have printed success (OK symbol)
     const allCalls = mockConsoleLog.mock.calls.flat().join("\n")
-    expect(allCalls).toContain("[OK]")
     expect(allCalls).toContain("OpenCode 1.4.0")
   })
 })

@@ -117,7 +117,7 @@ export async function checkSystem(deps: SystemCheckDeps = defaultDeps): Promise<
     })
   }
 
-  if (pluginInfo.entry && !pluginInfo.isLocalDev) {
+  if (pluginInfo.entry && !pluginInfo.isLocalDev && LEGACY_PLUGIN_NAME !== PLUGIN_NAME) {
     const isLegacyName = pluginInfo.entry === LEGACY_PLUGIN_NAME
       || pluginInfo.entry.startsWith(`${LEGACY_PLUGIN_NAME}@`)
 

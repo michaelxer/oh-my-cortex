@@ -8,6 +8,7 @@ const originalHomedir = os.homedir.bind(os)
 let mockedHomeDir = ""
 let moduleImportCounter = 0
 let resolvePromptAppend: typeof import("./resolve-file-uri").resolvePromptAppend
+let canCreateSymlink = true
 
 mock.module("node:os", () => ({
   ...os,
@@ -38,7 +39,14 @@ describe("resolvePromptAppend", () => {
     writeFileSync(spacedFilePath, "encoded-content", "utf8")
     writeFileSync(homeFilePath, "home-content", "utf8")
     writeFileSync(escapedFilePath, "escaped-content", "utf8")
-    symlinkSync(absoluteFilePath, linkedAbsolutePath)
+    try {
+      symlinkSync(absoluteFilePath, linkedAbsolutePath)
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "EPERM") {
+        throw error
+      }
+      canCreateSymlink = false
+    }
 
     moduleImportCounter += 1
     ;({ resolvePromptAppend } = await import(`./resolve-file-uri?test=${moduleImportCounter}`))
@@ -151,6 +159,10 @@ describe("resolvePromptAppend", () => {
   })
 
   test("rejects symlink file URI that escapes configDir", () => {
+    if (!canCreateSymlink) {
+      return
+    }
+
     //#given
     const input = "file://./linked-absolute.txt"
 
