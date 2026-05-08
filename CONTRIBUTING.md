@@ -121,7 +121,6 @@ oh-my-cortex/
 │   ├── cli/             # CLI: install, run, doctor, mcp-oauth (Commander.js)
 │   ├── plugin/          # 10 OpenCode hook handlers + 52 hook composition
 │   └── plugin-handlers/ # 6-phase config loading pipeline
-├── packages/            # Monorepo: comment-checker, opencode-sdk
 └── dist/                # Build output (ESM + .d.ts)
 ```
 

@@ -4,7 +4,7 @@
 
 ## OVERVIEW
 
-OpenCode plugin (npm: `oh-my-cortex`, dual-published as `oh-my-cortex` during transition) extending Claude Code with 11 agents, 52 lifecycle hooks, 26 tools, 3-tier MCP system (built-in + .mcp.json + skill-embedded), Hashline LINE#ID edit tool, IntentGate classifier, and Claude Code compatibility. 1766 TypeScript source files, 377k LOC, 104 barrel index.ts files. Entry: `src/index.ts` → 5-step init (loadConfig → createManagers → createTools → createHooks → createPluginInterface).
+OpenCode plugin (npm: `oh-my-cortex`) extending Claude Code with 11 agents, 52 lifecycle hooks, 26 tools, 3-tier MCP system (built-in + .mcp.json + skill-embedded), Hashline LINE#ID edit tool, IntentGate classifier, and Claude Code compatibility. 1766 TypeScript source files, 377k LOC, 104 barrel index.ts files. Entry: `src/index.ts` → 5-step init (loadConfig → createManagers → createTools → createHooks → createPluginInterface).
 
 ## STRUCTURE
 
@@ -24,7 +24,6 @@ oh-my-cortex/
 │   ├── plugin/               # 10 OpenCode hook handlers + 52 hook composition
 │   ├── plugin-handlers/      # 6-phase config loading pipeline
 │   └── openclaw/             # Bidirectional external integration (Discord/Telegram/webhook/command)
-├── packages/                 # 11 platform-specific compiled binaries (darwin/linux/windows, AVX2 + baseline variants)
 ├── script/                   # Build/publish automation (singular, not scripts/)
 ├── .cortex/                # AI agent workspace (rules, plans, tasks, notepads)
 └── .local-ignore/            # Dev-only test fixtures + PR worktrees
@@ -112,7 +111,7 @@ Fields: agents (14 overridable, 21 fields each), categories (8 built-in + custom
 - **Module structure**: index.ts barrel exports, no catch-all files (utils.ts, helpers.ts banned), 200 LOC soft limit
 - **Imports**: relative within module, barrel imports across modules (`import { log } from "./shared"`)
 - **No path aliases**: no `@/` -- relative imports only
-- **Dual package**: `oh-my-cortex` + `oh-my-cortex` published simultaneously (transition period)
+- **Single package**: OMX publishes only the root `oh-my-cortex` package. Do not add platform-specific npm packages or optional package dispatch.
 
 ## ANTI-PATTERNS
 
@@ -134,7 +133,6 @@ Fields: agents (14 overridable, 21 fields each), categories (8 built-in + custom
 ```bash
 bun test                    # Bun test suite
 bun run build              # Build plugin (ESM + declarations + schema)
-bun run build:all          # Build + platform binaries
 bun run typecheck           # tsc --noEmit
 bunx oh-my-cortex install # Interactive setup
 bunx oh-my-cortex doctor  # Health diagnostics
@@ -146,8 +144,7 @@ bunx oh-my-cortex run     # Non-interactive session
 | Workflow | Trigger | Purpose |
 |----------|---------|---------|
 | ci.yml | push/PR to master/dev | Tests (split: mock-heavy isolated + batch), typecheck, build, schema auto-commit |
-| publish.yml | manual dispatch | Version bump, dual npm publish (oh-my-cortex + oh-my-cortex), platform binaries, GitHub release |
-| publish-platform.yml | called by publish | 11 platform binaries via bun compile (darwin/linux/windows) |
+| publish.yml | manual dispatch | Version bump, single npm publish (`oh-my-cortex`), GitHub release |
 | chief-agent.yml | @mention / dispatch | AI agent handles issues/PRs |
 | refresh-model-capabilities.yml | weekly schedule / dispatch | Auto-refresh model capabilities from models.dev API |
 | cla.yml | issue_comment/PR | CLA assistant for contributors |
@@ -167,6 +164,6 @@ bunx oh-my-cortex run     # Non-interactive session
 - 104 barrel export files (index.ts) establish module boundaries
 - Architecture rules enforced via `.cortex/rules/modular-code-enforcement.md`
 - Windows builds run on `windows-latest` runner (not cross-compiled) to avoid Bun segfaults
-- Platform binaries detect AVX2 + libc family at runtime, fallback to baseline if needed
+- npm distribution is the root JS CLI package only, matching OMC's simplified installer path.
 - Hashline edit: every Read output tagged with `LINE#ID` content hashes; edits reject on hash mismatch
 - IntentGate: classifies user intent (research/implementation/investigation/evaluation/fix) before routing

@@ -1,7 +1,7 @@
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
-import { readFileSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 
 const workflowPaths = [
   new URL("../.github/workflows/ci.yml", import.meta.url),
@@ -14,8 +14,15 @@ describe("test workflows", () => {
       // #given
       const workflow = readFileSync(workflowPath, "utf8")
 
-      expect(workflow).toContain("- name: Run tests")
-      expect(workflow).toMatch(/run: bun (test|run script\/run-ci-tests\.ts)/)
+      expect(workflow).toMatch(/run:\s*(\|\s*)?\r?\n?\s*bun (test|run script\/run-ci-tests\.ts)/)
     }
+  })
+
+  test("does not restore platform package publishing", () => {
+    // #given
+    const platformWorkflowPath = new URL("../.github/workflows/publish-platform.yml", import.meta.url)
+
+    // #then
+    expect(existsSync(platformWorkflowPath)).toBe(false)
   })
 })

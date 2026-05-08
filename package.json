@@ -21,8 +21,6 @@
   },
   "scripts": {
     "build": "bun build src/index.ts --outdir dist --target bun --format esm --external @ast-grep/napi --external zod && tsc --emitDeclarationOnly && bun build src/cli/index.ts --outdir dist/cli --target bun --format esm --external @ast-grep/napi && bun build src/npm-cli/index.ts --outdir dist/npm-cli --target node --format esm --external @ast-grep/napi && bun run build:schema",
-    "build:all": "bun run build && bun run build:binaries",
-    "build:binaries": "bun run script/build-binaries.ts",
     "build:schema": "bun run script/build-schema.ts",
     "build:model-capabilities": "bun run script/build-model-capabilities.ts",
     "clean": "rm -rf dist",
