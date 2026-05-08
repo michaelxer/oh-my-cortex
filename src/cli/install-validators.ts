@@ -74,6 +74,7 @@ export function formatConfigSummary(config: InstallConfig): string {
   lines.push(formatProvider("Kimi For Coding", config.hasKimiForCoding))
   lines.push(formatProvider("OpenCode Go", config.hasOpencodeGo))
   lines.push(formatProvider("Vercel AI Gateway", config.hasVercelAiGateway))
+  lines.push(formatProvider("AXR AI", !!config.axraiTier, config.axraiTier))
 
   return lines.join("\n")
 }
@@ -225,22 +226,27 @@ export function printBox(content: string, title?: string): void {
 
 export function validateNonTuiArgs(args: InstallArgs): { valid: boolean; errors: string[] } {
   const errors: string[] = []
+  const usesAxrai = args.axrai === "trial" || args.axrai === "pro" || args.axrai === "owner"
 
-  if (args.claude === undefined) {
+  if (args.axrai !== undefined && !["no", "trial", "pro", "owner"].includes(args.axrai)) {
+    errors.push(`Invalid --axrai value: ${args.axrai} (expected: no, trial, pro, owner)`)
+  }
+
+  if (!usesAxrai && args.claude === undefined) {
     errors.push("--claude is required (values: no, yes, max20)")
-  } else if (!["no", "yes", "max20"].includes(args.claude)) {
+  } else if (args.claude !== undefined && !["no", "yes", "max20"].includes(args.claude)) {
     errors.push(`Invalid --claude value: ${args.claude} (expected: no, yes, max20)`)
   }
 
-  if (args.gemini === undefined) {
+  if (!usesAxrai && args.gemini === undefined) {
     errors.push("--gemini is required (values: no, yes)")
-  } else if (!["no", "yes"].includes(args.gemini)) {
+  } else if (args.gemini !== undefined && !["no", "yes"].includes(args.gemini)) {
     errors.push(`Invalid --gemini value: ${args.gemini} (expected: no, yes)`)
   }
 
-  if (args.copilot === undefined) {
+  if (!usesAxrai && args.copilot === undefined) {
     errors.push("--copilot is required (values: no, yes)")
-  } else if (!["no", "yes"].includes(args.copilot)) {
+  } else if (args.copilot !== undefined && !["no", "yes"].includes(args.copilot)) {
     errors.push(`Invalid --copilot value: ${args.copilot} (expected: no, yes)`)
   }
 
@@ -272,17 +278,19 @@ export function validateNonTuiArgs(args: InstallArgs): { valid: boolean; errors:
 }
 
 export function argsToConfig(args: InstallArgs): InstallConfig {
+  const axraiTier = args.axrai === "trial" || args.axrai === "pro" || args.axrai === "owner" ? args.axrai : undefined
   return {
-    hasClaude: args.claude !== "no",
-    isMax20: args.claude === "max20",
-    hasOpenAI: args.openai === "yes",
-    hasGemini: args.gemini === "yes",
-    hasCopilot: args.copilot === "yes",
-    hasOpencodeZen: args.opencodeZen === "yes",
-    hasZaiCodingPlan: args.zaiCodingPlan === "yes",
-hasKimiForCoding: args.kimiForCoding === "yes",
-    hasOpencodeGo: args.opencodeGo === "yes",
-    hasVercelAiGateway: args.vercelAiGateway === "yes",
+    hasClaude: axraiTier ? false : args.claude !== "no",
+    isMax20: axraiTier ? false : args.claude === "max20",
+    hasOpenAI: axraiTier ? false : args.openai === "yes",
+    hasGemini: axraiTier ? false : args.gemini === "yes",
+    hasCopilot: axraiTier ? false : args.copilot === "yes",
+    hasOpencodeZen: axraiTier ? false : args.opencodeZen === "yes",
+    hasZaiCodingPlan: axraiTier ? false : args.zaiCodingPlan === "yes",
+    hasKimiForCoding: axraiTier ? false : args.kimiForCoding === "yes",
+    hasOpencodeGo: axraiTier ? false : args.opencodeGo === "yes",
+    hasVercelAiGateway: axraiTier ? false : args.vercelAiGateway === "yes",
+    axraiTier,
   }
 }
 
@@ -293,7 +301,7 @@ export function detectedToInitialValues(detected: DetectedConfig): {
   copilot: BooleanArg
   opencodeZen: BooleanArg
   zaiCodingPlan: BooleanArg
-kimiForCoding: BooleanArg
+  kimiForCoding: BooleanArg
   opencodeGo: BooleanArg
   vercelAiGateway: BooleanArg
 } {
@@ -309,7 +317,7 @@ kimiForCoding: BooleanArg
     copilot: detected.hasCopilot ? "yes" : "no",
     opencodeZen: detected.hasOpencodeZen ? "yes" : "no",
     zaiCodingPlan: detected.hasZaiCodingPlan ? "yes" : "no",
-kimiForCoding: detected.hasKimiForCoding ? "yes" : "no",
+    kimiForCoding: detected.hasKimiForCoding ? "yes" : "no",
     opencodeGo: detected.hasOpencodeGo ? "yes" : "no",
     vercelAiGateway: detected.hasVercelAiGateway ? "yes" : "no",
   }

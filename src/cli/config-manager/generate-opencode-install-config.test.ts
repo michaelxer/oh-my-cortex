@@ -83,4 +83,28 @@ describe("generateOpenCodeInstallConfig", () => {
     expect(Object.keys(mcp)).toContain("context7")
     expect(Object.keys(mcp)).toContain("grep_app")
   })
+
+  test("merges AXR AI OpenCode provider config with visible OMX entries", async () => {
+    const config = await generateOpenCodeInstallConfig({
+      ...noProviderInstallConfig,
+      axraiTier: "owner",
+      axraiModelIds: ["gpt-5.5", "gpt-5-mini"],
+      axraiPrimaryModel: "axrai/gpt-5.5",
+      axraiSmallModel: "axrai/gpt-5-mini",
+      axraiOpenCodeConfig: {
+        provider: {
+          axrai: {
+            options: { baseURL: "https://api.axrai.app/v1" },
+            models: { "gpt-5.5": { name: "gpt-5.5" } },
+          },
+        },
+        model: "axrai/gpt-5.5",
+        small_model: "axrai/gpt-5-mini",
+      },
+    })
+
+    expect(asRecord(config.provider).axrai).toBeTruthy()
+    expect(config.model).toBe("axrai/gpt-5.5")
+    expect(Object.keys(asRecord(config.agent))).toContain("Chief - Deepworker")
+  })
 })

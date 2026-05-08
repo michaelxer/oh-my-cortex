@@ -188,6 +188,46 @@ See the [Orchestration System Guide](./orchestration.md) for how agents dispatch
 
 ## Customization
 
+### AXR AI Pro / Owner Recommendations
+
+Use this table as the recommended override reference for Mettle community members using AXR AI Pro or AXR AI Owner / Full Access when these model IDs are present in the live AXR catalog. If AXR changes the catalog or adds newer superior models, prefer the newer matching model family and update this table. For AXR Trial / Pilot users, let the installer auto-select from the limited Trial catalog instead of forcing this table.
+
+All model IDs below use the `axrai/` provider prefix for `oh-my-cortex.json`.
+
+| OMX Role | Config Key | Recommended Primary | Recommended Fallback |
+| --- | --- | --- | --- |
+| Chief | `chief` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| Founder | `founder` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| Thinker | `thinker` | `axrai/gpt-5.5` | `axrai/gemini-3.1-pro` |
+| Planner | `planner` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| Reviewer | `reviewer` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| Critic | `critic` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| Lead | `lead` | `axrai/gpt-5.4` | `axrai/kimi-k2.5` |
+| Worker | `worker` | `axrai/gpt-5.4` | `axrai/kimi-k2.5` |
+| Researcher | `researcher` | `axrai/claude-haiku-4.5` | `axrai/gemini-3.0-flash` |
+| Tracker | `tracker` | `axrai/claude-haiku-4.5` | `axrai/gemini-3.0-flash` |
+| Spotter | `spotter` | `axrai/gpt-5.4` | `axrai/kimi-k2.5` |
+
+Recommended category overrides for AXR Pro / Owner:
+
+| Category | Recommended Primary | Recommended Fallback |
+| --- | --- | --- |
+| `visual-engineering` | `axrai/gemini-3.1-pro` | `axrai/gpt-5.4` |
+| `artistry` | `axrai/gemini-3.1-pro` | `axrai/claude-opus-4.6` |
+| `ultrabrain` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| `deep` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| `quick` | `axrai/claude-haiku-4.5` | `axrai/gemini-3.0-flash` |
+| `unspecified-high` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| `unspecified-low` | `axrai/kimi-k2.5` | `axrai/gpt-5.4` |
+| `writing` | `axrai/claude-haiku-4.5` | `axrai/gemini-3.0-flash` |
+| `communication` | `axrai/claude-opus-4.6` | `axrai/gpt-5.5` |
+| `strategic-analysis` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| `coaching` | `axrai/claude-opus-4.6` | `axrai/gpt-5.5` |
+| `crisis` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| `research-synthesis` | `axrai/gpt-5.5` | `axrai/gemini-3.1-pro` |
+
+The installer applies these recommendations automatically for AXR Pro and AXR Owner / Full Access when the catalog contains the recommended model IDs. Owner setup fetches `https://api.axrai.app/v1/catalog` with `AXRAI_API_KEY`, strips any raw API key from the returned config before writing, and stores only model/provider configuration.
+
 ### Example Configuration
 
 ```jsonc

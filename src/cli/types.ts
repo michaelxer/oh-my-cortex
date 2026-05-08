@@ -1,5 +1,6 @@
 export type ClaudeSubscription = "no" | "yes" | "max20"
 export type BooleanArg = "no" | "yes"
+export type AxraiTier = "trial" | "pro" | "owner"
 
 export interface InstallArgs {
   tui: boolean
@@ -9,9 +10,10 @@ export interface InstallArgs {
   copilot?: BooleanArg
   opencodeZen?: BooleanArg
   zaiCodingPlan?: BooleanArg
-kimiForCoding?: BooleanArg
+  kimiForCoding?: BooleanArg
   opencodeGo?: BooleanArg
   vercelAiGateway?: BooleanArg
+  axrai?: AxraiTier | "no"
   skipAuth?: boolean
 }
 
@@ -26,6 +28,11 @@ export interface InstallConfig {
   hasKimiForCoding: boolean
   hasOpencodeGo: boolean
   hasVercelAiGateway: boolean
+  axraiTier?: AxraiTier
+  axraiModelIds?: string[]
+  axraiOpenCodeConfig?: Record<string, unknown>
+  axraiPrimaryModel?: string
+  axraiSmallModel?: string
 }
 
 export interface ConfigMergeResult {

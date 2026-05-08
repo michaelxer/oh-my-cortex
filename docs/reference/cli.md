@@ -6,10 +6,10 @@ Reference for the published `oh-my-cortex` npm CLI. The package now runs a JavaS
 
 ```bash
 # Display help
-npx oh-my-cortex
+npx oh-my-cortex@latest
 
 # Or with Bun
-bunx oh-my-cortex
+bunx oh-my-cortex@latest
 ```
 
 ## Commands
@@ -29,7 +29,7 @@ Interactive installation tool for initial oh-my-cortex setup.
 ### Usage
 
 ```bash
-npx oh-my-cortex install
+npx oh-my-cortex@latest install
 ```
 
 ### Options
@@ -37,6 +37,7 @@ npx oh-my-cortex install
 | Option | Description |
 | --- | --- |
 | `--no-tui` | Run in non-interactive mode without TUI |
+| `--axrai <no\|trial\|pro\|owner>` | AXR AI setup using the public Trial/Pro catalog or authenticated Owner catalog |
 | `--claude <no\|yes\|max20>` | Claude subscription mode |
 | `--openai <no\|yes>` | OpenAI / ChatGPT subscription |
 | `--gemini <no\|yes>` | Gemini integration |
@@ -51,9 +52,12 @@ npx oh-my-cortex install
 ### Examples
 
 ```bash
-npx oh-my-cortex install
-npx oh-my-cortex install --no-tui --claude=max20 --openai=yes --gemini=yes --copilot=no
-bunx oh-my-cortex install
+npx oh-my-cortex@latest install
+npx oh-my-cortex@latest install --no-tui --axrai=trial
+npx oh-my-cortex@latest install --no-tui --axrai=pro
+npx oh-my-cortex@latest install --no-tui --axrai=owner
+npx oh-my-cortex@latest install --no-tui --claude=max20 --openai=yes --gemini=yes --copilot=no
+bunx oh-my-cortex@latest install
 ```
 
-The installer registers `oh-my-cortex` in OpenCode settings, writes the generated OMX config, and shows provider authentication hints.
+The installer registers `oh-my-cortex` in OpenCode settings, writes the generated OMX config, and shows provider authentication hints. AXR Owner / Full Access reads `AXRAI_API_KEY` from the environment for non-interactive installs and does not write raw API keys into config.

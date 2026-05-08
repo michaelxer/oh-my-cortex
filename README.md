@@ -186,7 +186,9 @@ or:
 bunx oh-my-cortex@latest install
 ```
 
-The installer asks what AI providers you have and automatically matches the strongest available model to each agent. It also writes the OpenCode plugin entry, visible OMX agent/MCP entries, and `oh-my-cortex.json`.
+The installer asks first whether you are a Mettle community member with an active AXR AI plan. AXR users can choose Trial/Pilot, Pro/Core/Builder/Scale, or Owner / Full Access; general users can choose No and continue with their own Claude, ChatGPT, Gemini, Copilot, OpenCode, Z.ai, Kimi, OpenCode Go, or Vercel provider setup.
+
+The installer automatically matches the strongest available model to each agent. It also writes the OpenCode plugin entry, visible OMX agent/MCP entries, and `oh-my-cortex.json`. AXR Owner / Full Access uses `AXRAI_API_KEY` only to fetch the owner catalog and does not write raw API keys into config.
 
 ### Updating Existing Installs
 

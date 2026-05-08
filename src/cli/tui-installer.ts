@@ -87,14 +87,14 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
 
   p.log.success(color.bold(isUpdate ? "Configuration updated!" : "Installation complete!"))
 
-  if (!config.hasClaude) {
+  if (!config.hasClaude && !config.axraiTier) {
     p.log.info(
       `${color.bold("Note:")} Chief agent performs best with Claude Opus 4.5+.\n` +
         `Other models work but may have reduced orchestration quality.`,
     )
   }
 
-  if (!config.hasClaude && !config.hasOpenAI && !config.hasGemini && !config.hasCopilot && !config.hasOpencodeZen && !config.hasVercelAiGateway) {
+  if (!config.hasClaude && !config.hasOpenAI && !config.hasGemini && !config.hasCopilot && !config.hasOpencodeZen && !config.hasVercelAiGateway && !config.axraiTier) {
     p.log.warn("No model providers configured. Using opencode/big-pickle as fallback.")
   }
 
@@ -135,6 +135,9 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
 
   // Important notes
   p.log.info(`OMX matches the ${color.bold("strongest available model")} to each agent automatically`)
+  if (config.axraiTier) {
+    p.log.info("AXR AI auth stays in OpenCode auth or AXRAI_API_KEY; OMX does not write API keys.")
+  }
   p.log.info(`Add more providers later by re-running ${color.cyan(`npx ${PUBLISHED_PACKAGE_NAME} install`)}`)
   p.log.info("Restart opencode and confirm Chief and Founder are the selectable OMX agents")
   p.log.info("Anonymous telemetry is enabled by default. Disable with OMX_SEND_ANONYMOUS_TELEMETRY=0 or OMX_DISABLE_POSTHOG=1.")

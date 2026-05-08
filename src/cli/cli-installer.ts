@@ -30,6 +30,7 @@ import {
 } from "./install-validators"
 import { getUnsupportedOpenCodeVersionMessage } from "./minimum-opencode-version"
 import { createCliPostHog, getPostHogDistinctId } from "../shared/posthog"
+import { fetchAxraiCatalog, fetchAxraiOwnerCatalog, getAxraiOpenCodeConfig } from "./axrai-catalog"
 
 export async function runCliInstaller(args: InstallArgs, version: string): Promise<number> {
   const posthog = createCliPostHog()
@@ -43,7 +44,7 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
     }
     console.log()
     printInfo(
-      `Usage: bunx ${PUBLISHED_PACKAGE_NAME} install --no-tui --claude=<no|yes|max20> --gemini=<no|yes> --copilot=<no|yes>`,
+      `Usage: bunx ${PUBLISHED_PACKAGE_NAME} install --no-tui --axrai=<no|trial|pro|owner> --claude=<no|yes|max20> --gemini=<no|yes> --copilot=<no|yes>`,
     )
     console.log()
     return 1
@@ -91,6 +92,31 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   }
 
   const config = argsToConfig(args)
+  if (config.axraiTier) {
+    try {
+      const catalog = config.axraiTier === "owner"
+        ? await fetchAxraiOwnerCatalog()
+        : await fetchAxraiCatalog()
+      const axrai = getAxraiOpenCodeConfig(catalog, config.axraiTier)
+      config.axraiModelIds = axrai.modelIds
+      config.axraiOpenCodeConfig = axrai.openCodeConfig
+      config.axraiPrimaryModel = axrai.primaryModel
+      config.axraiSmallModel = axrai.smallModel
+    } catch (err) {
+      printError(err instanceof Error ? err.message : "Failed to configure AXR AI from the live catalog")
+      try {
+        posthog.capture({ distinctId, event: "install_failed", properties: { command: "install", reason: "axrai_catalog_failed", is_update: isUpdate } })
+      } catch {
+        // telemetry failure is non-fatal, silently ignore
+      }
+      try {
+        await posthog.shutdown()
+      } catch {
+        // telemetry failure is non-fatal, silently ignore
+      }
+      return 1
+    }
+  }
   const generatedOpenCodeConfig = await generateOpenCodeInstallConfig(config)
 
   printStep(step++, totalSteps, `Adding ${PLUGIN_NAME} plugin and visible OMX entries...`)
@@ -142,7 +168,7 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   // Provider summary
   printBox(formatConfigSummary(config), isUpdate ? "Updated Configuration" : "Installation Complete")
 
-  if (!config.hasClaude) {
+  if (!config.hasClaude && !config.axraiTier) {
     printInfo(
       "Note: Chief agent performs best with Claude Opus 4.5+. " +
         "Other models work but may have reduced orchestration quality.",
@@ -155,7 +181,8 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
     !config.hasGemini &&
     !config.hasCopilot &&
     !config.hasOpencodeZen &&
-    !config.hasVercelAiGateway
+    !config.hasVercelAiGateway &&
+    !config.axraiTier
   ) {
     printWarning("No model providers configured. Using opencode/big-pickle as fallback.")
   }
@@ -176,6 +203,9 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   console.log(`  ${SYMBOLS.info} ${color.bold("Important Notes")}`)
   console.log(`    ${SYMBOLS.bullet} OMX matches the ${color.bold("strongest available model")} to each agent automatically`)
   console.log(`    ${SYMBOLS.bullet} Any AI model works — OMX adapts to what you have`)
+  if (config.axraiTier) {
+    console.log(`    ${SYMBOLS.bullet} AXR AI auth stays in OpenCode auth or AXRAI_API_KEY; OMX does not write API keys`)
+  }
   console.log(`    ${SYMBOLS.bullet} Add more providers later by re-running ${color.cyan(`npx ${PUBLISHED_PACKAGE_NAME} install`)}`)
   console.log(`    ${SYMBOLS.bullet} Restart opencode and confirm Chief and Founder are selectable`)
   console.log()
@@ -205,6 +235,7 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
         has_gemini: config.hasGemini,
         has_copilot: config.hasCopilot,
         has_opencode_zen: config.hasOpencodeZen,
+        axrai_tier: config.axraiTier,
       },
     })
   } catch {

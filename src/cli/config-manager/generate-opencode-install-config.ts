@@ -1,6 +1,7 @@
 import { getAgentDisplayName } from "../../shared/agent-display-names"
 import type { InstallConfig } from "../types"
 import { generateOmxConfig } from "./generate-omx-config"
+import { deepMergeRecord } from "./deep-merge-record"
 
 const AGENT_ROLES: Record<string, { description: string; mode: "primary" | "subagent"; order: number }> = {
   chief: { description: "OMX orchestrator and main conversation agent", mode: "primary", order: 1 },
@@ -62,7 +63,7 @@ export async function generateOpenCodeInstallConfig(
     ]),
   )
 
-  return {
+  const visibleConfig = {
     default_agent: getAgentDisplayName("chief"),
     agent: agentEntries,
     mcp: {
@@ -90,4 +91,9 @@ export async function generateOpenCodeInstallConfig(
       },
     },
   }
+
+  return deepMergeRecord(
+    deepMergeRecord({}, installConfig.axraiOpenCodeConfig ?? {}),
+    visibleConfig,
+  )
 }

@@ -34,12 +34,16 @@ program
   .option("--kimi-for-coding <value>", "Kimi For Coding subscription: no, yes (default: no)")
   .option("--opencode-go <value>", "OpenCode Go subscription: no, yes (default: no)")
   .option("--vercel-ai-gateway <value>", "Vercel AI Gateway: no, yes (default: no)")
+  .option("--axrai <value>", "AXR AI plan: no, trial, pro, owner (default: no)")
   .option("--skip-auth", "Skip authentication setup hints")
   .addHelpText("after", `
 Examples:
   $ bunx oh-my-cortex install
   $ bunx oh-my-cortex install --no-tui --claude=max20 --openai=yes --gemini=yes --copilot=no
   $ bunx oh-my-cortex install --no-tui --claude=no --gemini=no --copilot=yes --opencode-zen=yes
+  $ bunx oh-my-cortex install --no-tui --axrai=trial
+  $ bunx oh-my-cortex install --no-tui --axrai=pro
+  $ bunx oh-my-cortex install --no-tui --axrai=owner
 
 Model Providers (Priority: Native > Copilot > OpenCode Zen > Z.ai > Kimi > Vercel):
   Claude        Native anthropic/ models (Opus, Sonnet, Haiku)
@@ -63,6 +67,7 @@ Model Providers (Priority: Native > Copilot > OpenCode Zen > Z.ai > Kimi > Verce
       kimiForCoding: options.kimiForCoding,
       opencodeGo: options.opencodeGo,
       vercelAiGateway: options.vercelAiGateway,
+      axrai: options.axrai,
       skipAuth: options.skipAuth ?? false,
     }
     const exitCode = await install(args)

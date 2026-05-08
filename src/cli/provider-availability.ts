@@ -11,7 +11,7 @@ export function toProviderAvailability(config: InstallConfig): ProviderAvailabil
 		opencodeZen: config.hasOpencodeZen,
 		copilot: config.hasCopilot,
 		zai: config.hasZaiCodingPlan,
-kimiForCoding: config.hasKimiForCoding,
+    kimiForCoding: config.hasKimiForCoding,
 		opencodeGo: config.hasOpencodeGo,
 		vercelAiGateway: config.hasVercelAiGateway,
 		isMaxPlan: config.isMax20,

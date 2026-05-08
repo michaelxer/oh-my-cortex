@@ -2,12 +2,15 @@ import * as p from "@clack/prompts"
 import type { Option } from "@clack/prompts"
 import color from "picocolors"
 import type {
+  AxraiTier,
+  BooleanArg,
   ClaudeSubscription,
   DetectedConfig,
   InstallConfig,
 } from "./types"
 import type { GeneratedOmxConfig } from "./model-fallback-types"
 import { detectedToInitialValues } from "./install-validators"
+import { fetchAxraiCatalog, fetchAxraiOwnerCatalog, getAxraiOpenCodeConfig } from "./axrai-catalog"
 
 async function selectOrCancel<TValue extends Readonly<string | boolean | number>>(params: {
   message: string
@@ -28,8 +31,86 @@ async function selectOrCancel<TValue extends Readonly<string | boolean | number>
   return value as TValue
 }
 
+async function passwordOrCancel(params: {
+  message: string
+}): Promise<string | null> {
+  if (!process.stdin.isTTY || !process.stdout.isTTY) return null
+
+  const value = await p.password({
+    message: params.message,
+  })
+  if (p.isCancel(value)) {
+    p.cancel("Installation cancelled.")
+    return null
+  }
+  return String(value).trim()
+}
+
 export async function promptInstallConfig(detected: DetectedConfig): Promise<InstallConfig | null> {
   const initial = detectedToInitialValues(detected)
+
+  const usesAxrai = await selectOrCancel<BooleanArg>({
+    message: "Are you a Mettle community member with an active AXR AI subscription plan? AXR AI is optional.",
+    options: [
+      { value: "yes", label: "Yes", hint: "Use AXR AI Trial, Pro, or Owner catalog setup" },
+      { value: "no", label: "No", hint: "Continue normal provider setup for general users" },
+    ],
+    initialValue: "no",
+  })
+  if (!usesAxrai) return null
+
+  if (usesAxrai === "yes") {
+    const axraiTier = await selectOrCancel<AxraiTier | "none">({
+      message: "What is your AXR AI subscription plan?",
+      options: [
+        { value: "trial", label: "Trial / Pilot", hint: "Use only models listed for the AXR AI Trial tier" },
+        { value: "pro", label: "Pro / Core / Builder / Scale", hint: "Use only models listed for the AXR AI Pro tier" },
+        { value: "owner", label: "Owner / Full Access", hint: "Use authenticated owner catalog from AXRAI_API_KEY" },
+        { value: "none", label: "Sorry, I don't have an AXR AI plan", hint: "Continue normal provider setup" },
+      ],
+      initialValue: "trial",
+    })
+    if (!axraiTier) return null
+
+    if (axraiTier !== "none") {
+      try {
+        let ownerKey = process.env.AXRAI_API_KEY
+        if (axraiTier === "owner" && !ownerKey) {
+          ownerKey = await passwordOrCancel({
+            message: "AXR owner API key (not saved; used once to fetch catalog)",
+          }) ?? undefined
+        }
+        const catalog = axraiTier === "owner"
+          ? await fetchAxraiOwnerCatalog(ownerKey)
+          : await fetchAxraiCatalog()
+        const axrai = getAxraiOpenCodeConfig(catalog, axraiTier)
+        return {
+          hasClaude: false,
+          isMax20: false,
+          hasOpenAI: false,
+          hasGemini: false,
+          hasCopilot: false,
+          hasOpencodeZen: false,
+          hasZaiCodingPlan: false,
+          hasKimiForCoding: false,
+          hasOpencodeGo: false,
+          hasVercelAiGateway: false,
+          axraiTier,
+          axraiModelIds: axrai.modelIds,
+          axraiOpenCodeConfig: axrai.openCodeConfig,
+          axraiPrimaryModel: axrai.primaryModel,
+          axraiSmallModel: axrai.smallModel,
+        }
+      } catch (err) {
+        p.log.error(err instanceof Error ? err.message : "Failed to configure AXR AI from the live catalog")
+        p.note(
+          "Check your internet connection, verify your AXR AI plan, or choose normal provider setup.",
+          "AXR AI setup failed",
+        )
+        return null
+      }
+    }
+  }
 
   const claude = await selectOrCancel<ClaudeSubscription>({
     message: "Do you have a Claude Pro/Max subscription?",
