@@ -20,6 +20,19 @@ const installConfig: InstallConfig = {
   hasVercelAiGateway: false,
 }
 
+const noProviderInstallConfig: InstallConfig = {
+  hasClaude: false,
+  isMax20: false,
+  hasOpenAI: false,
+  hasGemini: false,
+  hasCopilot: false,
+  hasOpencodeZen: false,
+  hasZaiCodingPlan: false,
+  hasKimiForCoding: false,
+  hasOpencodeGo: false,
+  hasVercelAiGateway: false,
+}
+
 function asRecord(value: unknown): Record<string, unknown> {
   return value && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, unknown>)
@@ -50,6 +63,17 @@ describe("generateOpenCodeInstallConfig", () => {
     expect(Object.keys(agents)).toContain("Founder - Deep Agent")
     expect(asRecord(agents["Chief - Deepworker"]).mode).toBe("primary")
     expect(asRecord(agents["Founder - Deep Agent"]).mode).toBe("primary")
+  })
+
+  test("keeps default Chief entry visible when no providers are configured", async () => {
+    const config = await generateOpenCodeInstallConfig(noProviderInstallConfig)
+    const agents = asRecord(config.agent)
+    const chief = asRecord(agents["Chief - Deepworker"])
+
+    expect(config.default_agent).toBe("Chief - Deepworker")
+    expect(Object.keys(agents)).toContain("Chief - Deepworker")
+    expect(chief.mode).toBe("primary")
+    expect(chief.model).toBe("opencode/gpt-5-nano")
   })
 
   test("generates visible OpenCode MCP entries for built-in MCP visibility", async () => {

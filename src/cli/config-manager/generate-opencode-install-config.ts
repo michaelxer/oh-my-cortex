@@ -16,6 +16,8 @@ const AGENT_ROLES: Record<string, { description: string; mode: "primary" | "suba
   spotter: { description: "Visual, image, and PDF analyst", mode: "subagent", order: 11 },
 }
 
+const VISIBLE_AGENT_FALLBACK_MODEL = "opencode/gpt-5-nano"
+
 type GeneratedAgentConfig = {
   model?: string
   variant?: string
@@ -51,9 +53,12 @@ export async function generateOpenCodeInstallConfig(
     agents?: Record<string, GeneratedAgentConfig>
   }
   const agentEntries = Object.fromEntries(
-    Object.entries(pluginConfig.agents ?? {}).map(([agentKey, modelConfig]) => [
+    Object.keys(AGENT_ROLES).map((agentKey) => [
       getAgentDisplayName(agentKey),
-      createVisibleAgentEntry(agentKey, modelConfig),
+      createVisibleAgentEntry(
+        agentKey,
+        pluginConfig.agents?.[agentKey] ?? { model: VISIBLE_AGENT_FALLBACK_MODEL },
+      ),
     ]),
   )
 

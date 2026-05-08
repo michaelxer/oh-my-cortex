@@ -49,7 +49,7 @@ Examples:
     }
 
     const exitCode = await install(args)
-    process.exit(exitCode)
+    process.exitCode = exitCode
   })
 
 program
@@ -59,4 +59,4 @@ program
     console.log(`oh-my-cortex v${VERSION}`)
   })
 
-program.parse()
+await program.parseAsync()
