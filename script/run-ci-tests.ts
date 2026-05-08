@@ -1,5 +1,7 @@
 /// <reference types="bun-types" />
 
+import { existsSync } from "node:fs"
+
 type CiTestPlan = {
   isolatedTestTargets: string[]
   isolatedModuleMockFiles: string[]
@@ -15,8 +17,13 @@ async function collectTestFiles(rootDirectory: string): Promise<string[]> {
 
   for (const testRoot of TEST_ROOTS) {
     const glob = new Bun.Glob("**/*.test.ts")
+    const testRootPath = `${rootDirectory}/${testRoot}`
 
-    for await (const testFile of glob.scan({ cwd: `${rootDirectory}/${testRoot}` })) {
+    if (!existsSync(testRootPath)) {
+      continue
+    }
+
+    for await (const testFile of glob.scan({ cwd: testRootPath })) {
       testFiles.push(`${testRoot}/${testFile}`)
     }
   }
