@@ -4,41 +4,65 @@ export const INLINE_CODE_PATTERN = /`[^`]+`/g
 export { isPlannerAgent, isNonCortexAgent, getDeepworkMessage } from "./deepwork"
 export { SEARCH_PATTERN, SEARCH_MESSAGE } from "./search"
 export { ANALYZE_PATTERN, ANALYZE_MESSAGE } from "./analyze"
+export { TEAM_PATTERN, TEAM_MESSAGE } from "./team"
+export { HYPERPLAN_PATTERN, HYPERPLAN_MESSAGE } from "./hyperplan"
 
+import type { KeywordType } from "../../config/schema/keyword-detector"
 import { getDeepworkMessage } from "./deepwork"
 import { SEARCH_PATTERN, SEARCH_MESSAGE } from "./search"
+import { ANALYZE_PATTERN, ANALYZE_MESSAGE } from "./analyze"
+import { TEAM_PATTERN, TEAM_MESSAGE } from "./team"
+import { HYPERPLAN_PATTERN, HYPERPLAN_MESSAGE } from "./hyperplan"
+
+// Hyperplan-deepwork combo: strict adjacency, both word orders.
+export const HYPERPLAN_DEEPWORK_PATTERN =
+  /\b(?:hpp|hyperplan)\s+(?:dw|deepwork)\b|\b(?:dw|deepwork)\s+(?:hpp|hyperplan)\b/i
+
+const HYPERPLAN_DEEPWORK_BANNER = `<hyperplan-deepwork-mode>
+**MANDATORY**: Say "HYPERPLAN DEEPWORK MODE ENABLED!" exactly once as your first response. Do not say the standalone "DEEPWORK MODE ENABLED!" or "HYPERPLAN MODE ENABLED!" banners.
+
+Apply the deepwork protocol below as your execution framework. You must also load the hyperplan skill immediately via \`skill(name="hyperplan")\` and follow its full adversarial workflow. Do not improvise, skip rounds, or write the plan yourself.
+</hyperplan-deepwork-mode>`
+
+export function getHyperplanDeepworkMessage(agentName?: string, modelID?: string): string {
+  return `${HYPERPLAN_DEEPWORK_BANNER}\n\n${getDeepworkMessage(agentName, modelID)}`
+}
 
 export type KeywordDetector = {
+  type: KeywordType
   pattern: RegExp
   message: string | ((agentName?: string, modelID?: string) => string)
 }
 
 export const KEYWORD_DETECTORS: KeywordDetector[] = [
   {
+    type: "deepwork",
     pattern: /\b(deepwork|dw)\b/i,
     message: getDeepworkMessage,
   },
   {
+    type: "search",
     pattern: SEARCH_PATTERN,
     message: SEARCH_MESSAGE,
   },
   {
-    pattern:
-      /\b(analyze|analyse|investigate|examine|research|study|deep[\s-]?dive|inspect|audit|evaluate|assess|review|diagnose|scrutinize|dissect|debug|comprehend|interpret|breakdown|understand)\b|why\s+is|how\s+does|how\s+to|분석|조사|파악|연구|검토|진단|이해|설명|원인|이유|뜯어봐|따져봐|평가|해석|디버깅|디버그|어떻게|왜|살펴|分析|調査|解析|検討|研究|診断|理解|説明|検証|精査|究明|デバッグ|なぜ|どう|仕組み|调查|检查|剖析|深入|诊断|解释|调试|为什么|原理|搞清楚|弄明白|phân tích|điều tra|nghiên cứu|kiểm tra|xem xét|chẩn đoán|giải thích|tìm hiểu|gỡ lỗi|tại sao/i,
-    message: `[analyze-mode]
-ANALYSIS MODE. Gather context before diving deep:
-CONTEXT GATHERING (parallel):
-- 1-2 tracker agents (codebase patterns, implementations)
-- 1-2 researcher agents (if external library involved)
-- Direct tools: Grep, AST-grep, LSP for targeted searches
-
-IF COMPLEX - DO NOT STRUGGLE ALONE. Consult specialists:
-- **Thinker**: Conventional problems (architecture, debugging, complex logic)
-- **Artistry**: Non-conventional problems (different approach needed)
-
-SYNTHESIZE findings before proceeding.
----
-MANDATORY delegate_task params: ALWAYS include load_skills=[] and run_in_background when calling delegate_task.
-Example: delegate_task(subagent_type="tracker", prompt="...", run_in_background=true, load_skills=[])`,
+    type: "analyze",
+    pattern: ANALYZE_PATTERN,
+    message: ANALYZE_MESSAGE,
+  },
+  {
+    type: "team",
+    pattern: TEAM_PATTERN,
+    message: TEAM_MESSAGE,
+  },
+  {
+    type: "hyperplan",
+    pattern: HYPERPLAN_PATTERN,
+    message: HYPERPLAN_MESSAGE,
+  },
+  {
+    type: "hyperplan-deepwork",
+    pattern: HYPERPLAN_DEEPWORK_PATTERN,
+    message: getHyperplanDeepworkMessage,
   },
 ]

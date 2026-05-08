@@ -61,7 +61,7 @@ export function createTransformHooks(args: {
   const keywordDetector = isHookEnabled("keyword-detector")
     ? safeCreateHook(
         "keyword-detector",
-        () => createKeywordDetectorHook(ctx, contextCollector, cortexLoop ?? undefined),
+        () => createKeywordDetectorHook(ctx, contextCollector, cortexLoop ?? undefined, pluginConfig.keyword_detector),
         { enabled: safeHookEnabled },
       )
     : null

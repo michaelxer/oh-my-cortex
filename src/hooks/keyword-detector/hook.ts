@@ -1,5 +1,7 @@
 import type { PluginInput } from "@opencode-ai/plugin"
-import { detectKeywordsWithType, extractPromptText } from "./detector"
+import type { KeywordDetectorConfig } from "../../config/schema/keyword-detector"
+import type { DetectedKeyword } from "./detector"
+import { detectKeywordsWithType, extractPromptText, looksLikeSlashCommand } from "./detector"
 import { isPlannerAgent, isNonCortexAgent } from "./constants"
 import { log } from "../../shared"
 import {
@@ -30,11 +32,20 @@ function getToastClient(ctx: PluginInput): ToastClient | undefined {
   return client.tui
 }
 
+function suppressComboStandalones(detected: DetectedKeyword[]): DetectedKeyword[] {
+  const hasCombo = detected.some((k) => k.type === "hyperplan-deepwork")
+  if (!hasCombo) return detected
+  return detected.filter((k) => k.type !== "deepwork" && k.type !== "hyperplan")
+}
+
 export function createKeywordDetectorHook(
   ctx: PluginInput,
   _collector?: ContextCollector,
-  _cortexLoop?: Pick<CortexLoopHook, "startLoop">
+  _cortexLoop?: Pick<CortexLoopHook, "startLoop">,
+  config?: KeywordDetectorConfig,
 ) {
+  const disabledKeywords = config?.disabled_keywords
+
   function getRuntimeVariant(input: { variant?: string }, message: Record<string, unknown>): string | undefined {
     if (typeof message["variant"] === "string") {
       return message["variant"]
@@ -64,6 +75,11 @@ export function createKeywordDetectorHook(
         return
       }
 
+      if (looksLikeSlashCommand(promptText)) {
+        log(`[keyword-detector] Skipping slash command invocation`, { sessionID: input.sessionID })
+        return
+      }
+
       const currentAgent = getSessionAgent(input.sessionID) ?? input.agent
 
       // Skip all keyword injection for non-OMX agents (e.g., OpenCode-Builder, Plan)
@@ -75,13 +91,16 @@ export function createKeywordDetectorHook(
       // Remove system-reminder content to prevent automated system messages from triggering mode keywords
       const cleanText = removeSystemReminders(promptText)
       const modelID = input.model?.modelID
-      let detectedKeywords = detectKeywordsWithType(cleanText, currentAgent, modelID)
+      let detectedKeywords = detectKeywordsWithType(cleanText, currentAgent, modelID, disabledKeywords)
+      detectedKeywords = suppressComboStandalones(detectedKeywords)
 
       if (isPlannerAgent(currentAgent)) {
         const preFilterCount = detectedKeywords.length
-        detectedKeywords = detectedKeywords.filter((k) => k.type !== "deepwork")
+        detectedKeywords = detectedKeywords.filter(
+          (k) => k.type !== "deepwork" && k.type !== "hyperplan" && k.type !== "hyperplan-deepwork"
+        )
         if (preFilterCount > detectedKeywords.length) {
-          log(`[keyword-detector] Filtered deepwork keywords for planner agent`, { sessionID: input.sessionID, agent: currentAgent })
+          log(`[keyword-detector] Filtered deepwork/hyperplan keywords for planner agent`, { sessionID: input.sessionID, agent: currentAgent })
         }
       }
 
@@ -99,7 +118,9 @@ export function createKeywordDetectorHook(
       const isNonMainSession = mainSessionID && input.sessionID !== mainSessionID
 
       if (isNonMainSession) {
-        detectedKeywords = detectedKeywords.filter((k) => k.type === "deepwork")
+        detectedKeywords = detectedKeywords.filter(
+          (k) => k.type === "deepwork" || k.type === "hyperplan-deepwork"
+        )
         if (detectedKeywords.length === 0) {
           log(`[keyword-detector] Skipping non-deepwork keywords in non-main session`, {
             sessionID: input.sessionID,
@@ -137,6 +158,50 @@ export function createKeywordDetectorHook(
             })
           )
 
+      }
+
+      const hasHyperplan = detectedKeywords.some((k) => k.type === "hyperplan")
+      if (hasHyperplan) {
+        log(`[keyword-detector] Hyperplan mode activated`, {
+          sessionID: input.sessionID,
+        })
+
+        getToastClient(ctx)
+          ?.showToast?.({
+            body: {
+              title: "Hyperplan Mode Activated",
+              message: "Adversarial planning engaged. Team Mode will cross-critique.",
+              variant: "success" as const,
+              duration: 3000,
+            },
+          })
+          .catch((err) =>
+            log(`[keyword-detector] Failed to show toast`, {
+              error: err,
+              sessionID: input.sessionID,
+            })
+          )
+      }
+
+      const hasHyperplanDeepwork = detectedKeywords.some((k) => k.type === "hyperplan-deepwork")
+      if (hasHyperplanDeepwork) {
+        log(`[keyword-detector] Hyperplan Deepwork mode activated`, { sessionID: input.sessionID })
+
+        getToastClient(ctx)
+          ?.showToast?.({
+            body: {
+              title: "Hyperplan Deepwork Mode Activated",
+              message: "Deepwork execution with adversarial Hyperplan workflow.",
+              variant: "success" as const,
+              duration: 3000,
+            },
+          })
+          .catch((err) =>
+            log(`[keyword-detector] Failed to show toast`, {
+              error: err,
+              sessionID: input.sessionID,
+            })
+          )
       }
 
       const textPartIndex = output.parts.findIndex((p) => p.type === "text" && p.text !== undefined)

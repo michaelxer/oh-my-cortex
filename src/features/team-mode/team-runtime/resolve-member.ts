@@ -53,7 +53,7 @@ function resolveSystemContent(input: {
 
 // Strip global `agents.worker.model` override at the team-mode boundary.
 // `resolveCategoryExecution` ranks it above category defaults (correct for plain
-// `task(category=…)`, wrong here) and would collapse every team member to the same model.
+// `task(category=...)`, wrong here) and would collapse every team member to the same model.
 function withoutWorkerOverride(ctx: ExecutorContext): ExecutorContext {
   if (ctx.workerModel === undefined) return ctx
   return { ...ctx, workerModel: undefined }
