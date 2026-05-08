@@ -190,23 +190,30 @@ See the [Orchestration System Guide](./orchestration.md) for how agents dispatch
 
 ### AXR AI Pro / Owner Recommendations
 
-Use this table as the recommended override reference for Mettle community members using AXR AI Pro or AXR AI Owner / Full Access when these model IDs are present in the live AXR catalog. If AXR changes the catalog or adds newer superior models, prefer the newer matching model family and update this table. For AXR Trial / Pilot users, let the installer auto-select from the limited Trial catalog instead of forcing this table.
+Use this table as the recommended override reference for Mettle community members using AXR AI Pro or AXR AI Owner / Full Access when these model IDs are present in the live AXR catalog. This is not copied from OMC: OMX has different agent roles, so the recommendations follow each OMX agent's prompt style. If AXR changes the catalog or adds newer superior models, prefer the newer matching model family and update this table. For AXR Trial / Pilot users, let the installer auto-select from the limited Trial catalog instead of forcing this table.
 
 All model IDs below use the `axrai/` provider prefix for `oh-my-cortex.json`.
 
 | OMX Role | Config Key | Recommended Primary | Recommended Fallback |
 | --- | --- | --- | --- |
 | Chief | `chief` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
-| Founder | `founder` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
+| Founder | `founder` | `axrai/gpt-5.5` | `axrai/gpt-5.4` |
 | Thinker | `thinker` | `axrai/gpt-5.5` | `axrai/gemini-3.1-pro` |
 | Planner | `planner` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
 | Reviewer | `reviewer` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
 | Critic | `critic` | `axrai/gpt-5.5` | `axrai/claude-opus-4.6` |
-| Lead | `lead` | `axrai/gpt-5.4` | `axrai/kimi-k2.5` |
-| Worker | `worker` | `axrai/gpt-5.4` | `axrai/kimi-k2.5` |
+| Lead | `lead` | `axrai/kimi-k2.5` | `axrai/gpt-5.4` |
+| Worker | `worker` | `axrai/kimi-k2.5` | `axrai/gpt-5.4` |
 | Researcher | `researcher` | `axrai/claude-haiku-4.5` | `axrai/gemini-3.0-flash` |
 | Tracker | `tracker` | `axrai/claude-haiku-4.5` | `axrai/gemini-3.0-flash` |
-| Spotter | `spotter` | `axrai/gpt-5.4` | `axrai/kimi-k2.5` |
+| Spotter | `spotter` | `axrai/gpt-5.5` | `axrai/kimi-k2.5` |
+
+Why these differ from OMC:
+
+- Founder is a primary autonomous GPT-native builder, so it should stay on the best GPT model available, with GPT-5.4 as the fallback rather than a Claude-family model.
+- Lead and Worker are execution/orchestration agents with Claude/Kimi-friendly mechanics and GPT prompt variants. Kimi K2.5 is the safer AXR primary for their default execution style, with GPT-5.4 as the fallback for GPT-native task work.
+- Thinker and Critic are high-stakes reasoning/review agents. GPT-5.5 stays primary; Thinker falls back to Gemini Pro for broad analytical synthesis, while Critic falls back to Opus for strict instruction-following plan review.
+- Spotter handles visual/media analysis, so it gets the strongest multimodal GPT path first and Kimi as the practical fallback.
 
 Recommended category overrides for AXR Pro / Owner:
 

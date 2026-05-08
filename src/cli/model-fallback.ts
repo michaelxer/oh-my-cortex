@@ -27,16 +27,16 @@ const SCHEMA_URL = "https://raw.githubusercontent.com/michaelxer/oh-my-cortex/de
 const AXRAI_PROVIDER = "axrai"
 const AXRAI_RECOMMENDED_AGENT_MODELS: Record<string, { primary: string; fallback: string }> = {
   chief: { primary: "gpt-5.5", fallback: "claude-opus-4.6" },
-  founder: { primary: "gpt-5.5", fallback: "claude-opus-4.6" },
+  founder: { primary: "gpt-5.5", fallback: "gpt-5.4" },
   thinker: { primary: "gpt-5.5", fallback: "gemini-3.1-pro" },
   planner: { primary: "gpt-5.5", fallback: "claude-opus-4.6" },
   reviewer: { primary: "gpt-5.5", fallback: "claude-opus-4.6" },
   critic: { primary: "gpt-5.5", fallback: "claude-opus-4.6" },
-  lead: { primary: "gpt-5.4", fallback: "kimi-k2.5" },
-  worker: { primary: "gpt-5.4", fallback: "kimi-k2.5" },
+  lead: { primary: "kimi-k2.5", fallback: "gpt-5.4" },
+  worker: { primary: "kimi-k2.5", fallback: "gpt-5.4" },
   researcher: { primary: "claude-haiku-4.5", fallback: "gemini-3.0-flash" },
   tracker: { primary: "claude-haiku-4.5", fallback: "gemini-3.0-flash" },
-  spotter: { primary: "gpt-5.4", fallback: "kimi-k2.5" },
+  spotter: { primary: "gpt-5.5", fallback: "kimi-k2.5" },
 }
 const AXRAI_RECOMMENDED_CATEGORY_MODELS: Record<string, { primary: string; fallback: string }> = {
   "visual-engineering": { primary: "gemini-3.1-pro", fallback: "gpt-5.4" },
