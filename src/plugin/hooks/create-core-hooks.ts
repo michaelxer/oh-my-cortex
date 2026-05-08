@@ -7,6 +7,8 @@ import type { ModelCacheState } from "../../plugin-state"
 import { createSessionHooks } from "./create-session-hooks"
 import { createToolGuardHooks } from "./create-tool-guard-hooks"
 import { createTransformHooks } from "./create-transform-hooks"
+import { createFileOpsTrackerHook } from "../../features/cortex-memory"
+import { safeCreateHook } from "../../shared/safe-create-hook"
 
 export function createCoreHooks(args: {
   ctx: PluginContext
@@ -45,9 +47,18 @@ export function createCoreHooks(args: {
     cortexLoop: session.cortexLoop,
   })
 
+  const fileOpsTracker = isHookEnabled("file-ops-tracker")
+    ? safeCreateHook(
+        "file-ops-tracker",
+        () => createFileOpsTrackerHook(ctx.directory),
+        { enabled: safeHookEnabled },
+      )
+    : null
+
   return {
     ...session,
     ...tool,
     ...transform,
+    fileOpsTracker,
   }
 }

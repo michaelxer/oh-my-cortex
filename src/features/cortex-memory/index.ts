@@ -9,3 +9,21 @@ export {
   createCortexLedgerLoaderHook,
   type CortexLedgerLoaderHook,
 } from "./ledger-loader"
+
+export {
+  appendFileOperation,
+  buildFileOperationRecord,
+  classifyFileOperation,
+  extractFileOperationPaths,
+  getFileOpsDir,
+  getFileOpsPath,
+  readSessionFileOps,
+  type FileOperationKind,
+  type FileOperationRecord,
+  type FileOpsState,
+} from "./file-ops"
+
+export {
+  createFileOpsTrackerHook,
+  type FileOpsTrackerHook,
+} from "./file-ops-tracker"
