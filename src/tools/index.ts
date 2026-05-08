@@ -45,6 +45,7 @@ export {
 } from "./task"
 export { createHashlineEditTool } from "./hashline-edit"
 export { createDecisionFrameworkTool } from "./decision-framework"
+export { createCortexSearchTool } from "./cortex-search"
 
 export function createBackgroundTools(manager: BackgroundManager, client: OpencodeClient): Record<string, ToolDefinition> {
   const outputManager: BackgroundOutputManager = manager

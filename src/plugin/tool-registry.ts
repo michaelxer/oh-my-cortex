@@ -44,6 +44,7 @@ import {
   createTaskUpdateTool,
   createHashlineEditTool,
   createDecisionFrameworkTool,
+  createCortexSearchTool,
 } from "../tools"
 import { getMainSessionID } from "../features/claude-code-session-state"
 import { filterDisabledTools } from "../shared/disabled-tools"
@@ -73,6 +74,7 @@ type ToolRegistryFactories = {
   createTaskUpdateTool: typeof createTaskUpdateTool
   createHashlineEditTool: typeof createHashlineEditTool
   createDecisionFrameworkTool: typeof createDecisionFrameworkTool
+  createCortexSearchTool: typeof createCortexSearchTool
   createTeamApproveShutdownTool: typeof createTeamApproveShutdownTool
   createTeamCreateTool: typeof createTeamCreateTool
   createTeamDeleteTool: typeof createTeamDeleteTool
@@ -107,6 +109,7 @@ const defaultToolRegistryFactories: ToolRegistryFactories = {
   createTaskUpdateTool,
   createHashlineEditTool,
   createDecisionFrameworkTool,
+  createCortexSearchTool,
   createTeamApproveShutdownTool,
   createTeamCreateTool,
   createTeamDeleteTool,
@@ -352,6 +355,7 @@ export function createToolRegistry(args: {
     ...taskToolsRecord,
     ...hashlineToolsRecord,
     decision_framework: factories.createDecisionFrameworkTool(),
+    cortex_search: factories.createCortexSearchTool(ctx.directory),
   }
 
   for (const toolDefinition of Object.values(allTools)) {

@@ -13,6 +13,7 @@ export const BuiltinCommandNameSchema = z.enum([
   "challenge",
   "checkpoint",
   "ledger",
+  "cortex-search",
   "lens",
   "decide",
   "hyperplan",

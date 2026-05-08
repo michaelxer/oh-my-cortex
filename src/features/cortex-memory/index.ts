@@ -27,3 +27,10 @@ export {
   createFileOpsTrackerHook,
   type FileOpsTrackerHook,
 } from "./file-ops-tracker"
+
+export {
+  searchCortexArtifacts,
+  type CortexArtifactSearchOptions,
+  type CortexArtifactSearchResult,
+  type CortexArtifactType,
+} from "./artifact-search"

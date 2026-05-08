@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, test, expect } from "bun:test"
 import { loadBuiltinCommands } from "./commands"
 import { HANDOFF_TEMPLATE } from "./templates/handoff"
 import { LEDGER_TEMPLATE } from "./templates/ledger"
+import { CORTEX_SEARCH_TEMPLATE } from "./templates/cortex-search"
 import { REMOVE_AI_SLOPS_TEMPLATE } from "./templates/remove-ai-slops"
 import type { BuiltinCommandName } from "./types"
 import { _resetForTesting, registerAgentName } from "../claude-code-session-state"
@@ -93,6 +94,29 @@ describe("loadBuiltinCommands", () => {
 
     //#then
     expect(commands.ledger).toBeUndefined()
+  })
+
+  test("should include cortex-search command in loaded commands", () => {
+    //#when
+    const commands = loadBuiltinCommands()
+
+    //#then
+    expect(commands["cortex-search"]).toBeDefined()
+    expect(commands["cortex-search"].name).toBe("cortex-search")
+    expect(commands["cortex-search"].template).toContain(CORTEX_SEARCH_TEMPLATE)
+    expect(commands["cortex-search"].template).toContain("cortex_search")
+    expect(commands["cortex-search"].template).toContain("$ARGUMENTS")
+  })
+
+  test("should exclude cortex-search when disabled", () => {
+    //#given
+    const disabledCommands: BuiltinCommandName[] = ["cortex-search"]
+
+    //#when
+    const commands = loadBuiltinCommands(disabledCommands)
+
+    //#then
+    expect(commands["cortex-search"]).toBeUndefined()
   })
 
   test("should default start-work to Lead for static slash-command discovery", () => {
