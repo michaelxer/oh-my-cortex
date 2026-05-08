@@ -12,6 +12,6 @@ export { replaceTmuxPane } from "./tmux-utils/pane-replace"
 export { spawnTmuxWindow } from "./tmux-utils/window-spawn"
 export { spawnTmuxSession, getIsolatedSessionName } from "./tmux-utils/session-spawn"
 export { killTmuxSessionIfExists } from "./tmux-utils/session-kill"
-export { sweepStaleCortexAgentSessions } from "./tmux-utils/stale-session-sweep"
+export { sweepStaleCortexAgentSessions, sweepTmuxSessionsWith } from "./tmux-utils/stale-session-sweep"
 
 export { applyLayout, enforceMainPaneWidth } from "./tmux-utils/layout"

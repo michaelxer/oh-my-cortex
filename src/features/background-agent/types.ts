@@ -47,6 +47,7 @@ export interface BackgroundTask {
   rootSessionID?: string
   parentSessionID: string
   parentMessageID: string
+  teamRunId?: string
   description: string
   prompt: string
   agent: string
@@ -114,6 +115,9 @@ export interface LaunchInput {
   skillContent?: string
   category?: string
   sessionPermission?: SessionPermissionRule[]
+  teamRunId?: string
+  suppressTmuxSpawn?: boolean
+  onSessionCreated?: (sessionID: string) => void | Promise<void>
 }
 
 export interface ResumeInput {

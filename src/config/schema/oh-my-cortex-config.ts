@@ -16,10 +16,12 @@ import { NotificationConfigSchema } from "./notification"
 import { OpenClawConfigSchema } from "./openclaw"
 import { ModelCapabilitiesConfigSchema } from "./model-capabilities"
 import { CortexLoopConfigSchema } from "./cortex-loop"
+import { KeywordDetectorConfigSchema } from "./keyword-detector"
 import { RuntimeFallbackConfigSchema } from "./runtime-fallback"
 import { SkillsConfigSchema } from "./skills"
 import { ChiefConfigSchema } from "./chief"
 import { ChiefAgentConfigSchema } from "./chief-agent"
+import { TeamModeConfigSchema } from "./team-mode"
 import { TmuxConfigSchema } from "./tmux"
 import { StartWorkConfigSchema } from "./start-work"
 import { WebsearchConfigSchema } from "./websearch"
@@ -53,6 +55,9 @@ export const OhMyCortexConfigSchema = z.object({
   auto_update: z.boolean().optional(),
   skills: SkillsConfigSchema.optional(),
   cortex_loop: CortexLoopConfigSchema.optional(),
+  team_mode: TeamModeConfigSchema.optional(),
+  /** Per-keyword disable list for keyword-detector. Allowed values: deepwork, search, analyze, team, hyperplan, hyperplan-deepwork. */
+  keyword_detector: KeywordDetectorConfigSchema.optional(),
   /**
    * Enable runtime fallback (default: false)
    * Set to false to disable, or use object for advanced config:

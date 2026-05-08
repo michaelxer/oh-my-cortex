@@ -67,28 +67,28 @@ describe("team-mode types", () => {
     expect(entries).toHaveLength(11)
     expect(verdictCounts).toEqual({ eligible: 3, conditional: 1, "hard-reject": 7 })
     expect(AGENT_ELIGIBILITY_REGISTRY.founder.rejectionMessage).toBe(
-      "Agent 'founder' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"chief\" instead.",
+      "Agent 'founder' lacks teammate permission. Use subagent_type: 'chief' unless founder teammate permissions are explicitly enabled.",
     )
     expect(AGENT_ELIGIBILITY_REGISTRY.thinker.rejectionMessage).toBe(
-      "Agent 'thinker' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'thinker' for read-only analysis instead.",
+      "Agent 'thinker' is read-only. Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'thinker' for read-only analysis instead.",
     )
     expect(AGENT_ELIGIBILITY_REGISTRY.researcher.rejectionMessage).toBe(
-      "Agent 'researcher' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
+      "Agent 'researcher' is read-only. Cannot write to the team mailbox. Use delegate-task for research queries instead.",
     )
     expect(AGENT_ELIGIBILITY_REGISTRY.tracker.rejectionMessage).toBe(
-      "Agent 'tracker' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for codebase exploration instead.",
+      "Agent 'tracker' is read-only. Cannot write to the team mailbox. Use delegate-task for codebase exploration instead.",
     )
     expect(AGENT_ELIGIBILITY_REGISTRY["spotter"].rejectionMessage).toBe(
-      "Agent 'spotter' has read-only tool access (only 'read' allowed). Cannot write to mailbox as team member.",
+      "Agent 'spotter' has read-only tool access. Cannot write to the team mailbox.",
     )
     expect(AGENT_ELIGIBILITY_REGISTRY.reviewer.rejectionMessage).toBe(
-      "Agent 'reviewer' is read-only (pre-planning consultant). Cannot write to mailbox as team member. Use delegate-task for pre-planning analysis instead.",
+      "Agent 'reviewer' is read-only. Use delegate-task for pre-planning analysis instead.",
     )
     expect(AGENT_ELIGIBILITY_REGISTRY.critic.rejectionMessage).toBe(
-      "Agent 'critic' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
+      "Agent 'critic' is read-only. Use delegate-task for plan critique instead.",
     )
     expect(AGENT_ELIGIBILITY_REGISTRY.planner.rejectionMessage).toBe(
-      "Agent 'planner' is plan-mode-only; can only write to .cortex/*.md (enforced by plannerMdOnly hook). Cannot write to team mailbox. Use category: 'plan' instead.",
+      "Agent 'planner' is plan-mode-only and cannot write to the team mailbox. Use category: 'strategic-analysis' or category: 'quick' instead.",
     )
     expect(CategoryMemberSchema).toBeDefined()
     expect(SubagentMemberSchema).toBeDefined()

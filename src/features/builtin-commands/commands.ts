@@ -12,6 +12,7 @@ import { CHALLENGE_TEMPLATE } from "./templates/challenge"
 import { CHECKPOINT_TEMPLATE } from "./templates/checkpoint"
 import { LENS_TEMPLATE } from "./templates/lens"
 import { DECIDE_TEMPLATE } from "./templates/decide"
+import { HYPERPLAN_TEMPLATE } from "./templates/hyperplan"
 
 interface LoadBuiltinCommandsOptions {
   useRegisteredAgents?: boolean
@@ -163,6 +164,13 @@ ${DECIDE_TEMPLATE}
 $ARGUMENTS
 </user-request>`,
       argumentHint: "[topic]",
+    },
+    hyperplan: {
+      description: "(builtin) Adversarial multi-agent planning via Team Mode",
+      template: `<command-instruction>
+${HYPERPLAN_TEMPLATE}
+</command-instruction>`,
+      argumentHint: "<planning request>",
     },
   }
 }

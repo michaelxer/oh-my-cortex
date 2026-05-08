@@ -404,6 +404,7 @@ export class BackgroundManager {
         spawnDepth: spawnReservation.spawnContext.childDepth,
         parentSessionID: input.parentSessionID,
         parentMessageID: input.parentMessageID,
+        teamRunId: input.teamRunId,
         parentModel: input.parentModel,
         parentAgent: input.parentAgent,
         parentTools: input.parentTools,
@@ -570,6 +571,7 @@ export class BackgroundManager {
       return
     }
 
+    await input.onSessionCreated?.(sessionID)
     this.settlePreStartDescendantReservation(task)
     subagentSessions.add(sessionID)
 
@@ -581,7 +583,7 @@ export class BackgroundManager {
       parentID: input.parentSessionID,
     })
 
-    if (this.onSubagentSessionCreated && this.tmuxEnabled && isInsideTmux()) {
+    if (!input.suppressTmuxSpawn && this.onSubagentSessionCreated && this.tmuxEnabled && isInsideTmux()) {
       log("[background-agent] Invoking tmux callback NOW", { sessionID })
       await this.onSubagentSessionCreated({
         sessionID,

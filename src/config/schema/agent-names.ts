@@ -30,6 +30,8 @@ export const BuiltinSkillNameSchema = z.enum([
   "domain-financial",
   "domain-security",
   "domain-political",
+  "team-mode",
+  "hyperplan",
 ])
 
 export const OverridableAgentNameSchema = z.enum([

@@ -28,6 +28,9 @@ export { createAutoUpdateCheckerHook } from "./auto-update-checker";
 
 export { createAgentUsageReminderHook } from "./agent-usage-reminder";
 export { createKeywordDetectorHook } from "./keyword-detector";
+export { createTeamMailboxInjector } from "./team-mailbox-injector";
+export { createTeamModeStatusInjector } from "./team-mode-status-injector";
+export { createTeamToolGating } from "./team-tool-gating";
 export { createNonInteractiveEnvHook } from "./non-interactive-env";
 export { createInteractiveBashSessionHook } from "./interactive-bash-session";
 

@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { createParseMember } from "./member-parser"
 
 export const MESSAGE_KINDS = [
   "message",
@@ -51,15 +52,40 @@ const TeamReferenceSchema = z.object({
   description: z.string().optional(),
 }).strict()
 
+const MISSING_TEAM_LEAD_MESSAGE =
+  "leadAgentId required (or write a `lead: {...}` field, or mark one member with `isLead: true`)"
+
 export const TeamSpecSchema = z.object({
-  version: z.literal(1),
+  version: z.literal(1).default(1),
   name: z.string().min(1).regex(/^[a-z0-9-]+$/),
   description: z.string().optional(),
-  createdAt: z.number().int().positive(),
-  leadAgentId: z.string(),
+  createdAt: z.number().int().positive().default(() => Date.now()),
+  leadAgentId: z.string().optional(),
   teamAllowedPaths: z.array(z.string()).optional(),
   sessionPermission: z.string().optional(),
   members: z.array(MemberSchema).min(1).max(8),
+}).superRefine((teamSpec, ctx) => {
+  if (teamSpec.leadAgentId === undefined && teamSpec.members.length > 1) {
+    ctx.addIssue({
+      code: "custom",
+      message: MISSING_TEAM_LEAD_MESSAGE,
+      path: ["leadAgentId"],
+    })
+  }
+}).transform((teamSpec) => {
+  if (teamSpec.leadAgentId !== undefined) {
+    return teamSpec
+  }
+
+  const firstMember = teamSpec.members[0]
+  if (!firstMember) {
+    throw new Error(MISSING_TEAM_LEAD_MESSAGE)
+  }
+
+  return {
+    ...teamSpec,
+    leadAgentId: firstMember.name,
+  }
 })
 
 export const MessageSchema = z.object({
@@ -92,11 +118,29 @@ export const TaskSchema = z.object({
   claimedAt: z.number().int().positive().optional(),
 })
 
+const RuntimeStateMemberModelSchema = z.object({
+  providerID: z.string(),
+  modelID: z.string(),
+  variant: z.string().optional(),
+  reasoningEffort: z.string().optional(),
+  temperature: z.number().optional(),
+  top_p: z.number().optional(),
+  maxTokens: z.number().optional(),
+  thinking: z.object({
+    type: z.enum(["enabled", "disabled"]),
+    budgetTokens: z.number().int().positive().optional(),
+  }).optional(),
+}).strict()
+
 const RuntimeStateMemberSchema = z.object({
   name: z.string(),
   sessionId: z.string().optional(),
   tmuxPaneId: z.string().optional(),
+  tmuxGridPaneId: z.string().optional(),
   agentType: z.enum(["leader", "general-purpose"]),
+  subagent_type: z.string().optional(),
+  category: z.string().optional(),
+  model: RuntimeStateMemberModelSchema.optional(),
   status: z.enum(["pending", "running", "idle", "errored", "completed", "shutdown_approved"]),
   color: z.string().optional(),
   worktreePath: z.string().optional(),
@@ -114,9 +158,18 @@ const RuntimeBoundsSchema = z.object({
 
 const ShutdownRequestSchema = z.object({
   memberId: z.string(),
+  requesterName: z.string(),
   requestedAt: z.number().int().positive(),
   approvedAt: z.number().int().positive().optional(),
   rejectedReason: z.string().optional(),
+  rejectedAt: z.number().int().positive().optional(),
+}).strict()
+
+const RuntimeStateTmuxLayoutSchema = z.object({
+  ownedSession: z.boolean(),
+  targetSessionId: z.string(),
+  focusWindowId: z.string().optional(),
+  gridWindowId: z.string().optional(),
 }).strict()
 
 export const RuntimeStateSchema = z.object({
@@ -127,6 +180,7 @@ export const RuntimeStateSchema = z.object({
   createdAt: z.number().int().positive(),
   status: z.enum(RUNTIME_STATUSES),
   leadSessionId: z.string().optional(),
+  tmuxLayout: RuntimeStateTmuxLayoutSchema.optional(),
   members: z.array(RuntimeStateMemberSchema),
   shutdownRequests: z.array(ShutdownRequestSchema).default([]),
   bounds: RuntimeBoundsSchema,
@@ -140,46 +194,68 @@ export const AGENT_ELIGIBILITY_REGISTRY: Readonly<Record<string, {
   founder: {
     verdict: "conditional",
     rejectionMessage:
-      "Agent 'founder' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"chief\" instead.",
+      "Agent 'founder' lacks teammate permission. Use subagent_type: 'chief' unless founder teammate permissions are explicitly enabled.",
   },
   thinker: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'thinker' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'thinker' for read-only analysis instead.",
+      "Agent 'thinker' is read-only. Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'thinker' for read-only analysis instead.",
   },
   researcher: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'researcher' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
+      "Agent 'researcher' is read-only. Cannot write to the team mailbox. Use delegate-task for research queries instead.",
   },
   tracker: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'tracker' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for codebase exploration instead.",
+      "Agent 'tracker' is read-only. Cannot write to the team mailbox. Use delegate-task for codebase exploration instead.",
   },
-  "spotter": {
+  spotter: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'spotter' has read-only tool access (only 'read' allowed). Cannot write to mailbox as team member.",
+      "Agent 'spotter' has read-only tool access. Cannot write to the team mailbox.",
   },
   reviewer: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'reviewer' is read-only (pre-planning consultant). Cannot write to mailbox as team member. Use delegate-task for pre-planning analysis instead.",
+      "Agent 'reviewer' is read-only. Use delegate-task for pre-planning analysis instead.",
   },
   critic: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'critic' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
+      "Agent 'critic' is read-only. Use delegate-task for plan critique instead.",
   },
   lead: { verdict: "eligible" },
   planner: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'planner' is plan-mode-only; can only write to .cortex/*.md (enforced by plannerMdOnly hook). Cannot write to team mailbox. Use category: 'plan' instead.",
+      "Agent 'planner' is plan-mode-only and cannot write to the team mailbox. Use category: 'strategic-analysis' or category: 'quick' instead.",
   },
-  "worker": { verdict: "eligible" },
+  worker: { verdict: "eligible" },
 } as const
+
+const parseMemberBase = createParseMember(MemberSchema, AGENT_ELIGIBILITY_REGISTRY)
+
+export function parseMember(input: unknown): Member {
+  if (input == null || typeof input !== "object") {
+    return parseMemberBase(input)
+  }
+
+  const raw = input as Record<string, unknown>
+  if (raw.subagent_type !== undefined) {
+    if (typeof raw.subagent_type !== "string" || !(raw.subagent_type in AGENT_ELIGIBILITY_REGISTRY)) {
+      return parseMemberBase(input)
+    }
+
+    const entry = AGENT_ELIGIBILITY_REGISTRY[raw.subagent_type]
+    if (entry.verdict === "hard-reject") {
+      throw new Error(entry.rejectionMessage)
+    }
+  }
+
+  return parseMemberBase(input)
+}
 
 export type TeamSpec = z.infer<typeof TeamSpecSchema>
 export type Member = z.infer<typeof MemberSchema>
@@ -187,4 +263,5 @@ export type CategoryMember = z.infer<typeof CategoryMemberSchema>
 export type SubagentMember = z.infer<typeof SubagentMemberSchema>
 export type Message = z.infer<typeof MessageSchema>
 export type Task = z.infer<typeof TaskSchema>
+export type RuntimeStateMember = z.infer<typeof RuntimeStateMemberSchema>
 export type RuntimeState = z.infer<typeof RuntimeStateSchema>
