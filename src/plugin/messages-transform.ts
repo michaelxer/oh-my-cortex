@@ -68,6 +68,15 @@ export function createMessagesTransformHandler(args: {
     )
 
     await runMessagesTransformHookSafely(
+      "mindmodelInjector",
+      args.hooks.mindmodelInjector?.[
+        "experimental.chat.messages.transform"
+      ],
+      input,
+      output,
+    )
+
+    await runMessagesTransformHookSafely(
       "thinkingBlockValidator",
       args.hooks.thinkingBlockValidator?.[
         "experimental.chat.messages.transform"

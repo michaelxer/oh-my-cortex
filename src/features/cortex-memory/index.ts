@@ -34,3 +34,13 @@ export {
   type CortexArtifactSearchResult,
   type CortexArtifactType,
 } from "./artifact-search"
+
+export {
+  buildMindmodelContext,
+  getMindmodelDir,
+} from "./mindmodel"
+
+export {
+  createMindmodelInjectorHook,
+  type MindmodelInjectorHook,
+} from "./mindmodel-injector"

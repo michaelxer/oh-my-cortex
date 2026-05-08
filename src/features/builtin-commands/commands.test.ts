@@ -6,6 +6,10 @@ import { HANDOFF_TEMPLATE } from "./templates/handoff"
 import { LEDGER_TEMPLATE } from "./templates/ledger"
 import { CORTEX_SEARCH_TEMPLATE } from "./templates/cortex-search"
 import { CORTEX_INIT_TEMPLATE } from "./templates/cortex-init"
+import { BRAINSTORM_TEMPLATE } from "./templates/brainstorm"
+import { CORTEX_PLAN_TEMPLATE } from "./templates/cortex-plan"
+import { CORTEX_WORKFLOW_TEMPLATE } from "./templates/cortex-workflow"
+import { MINDMODEL_TEMPLATE } from "./templates/mindmodel"
 import { REMOVE_AI_SLOPS_TEMPLATE } from "./templates/remove-ai-slops"
 import type { BuiltinCommandName } from "./types"
 import { _resetForTesting, registerAgentName } from "../claude-code-session-state"
@@ -141,6 +145,38 @@ describe("loadBuiltinCommands", () => {
 
     //#then
     expect(commands["cortex-init"]).toBeUndefined()
+  })
+
+  test("should include OMX workflow and mindmodel commands", () => {
+    //#when
+    const commands = loadBuiltinCommands()
+
+    //#then
+    expect(commands.brainstorm.template).toContain(BRAINSTORM_TEMPLATE)
+    expect(commands["cortex-plan"].template).toContain(CORTEX_PLAN_TEMPLATE)
+    expect(commands["cortex-workflow"].template).toContain(CORTEX_WORKFLOW_TEMPLATE)
+    expect(commands.mindmodel.template).toContain(MINDMODEL_TEMPLATE)
+    expect(commands["cortex-workflow"].template).toContain("Use existing OMX agents only")
+    expect(commands.mindmodel.template).toContain(".cortex/mindmodel")
+  })
+
+  test("should exclude OMX workflow commands when disabled", () => {
+    //#given
+    const disabledCommands: BuiltinCommandName[] = [
+      "brainstorm",
+      "cortex-plan",
+      "cortex-workflow",
+      "mindmodel",
+    ]
+
+    //#when
+    const commands = loadBuiltinCommands(disabledCommands)
+
+    //#then
+    expect(commands.brainstorm).toBeUndefined()
+    expect(commands["cortex-plan"]).toBeUndefined()
+    expect(commands["cortex-workflow"]).toBeUndefined()
+    expect(commands.mindmodel).toBeUndefined()
   })
 
   test("should default start-work to Lead for static slash-command discovery", () => {

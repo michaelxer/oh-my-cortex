@@ -17,7 +17,10 @@ import {
   contextCollector,
   createContextInjectorMessagesTransformHook,
 } from "../../features/context-injector"
-import { createCortexLedgerLoaderHook } from "../../features/cortex-memory"
+import {
+  createCortexLedgerLoaderHook,
+  createMindmodelInjectorHook,
+} from "../../features/cortex-memory"
 import { safeCreateHook } from "../../shared/safe-create-hook"
 
 export type TransformHooks = {
@@ -26,6 +29,7 @@ export type TransformHooks = {
   teamModeStatusInjector: ReturnType<typeof createTeamModeStatusInjector> | null
   teamMailboxInjector: ReturnType<typeof createTeamMailboxInjector> | null
   cortexLedgerLoader: ReturnType<typeof createCortexLedgerLoaderHook> | null
+  mindmodelInjector: ReturnType<typeof createMindmodelInjectorHook> | null
   contextInjectorMessagesTransform: ReturnType<typeof createContextInjectorMessagesTransformHook>
   thinkingBlockValidator: ReturnType<typeof createThinkingBlockValidatorHook> | null
   toolPairValidator: ReturnType<typeof createToolPairValidatorHook> | null
@@ -75,6 +79,14 @@ export function createTransformHooks(args: {
     ? safeCreateHook(
         "cortex-ledger-loader",
         () => createCortexLedgerLoaderHook(ctx.directory),
+        { enabled: safeHookEnabled },
+      )
+    : null
+
+  const mindmodelInjector = isHookEnabled("mindmodel-injector")
+    ? safeCreateHook(
+        "mindmodel-injector",
+        () => createMindmodelInjectorHook(ctx.directory),
         { enabled: safeHookEnabled },
       )
     : null
@@ -142,6 +154,7 @@ export function createTransformHooks(args: {
     teamModeStatusInjector,
     teamMailboxInjector,
     cortexLedgerLoader,
+    mindmodelInjector,
     contextInjectorMessagesTransform,
     thinkingBlockValidator,
     toolPairValidator,

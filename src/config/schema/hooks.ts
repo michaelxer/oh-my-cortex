@@ -61,6 +61,7 @@ export const HookNameSchema = z.enum([
   "checkpoint-counter",
   "cortex-ledger-loader",
   "file-ops-tracker",
+  "mindmodel-injector",
 ])
 
 export type HookName = z.infer<typeof HookNameSchema>
