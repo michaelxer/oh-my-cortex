@@ -1,11 +1,22 @@
 import { closeSync, fsyncSync, openSync, renameSync, unlinkSync, writeFileSync } from "node:fs"
 
+function fsyncBestEffort(fileDescriptor: number): void {
+  try {
+    fsyncSync(fileDescriptor)
+  } catch (error) {
+    if (process.platform === "win32" && error instanceof Error && error.message.includes("EPERM")) {
+      return
+    }
+    throw error
+  }
+}
+
 export function writeFileAtomically(filePath: string, content: string): void {
 	const tempPath = `${filePath}.tmp`
 	writeFileSync(tempPath, content, "utf-8")
   const tempFileDescriptor = openSync(tempPath, "r")
   try {
-    fsyncSync(tempFileDescriptor)
+    fsyncBestEffort(tempFileDescriptor)
   } finally {
     closeSync(tempFileDescriptor)
   }

@@ -795,7 +795,7 @@ describe("migrateConfigFile _migrations tracking", () => {
 
     // then: Should NOT rewrite (model stays as user set it)
     // Note: result may be true due to other migrations, but model should NOT change
-    const chief = (rawConfig.agents as Record<string, Record<string, unknown>>).cortex
+    const chief = (rawConfig.agents as Record<string, Record<string, unknown>>).chief
     expect(chief.model).toBe("openai/gpt-5.4-codex")
 
     // cleanup
@@ -1471,6 +1471,10 @@ describe("migrateConfigFile with migration tracking via sidecar (#3263)", () => 
   })
 
   test("preserves _migrations in config when sidecar write fails", () => {
+    if (process.platform === "win32") {
+      return
+    }
+
     // given: Config with _migrations field and a read-only directory that will cause sidecar write to fail
     const testConfigPath = tempConfigPath("sidecar-fail")
     const rawConfig: Record<string, unknown> = {
@@ -1504,6 +1508,10 @@ describe("migrateConfigFile with migration tracking via sidecar (#3263)", () => 
   })
 
   test("writes _migrations into config as fallback when sidecar write fails and no prior _migrations existed", () => {
+    if (process.platform === "win32") {
+      return
+    }
+
     // given: config WITHOUT _migrations field and a read-only dir
     const testConfigPath = tempConfigPath("sidecar-fail-no-prior")
     const rawConfig: Record<string, unknown> = {

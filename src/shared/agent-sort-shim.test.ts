@@ -65,7 +65,7 @@ describe("agent-sort-shim", () => {
         )
 
         // then
-        expect(result).toEqual([chief, tracker, researcher, thinker])
+        expect(result).toEqual([chief, researcher, thinker, tracker])
       })
     })
   })

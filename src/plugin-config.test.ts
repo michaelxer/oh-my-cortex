@@ -331,20 +331,19 @@ describe("loadPluginConfig", () => {
     expect(config.mcp_env_allowlist).toEqual(["USER_ONLY_TOKEN"])
   })
 
-  it("should ignore edits to the renamed legacy backup after migration", async () => {
+  it("should ignore edits to a backup file next to the canonical config", async () => {
     // given
     const rootDir = mkdtempSync(join(tmpdir(), "omx-plugin-config-legacy-"))
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
-    const legacyConfigPath = join(projectConfigDir, "oh-my-cortex.jsonc")
-    const backupConfigPath = `${legacyConfigPath}.bak`
     const canonicalConfigPath = join(projectConfigDir, "oh-my-cortex.jsonc")
+    const backupConfigPath = `${canonicalConfigPath}.bak`
 
     tempDirs.push(rootDir)
     mkdirSync(userConfigDir, { recursive: true })
     mkdirSync(projectConfigDir, { recursive: true })
-    writeFileSync(legacyConfigPath, JSON.stringify({ agents: { thinker: { model: "openai/gpt-5.5" } } }))
+    writeFileSync(canonicalConfigPath, JSON.stringify({ agents: { thinker: { model: "openai/gpt-5.5" } } }))
 
     process.env.OPENCODE_CONFIG_DIR = userConfigDir
 
@@ -355,7 +354,7 @@ describe("loadPluginConfig", () => {
     const reloadedConfig = loadPluginConfig(projectDir, {})
 
     // then
-    expect(existsSync(legacyConfigPath)).toBe(false)
+    expect(existsSync(canonicalConfigPath)).toBe(true)
     expect(existsSync(backupConfigPath)).toBe(true)
     expect(readFileSync(canonicalConfigPath, "utf-8")).toContain('"openai/gpt-5.5"')
     expect(reloadedConfig.agents?.thinker?.model).toBe("openai/gpt-5.5")
@@ -398,19 +397,18 @@ describe("loadPluginConfig", () => {
     expect(config.agents?.thinker?.model).toBe("openai/gpt-5.5")
   })
 
-  it("should load migrated legacy project config on the first load", async () => {
+  it("should load canonical project config on the first load", async () => {
     // given
     const rootDir = mkdtempSync(join(tmpdir(), "omx-plugin-config-first-load-"))
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
-    const legacyConfigPath = join(projectConfigDir, "oh-my-cortex.jsonc")
     const canonicalConfigPath = join(projectConfigDir, "oh-my-cortex.jsonc")
 
     tempDirs.push(rootDir)
     mkdirSync(userConfigDir, { recursive: true })
     mkdirSync(projectConfigDir, { recursive: true })
-    writeFileSync(legacyConfigPath, JSON.stringify({ agents: { thinker: { model: "openai/gpt-5.5" } } }))
+    writeFileSync(canonicalConfigPath, JSON.stringify({ agents: { thinker: { model: "openai/gpt-5.5" } } }))
 
     process.env.OPENCODE_CONFIG_DIR = userConfigDir
 
@@ -419,7 +417,6 @@ describe("loadPluginConfig", () => {
     const config = loadPluginConfig(projectDir, {})
 
     // then
-    expect(existsSync(legacyConfigPath)).toBe(false)
     expect(existsSync(canonicalConfigPath)).toBe(true)
     expect(config.agents?.thinker?.model).toBe("openai/gpt-5.5")
   })
