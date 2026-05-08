@@ -9,8 +9,12 @@ import { detectConfigFormat } from "./opencode-config-format"
 import { parseOpenCodeConfigFileWithError, type OpenCodeConfig } from "./parse-opencode-config-file"
 import { getPluginNameWithVersion } from "./plugin-name-with-version"
 import { checkVersionCompatibility, extractVersionFromPluginEntry } from "./version-compatibility"
+import { deepMergeRecord } from "./deep-merge-record"
 
-export async function addPluginToOpenCodeConfig(currentVersion: string): Promise<ConfigMergeResult> {
+export async function addPluginToOpenCodeConfig(
+  currentVersion: string,
+  generatedOpenCodeConfig?: Record<string, unknown>,
+): Promise<ConfigMergeResult> {
   try {
     ensureConfigDirectoryExists()
   } catch (err) {
@@ -26,7 +30,10 @@ export async function addPluginToOpenCodeConfig(currentVersion: string): Promise
 
   try {
     if (format === "none") {
-      const config: OpenCodeConfig = { plugin: [pluginEntry] }
+      const config: OpenCodeConfig = {
+        ...(generatedOpenCodeConfig ?? {}),
+        plugin: [pluginEntry],
+      }
       writeFileSync(path, JSON.stringify(config, null, 2) + "\n")
       return { success: true, configPath: path }
     }
@@ -40,7 +47,9 @@ export async function addPluginToOpenCodeConfig(currentVersion: string): Promise
       }
     }
 
-    const config = parseResult.config
+    const config = generatedOpenCodeConfig
+      ? deepMergeRecord(parseResult.config, generatedOpenCodeConfig as OpenCodeConfig)
+      : parseResult.config
     const plugins = config.plugin ?? []
 
     const canonicalEntries = plugins.filter(
@@ -83,7 +92,7 @@ export async function addPluginToOpenCodeConfig(currentVersion: string): Promise
 
     config.plugin = normalizedPlugins
 
-    if (format === "jsonc") {
+    if (format === "jsonc" && !generatedOpenCodeConfig) {
       const content = readFileSync(path, "utf-8")
       const pluginArrayRegex = /((?:"plugin"|plugin)\s*:\s*)\[([\s\S]*?)\]/
       const match = content.match(pluginArrayRegex)

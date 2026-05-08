@@ -4,6 +4,7 @@ import type { InstallArgs } from "./types"
 import {
   addPluginToOpenCodeConfig,
   detectCurrentConfig,
+  generateOpenCodeInstallConfig,
   getOpenCodeVersion,
   isOpenCodeInstalled,
   writeOmxConfig,
@@ -90,9 +91,10 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   }
 
   const config = argsToConfig(args)
+  const generatedOpenCodeConfig = await generateOpenCodeInstallConfig(config)
 
-  printStep(step++, totalSteps, `Adding ${PLUGIN_NAME} plugin...`)
-  const pluginResult = await addPluginToOpenCodeConfig(version)
+  printStep(step++, totalSteps, `Adding ${PLUGIN_NAME} plugin and visible OMX entries...`)
+  const pluginResult = await addPluginToOpenCodeConfig(version, generatedOpenCodeConfig)
   if (!pluginResult.success) {
     printError(`Failed: ${pluginResult.error}`)
     try {

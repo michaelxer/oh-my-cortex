@@ -56,6 +56,26 @@ describe("keyword-detector message transform", () => {
     expect(textPart!.text).toContain("YOU MUST LEVERAGE ALL AVAILABLE AGENTS")
   })
 
+  test("should inject deepwork even when Desktop runtime has no TUI toast client", async () => {
+    // given - Desktop-like runtime can omit ctx.client.tui
+    const collector = new ContextCollector()
+    const hook = createKeywordDetectorHook({ client: {} } as unknown as PluginInput, collector)
+    const sessionID = "no-toast-session"
+    const output = {
+      message: {} as Record<string, unknown>,
+      parts: [{ type: "text", text: "deepwork fix visibility" }],
+    }
+
+    // when
+    await hook["chat.message"]({ sessionID, agent: "chief" }, output)
+
+    // then - missing toast support must not prevent prompt injection
+    const textPart = output.parts.find(p => p.type === "text")
+    expect(textPart).toBeDefined()
+    expect(textPart!.text).toContain("DEEPWORK MODE ENABLED!")
+    expect(textPart!.text).toContain("fix visibility")
+  })
+
   test("should prepend search message to text part", async () => {
     // given - mock getMainSessionID to return our session (isolate from global state)
     const collector = new ContextCollector()

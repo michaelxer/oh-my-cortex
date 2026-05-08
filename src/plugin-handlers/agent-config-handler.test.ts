@@ -336,6 +336,32 @@ describe("applyAgentConfig builtin override protection", () => {
     })
   })
 
+  test("filters opencode config agents whose key matches builtin display-name alias", async () => {
+    // given - installer writes visible static entries into opencode.json
+    const config = createBaseConfig()
+    ;(config as Record<string, unknown>).agent = {
+      [BUILTIN_CHIEF_DISPLAY_NAME]: {
+        name: BUILTIN_CHIEF_DISPLAY_NAME,
+        prompt: "installer visibility shim prompt",
+        mode: "primary",
+      },
+    }
+
+    // when
+    const result = await applyAgentConfig({
+      config,
+      pluginConfig: createPluginConfig(),
+      ctx: { directory: "/tmp" },
+      pluginComponents: createPluginComponents(),
+    })
+
+    // then - full builtin prompt wins over the visible static entry
+    expect(result[BUILTIN_CHIEF_DISPLAY_NAME]).toEqual({
+      ...builtinChiefConfig,
+      name: getAgentDisplayName("chief"),
+    })
+  })
+
   describe("#given protected builtin agents use hyphenated names", () => {
     describe("#when a user agent uses the underscored multimodal looker alias", () => {
       test("filters the override", async () => {

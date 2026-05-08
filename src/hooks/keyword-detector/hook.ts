@@ -14,6 +14,22 @@ import {
 import type { ContextCollector } from "../../features/context-injector"
 import type { CortexLoopHook } from "../cortex-loop"
 
+type ToastClient = {
+  showToast?: (input: {
+    body: {
+      title: string
+      message: string
+      variant: "success" | "warning" | "error" | "info"
+      duration: number
+    }
+  }) => Promise<unknown>
+}
+
+function getToastClient(ctx: PluginInput): ToastClient | undefined {
+  const client = ctx.client as unknown as { tui?: ToastClient }
+  return client.tui
+}
+
 export function createKeywordDetectorHook(
   ctx: PluginInput,
   _collector?: ContextCollector,
@@ -103,8 +119,8 @@ export function createKeywordDetectorHook(
           runtimeVariant,
         })
 
-        ctx.client.tui
-          .showToast({
+        getToastClient(ctx)
+          ?.showToast?.({
             body: {
               title: "Deepwork Mode Activated",
               message: isRuntimeMax

@@ -250,7 +250,7 @@ export async function applyAgentConfig(params: {
       agentConfig["OpenCode-Builder"] = override ? { ...base, ...override } : base;
     }
 
-    const filteredConfigAgents = configAgent
+    const rawConfigAgents = configAgent
       ? Object.fromEntries(
           Object.entries(configAgent)
             .filter(([key]) => {
@@ -283,6 +283,10 @@ export async function applyAgentConfig(params: {
       ...Object.keys(agentConfig),
       ...Object.keys(builtinAgents),
     ]);
+    const filteredConfigAgents = filterProtectedAgentOverrides(
+      rawConfigAgents,
+      protectedBuiltinAgentNames,
+    );
     const filteredUserAgents = filterProtectedAgentOverrides(
       userAgents,
       protectedBuiltinAgentNames,
@@ -374,6 +378,10 @@ export async function applyAgentConfig(params: {
           }),
         )
       : {};
+    const filteredConfigAgents = filterProtectedAgentOverrides(
+      defaultedConfigAgents,
+      protectedBuiltinAgentNames,
+    );
 
     params.config.agent = {
       ...builtinAgents,
@@ -385,7 +393,7 @@ export async function applyAgentConfig(params: {
       ...filterDisabledAgents(filteredOpencodeProjectAgents),
       ...filterDisabledAgents(filteredAgentDefinitionAgents),
       ...filterDisabledAgents(filteredOpencodeConfigAgents),
-      ...defaultedConfigAgents,
+      ...filteredConfigAgents,
     };
   }
 

@@ -5,6 +5,7 @@ import type { InstallArgs } from "./types"
 import {
   addPluginToOpenCodeConfig,
   detectCurrentConfig,
+  generateOpenCodeInstallConfig,
   getOpenCodeVersion,
   isOpenCodeInstalled,
   writeOmxConfig,
@@ -61,8 +62,10 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
   const config = await promptInstallConfig(detected)
   if (!config) return 1
 
-  spinner.start(`Adding ${PLUGIN_NAME} to OpenCode config`)
-  const pluginResult = await addPluginToOpenCodeConfig(version)
+  const generatedOpenCodeConfig = await generateOpenCodeInstallConfig(config)
+
+  spinner.start(`Adding ${PLUGIN_NAME} and visible OMX entries to OpenCode config`)
+  const pluginResult = await addPluginToOpenCodeConfig(version, generatedOpenCodeConfig)
   if (!pluginResult.success) {
     spinner.stop(`Failed to add plugin: ${pluginResult.error}`)
     p.outro(color.red("Installation failed."))

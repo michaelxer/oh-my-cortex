@@ -182,6 +182,31 @@ describe("addPluginToOpenCodeConfig - single package writes", () => {
     expect(result.success).toBe(true)
     const savedContent = readFileSync(testConfigPath, "utf-8")
     expect(savedContent.includes('"plugin": [\n    "oh-my-cortex"\n  ]')).toBe(true)
-    expect(savedContent.includes("oh-my-cortex")).toBe(false)
+    expect(savedContent.match(/oh-my-cortex/g)?.length).toBe(1)
+    expect(savedContent.includes("oh-my-cortex@")).toBe(false)
+  })
+
+  it("writes generated visible agent and mcp entries when provided", async () => {
+    // given
+    const generatedOpenCodeConfig = {
+      agent: {
+        "Chief - Deepworker": { mode: "primary", model: "anthropic/claude-opus-4-7" },
+      },
+      mcp: {
+        context7: { type: "local", command: ["bunx", "-y", "@upstash/context7-mcp"] },
+      },
+    }
+    writeFileSync(testConfigPath, JSON.stringify({ model: "anthropic/claude-opus-4-7" }, null, 2) + "\n", "utf-8")
+
+    // when
+    const result = await addPluginToOpenCodeConfig("3.11.0", generatedOpenCodeConfig)
+
+    // then
+    expect(result.success).toBe(true)
+    const savedConfig = JSON.parse(readFileSync(testConfigPath, "utf-8"))
+    expect(savedConfig.plugin).toEqual(["oh-my-cortex"])
+    expect(savedConfig.agent["Chief - Deepworker"].mode).toBe("primary")
+    expect(savedConfig.mcp.context7).toBeDefined()
+    expect(savedConfig.model).toBe("anthropic/claude-opus-4-7")
   })
 })
