@@ -12,6 +12,7 @@ import { CHALLENGE_TEMPLATE } from "./templates/challenge"
 import { CHECKPOINT_TEMPLATE } from "./templates/checkpoint"
 import { LEDGER_TEMPLATE } from "./templates/ledger"
 import { CORTEX_SEARCH_TEMPLATE } from "./templates/cortex-search"
+import { CORTEX_INIT_TEMPLATE } from "./templates/cortex-init"
 import { LENS_TEMPLATE } from "./templates/lens"
 import { DECIDE_TEMPLATE } from "./templates/decide"
 import { HYPERPLAN_TEMPLATE } from "./templates/hyperplan"
@@ -171,6 +172,17 @@ ${CORTEX_SEARCH_TEMPLATE}
 $ARGUMENTS
 </user-request>`,
       argumentHint: "<query>",
+    },
+    "cortex-init": {
+      description: "(builtin) Initialize OMX project memory docs",
+      template: `<command-instruction>
+${CORTEX_INIT_TEMPLATE}
+</command-instruction>
+
+<user-request>
+$ARGUMENTS
+</user-request>`,
+      argumentHint: "[--create-missing] [--update-existing]",
     },
     lens: {
       description: "(builtin) Activate a domain lens (health, legal, financial, security, political)",

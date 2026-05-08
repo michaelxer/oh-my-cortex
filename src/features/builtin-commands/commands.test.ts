@@ -5,6 +5,7 @@ import { loadBuiltinCommands } from "./commands"
 import { HANDOFF_TEMPLATE } from "./templates/handoff"
 import { LEDGER_TEMPLATE } from "./templates/ledger"
 import { CORTEX_SEARCH_TEMPLATE } from "./templates/cortex-search"
+import { CORTEX_INIT_TEMPLATE } from "./templates/cortex-init"
 import { REMOVE_AI_SLOPS_TEMPLATE } from "./templates/remove-ai-slops"
 import type { BuiltinCommandName } from "./types"
 import { _resetForTesting, registerAgentName } from "../claude-code-session-state"
@@ -117,6 +118,29 @@ describe("loadBuiltinCommands", () => {
 
     //#then
     expect(commands["cortex-search"]).toBeUndefined()
+  })
+
+  test("should include cortex-init command in loaded commands", () => {
+    //#when
+    const commands = loadBuiltinCommands()
+
+    //#then
+    expect(commands["cortex-init"]).toBeDefined()
+    expect(commands["cortex-init"].name).toBe("cortex-init")
+    expect(commands["cortex-init"].template).toContain(CORTEX_INIT_TEMPLATE)
+    expect(commands["cortex-init"].template).toContain("ARCHITECTURE.md")
+    expect(commands["cortex-init"].template).toContain("$ARGUMENTS")
+  })
+
+  test("should exclude cortex-init when disabled", () => {
+    //#given
+    const disabledCommands: BuiltinCommandName[] = ["cortex-init"]
+
+    //#when
+    const commands = loadBuiltinCommands(disabledCommands)
+
+    //#then
+    expect(commands["cortex-init"]).toBeUndefined()
   })
 
   test("should default start-work to Lead for static slash-command discovery", () => {
