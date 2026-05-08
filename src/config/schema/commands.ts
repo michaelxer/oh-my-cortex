@@ -12,6 +12,7 @@ export const BuiltinCommandNameSchema = z.enum([
   "handoff",
   "challenge",
   "checkpoint",
+  "ledger",
   "lens",
   "decide",
   "hyperplan",

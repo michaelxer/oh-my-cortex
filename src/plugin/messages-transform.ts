@@ -59,6 +59,15 @@ export function createMessagesTransformHandler(args: {
     )
 
     await runMessagesTransformHookSafely(
+      "cortexLedgerLoader",
+      args.hooks.cortexLedgerLoader?.[
+        "experimental.chat.messages.transform"
+      ],
+      input,
+      output,
+    )
+
+    await runMessagesTransformHookSafely(
       "thinkingBlockValidator",
       args.hooks.thinkingBlockValidator?.[
         "experimental.chat.messages.transform"

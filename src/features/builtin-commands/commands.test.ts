@@ -3,6 +3,7 @@
 import { afterEach, beforeEach, describe, test, expect } from "bun:test"
 import { loadBuiltinCommands } from "./commands"
 import { HANDOFF_TEMPLATE } from "./templates/handoff"
+import { LEDGER_TEMPLATE } from "./templates/ledger"
 import { REMOVE_AI_SLOPS_TEMPLATE } from "./templates/remove-ai-slops"
 import type { BuiltinCommandName } from "./types"
 import { _resetForTesting, registerAgentName } from "../claude-code-session-state"
@@ -69,6 +70,29 @@ describe("loadBuiltinCommands", () => {
 
     //#then
     expect(commands.handoff.description).toContain("context summary")
+  })
+
+  test("should include ledger command in loaded commands", () => {
+    //#when
+    const commands = loadBuiltinCommands()
+
+    //#then
+    expect(commands.ledger).toBeDefined()
+    expect(commands.ledger.name).toBe("ledger")
+    expect(commands.ledger.template).toContain(LEDGER_TEMPLATE)
+    expect(commands.ledger.template).toContain(".cortex/ledgers")
+    expect(commands.ledger.template).toContain("$SESSION_ID")
+  })
+
+  test("should exclude ledger when disabled", () => {
+    //#given
+    const disabledCommands: BuiltinCommandName[] = ["ledger"]
+
+    //#when
+    const commands = loadBuiltinCommands(disabledCommands)
+
+    //#then
+    expect(commands.ledger).toBeUndefined()
   })
 
   test("should default start-work to Lead for static slash-command discovery", () => {

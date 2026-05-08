@@ -59,6 +59,7 @@ export const HookNameSchema = z.enum([
   "challenge-engine",
   "domain-lens",
   "checkpoint-counter",
+  "cortex-ledger-loader",
 ])
 
 export type HookName = z.infer<typeof HookNameSchema>

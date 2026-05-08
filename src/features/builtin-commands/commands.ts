@@ -10,6 +10,7 @@ import { HANDOFF_TEMPLATE } from "./templates/handoff"
 import { REMOVE_AI_SLOPS_TEMPLATE } from "./templates/remove-ai-slops"
 import { CHALLENGE_TEMPLATE } from "./templates/challenge"
 import { CHECKPOINT_TEMPLATE } from "./templates/checkpoint"
+import { LEDGER_TEMPLATE } from "./templates/ledger"
 import { LENS_TEMPLATE } from "./templates/lens"
 import { DECIDE_TEMPLATE } from "./templates/decide"
 import { HYPERPLAN_TEMPLATE } from "./templates/hyperplan"
@@ -142,6 +143,22 @@ $ARGUMENTS
       template: `<command-instruction>
 ${CHECKPOINT_TEMPLATE}
 </command-instruction>`,
+    },
+    ledger: {
+      description: "(builtin) Create or update an OMX continuity ledger in .cortex/ledgers",
+      template: `<command-instruction>
+${LEDGER_TEMPLATE}
+</command-instruction>
+
+<session-context>
+Session ID: $SESSION_ID
+Timestamp: $TIMESTAMP
+</session-context>
+
+<user-request>
+$ARGUMENTS
+</user-request>`,
+      argumentHint: "[session-or-topic]",
     },
     lens: {
       description: "(builtin) Activate a domain lens (health, legal, financial, security, political)",
