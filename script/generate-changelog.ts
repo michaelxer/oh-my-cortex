@@ -57,7 +57,6 @@ function buildReleaseFraming(files: string[]): string[] {
     touchesAnyPath(files, [
       "src/index.ts",
       "src/plugin-config.ts",
-      "bin/platform.js",
       "postinstall.mjs",
       "docs",
     ])

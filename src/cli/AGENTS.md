@@ -6,6 +6,10 @@
 
 Commander.js CLI with 6 commands. Entry: `index.ts` → `runCli()` in `cli-program.ts`.
 
+## DISTRIBUTION RULE
+
+The CLI is shipped only through the root `oh-my-cortex` npm package. Do not reintroduce platform package resolution, `bin/platform.js`, `packages/*`, native binary dispatch, or platform publish workflows. Installer work must keep using the root JS CLI bundle.
+
 ## COMMANDS
 
 | Command | Purpose | Key Logic |

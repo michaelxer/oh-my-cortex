@@ -6,6 +6,10 @@
 
 20 files. Stateless utility functions for the `install` command. Handles OpenCode config manipulation, provider configuration, JSONC operations, binary detection, and npm registry queries. No class — flat utility collection.
 
+## DISTRIBUTION RULE
+
+OMX install/config-manager code must never depend on platform-specific npm packages. Keep installation on the single root package `oh-my-cortex`; do not recreate `packages/*`, optional platform package dispatch, or platform publish recovery logic.
+
 ## FILE CATALOG
 
 | File | Purpose |

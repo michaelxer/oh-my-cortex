@@ -2,6 +2,14 @@
 
 **Generated:** 2026-04-18 | **Commit:** 2892ca4a | **Branch:** dev
 
+## MANDATORY DISTRIBUTION POLICY
+
+OMX is a single-package npm project. Publish exactly one npm package: `oh-my-cortex`.
+
+Never restore OMO-style multi-package distribution. Do not recreate `packages/*`, `bin/platform.js`, native binary dispatch, `publish-platform.yml`, `build:binaries`, `build:all`, or `oh-my-cortex-darwin-*` / `oh-my-cortex-linux-*` / `oh-my-cortex-windows-*` package names.
+
+This policy exists because the platform-package path already caused failed npm publishes and install confusion. The fixed installer is the root JS CLI from `dist/npm-cli/index.js`; keep all future install, publish, and docs work on that path.
+
 ## OVERVIEW
 
 OpenCode plugin (npm: `oh-my-cortex`) extending Claude Code with 11 agents, 52 lifecycle hooks, 26 tools, 3-tier MCP system (built-in + .mcp.json + skill-embedded), Hashline LINE#ID edit tool, IntentGate classifier, and Claude Code compatibility. 1766 TypeScript source files, 377k LOC, 104 barrel index.ts files. Entry: `src/index.ts` → 5-step init (loadConfig → createManagers → createTools → createHooks → createPluginInterface).

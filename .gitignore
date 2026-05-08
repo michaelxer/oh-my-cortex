@@ -6,10 +6,7 @@ node_modules/
 # Build output
 dist/
 
-# Platform binaries (built, not committed)
-packages/*/bin/oh-my-opencode
-packages/*/bin/oh-my-opencode.exe
-packages/*/bin/*.map
+# OMX is a single-package npm distribution. Do not restore packages/* platform package outputs.
 
 # IDE
 .idea/
