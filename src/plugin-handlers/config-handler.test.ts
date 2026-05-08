@@ -41,6 +41,7 @@ function createPluginConfig(overrides: Partial<OhMyCortexConfig> = {}): OhMyCort
 }
 
 let setAdditionalAllowedMcpEnvVarsSpy: ReturnType<typeof spyOn> | undefined
+let readOpencodeConfigAgentsSpy: ReturnType<typeof spyOn> | undefined
 
 beforeEach(async () => {
   mock.restore()
@@ -71,6 +72,10 @@ beforeEach(async () => {
   spyOn(agentLoader, "loadProjectAgents" as any).mockReturnValue({})
   spyOn(agentLoader, "loadOpencodeGlobalAgents" as any).mockReturnValue({})
   spyOn(agentLoader, "loadOpencodeProjectAgents" as any).mockReturnValue({})
+  readOpencodeConfigAgentsSpy = spyOn(
+    agentLoader,
+    "readOpencodeConfigAgents" as any,
+  ).mockReturnValue({})
 
   spyOn(mcpLoader, "loadMcpConfigs" as any).mockResolvedValue({ servers: {} })
   setAdditionalAllowedMcpEnvVarsSpy = spyOn(mcpLoader, "setAdditionalAllowedMcpEnvVars").mockImplementation(() => {})
@@ -122,6 +127,7 @@ afterEach(() => {
   ;(agentLoader.loadProjectAgents as any)?.mockRestore?.()
   ;(agentLoader.loadOpencodeGlobalAgents as any)?.mockRestore?.()
   ;(agentLoader.loadOpencodeProjectAgents as any)?.mockRestore?.()
+  readOpencodeConfigAgentsSpy?.mockRestore()
   ;(mcpLoader.loadMcpConfigs as any)?.mockRestore?.()
   setAdditionalAllowedMcpEnvVarsSpy?.mockRestore()
   ;(pluginLoader.loadAllPluginComponents as any)?.mockRestore?.()
