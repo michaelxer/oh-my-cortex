@@ -600,6 +600,185 @@ Read this project and explain what it does in plain language. Then tell me the s
 Prepare this release carefully. Search memory first, make a checkpoint plan, verify each step, push when done, and update the ledger.
 ```
 
+## Use Case Ideas
+
+OMX is not only for software projects. You can use it whenever you need structured thinking, careful questions, or a second brain that will not simply agree with you.
+
+The best prompts usually say:
+
+- What you are trying to decide or solve.
+- What country, state, industry, role, or situation applies.
+- What you already know.
+- What you are worried about.
+- Whether you want advice, a plan, a checklist, a draft, or questions first.
+
+### Tax Planning
+
+OMX can help you prepare for tax planning by asking for the missing context and organizing the questions you should bring to a qualified tax professional.
+
+For example, it should ask things like:
+
+- What country and state/province are you in?
+- Are you an employee, freelancer, company owner, investor, or mixed?
+- What type of business do you run?
+- Is this personal tax, business tax, payroll tax, sales/VAT/GST, or cross-border tax?
+- What income, expenses, assets, or transactions are involved?
+- Are there deadlines, audits, penalties, or reporting obligations?
+
+Example:
+
+```text
+/lens financial
+I want help preparing for tax planning. Ask me the important questions first: country, business type, income sources, expenses, deadlines, and what I should discuss with a tax professional.
+```
+
+OMX can help you understand the shape of the problem, prepare documents, compare options, and make a checklist. It should not pretend to be your tax advisor or give final legal/tax rulings.
+
+### Business Strategy
+
+Use OMX for business decisions where you want challenge, structure, and clear tradeoffs.
+
+Good uses:
+
+- Choosing a business model.
+- Pricing a product.
+- Evaluating a competitor.
+- Planning a launch.
+- Deciding whether to hire, outsource, or automate.
+- Preparing investor, partner, or customer communication.
+
+Example:
+
+```text
+hyperplan
+I want to launch a small AI automation service for local businesses. Challenge the idea, ask what market details are missing, compare possible offers, and recommend the strongest next step.
+```
+
+### Relationship And Communication
+
+OMX can help you think through difficult conversations without escalating them.
+
+Good uses:
+
+- Drafting a message that is honest but not harsh.
+- Understanding another person's likely perspective.
+- Preparing for a sensitive conversation.
+- Separating facts, feelings, assumptions, and requests.
+- Choosing whether to reply now or wait.
+
+Example:
+
+```text
+I need to talk to my business partner about missed deadlines. Help me understand the situation from both sides, ask me what context matters, then draft a calm message that protects the relationship.
+```
+
+OMX should not manipulate people for you. It should help you communicate clearly, respectfully, and with awareness of consequences.
+
+### Mental Health Support
+
+OMX can help with reflection, journaling, planning, and emotional organization. It should be supportive and careful, but it is not a therapist, doctor, or emergency service.
+
+Good uses:
+
+- Sorting out what you are feeling.
+- Creating a simple routine for sleep, work, or stress.
+- Preparing what to tell a counselor, doctor, friend, or family member.
+- Writing a grounding plan for a difficult week.
+- Separating facts from spiraling thoughts.
+
+Example:
+
+```text
+/lens health
+I feel overwhelmed and stuck. Please help me organize what is going on, ask gentle questions, suggest simple next steps for today, and tell me when I should reach out to a real person or professional.
+```
+
+If someone may be in immediate danger or thinking about self-harm, OMX should encourage contacting local emergency services, a crisis line, or a trusted person right away.
+
+### Legal Or Contract Review
+
+OMX can help you understand a contract or legal situation at a high level and prepare questions for a lawyer.
+
+It should ask:
+
+- What country/state jurisdiction applies?
+- Is this employment, business, real estate, family, immigration, intellectual property, or another area?
+- Are there deadlines?
+- What outcome do you want?
+- What documents or clauses matter most?
+
+Example:
+
+```text
+/lens legal
+Help me understand this contract in plain language. Flag risky clauses, ask what jurisdiction applies, and prepare questions I should ask a lawyer before signing.
+```
+
+### Learning And Career Planning
+
+OMX can act like a study partner or career planning assistant.
+
+Good uses:
+
+- Building a learning plan.
+- Breaking a big goal into weekly steps.
+- Reviewing a resume or portfolio.
+- Preparing for interviews.
+- Explaining hard topics in simple language.
+
+Example:
+
+```text
+I want to learn data analysis for a better job. Ask about my current skill level, time per week, budget, and target role. Then create a 12-week plan.
+```
+
+### Personal Decision Making
+
+Use `/decide` when you are stuck between options.
+
+Example:
+
+```text
+/decide
+Should I stay at my current job, look for a new role, or start freelancing? Ask me the important questions first, then compare the options clearly.
+```
+
+OMX is good at naming tradeoffs, risks, reversibility, and hidden costs.
+
+### Research And Sensemaking
+
+Use OMX when you have too much information and need a clean summary.
+
+Good uses:
+
+- Comparing tools or products.
+- Summarizing long articles.
+- Understanding a market.
+- Preparing a briefing.
+- Finding what evidence is strong, weak, or missing.
+
+Example:
+
+```text
+Research this market and give me a plain-language briefing. Separate confirmed facts, likely trends, weak evidence, and open questions.
+```
+
+### Long Projects
+
+For work that may take more than one session, combine planning and memory:
+
+```text
+/cortex-workflow
+Help me plan this project, break it into checkpoints, execute the first checkpoint, verify it, push when done, and update the ledger so the next session can continue.
+```
+
+After each meaningful checkpoint:
+
+```text
+/ledger
+Write what changed, what was verified, what is still open, and the exact next step.
+```
+
 ## Common Commands
 
 | Command | Plain Meaning |
