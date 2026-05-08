@@ -255,6 +255,8 @@ OMX adapts when your request touches sensitive areas.
 | Security | Defensive, evidence-preserving, triages before action. |
 | Political | Stakeholder-aware and careful with protocol or reputation risk. |
 
+For law, tax, finance, business regulation, and political or public-sector topics, the agent should not assume one country or one set of rules. It should ask where you are, what jurisdiction applies, what type of person or business you are, and whether the information needs to be current. When current or local information matters, it should look for relevant sources before summarizing.
+
 Example:
 
 ```text
@@ -625,6 +627,8 @@ For example, it should ask things like:
 - What income, expenses, assets, or transactions are involved?
 - Are there deadlines, audits, penalties, or reporting obligations?
 
+If your situation depends on local rules, OMX should help find relevant country, state, province, city, or industry information before organizing the answer. It should separate what is confirmed from what still needs a tax professional.
+
 Example:
 
 ```text
@@ -646,6 +650,8 @@ Good uses:
 - Planning a launch.
 - Deciding whether to hire, outsource, or automate.
 - Preparing investor, partner, or customer communication.
+
+For business questions, OMX should ask about your market, customer type, country or region, budget, timing, competitors, and constraints. If local regulation, taxes, labor rules, import/export rules, licensing, or cultural norms matter, it should research or ask for those details before recommending a path.
 
 Example:
 
@@ -706,6 +712,8 @@ It should ask:
 - Are there deadlines?
 - What outcome do you want?
 - What documents or clauses matter most?
+
+For legal questions, local law matters. OMX should ask for jurisdiction first and, when useful, look for relevant local statutes, agency guidance, court/regulator context, or plain-language official resources. It should clearly separate general information from legal advice.
 
 Example:
 
