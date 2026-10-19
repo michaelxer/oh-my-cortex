@@ -1,3 +1,12 @@
 {
-  "signedContributors": []
+  "signedContributors": [
+    {
+      "name": "yaoyongli1974-dotcom",
+      "id": 227500049,
+      "comment_id": 6269963912,
+      "created_at": "2026-10-19T14:43:39Z",
+      "repoId": 1225082193,
+      "pullRequestNo": 1
+    }
+  ]
 }
