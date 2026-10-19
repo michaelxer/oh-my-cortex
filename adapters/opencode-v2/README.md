@@ -1,5 +1,7 @@
 # OpenCode V2 adapter for oh-my-cortex
 
+[English](./README.md) | [简体中文](./README.zh-cn.md)
+
 Compatibility layer that runs the V1 plugin [`oh-my-cortex`](https://github.com/michaelxer/oh-my-cortex)
 on **OpenCode V2** (tested with OpenCode 2.0.32 and oh-my-cortex 0.1.6).
 
